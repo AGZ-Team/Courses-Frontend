@@ -3,6 +3,13 @@
 import {useEffect, useRef, useState, useTransition} from 'react';
 import {useLocale} from 'next-intl';
 import {routing, usePathname, useRouter, Locale} from '@/i18n/routing';
+import { FaGlobe, FaLanguage } from 'react-icons/fa';
+import { BiGlobe } from 'react-icons/bi';
+import { BsGlobe2 } from 'react-icons/bs';
+import { GrLanguage } from 'react-icons/gr';
+import { HiMiniGlobeAlt } from 'react-icons/hi2';
+import { IoLanguageOutline } from 'react-icons/io5';
+import { LuGlobe, LuGlobeLock, LuLanguages } from 'react-icons/lu';
 
 const localeLabels: Record<Locale, string> = {
   en: 'English',
@@ -62,20 +69,7 @@ const LanguageSwitcher = () => {
         aria-expanded={isOpen}
         aria-label={`Change language, current: ${localeLabels[locale]}`}
       >
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          className="h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.6}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx={12} cy={12} r={9} />
-          <path d="M3 12h18" />
-          <path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9" />
-        </svg>
+        <LuLanguages className={`h-4 w-5`} />
         <span className="pointer-events-none absolute -bottom-1 right-1 rounded-full bg-emerald-400 px-1 text-[10px] font-semibold text-[#0b0440]">
           {locale.toUpperCase()}
         </span>

@@ -32,5 +32,18 @@
     "login": "Log in",
     "signup": "Sign up",
     "brandName": "Educrat"
+  },
+  "login": {
+    "title": "Login",
+    "subtitlePrefix": "Don't have an account yet?",
+    "signupCta": "Sign up for free",
+    "usernameOrEmail": "Username Or Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "submit": "Login",
+    "orUsing": "Or sign in using",
+    "facebook": "Log In via Facebook",
+    "google": "Log In via Google+"
   }
 }

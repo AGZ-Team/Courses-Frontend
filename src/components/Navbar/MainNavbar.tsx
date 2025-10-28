@@ -3,6 +3,8 @@
 import {Link} from '@/i18n/routing';
 import LanguageSwitcher from '@/components/Navbar/LanguageSwitcher';
 import {useTranslations, useLocale} from 'next-intl';
+import { LuSearch } from 'react-icons/lu';
+import { CgShoppingCart } from 'react-icons/cg';
 
 type NavItem = {
   labelKey: string;
@@ -103,22 +105,10 @@ const MainNavbar = () => {
   <div className="flex items-center gap-6 text-sm font-medium">
           <button
             type="button"
-            className={`hidden rounded-full bg-white/10 ${isAr ? 'p-3 mr-3' : 'p-2.5 m-4'} transition hover:bg-white/20 md:block `}
+            className={`hidden rounded-full bg-white/10 ${isAr ? 'p-3' : 'p-2.5 '} transition hover:bg-white/20 md:block `}
             aria-label={t('search')}
           >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx={11} cy={11} r={6} />
-              <path d="m20 20-3-3" />
-            </svg>
+            <LuSearch className={`h-5 w-5`} />
           </button>
 
           <button
@@ -126,19 +116,7 @@ const MainNavbar = () => {
             className={`relative rounded-full bg-white/10 ${isAr ? 'p-3' : 'p-2.5'} transition hover:bg-white/20`}
             aria-label={t('cart')}
           >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m6 6 1.5 12h9L18 6" />
-              <path d="M9 6V4a3 3 0 0 1 6 0v2" />
-            </svg>
+            <CgShoppingCart className={`h-5 w-5`} />
             <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white">
               3
             </span>

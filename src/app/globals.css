@@ -26,3 +26,37 @@ body {
   }
 }
 
+/* Login background floating animation */
+@keyframes float-slow {
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(calc(-50% - 16px)) translateX(10px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 18s linear infinite;
+}
+
+/* Even slower, more subtle float */
+@keyframes float-slower {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-10px) translateX(6px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.animate-float-slower {
+  animation: float-slower 24s ease-in-out infinite;
+}
+
