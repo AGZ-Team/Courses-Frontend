@@ -5,7 +5,9 @@ type Props = {
 };
 
 export default function RootLayout({children}: Props) {
-  // A root layout is still required, even though the HTML shell lives
-  // inside the locale-specific layout.
-  return children;
+  return (
+    <html>
+      <body>{children}</body>
+    </html>
+  );
 }

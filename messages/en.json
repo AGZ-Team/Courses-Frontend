@@ -1,0 +1,9 @@
+{
+    "welcome_message": "Welcome to our application!",
+    "login_button": "Log In",
+    "signup_button": "Sign Up",
+    "logout_button": "Log Out",
+    "profile_page": "Profile Page",
+    "settings_page": "Settings Page",
+    "error_message": "An error occurred. Please try again."
+}
