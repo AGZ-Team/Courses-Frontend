@@ -36,7 +36,7 @@ export default async function LocaleLayout({children, params}: Props) {
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="bg-background text-foreground antialiased">
+      <body className="bg-background text-foreground antialiased" suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <div className="min-h-screen">
             <header className="flex items-center justify-end gap-4 border-b border-zinc-200 bg-white px-6 py-4 shadow-sm">
