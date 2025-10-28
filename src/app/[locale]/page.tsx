@@ -1,4 +1,4 @@
-import HomeHero from '@/components/HomeComponents/HomeHer';
+import HomeHero from '@/components/Home/HomeHero';
 import {getTranslations} from 'next-intl/server';
 
 

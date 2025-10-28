@@ -5,11 +5,11 @@ type PageProps = {
   params: Promise<{locale: string}>;
 };
 
-export default async function SignupPage({params}: PageProps) {
+export default async function LoginPage({params}: PageProps) {
   const {locale} = await params;
   setRequestLocale(locale);
   
   return (
-    <div>signup</div>
+    <div>login</div>
   )
 }

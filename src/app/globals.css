@@ -16,3 +16,13 @@ body {
   --color: #4973ff;
 }
 
+/* Ensure locale-specific fonts are applied consistently */
+@layer base {
+  html[lang="ar"] {
+    font-family: var(--font-cairo), system-ui, sans-serif;
+  }
+  html[lang="en"] {
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+  }
+}
+
