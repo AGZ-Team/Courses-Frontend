@@ -1,4 +1,28 @@
 {
+  "home": {
+    "welcome": "New skills, new horizons",
+    "heroHeadline": "Unlock your learning potential",
+    "heroSub": "with Educrat",
+    "description": "Discover expert-led courses, events, and resources designed to help you grow faster and smarter.",
+    "heroCtaA": "Browse courses",
+    "heroCtaB": "View events",
+    "heroCtaC": "Contact us"
+  },
+  "nav": {
+    "ariaLabel": "Main navigation",
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "welcome_message": "Welcome to our application!",
+  "login_button": "Log In",
+  "signup_button": "Sign Up",
+  "logout_button": "Log Out",
+  "profile_page": "Profile Page",
+  "settings_page": "Settings Page",
+  "error_message": "An error occurred. Please try again.",
     "welcome_message": "Welcome to our application!",
     "login_button": "Log In",
     "signup_button": "Sign Up",
