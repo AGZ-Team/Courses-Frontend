@@ -5,5 +5,22 @@
     "logout_button": "Log Out",
     "profile_page": "Profile Page",
     "settings_page": "Settings Page",
-    "error_message": "An error occurred. Please try again."
+    "error_message": "An error occurred. Please try again.",
+    "home": {
+        "welcome": "Welcome",
+        "heroHeadline": "Build Amazing Things",
+        "heroSub": "Together",
+        "description": "Create and learn with our comprehensive courses platform.",
+        "heroCtaA": "Get Started",
+        "heroCtaB": "View Projects",
+        "heroCtaC": "Contact Us"
+    },
+    "nav": {
+        "ariaLabel": "Main Navigation",
+        "home": "Home",
+        "about": "About",
+        "projects": "Projects",
+        "services": "Services",
+        "contact": "Contact"
+    }
 }
