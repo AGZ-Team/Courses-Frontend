@@ -1,5 +1,6 @@
 "use client";
 import React, {useEffect, useRef, useState} from 'react';
+import {useTranslations} from 'next-intl';
 import type {IconType} from 'react-icons';
 import {SiAmazon, SiAmd, SiCisco, SiLogitech, SiSpotify} from 'react-icons/si';
 import {IoCameraOutline} from 'react-icons/io5';
@@ -12,56 +13,49 @@ import {
   MdOutlineComputer
 } from 'react-icons/md';
 
-const brandLogos: {name: string; icon: IconType}[] = [
-  {name: 'Amazon', icon: SiAmazon},
-  {name: 'AMD', icon: SiAmd},
-  {name: 'Cisco', icon: SiCisco},
-  {name: 'Dropcam', icon: IoCameraOutline},
-  {name: 'Logitech', icon: SiLogitech},
-  {name: 'Spotify', icon: SiSpotify}
+const brandLogos: {name: string; icon: IconType; translationKey: string}[] = [
+  {name: 'Amazon', icon: SiAmazon, translationKey: 'amazon'},
+  {name: 'AMD', icon: SiAmd, translationKey: 'amd'},
+  {name: 'Cisco', icon: SiCisco, translationKey: 'cisco'},
+  {name: 'Dropcam', icon: IoCameraOutline, translationKey: 'dropcam'},
+  {name: 'Logitech', icon: SiLogitech, translationKey: 'logitech'},
+  {name: 'Spotify', icon: SiSpotify, translationKey: 'spotify'}
 ];
 
 type CategoryCard = {
-  name: string;
-  courses: string;
+  translationKey: string;
   icon: IconType;
   accent: string;
 };
 
 const categories: CategoryCard[] = [
   {
-    name: 'Engineering Architecture',
-    courses: '35+ Courses',
+    translationKey: 'engineering',
     icon: MdArchitecture,
     accent: 'from-[#eef3ff] via-[#e5ecff] to-[#dbe4ff]'
   },
   {
-    name: 'Personal Development',
-    courses: '908+ Courses',
+    translationKey: 'personal',
     icon: MdSelfImprovement,
     accent: 'from-[#f4ecff] via-[#efe3ff] to-[#e9d8ff]'
   },
   {
-    name: 'Finance Accounting',
-    courses: '129+ Courses',
+    translationKey: 'finance',
     icon: MdOutlinePriceCheck,
     accent: 'from-[#f0f9ff] via-[#e0f2ff] to-[#d4ecff]'
   },
   {
-    name: 'Design Creative',
-    courses: '573+ Courses',
+    translationKey: 'design',
     icon: MdDesignServices,
     accent: 'from-[#f6f1ff] via-[#efe7ff] to-[#e4daff]'
   },
   {
-    name: 'Sales Marketing',
-    courses: '565+ Courses',
+    translationKey: 'marketing',
     icon: MdOutlineCampaign,
     accent: 'from-[#f6f5ff] via-[#eae8ff] to-[#dedcff]'
   },
   {
-    name: 'Development IT',
-    courses: '126+ Courses',
+    translationKey: 'development',
     icon: MdOutlineComputer,
     accent: 'from-[#f1f5ff] via-[#e1ebff] to-[#d7e4ff]'
   }
@@ -71,6 +65,7 @@ const scrollAmount = 320;
 const itemsPerView = 3;
 
 const CarouselHome = () => {
+  const t = useTranslations('carouselHome');
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const dotCount = Math.max(1, Math.ceil(categories.length / itemsPerView));
@@ -107,15 +102,15 @@ const CarouselHome = () => {
       <div className="mx-auto flex w-full max-w-[1480px] flex-col items-center gap-16 px-6 text-center mt-5">
         <div className="space-y-10">
           <div className="space-y-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.38em] text-[#6440fb]" style={{letterSpacing: '0.38em'}}>
-              Trusted by the world&apos;s best
+            <p className="text-lg font-semibold uppercase tracking-[0.38em] text-[#6440fb]" style={{letterSpacing: '0.38em'}}>
+              {t('trustedHeading')}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-14 text-[#2d2a67] opacity-90">
-              {brandLogos.map(({name, icon: BrandIcon}) => (
+              {brandLogos.map(({name, icon: BrandIcon, translationKey}) => (
                 <div
                   key={name}
                   className="flex h-24 w-44 items-center justify-center rounded-xl  bg-white/80 text-4xl  backdrop-blur-sm transition hover:-translate-y-1 hover:border-[#d6daf2]"
-                  aria-label={name}
+                  aria-label={t(`brands.${translationKey}`)}
                 >
                   <BrandIcon className="opacity-80" />
                 </div>
@@ -124,8 +119,8 @@ const CarouselHome = () => {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-[2.25rem] font-bold text-[#10085d] sm:text-[2.5rem]">Top Categories</h2>
-            <p className="text-base text-[#6e6b7b]">Lorem ipsum dolor sit amet, consectetur.</p>
+            <h2 className="text-[2.25rem] font-bold text-[#10085d] sm:text-[2.5rem]">{t('title')}</h2>
+            <p className="text-base text-[#6e6b7b]">{t('description')}</p>
           </div>
         </div>
 
@@ -134,20 +129,24 @@ const CarouselHome = () => {
             ref={carouselRef}
             className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 py-6"
           >
-            {categories.map(({name, courses, icon: IconComponent, accent}) => (
+            {categories.map(({translationKey, icon: IconComponent, accent}) => (
               <article
-                key={name}
+                key={translationKey}
                 className="group relative flex min-w-[232px] max-w-[232px] flex-1 snap-center flex-col items-center gap-5 overflow-hidden rounded-[26px] border border-[#eef0f7] bg-slate-100 p-8 text-center shadow-[0_12px_26px_rgba(18,13,80,0.06)] transition duration-300 ease-out hover:-translate-y-3 hover:border-transparent hover:bg-[#14085d] hover:shadow-[0_34px_60px_rgba(20,12,88,0.2)]"
               >
                 <span
-                  className={`relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} text-[#6440fb] shadow-[0_12px_28px_rgba(100,64,251,0.16)] transition group-hover:scale-[1.07] group-hover:shadow-[0_18px_36px_rgba(16,10,80,0.22)]`}
+                  className={`relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br ${accent} text-[#6440fb] shadow-[0_12px_28px_rgba(100,64,251,0.16)] transition group-hover:scale-[1.07] group-hover:shadow-[0_18px_36px_rgba(16,10,80,0.22)]`}
                   aria-hidden
                 >
                   <IconComponent className="text-[1.75rem]" />
                 </span>
                 <div className="relative z-10 space-y-1 transition duration-300 group-hover:translate-y-px">
-                  <h3 className="text-lg font-semibold text-[#10085d] transition duration-300 group-hover:text-white">{name}</h3>
-                  <p className="text-sm font-medium text-[#6e6b7b] transition duration-300 group-hover:text-[#d9d6ff]">{courses}</p>
+                  <h3 className="text-lg font-semibold text-[#10085d] transition duration-300 group-hover:text-white">
+                    {t(`categories.${translationKey}.name`)}
+                  </h3>
+                  <p className="text-sm font-medium text-[#6e6b7b] transition duration-300 group-hover:text-[#d9d6ff]">
+                    {t(`categories.${translationKey}.courses`)}
+                  </p>
                 </div>
               </article>
             ))}
@@ -164,7 +163,7 @@ const CarouselHome = () => {
                   <path d="M5.5 12.5L0 6.5L5.5 0.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M0.75 6.5H15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                <span className="sr-only">Previous categories</span>
+                <span className="sr-only">{t('aria.prev')}</span>
               </button>
               <button
                 type="button"
@@ -175,7 +174,7 @@ const CarouselHome = () => {
                   <path d="M10.5 0.5L16 6.5L10.5 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M15.25 6.5H0.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                <span className="sr-only">Next categories</span>
+                <span className="sr-only">{t('aria.next')}</span>
               </button>
             </div>
             <div className="flex items-center gap-2">

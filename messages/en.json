@@ -28,12 +28,31 @@
       "Over 12 million students",
       "More than 60,000 courses",
       "Learn anything online"
-    ]
+    ],
+    "images": {
+      "learner": "Learner",
+      "happyStudent": "Happy student",
+      "collaborativeLearning": "Collaborative learning"
+    },
+    "cards": {
+      "instructor": {
+        "name": "Ali Tufan",
+        "role": "UX/UI Designer"
+      },
+      "admission": {
+        "title": "Congrats!",
+        "message": "Your Admission Completed"
+      },
+      "freeCourses": {
+        "count": "3,000+",
+        "label": "Free Courses"
+      }
+    }
   },
   "carouselHome": {
     "trustedHeading": "Trusted by the world's best",
     "title": "Top Categories",
-    "description": "Lorem ipsum dolor sit amet, consectetur.",
+    "description": "Explore a variety of categories to find the perfect course for you.",
     "brands": {
       "amazon": "Amazon",
       "amd": "AMD",

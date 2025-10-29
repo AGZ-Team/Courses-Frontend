@@ -116,21 +116,21 @@ const HomeHero = () => {
               className="pointer-events-none absolute left-1/2 top-0 w-[360px] -translate-x-1/2 rounded-[46px] border border-white/10 bg-white/5 shadow-[0_44px_120px_rgba(18,12,68,0.55)] transition-transform duration-300 ease-out"
               style={parallaxStyle(10, 8)}
             >
-              <Image src={portraitSrc} priority alt="Learner" width={420} height={520} className="h-[500px] w-full rounded-[40px] object-cover" />
+              <Image src={portraitSrc} priority alt={t('images.learner')} width={420} height={520} className="h-[500px] w-full rounded-[40px] object-cover" />
             </div>
 
             <div
               className="pointer-events-none absolute right-6 top-24 w-[190px] rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_24px_70px_rgba(18,12,68,0.35)] transition-transform duration-300 ease-out"
               style={parallaxStyle(-18, 12)}
             >
-              <Image src={smileSrc} priority alt="Happy student" width={220} height={180} className="h-[150px] w-full rounded-[22px] object-cover" />
+              <Image src={smileSrc} priority alt={t('images.happyStudent')} width={220} height={180} className="h-[150px] w-full rounded-[22px] object-cover" />
             </div>
 
             <div
               className="pointer-events-none absolute left-6 bottom-16 w-[200px] rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_24px_70px_rgba(18,12,68,0.35)] transition-transform duration-300 ease-out"
               style={parallaxStyle(16, -12)}
             >
-              <Image src={teamSrc} priority alt="Collaborative learning" width={240} height={200} className="h-[160px] w-full rounded-[22px] object-cover" />
+              <Image src={teamSrc} priority alt={t('images.collaborativeLearning')} width={240} height={200} className="h-[160px] w-full rounded-[22px] object-cover" />
             </div>
 
             <div
@@ -138,8 +138,8 @@ const HomeHero = () => {
               style={parallaxStyle(22, 18)}
             >
               <div className="mb-3 h-10 w-10 rounded-full bg-[radial-gradient(circle_at_top_left,#5f4bff,rgba(255,255,255,0.2))]" />
-              <p className="font-semibold text-white">Ali Tufan</p>
-              <p className="text-[11px] text-emerald-300">UX/UI Designer</p>
+              <p className="font-semibold text-white">{t('cards.instructor.name')}</p>
+              <p className="text-[11px] text-emerald-300">{t('cards.instructor.role')}</p>
               <p className="mt-2 text-[11px] text-amber-300">★★★★★</p>
             </div>
 
@@ -147,16 +147,16 @@ const HomeHero = () => {
               className="pointer-events-none absolute right-2 bottom-24 w-44 rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
               style={parallaxStyle(-20, -14)}
             >
-              <p className="text-[11px] text-white/70">Congrats!</p>
-              <p className="font-semibold text-white">Your Admission Completed</p>
+              <p className="text-[11px] text-white/70">{t('cards.admission.title')}</p>
+              <p className="font-semibold text-white">{t('cards.admission.message')}</p>
             </div>
 
             <div
               className="pointer-events-none absolute left-1/2 bottom-6 w-44 -translate-x-1/2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
               style={parallaxStyle(14, -10)}
             >
-              <span className="text-lg font-semibold text-emerald-300">3,000+</span>
-              <span className="text-[11px] text-white/70">Free Courses</span>
+              <span className="text-lg font-semibold text-emerald-300">{t('cards.freeCourses.count')}</span>
+              <span className="text-[11px] text-white/70"> {t('cards.freeCourses.label')}</span>
             </div>
           </div>
         </div>
