@@ -56,7 +56,7 @@ export default function LoginDecor({side = 'right'}: Props) {
     >
       {/* top small avatar (outer edge) */}
       <img
-        src="/assets/img/login/2.png"
+        src="/assets/2.png"
         alt=""
         className={`absolute ${outerEdge} top-[18%] w-24 md:w-28 translate-x-[calc(var(--parallax-x,0)*6px)] translate-y-[calc(var(--parallax-y,0)*6px)] animate-float-slower`}
       />
@@ -64,7 +64,7 @@ export default function LoginDecor({side = 'right'}: Props) {
       {/* big center avatar (exact middle) */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <img
-          src="/assets/img/login/1.png"
+          src="/assets/1.png"
           alt=""
           className="w-[360px] md:w-[420px] lg:w-[460px] translate-x-[calc(var(--parallax-x,0)*4px)] translate-y-[calc(var(--parallax-y,0)*4px)] animate-float-slower"
         />
@@ -72,7 +72,7 @@ export default function LoginDecor({side = 'right'}: Props) {
 
       {/* bottom small avatar (inner edge) */}
       <img
-        src="/assets/img/login/3.png"
+        src="/assets/3.png"
         alt=""
         className={`absolute ${innerEdge} bottom-[12%] w-24 md:w-28 translate-x-[calc(var(--parallax-x,0)*8px)] translate-y-[calc(var(--parallax-y,0)*8px)] animate-float-slower`}
       />

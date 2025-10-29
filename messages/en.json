@@ -6,6 +6,24 @@
   "profile_page": "Profile Page",
   "settings_page": "Settings Page",
   "error_message": "An error occurred. Please try again.",
+  "metadata": {
+    "home": {
+      "title": "Home - Educrat | Online Learning Platform",
+      "description": "Learn new skills online with top educators. Build skills with courses, certificates, and degrees from world-class universities and companies."
+    },
+    "login": {
+      "title": "Login - Educrat",
+      "description": "Log in to your Educrat account to access your courses and continue learning."
+    },
+    "signup": {
+      "title": "Sign Up - Educrat",
+      "description": "Create your Educrat account to start learning or teaching. Join millions of students and educators worldwide."
+    },
+    "contact": {
+      "title": "Contact Us - Educrat",
+      "description": "Get in touch with us. We're here to help you with any questions about our courses and services."
+    }
+  },
   "home": {
     "welcome": "Welcome",
     "heroHeadline": "Build Amazing Things",
@@ -122,5 +140,67 @@
     "orUsing": "Or sign in using",
     "facebook": "Log In via Facebook",
     "google": "Log In via Google+"
+  },
+  "contact": {
+    "title": "Keep In Touch With Us",
+    "subtitle": "We are here to help you and answer all your questions regarding our educational services.",
+    "address": "Port Said - Port Fouad - Al-Mahdiyah",
+    "phone": "(+1) 123 456 7890",
+    "email": "hi@educrat.com",
+    "formTitle": "Send a Message",
+    "formSubtitle": "We will get back to you as soon as possible.",
+    "nameLabel": "Name",
+    "emailLabel": "Email Address",
+    "messageLabel": "Message",
+    "submit": "Send Message",
+    "faqTitle": "Frequently Asked Questions",
+    "faqSubtitle": "Ut enim ad minim veniam, quis nostrud exercitation ullamco",
+    "faqs": [
+      {
+        "question": "Do you offer discounts for students?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+      },
+      {
+        "question": "Do you offer special pricing for big teams?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+      },
+      {
+        "question": "What is the past experience of your teachers?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+      },
+      {
+        "question": "What is the course refund policy?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+      },
+      {
+        "question": "Do you offer discounts for non-profits?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+      }
+    ]
+  },
+  "signup": {
+    "title": "Sign Up",
+    "subtitlePrefix": "Already have an account?",
+    "loginCta": "Log in",
+    "studentTab": "Student",
+    "instructorTab": "Instructor",
+    "email": "Email address",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "expertise": "Area of Expertise",
+    "idFront": "ID Front",
+    "idBack": "ID Back",
+    "uploadIdFront": "Upload Front ID",
+    "uploadIdBack": "Upload Back ID",
+    "submit": "Register",
+    "orUsing": "Or sign up using",
+    "facebook": "Sign Up via Facebook",
+    "google": "Sign Up via Google+",
+    "studentDescription": "Create an account to start learning",
+    "instructorDescription": "Create an account to start teaching"
   }
 }
