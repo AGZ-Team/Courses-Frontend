@@ -3,6 +3,7 @@ import {setRequestLocale, getTranslations} from 'next-intl/server';
 import {Link} from '@/i18n/routing';
 import LoginDecor from '@/components/Login/LoginDecor';
 import {FaFacebook, FaGooglePlusG} from 'react-icons/fa';
+import Image from 'next/image';
 type PageProps = {
   params: Promise<{locale: string}>;
 };
@@ -20,9 +21,11 @@ export default async function LoginPage({params}: PageProps) {
       <div className="absolute inset-y-0 left-0 hidden w-[45vw] bg-[#0b0440] md:block">
         <div className="relative h-full">
           {/* moving background image */}
-          <img
+          <Image
             src="/assets/img/login/bg.png"
             alt=""
+            layout="fill"
+            objectFit="cover"
             className="pointer-events-none absolute left-[-140px] top-1/2 w-[920px] max-w-none -translate-y-1/2 opacity-95 animate-float-slow"
           />
           <LoginDecor side="left" />

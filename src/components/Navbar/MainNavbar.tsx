@@ -28,7 +28,7 @@ const MainNavbar = () => {
   ];
 
   return (
-    <header className="relative z-10 bg-[#0b0440] text-white">
+    <header className="sticky top-0 z-20 bg-[#0b0440] text-white">
       <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1300px] items-center justify-between px-6`}>
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-3">
