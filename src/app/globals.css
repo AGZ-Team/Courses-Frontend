@@ -1,21 +1,5 @@
 @import "tailwindcss";
 
-@layer base {
-html, body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-}
-
-}
-/* Optional global tweaks */
-:root {
-  color-scheme: light dark;
-  --color: #4973ff;
-}
-
 /* Ensure locale-specific fonts are applied consistently */
 @layer base {
   html[lang="ar"] {
@@ -24,39 +8,64 @@ body {
   html[lang="en"] {
     font-family: var(--font-geist-sans), system-ui, sans-serif;
   }
+
 }
 
-/* Login background floating animation */
-@keyframes float-slow {
+/* Optional global tweaks */
+
+:root {
+  color-scheme: light dark;
+  --color: #4973ff;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: #ffffff;
+  overflow: hidden;
+  transition: background 1000ms ease;
+}
+
+.waves::before,
+.waves::after {
+  content: '';
+  position: absolute;
+  width: 300vw;
+  height: 300vw;
+  top: -66vw;
+  left: 50%;
+  transform: translate(-50%, -65%);
+}
+
+.waves::before {
+  border-radius: 44%;
+  background: #09004ef6;
+  animation: waves 10s linear infinite;
+}
+
+.waves::after {
+  border-radius: 44%;
+  background: rgba(9, 0, 78, 0.5) ;
+  animation: waves 15s linear infinite;
+}
+
+@keyframes waves {
   0% {
-    transform: translateY(-50%) translateX(0);
+    transform: translate(-50%, -75%) rotate(0deg);
   }
-  50% {
-    transform: translateY(calc(-50% - 16px)) translateX(10px);
-  }
+  
   100% {
-    transform: translateY(-50%) translateX(0);
+    transform: translate(-50%, -75%) rotate(360deg);
   }
 }
-
-.animate-float-slow {
-  animation: float-slow 18s linear infinite;
-}
-
-/* Even slower, more subtle float */
-@keyframes float-slower {
-  0% {
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    transform: translateY(-10px) translateX(6px);
-  }
-  100% {
-    transform: translateY(0) translateX(0);
-  }
-}
-
-.animate-float-slower {
-  animation: float-slower 24s ease-in-out infinite;
-}
-

@@ -15,6 +15,64 @@
     "heroCtaB": "View Projects",
     "heroCtaC": "Contact Us"
   },
+  "homeHero": {
+    "eyebrow": "Learn with the best",
+    "headline": {
+      "lineA": "Learn New Skills Online",
+      "lineBRich": "with Top <highlight>Educators</highlight>"
+    },
+    "description": "Build skills with courses, certificates, and degrees online from world-class universities and companies. Unlock your potential with curated paths designed by experts.",
+    "primaryCta": "Join For Free",
+    "secondaryCta": "Find Courses",
+    "stats": [
+      "Over 12 million students",
+      "More than 60,000 courses",
+      "Learn anything online"
+    ]
+  },
+  "carouselHome": {
+    "trustedHeading": "Trusted by the world's best",
+    "title": "Top Categories",
+    "description": "Lorem ipsum dolor sit amet, consectetur.",
+    "brands": {
+      "amazon": "Amazon",
+      "amd": "AMD",
+      "cisco": "Cisco",
+      "dropcam": "Dropcam",
+      "logitech": "Logitech",
+      "spotify": "Spotify"
+    },
+    "categories": {
+      "engineering": {
+        "name": "Engineering Architecture",
+        "courses": "35+ Courses"
+      },
+      "personal": {
+        "name": "Personal Development",
+        "courses": "908+ Courses"
+      },
+      "finance": {
+        "name": "Finance Accounting",
+        "courses": "129+ Courses"
+      },
+      "design": {
+        "name": "Design Creative",
+        "courses": "573+ Courses"
+      },
+      "marketing": {
+        "name": "Sales Marketing",
+        "courses": "565+ Courses"
+      },
+      "development": {
+        "name": "Development IT",
+        "courses": "126+ Courses"
+      }
+    },
+    "aria": {
+      "prev": "Previous categories",
+      "next": "Next categories"
+    }
+  },
   "nav": {
     "ariaLabel": "Main Navigation",
     "home": "Home",

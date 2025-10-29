@@ -29,14 +29,14 @@ const MainNavbar = () => {
 
   return (
     <header className="relative z-10 bg-[#0b0440] text-white">
-      <div className={`mx-auto flex ${isAr ? 'h-28' : 'h-24'} w-full max-w-[1200px] items-center justify-between px-6`}>
+      <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1300px] items-center justify-between px-6`}>
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-3">
-            <span className={`flex ${isAr ? 'h-14 w-14' : 'h-12 w-12'} items-center justify-center rounded-full bg-white/10`}>
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
-                className={`${isAr ? 'h-8 w-8' : 'h-7 w-7'} text-emerald-400`}
+                className="h-7 w-7 text-emerald-400"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={1.6}
@@ -70,7 +70,7 @@ const MainNavbar = () => {
           </button>
         </div>
 
-  <nav className={`hidden items-center ${isAr ? 'gap-6' : 'gap-8'} ${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium md:flex`} aria-label={t('ariaLabel')}>
+  <nav className={`hidden items-center gap-8 ${isAr ? ' px-4 text-[15px]' : 'px-2 text-[18px]'}  font-medium md:flex`} aria-label={t('ariaLabel')}>
           {navItems.map((item) => (
             <Link
               key={item.labelKey}
@@ -96,16 +96,16 @@ const MainNavbar = () => {
                 </svg>
               )}
               {item.isActive && (
-                <span className={`pointer-events-none absolute ${isAr ? '-bottom-7' : '-bottom-6'} left-0 right-0 h-px bg-white/15`} />
+                <span className={`pointer-events-none absolute -bottom-6 left-0 right-0 h-px bg-white/15`} />
               )}
             </Link>
           ))}
         </nav>
 
-  <div className="flex items-center gap-6 text-sm font-medium">
+        <div className="flex items-center gap-6 text-sm font-medium md:px-6">
           <button
             type="button"
-            className={`hidden rounded-full bg-white/10 ${isAr ? 'p-3' : 'p-2.5 '} transition hover:bg-white/20 md:block `}
+            className="hidden rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 md:block"
             aria-label={t('search')}
           >
             <LuSearch className={`h-5 w-5`} />
@@ -113,7 +113,7 @@ const MainNavbar = () => {
 
           <button
             type="button"
-            className={`relative rounded-full bg-white/10 ${isAr ? 'p-3' : 'p-2.5'} transition hover:bg-white/20`}
+            className="relative rounded-full bg-white/10 p-2.5 transition hover:bg-white/20"
             aria-label={t('cart')}
           >
             <CgShoppingCart className={`h-5 w-5`} />

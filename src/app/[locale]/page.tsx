@@ -1,20 +1,18 @@
+import CarouselHome from '@/components/Home/CarouselHome';
 import HomeHero from '@/components/Home/HomeHero';
 import {getTranslations} from 'next-intl/server';
 
 
-type PageProps = {
-  params: Promise<{locale: string}>;
-};
 
-export default async function HomePage({params}: PageProps) {
-  const {locale} = await params;
-  const t = await getTranslations({namespace: 'home', locale});
-  const nav = await getTranslations({namespace: 'nav', locale});
-  const navItems = ['home', 'about', 'projects', 'services', 'contact'] as const;
 
+export default async function HomePage() {
+  
   return (
     <section>
       <HomeHero />
+
+      <CarouselHome />
+
     </section>
   );
 }
