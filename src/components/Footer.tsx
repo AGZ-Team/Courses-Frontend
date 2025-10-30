@@ -1,9 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import {FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter} from 'react-icons/fa';
 import LanguageSwitcher from '@/components/Navbar/LanguageSwitcher';
 import {useTranslations} from 'next-intl';
+import {Link} from '@/i18n/routing';
 
 const FOOTER_LINK_GROUPS = [
   {

@@ -22,6 +22,14 @@
     "contact": {
       "title": "Contact Us - Educrat",
       "description": "Get in touch with us. We're here to help you with any questions about our courses and services."
+    },
+    "terms": {
+      "title": "Terms & Conditions | Educrat",
+      "description": "Understand the terms and conditions that govern your use of the Educrat learning platform."
+    },
+    "privacy": {
+      "title": "Privacy Policy | Educrat",
+      "description": "Discover how Educrat protects learner privacy, keeps your data safe, and gives you control over your information."
     }
   },
   "home": {
@@ -503,5 +511,133 @@
     "count": "8 million",
     "subtitle": "learners worldwide",
     "cta": "Start Learning For Free"
+  },
+  "terms": {
+    "badge": "Terms & Conditions",
+    "title": "Our commitment to clear guidelines",
+    "subtitle": "We're on a mission to deliver engaging, curated courses at a reasonable price. These terms help protect the balance between the experience you expect and the trust you place in Educrat.",
+    "sections": {
+      "usingServices": {
+        "title": "Using our services",
+        "paragraphs": [
+          "You agree to access Educrat only through the interfaces we provide and in accordance with the instructions we publish. You may use our Services only as permitted by law, including applicable export and re-export control laws and regulations.",
+          "We may suspend or stop providing our Services to you if you do not comply with our terms or policies, if you misuse the Services, or if we are investigating suspected misconduct. Using our Services does not give you ownership of any intellectual property rights in the Services or the content you access. You may not remove, obscure, or alter any legal notices displayed in or along with the Services."
+        ]
+      },
+      "yourContent": {
+        "title": "Your content in our services",
+        "paragraphs": [
+          "When you submit, store, or send content to or through the Services, you give Educrat (and those we work with) a worldwide license to use, host, store, reproduce, modify, create derivative works, communicate, publish, publicly perform, publicly display, and distribute such content for the purpose of operating, promoting, and improving the Services, and to develop new ones.",
+          "This license continues even if you stop using our Services. Make sure you have the necessary rights to grant us this license for any content that you submit to our Services."
+        ]
+      },
+      "subscriptions": {
+        "title": "Subscriptions & payments",
+        "paragraphs": [
+          "Some parts of Educrat are billed on a subscription basis. You will be billed in advance on a recurring and periodic basis depending on the subscription plan you select. At the end of each period, your subscription will automatically renew under the exact same conditions unless you cancel it or Educrat cancels it.",
+          "All fees are exclusive of taxes, levies, or duties imposed by taxing authorities, and you are responsible for payment of all such taxes, levies, or duties."
+        ]
+      },
+      "termination": {
+        "title": "Termination",
+        "paragraphs": [
+          "We may suspend or terminate access to the Services immediately, without prior notice or liability, for any reason whatsoever, including if you breach the Terms. All provisions of the Terms which by their nature should survive termination shall survive termination, including ownership provisions, warranty disclaimers, indemnity, and limitations of liability.",
+          "You may stop using the Services at any time. If you wish to terminate your account, you may simply discontinue using the Services or contact our support team for assistance."
+        ]
+      },
+      "changes": {
+        "title": "Changes to these terms",
+        "paragraphs": [
+          "We reserve the right to modify or replace these Terms at any time. If a revision is material we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.",
+          "By continuing to access or use the Services after revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Services."
+        ]
+      },
+      "contact": {
+        "title": "Contact us",
+        "paragraphs": [
+          "If you have any questions about these Terms, please reach out to our support team at support@educrat.com. We are committed to addressing your concerns and helping you get the most from Educrat."
+        ]
+      }
+    },
+    "helpBox": {
+      "title": "Need help understanding a clause?",
+      "description": "Our team is happy to walk you through how Educrat works. Reach out anytime and we'll respond within one business day: ",
+      "email": "support@educrat.com"
+    }
+  },
+  "privacy": {
+    "badge": "Privacy Policy",
+    "title": "Protecting your learning journey",
+    "subtitle": "We design every Educrat experience with privacy in mind—from the courses you browse to the certifications you earn. This policy explains how we collect, use, and safeguard your information, and the controls you have along the way.",
+    "highlights": [
+      {
+        "title": "Crystal-clear transparency",
+        "description": "We explain which data we collect, why we collect it, and how long we retain it in language that is easy to understand."
+      },
+      {
+        "title": "Security-first mindset",
+        "description": "Your personal information is encrypted in transit and at rest, safeguarded by continuous monitoring and dedicated security reviews."
+      },
+      {
+        "title": "You control your data",
+        "description": "Download, update, or delete your information whenever you need. We provide self-serve tools and responsive support to help."
+      }
+    ],
+    "sections": {
+      "infoCollect": {
+        "title": "Information we collect",
+        "paragraphs": [
+          "We collect the information you share with us when creating an account, enrolling in a course, or interacting with Educrat content. This may include your name, email address, payment details, demographic information, and any preferences you choose to store in your profile.",
+          "We also gather limited technical data such as browser type, device identifiers, and usage analytics to help us maintain platform reliability and improve the learning experience. We never collect more than we need, and we never sell your personal data."
+        ]
+      },
+      "howWeUse": {
+        "title": "How we use your information",
+        "paragraphs": [
+          "Your information powers key Educrat features like course recommendations, progress tracking, certification, and customer support. We use aggregated insights to improve course quality, detect fraud, and keep the platform safe for learners and instructors alike.",
+          "When we communicate with you, it is to deliver service updates, account notifications, or personalized learning tips. You can adjust your communication preferences or unsubscribe from marketing email at any time."
+        ]
+      },
+      "sharing": {
+        "title": "Sharing & third parties",
+        "paragraphs": [
+          "We share information with trusted service providers who help us operate the platform—such as payment processors, analytics partners, and cloud hosting vendors. These partners are bound by strict confidentiality agreements and cannot use your data for their own purposes.",
+          "If the law requires it, we may disclose limited information in response to valid legal requests. Otherwise, we never disclose personal data unless you provide explicit consent."
+        ]
+      },
+      "dataRetention": {
+        "title": "Data retention & deletion",
+        "paragraphs": [
+          "We retain your personal information for as long as your account is active or as needed to provide Services. When data is no longer required, we erase or anonymize it. You may request deletion at any time by contacting support—once confirmed, we remove or de-identify your personal data within 30 days.",
+          "Some information may persist in encrypted backups for a limited period before being completely removed."
+        ]
+      },
+      "international": {
+        "title": "International transfers",
+        "paragraphs": [
+          "Educrat may process data on servers located in different countries. Whenever information crosses borders, we apply the same rigorous safeguards and rely on industry-standard legal mechanisms such as Standard Contractual Clauses to protect your privacy."
+        ]
+      },
+      "yourRights": {
+        "title": "Your rights & choices",
+        "paragraphs": [
+          "You can access, correct, download, or delete your personal information directly from your account dashboard. You also have the right to object to processing, withdraw consent, and file a complaint with your local data protection authority.",
+          "To exercise any of these rights or ask a question, contact us at privacy@educrat.com. We respond within one business day."
+        ]
+      }
+    },
+    "ctaBox": {
+      "title": "Need a data export or deletion?",
+      "description": "Use the account dashboard to download your learning history and certificates. Prefer a guided request? Our privacy team will help you gather, update, or remove your data within 24 hours.",
+      "button": "Email privacy@educrat.com",
+      "quickAccess": {
+        "title": "Quick access",
+        "items": [
+          "Download your account data from the dashboard settings.",
+          "Update email preferences directly from any Educrat email footer.",
+          "Reach out to support for enterprise privacy agreements or data processing addendums."
+        ]
+      }
+    }
   }
 }
