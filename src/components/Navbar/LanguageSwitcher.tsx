@@ -16,7 +16,11 @@ const localeLabels: Record<Locale, string> = {
   ar: 'Arabic'
 };
 
-const LanguageSwitcher = () => {
+type LanguageSwitcherProps = {
+  placement?: 'up' | 'down';
+};
+
+const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale() as Locale;
@@ -79,7 +83,7 @@ const LanguageSwitcher = () => {
         <div
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 mt-2 w-36 rounded-md border border-white/10 bg-[#0b0440] py-1 text-sm shadow-lg"
+          className={`absolute right-0 ${placement === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'} w-36 rounded-md border border-white/10 bg-[#0b0440] py-1 text-sm shadow-lg`}
         >
           {routing.locales.map((availableLocale) => {
             const isActive = availableLocale === locale;

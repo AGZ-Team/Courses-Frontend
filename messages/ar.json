@@ -202,5 +202,51 @@
         "google": "التسجيل عبر جوجل+",
         "studentDescription": "أنشئ حسابًا لبدء التعلم",
         "instructorDescription": "أنشئ حسابًا لبدء التدريس"
+    },
+    "footer": {
+        "brandName": "إديوكرات",
+        "socialPrompt": "تابعنا على منصات التواصل الاجتماعي",
+        "social": {
+            "facebook": "فيسبوك",
+            "twitter": "تويتر",
+            "instagram": "إنستغرام",
+            "linkedin": "لينكدإن"
+        },
+        "groups": {
+            "company": {
+                "title": "الشركة",
+                "links": {
+                    "home": "الرئيسية",
+                    "contact": "اتصل بنا"
+                }
+            },
+            "legal": {
+                "title": "قانوني",
+                "links": {
+                    "terms": "شروط الاستخدام",
+                    "privacy": "سياسة الخصوصية"
+                }
+            },
+            "account": {
+                "title": "الحساب",
+                "links": {
+                    "login": "تسجيل الدخول",
+                    "signup": "إنشاء حساب"
+                }
+            }
+        },
+        "newsletter": {
+            "title": "تواصل معنا",
+            "subtitle": "لا نرسل أي رسائل مزعجة، فلا داعي للقلق",
+            "emailLabel": "عنوان البريد الإلكتروني",
+            "placeholder": "البريد الإلكتروني...",
+            "submit": "إرسال"
+        },
+        "legal": "© {year} إديوكرات. جميع الحقوق محفوظة.",
+        "legalLinks": {
+            "terms": "شروط الخدمة",
+            "privacy": "سياسة الخصوصية",
+            "cookies": "سياسة ملفات تعريف الارتباط"
+        }
     }
 }

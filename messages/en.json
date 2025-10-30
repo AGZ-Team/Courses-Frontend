@@ -202,5 +202,51 @@
     "google": "Sign Up via Google+",
     "studentDescription": "Create an account to start learning",
     "instructorDescription": "Create an account to start teaching"
+  },
+  "footer": {
+    "brandName": "Educrat",
+    "socialPrompt": "Follow us on social media",
+    "social": {
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    },
+    "groups": {
+      "company": {
+        "title": "Company",
+        "links": {
+          "home": "Home",
+          "contact": "Contact"
+        }
+      },
+      "legal": {
+        "title": "Legal",
+        "links": {
+          "terms": "Terms of Use",
+          "privacy": "Privacy Policy"
+        }
+      },
+      "account": {
+        "title": "Account",
+        "links": {
+          "login": "Log in",
+          "signup": "Create Account"
+        }
+      }
+    },
+    "newsletter": {
+      "title": "Get in touch",
+      "subtitle": "We don’t send spam so don’t worry.",
+      "emailLabel": "Email address",
+      "placeholder": "Email...",
+      "submit": "Submit"
+    },
+    "legal": " 2024 Educrat. All rights reserved.",
+    "legalLinks": {
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookie Policy"
+    }
   }
 }
