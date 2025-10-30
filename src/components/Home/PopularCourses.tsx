@@ -51,7 +51,7 @@ const POPULAR_COURSES: Course[] = [
     id: 1,
     title: 'Learn Figma – UI/UX Design Essential Training',
     category: 'Design',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/1.png',
+    image: '/coursesImages/1.png',
     imageAlt: 'Students collaborating on a UI design project',
     rating: 4.3,
     ratingCount: 1891,
@@ -60,7 +60,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Beginner',
     author: {
       name: 'Jane Cooper',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-1.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 199, discounted: 79}
   },
@@ -68,7 +68,7 @@ const POPULAR_COURSES: Course[] = [
     id: 2,
     title: 'Complete Python Bootcamp From Zero to Hero in Python',
     category: 'Programming',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/2.png',
+    image: '/coursesImages/2.png',
     imageAlt: 'Instructor teaching a Python course online',
     rating: 4.7,
     ratingCount: 2891,
@@ -77,7 +77,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Expert',
     author: {
       name: 'Jenny Wilson',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-2.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 189, discounted: 89},
     badges: [
@@ -89,7 +89,7 @@ const POPULAR_COURSES: Course[] = [
     id: 3,
     title: 'Angular – The Complete Guide (2022 Edition)',
     category: 'Programming',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/3.png',
+    image: '/coursesImages/3.png',
     imageAlt: 'Angular developer working on a laptop',
     rating: 4.6,
     ratingCount: 1983,
@@ -98,7 +98,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Intermediate',
     author: {
       name: 'Albert Flores',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-3.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 249, discounted: 129}
   },
@@ -106,7 +106,7 @@ const POPULAR_COURSES: Course[] = [
     id: 4,
     title: 'The Ultimate Drawing Course Beginner to Advanced',
     category: 'Art',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/4.png',
+    image: '/coursesImages/4.png',
     imageAlt: 'Artist practicing drawing techniques',
     rating: 4.2,
     ratingCount: 1981,
@@ -115,7 +115,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Expert',
     author: {
       name: 'Jacob Jones',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-4.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 179, discounted: 99}
   },
@@ -123,7 +123,7 @@ const POPULAR_COURSES: Course[] = [
     id: 5,
     title: 'Photography Masterclass: Complete Guide to Photography',
     category: 'Photography',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/5.png',
+    image: '/coursesImages/5.png',
     imageAlt: 'Photographer capturing a portrait in a studio',
     rating: 4.5,
     ratingCount: 1570,
@@ -132,7 +132,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Intermediate',
     author: {
       name: 'Theresa Webb',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-5.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 219, discounted: 129}
   },
@@ -140,7 +140,7 @@ const POPULAR_COURSES: Course[] = [
     id: 6,
     title: 'Animation Fundamentals: Bring Characters to Life',
     category: 'Animation',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/6.png',
+    image: '/coursesImages/6.png',
     imageAlt: 'Animator working on character designs',
     rating: 4.4,
     ratingCount: 1250,
@@ -149,7 +149,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Intermediate',
     author: {
       name: 'Courtney Henry',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-6.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 199, discounted: 119}
   },
@@ -157,7 +157,7 @@ const POPULAR_COURSES: Course[] = [
     id: 7,
     title: 'Modern Web Development: Build Responsive Experiences',
     category: 'Development',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/7.png',
+    image: '/coursesImages/7.png',
     imageAlt: 'Developer coding a modern web application',
     rating: 4.8,
     ratingCount: 2235,
@@ -166,7 +166,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Advanced',
     author: {
       name: 'Guy Hawkins',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-7.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 229, discounted: 139}
   },
@@ -174,7 +174,7 @@ const POPULAR_COURSES: Course[] = [
     id: 8,
     title: 'Creative Writing Mastery: Craft Compelling Stories',
     category: 'Writing',
-    image: 'https://educrat-react.vercel.app/assets/img/coursesCards/8.png',
+    image: '/coursesImages/8.png',
     imageAlt: 'Writer drafting a story on a laptop',
     rating: 4.1,
     ratingCount: 980,
@@ -183,7 +183,7 @@ const POPULAR_COURSES: Course[] = [
     level: 'Beginner',
     author: {
       name: 'Savannah Nguyen',
-      avatar: 'https://educrat-react.vercel.app/assets/img/general/avatar-8.png'
+      avatar: '/coursesImages/avatar-1.png'
     },
     price: {original: 149, discounted: 79}
   }

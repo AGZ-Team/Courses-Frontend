@@ -103,6 +103,18 @@
       "development": {
         "name": "Development IT",
         "courses": "126+ Courses"
+      },
+      "social": {
+        "name": "Social Media",
+        "courses": "80 Courses"
+      },
+      "ai": {
+        "name": "Artificial Intelligence",
+        "courses": "62 Courses"
+      },
+      "languages": {
+        "name": "Language Learning",
+        "courses": "210 Courses"
       }
     },
     "aria": {

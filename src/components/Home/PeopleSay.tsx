@@ -1,16 +1,73 @@
 'use client';
 
 import {useCallback, useEffect, useRef, useState} from 'react';
+import {useLocale} from 'next-intl';
 import {IoArrowBack, IoArrowForward} from 'react-icons/io5';
-import {useTranslations} from 'next-intl';
 
-const TESTIMONIAL_AVATARS = [
-  'https://educrat-react.vercel.app/assets/img/testimonials/1.png',
-  'https://educrat-react.vercel.app/assets/img/testimonials/2.png',
-  'https://educrat-react.vercel.app/assets/img/testimonials/3.png'
+const TESTIMONIALS = [
+  {
+    id: 0,
+    heading: 'Great Work',
+    quote:
+      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
+    name: 'Courtney Henry',
+    role: 'Web Designer',
+    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/1.png'
+  },
+  {
+    id: 1,
+    heading: 'Great Work',
+    quote:
+      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
+    name: 'Ronald Richards',
+    role: 'President of Sales',
+    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/2.png'
+  },
+  {
+    id: 2,
+    heading: 'Great Work',
+    quote:
+      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
+    name: 'Annette Black',
+    role: 'Nursing Assistant',
+    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/3.png'
+  },
+  {
+    id: 3,
+    heading: 'Great Work',
+    quote:
+      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
+    name: 'Courtney Henry',
+    role: 'Web Designer',
+    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/4.png'
+  },{ id: 4,
+    heading: 'Great Work',
+    quote:
+      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
+    name: 'Courtney Henry',
+    role: 'Web Designer',
+    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/1.png'
+  },{ id: 5,
+    heading: 'Great Work',
+    quote:
+      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
+    name: 'Courtney Henry',
+    role: 'Web Designer',
+    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/4.png'
+  }
+
 ] as const;
 
-const COUNTER_KEYS = ['studentsWorldwide', 'courseViews', 'fiveStarReviews', 'community'] as const;
+const COUNTERS = [
+  {id: 1, label: 'Students worldwide', value: '350,000+'},
+  {id: 2, label: 'Total course views', value: '496,000+'},
+  {id: 3, label: 'Five-star course reviews', value: '19,000+'},
+  {id: 4, label: 'Students community', value: '987,000+'}
+] as const;
+
+const POSITION_TOLERANCE = 6;
+
+type Testimonial = (typeof TESTIMONIALS)[number];
 
 type VisibleConfig = {
   slidesPerScroll: number;
@@ -42,24 +99,46 @@ const useVisibleConfig = () => {
 };
 
 const PeopleSay = () => {
-  const t = useTranslations('peopleSay');
+  const locale = useLocale();
+  const isAr = locale === 'ar';
   const {slidesPerScroll} = useVisibleConfig();
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
 
-  const testimonialsRaw = t.raw('testimonials');
-  const testimonials = Array.isArray(testimonialsRaw) ? (testimonialsRaw as Array<{heading: string; quote: string; name: string; role: string}>) : [];
+  const getNormalizedScrollLeft = useCallback(
+    (container: HTMLElement) => {
+      const {scrollLeft, scrollWidth, clientWidth} = container;
+      if (!isAr) {
+        return scrollLeft;
+      }
+
+      const maxScrollLeft = scrollWidth - clientWidth;
+
+      if (scrollLeft >= 0 && scrollLeft <= maxScrollLeft) {
+        return maxScrollLeft - scrollLeft;
+      }
+
+      if (scrollLeft < 0) {
+        return maxScrollLeft + scrollLeft;
+      }
+
+      return Math.max(0, Math.min(maxScrollLeft, scrollLeft));
+    },
+    [isAr]
+  );
 
   const updateNavState = useCallback(() => {
     const container = sliderRef.current;
     if (!container) return;
 
     const {scrollLeft, scrollWidth, clientWidth} = container;
-    const maxScrollLeft = scrollWidth - clientWidth - 1;
-    setIsAtStart(scrollLeft <= 1);
-    setIsAtEnd(scrollLeft >= maxScrollLeft);
-  }, []);
+    const normalizedLeft = Math.max(scrollLeft, 0);
+    const maxScrollLeft = Math.max(scrollWidth - clientWidth, 0);
+
+    setIsAtStart(normalizedLeft <= POSITION_TOLERANCE);
+    setIsAtEnd(normalizedLeft >= maxScrollLeft - POSITION_TOLERANCE);
+  }, [getNormalizedScrollLeft]);
 
   useEffect(() => {
     updateNavState();
@@ -79,19 +158,20 @@ const PeopleSay = () => {
 
       const offset = card.getBoundingClientRect().width + parseFloat(getComputedStyle(container).gap || '0');
       const distance = offset * slidesPerScroll;
+      const logicalDirection = isAr ? (direction === 'next' ? -1 : 1) : direction === 'next' ? 1 : -1;
 
-      container.scrollBy({left: direction === 'next' ? distance : -distance, behavior: 'smooth'});
+      container.scrollBy({left: distance * logicalDirection, behavior: 'smooth'});
     },
-    [slidesPerScroll]
+    [isAr, slidesPerScroll]
   );
 
   return (
     <section className="w-full bg-[#6440fb] py-28">
       <div className="mx-auto flex w-full flex-col px-4 sm:px-6 lg:px-0">
         <div className="text-center">
-          <p className="text-[32px] sm:text-4xl font-semibold uppercase tracking-[4px] text-[#00ff84]">{t('title')}</p>
-          <h3 className="mx-auto mt-3 max-w-[640px] text-sm sm:text-base font-semibold leading-[1.35] text-white">
-            {t('subtitle')}
+          <p className="text-4xl font-semibold uppercase tracking-[4px] text-[#00ff84]">What People Say</p>
+          <h3 className="mx-auto mt-3 max-w-[640px] text-base font-semibold leading-[1.35] text-white sm:text-base">
+            Learn ipsum dolor sit amet, consectetur.
           </h3>
         </div>
 
@@ -99,29 +179,30 @@ const PeopleSay = () => {
           <div
             ref={sliderRef}
             onScroll={handleScroll}
-            className="flex snap-x snap-mandatory gap-6 sm:gap-8 overflow-x-auto scroll-smooth px-2 pb-9 [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-smooth px-2 pb-9 [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden"
             aria-label="Testimonial slider"
+            dir="ltr"
           >
-            {testimonials.map((testimonial, index) => (
+            {TESTIMONIALS.map((testimonial) => (
               <article
-                key={index}
+                key={testimonial.id}
                 data-testimonial-card
-                className="snap-start rounded-[10px] border border-[#e0e4f5] bg-white px-6 sm:px-8 pb-6 sm:pb-7 pt-6 sm:pt-8 shadow-[0_25px_45px_rgba(12,5,78,0.14)] transition-transform duration-300 hover:-translate-y-1"
-                style={{minWidth: '320px', maxWidth: '480px'}}
+                className="snap-start rounded-[10px] border border-[#e0e4f5] bg-white px-8 pb-7 pt-8 shadow-[0_25px_45px_rgba(12,5,78,0.14)] transition-transform duration-300 hover:-translate-y-1"
+                style={{minWidth: '440px', maxWidth: '480px'}}
               >
-                <h3 className="text-[16px] sm:text-[18px] font-normal leading-7 sm:leading-9 text-[#6440fb]">{testimonial.heading}</h3>
-                <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-[26px] sm:leading-[30px] text-[#221f3d]">"{testimonial.quote}"</p>
-                <div className="mt-4 sm:mt-5 h-px w-full bg-[#ededed]" />
-                <div className="mt-5 sm:mt-6 flex items-center gap-3 sm:gap-4">
+                <h3 className="text-[18px] font-normal leading-9 text-[#6440fb]">{testimonial.heading}</h3>
+                <p className="mt-4 text-[15px] leading-[30px] text-[#221f3d]">“{testimonial.quote}”</p>
+                <div className="mt-5 h-px w-full bg-[#ededed]" />
+                <div className="mt-6 flex items-center gap-4">
                   <img
-                    src={TESTIMONIAL_AVATARS[index]}
+                    src={testimonial.avatar}
                     alt={testimonial.name}
-                    className="h-14 w-14 sm:h-15 sm:w-15 rounded-full object-cover"
+                    className="h-15 w-15 rounded-full object-cover"
                     loading="lazy"
                   />
                   <div className="text-left text-sm leading-[1.2]">
-                    <p className="text-[14px] sm:text-[15px] font-medium text-[#221f3d]">{testimonial.name}</p>
-                    <p className="mt-1 text-[12px] sm:text-[13px] text-[#7f839b]">{testimonial.role}</p>
+                    <p className="text-[15px] font-medium text-[#221f3d]">{testimonial.name}</p>
+                    <p className="mt-1 text-[13px] text-[#7f839b]">{testimonial.role}</p>
                   </div>
                 </div>
               </article>
@@ -131,33 +212,33 @@ const PeopleSay = () => {
           <div className="mt-12 flex justify-center gap-5">
             <button
               type="button"
-              onClick={() => scrollBySlides('prev')}
+              onClick={() => scrollBySlides(isAr ? 'next' : 'prev')}
               className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#2f19ff] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
               aria-label="Previous testimonials"
-              disabled={isAtStart}
+              disabled={isAr ? isAtEnd : isAtStart}
             >
-              <IoArrowBack className="h-5 w-5" />
+              <IoArrowBack className={`h-5 w-5 ${isAr ? 'rotate-180' : ''}`} />
             </button>
             <button
               type="button"
-              onClick={() => scrollBySlides('next')}
+              onClick={() => scrollBySlides(isAr ? 'prev' : 'next')}
               className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#2f19ff] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
               aria-label="Next testimonials"
-              disabled={isAtEnd}
+              disabled={isAr ? isAtStart : isAtEnd}
             >
-              <IoArrowForward className="h-5 w-5" />
+              <IoArrowForward className={`h-5 w-5 ${isAr ? 'rotate-180' : ''}`} />
             </button>
           </div>
         </div>
 
-        <div className="mt-20 sm:mt-24 grid gap-6 sm:gap-8 text-center mx-auto max-w-[1540px] grid-cols-2 lg:grid-cols-4 px-4">
-          {COUNTER_KEYS.map((key) => (
+        <div className="mt-24 grid gap-8 text-center mx-auto max-w-[1540px] sm:grid-cols-2 lg:grid-cols-4">
+          {COUNTERS.map((counter) => (
             <div
-              key={key}
-              className="rounded-xl px-6 sm:px-8 py-8 sm:py-10"
+              key={counter.id}
+              className="rounded-[12px]  px-8 py-10"
             >
-              <p className="text-[28px] sm:text-[34px] font-semibold leading-9 sm:leading-[42px] text-[#00ff84]">{t(`counters.${key}.value`)}</p>
-              <p className="mt-2 sm:mt-3 text-[11px] sm:text-[13px] font-medium uppercase tracking-[2px] sm:tracking-[3px] text-white">{t(`counters.${key}.label`)}</p>
+              <p className="text-[34px] font-semibold leading-[42px] text-[#00ff84]">{counter.value}</p>
+              <p className="mt-3 text-[13px] font-medium uppercase tracking-[3px] text-white">{counter.label}</p>
             </div>
           ))}
         </div>

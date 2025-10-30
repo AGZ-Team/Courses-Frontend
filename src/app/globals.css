@@ -33,7 +33,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 300px;
+  height: var(--wave-height, 300px);
   background: #ffffff;
   overflow: hidden;
   transition: background 1000ms ease;
@@ -69,6 +69,17 @@
   
   100% {
     transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .waves {
+    --wave-height: 150px;
+  }
+
+  .waves::before,
+  .waves::after {
+    top: -52vw;
   }
 }
 

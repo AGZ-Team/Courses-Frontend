@@ -5,6 +5,7 @@ import {routing, isLocale} from '@/i18n/routing';
 import MainNavbar from '@/components/Navbar/MainNavbar';
 import {Cairo} from 'next/font/google';
 import Footer from '@/components/Footer';
+import ArrowBtn from '@/components/Home/arrowBtn';
 
 const cairo = Cairo({subsets: ['arabic', 'latin'], variable: '--font-cairo'});
 
@@ -39,6 +40,8 @@ export default async function LocaleLayout({children, params}: Props) {
           </header>
           <main>{children}</main>
       <Footer />
+
+      <ArrowBtn />
         </NextIntlClientProvider>
       </body>
     </html>

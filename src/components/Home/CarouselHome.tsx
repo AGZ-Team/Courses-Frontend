@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import {useEffect, useRef, useState} from 'react';
-import {useTranslations} from 'next-intl';
+import {useTranslations, useLocale} from 'next-intl';
 
 type BrandTranslationKey = 'amazon' | 'amd' | 'cisco' | 'dropcam' | 'logitech' | 'spotify';
 
@@ -16,43 +16,52 @@ type Brand = {
 const BRANDS = [
   {
     translationKey: 'amazon',
-    image: 'https://educrat-react.vercel.app/assets/img/clients/1.svg',
+    image: 'svgs/c1.svg',
     width: 90,
     height: 32
   },
   {
     translationKey: 'amd',
-    image: 'https://educrat-react.vercel.app/assets/img/clients/2.svg',
+    image: 'svgs/c2.svg',
     width: 72,
     height: 28
   },
   {
     translationKey: 'cisco',
-    image: 'https://educrat-react.vercel.app/assets/img/clients/3.svg',
+    image: 'svgs/c3.svg',
     width: 76,
     height: 32
   },
   {
     translationKey: 'dropcam',
-    image: 'https://educrat-react.vercel.app/assets/img/clients/4.svg',
+    image: 'svgs/c4.svg',
     width: 68,
     height: 30
   },
   {
     translationKey: 'logitech',
-    image: 'https://educrat-react.vercel.app/assets/img/clients/5.svg',
+    image: 'svgs/c5.svg',
     width: 92,
     height: 32
   },
   {
     translationKey: 'spotify',
-    image: 'https://educrat-react.vercel.app/assets/img/clients/6.svg',
+    image: 'svgs/c6.svg',
     width: 88,
     height: 28
   }
 ] as const satisfies readonly Brand[];
 
-type CategoryTranslationKey = 'engineering' | 'personal' | 'finance' | 'design' | 'marketing' | 'development';
+type CategoryTranslationKey =
+  | 'engineering'
+  | 'personal'
+  | 'finance'
+  | 'design'
+  | 'marketing'
+  | 'development'
+  | 'social'
+  | 'ai'
+  | 'languages';
 
 type Category = {
   translationKey: CategoryTranslationKey;
@@ -63,33 +72,48 @@ type Category = {
 const CATEGORIES = [
   {
     translationKey: 'engineering',
-    image: 'https://educrat-react.vercel.app/assets/img/featureCards/4.svg',
+    image: '/svgs/4.svg',
     gradient: 'from-[#f4f7ff] via-[#edf2ff] to-[#e7ecff]'
   },
   {
     translationKey: 'personal',
-    image: 'https://educrat-react.vercel.app/assets/img/featureCards/5.svg',
+    image: '/svgs/5.svg',
     gradient: 'from-[#f5efff] via-[#eee4ff] to-[#e7d8ff]'
   },
   {
     translationKey: 'finance',
-    image: 'https://educrat-react.vercel.app/assets/img/featureCards/6.svg',
+    image: '/svgs/6.svg',
     gradient: 'from-[#eff8ff] via-[#e5f2ff] to-[#dcecff]'
   },
   {
     translationKey: 'design',
-    image: 'https://educrat-react.vercel.app/assets/img/featureCards/1.svg',
+    image: '/svgs/1.svg',
     gradient: 'from-[#f6f2ff] via-[#eee6ff] to-[#e3d7ff]'
   },
   {
     translationKey: 'marketing',
-    image: 'https://educrat-react.vercel.app/assets/img/featureCards/2.svg',
+    image: '/svgs/2.svg',
     gradient: 'from-[#f5f4ff] via-[#ecebff] to-[#e3e2ff]'
   },
   {
     translationKey: 'development',
-    image: 'https://educrat-react.vercel.app/assets/img/featureCards/3.svg',
+    image: '/svgs/3.svg',
     gradient: 'from-[#f1f5ff] via-[#e7edff] to-[#dee6ff]'
+  },
+  {
+    translationKey: 'social',
+    image: '/svgs/5.svg',
+    gradient: 'from-[#f5efff] via-[#eee4ff] to-[#e7d8ff]'
+  },
+  {
+    translationKey: 'ai',
+    image: '/svgs/2.svg',
+    gradient: 'from-[#f0f9ff] via-[#e0f2fe] to-[#cfe7fd]'
+  },
+  {
+    translationKey: 'languages',
+    image: '/svgs/1.svg',
+    gradient: 'from-[#fef6ff] via-[#f5e9ff] to-[#ebdbff]'
   }
 ] as const satisfies readonly Category[];
 
@@ -98,6 +122,8 @@ const ITEMS_PER_VIEW = 3;
 
 const CarouselHome = () => {
   const t = useTranslations('carouselHome');
+  const locale = useLocale();
+  const isAr = locale === 'ar';
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const dotCount = Math.max(1, Math.ceil(CATEGORIES.length / ITEMS_PER_VIEW));
@@ -125,7 +151,8 @@ const CarouselHome = () => {
     if (!node) return;
 
     const delta = direction === 'left' ? -SCROLL_AMOUNT : SCROLL_AMOUNT;
-    node.scrollBy({left: delta, behavior: 'smooth'});
+    const adjustedDelta = isAr ? -delta : delta;
+    node.scrollBy({left: adjustedDelta, behavior: 'smooth'});
     requestAnimationFrame(syncIndicator);
   };
 
@@ -214,10 +241,17 @@ const CarouselHome = () => {
             <div className="flex items-center gap-4">
               <button
                 type="button"
-                onClick={() => handleScroll('left')}
+                onClick={() => handleScroll(isAr ? 'right' : 'left')}
                 className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#120a5c] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#5b47f7] hover:text-[#5b47f7]"
               >
-                <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="16"
+                  height="13"
+                  viewBox="0 0 16 13"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={isAr ? 'rotate-180' : ''}
+                >
                   <path d="M5.5 12.5L0 6.5L5.5 0.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M0.75 6.5H15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
@@ -225,10 +259,17 @@ const CarouselHome = () => {
               </button>
               <button
                 type="button"
-                onClick={() => handleScroll('right')}
+                onClick={() => handleScroll(isAr ? 'left' : 'right')}
                 className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#120a5c] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#5b47f7] hover:text-[#5b47f7]"
               >
-                <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="16"
+                  height="13"
+                  viewBox="0 0 16 13"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={isAr ? 'rotate-180' : ''}
+                >
                   <path d="M10.5 0.5L16 6.5L10.5 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M15.25 6.5H0.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>

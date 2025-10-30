@@ -4,9 +4,9 @@ import React, {useRef, useState} from 'react';
 import Image from 'next/image';
 import {useLocale, useTranslations} from 'next-intl';
 
-const portraitSrc = 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=760&q=80';
-const smileSrc = 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=520&q=80';
-const teamSrc = 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=520&q=80';
+const portraitSrc = '/heroImages/hero-img1.avif';
+const smileSrc = '/heroImages/hero-img2.avif';
+const teamSrc = '/heroImages/hero-img3.avif';
 
 const HomeHero = () => {
   const t = useTranslations('homeHero');
