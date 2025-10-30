@@ -3,56 +3,35 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {HiOutlineArrowUpRight} from 'react-icons/hi2';
-
-const BLOG_POSTS = [
-  {
-    id: 1,
-    category: 'Writing',
-    title: 'Eco-Education in Our Lives: We Can Change the Future',
-    date: 'January 5, 2023',
-    image: 'https://educrat-react.vercel.app/assets/img/blog-list/1.png'
-  },
-  {
-    id: 2,
-    category: 'Education',
-    title: 'Engendering a culture of professional development',
-    date: 'February 18, 2023',
-    image: 'https://educrat-react.vercel.app/assets/img/blog-list/2.png'
-  }
-] as const;
-
-const EVENTS = [
-  {
-    id: 1,
-    category: 'Design',
-    title: 'Summer School 2022',
-    date: '6 April, 2022',
-    image: 'https://educrat-react.vercel.app/assets/img/courses-list/1.png'
-  },
-  {
-    id: 2,
-    category: 'Animation',
-    title: 'Summer School 2022',
-    date: '6 April, 2022',
-    image: 'https://educrat-react.vercel.app/assets/img/courses-list/2.png'
-  },
-  {
-    id: 3,
-    category: 'Writing',
-    title: 'Summer School 2022',
-    date: '6 April, 2022',
-    image: 'https://educrat-react.vercel.app/assets/img/courses-list/3.png'
-  }
-] as const;
+import {useTranslations} from 'next-intl';
 
 const News = () => {
+  const t = useTranslations('news');
+  const blogPostsRaw = t.raw('blogPosts');
+  const eventsRaw = t.raw('events');
+  
+  const blogPosts = Array.isArray(blogPostsRaw) 
+    ? (blogPostsRaw as Array<{category: string; title: string; date: string}>).map((post, idx) => ({
+        id: idx + 1,
+        ...post,
+        image: `https://educrat-react.vercel.app/assets/img/blog-list/${idx + 1}.png`
+      }))
+    : [];
+    
+  const events = Array.isArray(eventsRaw)
+    ? (eventsRaw as Array<{category: string; title: string; date: string}>).map((event, idx) => ({
+        id: idx + 1,
+        ...event,
+        image: `https://educrat-react.vercel.app/assets/img/courses-list/${idx + 1}.png`
+      }))
+    : [];
   return (
     <section className="w-full bg-white py-24 sm:py-28">
       <div className="mx-auto w-full max-w-[1380px] px-4 sm:px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between" data-aos="fade-left" data-aos-duration="600">
           <div className="space-y-4">
-            <h2 className="text-[32px] font-semibold text-[#131022] sm:text-[36px]">Resources &amp; News</h2>
-            <p className="text-[15px] text-[#4f4a63]">Lorem ipsum dolor sit amet, consectetur.</p>
+            <h2 className="text-[32px] font-semibold text-[#131022] sm:text-[36px]">{t('title')}</h2>
+            <p className="text-[15px] text-[#4f4a63]">{t('subtitle')}</p>
           </div>
 
           <Link
@@ -61,14 +40,14 @@ const News = () => {
             data-aos="fade-left"
             data-aos-duration="700"
           >
-            Browse Blog
+            {t('browseBlog')}
             <HiOutlineArrowUpRight className="h-5 w-5" aria-hidden />
           </Link>
         </div>
 
         <div className="mt-14 grid gap-8 lg:grid-cols-3">
           <div className="grid gap-8 sm:grid-cols-2 lg:col-span-2" data-aos="fade-up" data-aos-duration="700">
-            {BLOG_POSTS.map((post, index) => (
+            {blogPosts.map((post, index) => (
               <article
                 key={post.id}
                 className="group flex h-full flex-col overflow-hidden rounded-[18px] border border-[#e2ddff] bg-white shadow-[0_18px_40px_rgba(19,16,34,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(19,16,34,0.12)]"
@@ -99,14 +78,14 @@ const News = () => {
           </div>
 
           <div className="space-y-6" data-aos="fade-left" data-aos-duration="800">
-            {EVENTS.map((event, index) => (
+            {events.map((event, index) => (
               <article
                 key={event.id}
                 className="group flex gap-5 rounded-[18px] border border-[#e2ddff] bg-white p-5 shadow-[0_18px_40px_rgba(19,16,34,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#4b35f5]/60 hover:shadow-[0_24px_60px_rgba(19,16,34,0.12)]"
                 data-aos="fade-left"
                 data-aos-delay={index * 120}
               >
-                <div className="relative h-[96px] w-[110px] overflow-hidden rounded-[14px]">
+                <div className="relative h-24 w-[110px] overflow-hidden rounded-[14px]">
                   <Image
                     src={event.image}
                     alt={event.title}

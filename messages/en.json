@@ -62,8 +62,8 @@
     },
     "cards": {
       "instructor": {
-        "name": "Ali Tufan",
-        "role": "UX/UI Designer"
+        "name": "Mohamed Galal",
+        "role": "UI/UX Designer"
       },
       "admission": {
         "title": "Congrats!",
@@ -357,7 +357,7 @@
   },
   "peopleSay": {
     "title": "What People Say",
-    "subtitle": "Learn ipsum dolor sit amet, consectetur.",
+    "subtitle": " Hear from our learners around the world",
     "testimonials": [
       {
         "heading": "Great Work",
@@ -417,25 +417,25 @@
   },
   "coursesReasons": {
     "title": "Why learn with our courses?",
-    "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+    "subtitle": "Discover the benefits of our courses.",
     "reasons": [
       {
         "title": "01. Learn",
-        "description": "Lorem ipsum dolor sit amet, consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+        "description": "Gain new knowledge and skills at your own pace."
       },
       {
         "title": "02. Graduate",
-        "description": "Lorem ipsum dolor sit amet, consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+        "description": "Receive a certificate upon completion to showcase your achievements."
       },
       {
         "title": "03. Work",
-        "description": "Lorem ipsum dolor sit amet, consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+        "description": "Prepare for the job market with new skills and in-depth knowledge."
       }
     ]
   },
   "instructorCarousel": {
     "title": "Learn from the best instructors",
-    "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+    "subtitle": "Discover the benefits of our courses.",
     "viewAll": "View All Instructors",
     "becomeInstructor": "Want to help people learn, grow and achieve more in life?",
     "becomeInstructorLink": "Become an instructor",
@@ -474,7 +474,7 @@
   },
   "news": {
     "title": "Resources & News",
-    "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+    "subtitle": "Stay updated with the latest trends and tips in your field.",
     "browseBlog": "Browse Blog",
     "blogPosts": [
       {

@@ -12,7 +12,7 @@ const CoursesReasons = () => {
 
   return (
     <section className="w-full bg-[#18035a] py-16 sm:py-20 md:py-24 lg:py-28">
-      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-12 sm:gap-14 md:gap-16 px-4 text-center sm:px-6">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 sm:gap-14 md:gap-16 px-4 text-center sm:px-6">
         <div className="space-y-3 sm:space-y-4" data-aos="fade-up" data-aos-duration="800">
           <h2 className="text-[28px] sm:text-[32px] md:text-[36px] font-semibold text-white">
             {t('title')}
@@ -36,7 +36,7 @@ const CoursesReasons = () => {
                   <Icon className="h-10 w-10 sm:h-12 sm:w-12 transition duration-300 group-hover:text-black" aria-hidden />
                 </div>
                 <h3 className="mt-8 sm:mt-10 text-[18px] sm:text-[20px] font-semibold">{reason.title}</h3>
-                <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-[24px] sm:leading-[26px]">{reason.description}</p>
+                <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-6 sm:leading-[26px]">{reason.description}</p>
               </article>
             );
           })}

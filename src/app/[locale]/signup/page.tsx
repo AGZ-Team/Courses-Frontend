@@ -52,7 +52,7 @@ export default async function SignupPage({params}: PageProps) {
   };
 
   return (
-    <section className="relative isolate h-[calc(100dvh-96px)] overflow-hidden bg-white">
+    <section className="relative isolate min-h-screen overflow-hidden bg-white">
       {/* Full-bleed navy panel on the left */}
       <div className="absolute inset-y-0 left-0 hidden w-[45vw] bg-[#0b0440] md:block">
         <div className="relative h-full overflow-hidden">
@@ -68,13 +68,13 @@ export default async function SignupPage({params}: PageProps) {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto w-full h-full max-w-[1500px]">
-        <div dir="ltr" className="grid grid-cols-1 md:grid-cols-2 h-full">
+      <div className="relative z-10 mx-auto w-full min-h-screen max-w-[1500px]">
+        <div dir="ltr" className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
           {/* Spacer column to balance the full-bleed panel */}
           <div className="hidden md:block md:col-start-1" />
 
           {/* Right: form card */}
-          <div className="flex items-center justify-center px-3 py-4 md:py-7 md:col-start-2 overflow-y-auto scrollbar-hide" dir={isAr ? 'rtl' : 'ltr'}>
+          <div className="flex items-center justify-center px-3 py-4 md:py-7 md:col-start-2 overflow-y-auto scrollbar-hide min-h-screen" dir={isAr ? 'rtl' : 'ltr'}>
             <SignupForm isAr={isAr} translations={translations} />
           </div>
         </div>

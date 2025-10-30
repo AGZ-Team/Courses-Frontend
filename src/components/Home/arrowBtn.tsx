@@ -31,7 +31,7 @@ const ArrowBtn = () => {
     <button
       type="button"
       onClick={scrollToTop}
-      className="fixed bottom-6 right-6 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#6d61ff] via-[#5d4bff] to-[#4a3fff] text-white shadow-[0_18px_35px_rgba(76,57,255,0.35)] transition hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6d61ff]"
+      className="fixed bottom-6 right-6 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#6d61ff] via-[#5d4bff] to-[#4a3fff] text-white shadow-[0_18px_35px_rgba(76,57,255,0.35)] transition hover:scale-105 focus-visible:outline focus-visible:outline-2 cursor-pointer focus-visible:outline-offset-2 focus-visible:outline-[#6d61ff]"
       aria-label="Scroll to top"
     >
       <LuArrowUp className="h-5 w-5" />

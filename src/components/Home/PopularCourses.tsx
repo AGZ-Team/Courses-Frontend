@@ -256,7 +256,7 @@ const PopularCourses = () => {
           {filteredCourses.map((course) => (
             <article
               key={course.id}
-              className="flex h-full flex-col overflow-hidden rounded-xl border border-[#e6e7f2] bg-white transition-all duration-300 hover:-translate-y-[6px] hover:shadow-[0_25px_55px_rgba(32,36,69,0.12)]"
+              className="flex h-full flex-col overflow-hidden rounded-xl border border-[#e6e7f2] bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_25px_55px_rgba(32,36,69,0.12)]"
             >
               <div className="relative h-[220px] w-full overflow-hidden">
                 <img
@@ -271,13 +271,13 @@ const PopularCourses = () => {
                     {course.badges.map((badge) => (
                       <span
                         key={badge.label}
-                        className={`rounded-full px-[14px] py-[6px] text-[11px] font-semibold uppercase tracking-[1.2px] ${
+                        className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[1.2px] ${
                           badge.variant === 'accent'
                             ? 'bg-[#6440fb] text-white'
                             : 'bg-[#22c55e] text-[#10254d]'
                         }`}
                       >
-                        {badge.label}
+                        {badge.label === 'Popular' ? t('courseCard.badges.popular') : t('courseCard.badges.bestSellers')}
                       </span>
                     ))}
                   </div>
@@ -310,7 +310,7 @@ const PopularCourses = () => {
                   <div className="flex items-center gap-2">
                     <LuCirclePlay className="h-4 w-4 text-[#6440fb]" />
                     <dt className="sr-only">Lessons</dt>
-                    <dd>{course.lessonCount} lesson</dd>
+                    <dd>{course.lessonCount} {t('courseCard.lessons')}</dd>
                   </div>
                   <div className="flex items-center gap-2">
                     <LuClock3 className="h-4 w-4 text-[#6440fb]" />
@@ -320,7 +320,7 @@ const PopularCourses = () => {
                   <div className="flex items-center gap-2">
                     <LuTrendingUp className="h-4 w-4 text-[#6440fb]" />
                     <dt className="sr-only">Level</dt>
-                    <dd>{course.level}</dd>
+                    <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as any)}</dd>
                   </div>
                 </dl>
 
@@ -337,7 +337,7 @@ const PopularCourses = () => {
 
                   <div className="text-right">
                     {course.price.isFree ? (
-                      <span className="text-lg font-semibold text-[#22c55e]">Free</span>
+                      <span className="text-lg font-semibold text-[#22c55e]">{t('courseCard.free')}</span>
                     ) : (
                       <>
                         <span className="block text-[13px] text-[#8b8fad] line-through">

@@ -62,7 +62,7 @@
         },
         "cards": {
             "instructor": {
-                "name": "علي طوفان",
+                "name": "محمد جلال",
                 "role": "مصمم واجهات المستخدم"
             },
             "admission": {
@@ -357,7 +357,7 @@
     },
     "peopleSay": {
         "title": "ماذا يقول الناس",
-        "subtitle": "تعلم ipsum dolor sit amet, consectetur.",
+        "subtitle": "استمع إلى آراء متعلمينا حول العالم",
         "testimonials": [
             {
                 "heading": "عمل رائع",
@@ -417,25 +417,25 @@
     },
     "coursesReasons": {
         "title": "لماذا تتعلم مع دوراتنا؟",
-        "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+        "subtitle": "استكشف الأسباب التي تجعلك تختار دوراتنا.",
         "reasons": [
             {
                 "title": "01. تعلّم",
-                "description": "Lorem ipsum dolor sit amet، consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+                "description": "استكشف مجموعة واسعة من الدورات التي تناسب اهتماماتك."
             },
             {
                 "title": "02. تخرّج",
-                "description": "Lorem ipsum dolor sit amet، consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+                "description": "احصل على شهادات معترف بها تعزز من مسيرتك المهنية."
             },
             {
                 "title": "03. اعمل",
-                "description": "Lorem ipsum dolor sit amet، consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+                "description": "استعد لدخول سوق العمل بمهارات جديدة ومعرفة متعمقة."
             }
         ]
     },
     "instructorCarousel": {
         "title": "تعلّم من أفضل المدربين",
-        "subtitle": "Lorem ipsum dolor sit amet، consectetur.",
+        "subtitle": "استعد لتجربة تعليمية فريدة مع أفضل المدربين في المجال.",
         "viewAll": "عرض جميع المدربين",
         "becomeInstructor": "هل تريد مساعدة الناس على التعلم والنمو وتحقيق المزيد في الحياة؟",
         "becomeInstructorLink": "كن مدرباً",
@@ -474,7 +474,7 @@
     },
     "news": {
         "title": "الموارد والأخبار",
-        "subtitle": "Lorem ipsum dolor sit amet، consectetur.",
+        "subtitle": "ابقَ على اطلاع بأحدث الاتجاهات والنصائح في مجالك.",
         "browseBlog": "تصفح المدونة",
         "blogPosts": [
             {

@@ -4,7 +4,7 @@ import {getMessages, setRequestLocale} from 'next-intl/server';
 import {routing, isLocale} from '@/i18n/routing';
 import MainNavbar from '@/components/Navbar/MainNavbar';
 import {Cairo} from 'next/font/google';
-import Footer from '@/components/Footer';
+import ConditionalFooter from '@/components/ConditionalFooter';
 import ArrowBtn from '@/components/Home/arrowBtn';
 
 const cairo = Cairo({subsets: ['arabic', 'latin'], variable: '--font-cairo'});
@@ -39,7 +39,7 @@ export default async function LocaleLayout({children, params}: Props) {
             <MainNavbar />
           </header>
           <main>{children}</main>
-      <Footer />
+      <ConditionalFooter />
 
       <ArrowBtn />
         </NextIntlClientProvider>

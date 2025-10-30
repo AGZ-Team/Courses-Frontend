@@ -1,73 +1,10 @@
 'use client';
 
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {useLocale} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {IoArrowBack, IoArrowForward} from 'react-icons/io5';
 
-const TESTIMONIALS = [
-  {
-    id: 0,
-    heading: 'Great Work',
-    quote:
-      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
-    name: 'Courtney Henry',
-    role: 'Web Designer',
-    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/1.png'
-  },
-  {
-    id: 1,
-    heading: 'Great Work',
-    quote:
-      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
-    name: 'Ronald Richards',
-    role: 'President of Sales',
-    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/2.png'
-  },
-  {
-    id: 2,
-    heading: 'Great Work',
-    quote:
-      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
-    name: 'Annette Black',
-    role: 'Nursing Assistant',
-    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/3.png'
-  },
-  {
-    id: 3,
-    heading: 'Great Work',
-    quote:
-      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
-    name: 'Courtney Henry',
-    role: 'Web Designer',
-    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/4.png'
-  },{ id: 4,
-    heading: 'Great Work',
-    quote:
-      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
-    name: 'Courtney Henry',
-    role: 'Web Designer',
-    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/1.png'
-  },{ id: 5,
-    heading: 'Great Work',
-    quote:
-      'I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.',
-    name: 'Courtney Henry',
-    role: 'Web Designer',
-    avatar: 'https://educrat-react.vercel.app/assets/img/testimonials/4.png'
-  }
-
-] as const;
-
-const COUNTERS = [
-  {id: 1, label: 'Students worldwide', value: '350,000+'},
-  {id: 2, label: 'Total course views', value: '496,000+'},
-  {id: 3, label: 'Five-star course reviews', value: '19,000+'},
-  {id: 4, label: 'Students community', value: '987,000+'}
-] as const;
-
 const POSITION_TOLERANCE = 6;
-
-type Testimonial = (typeof TESTIMONIALS)[number];
 
 type VisibleConfig = {
   slidesPerScroll: number;
@@ -101,10 +38,34 @@ const useVisibleConfig = () => {
 const PeopleSay = () => {
   const locale = useLocale();
   const isAr = locale === 'ar';
+  const t = useTranslations('peopleSay');
+  const tAria = useTranslations('peopleSay.aria');
   const {slidesPerScroll} = useVisibleConfig();
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  
+  const testimonialsRaw = t.raw('testimonials');
+  const testimonials = Array.isArray(testimonialsRaw)
+    ? (testimonialsRaw as Array<{heading: string; quote: string; name: string; role: string}>).map((item, idx) => ({
+        id: idx,
+        ...item,
+        avatar: `https://educrat-react.vercel.app/assets/img/testimonials/${(idx % 4) + 1}.png`
+      }))
+    : [];
+
+  // Add two more cards by duplicating from the start to enable arrow scrolling
+  const extendedTestimonials = testimonials.concat(
+    testimonials.slice(0, 2).map((t, i) => ({...t, id: testimonials.length + i}))
+  );
+    
+  const countersRaw = t.raw('counters');
+  const counters = countersRaw && typeof countersRaw === 'object' 
+    ? Object.entries(countersRaw as Record<string, {value: string; label: string}>).map(([key, val], idx) => ({
+        id: idx + 1,
+        ...val
+      }))
+    : [];
 
   const getNormalizedScrollLeft = useCallback(
     (container: HTMLElement) => {
@@ -158,20 +119,22 @@ const PeopleSay = () => {
 
       const offset = card.getBoundingClientRect().width + parseFloat(getComputedStyle(container).gap || '0');
       const distance = offset * slidesPerScroll;
-      const logicalDirection = isAr ? (direction === 'next' ? -1 : 1) : direction === 'next' ? 1 : -1;
+      // In LTR: next = scroll right (+), prev = scroll left (-)
+      // Container is always dir="ltr", so we always scroll in LTR direction
+      const scrollDirection = direction === 'next' ? 1 : -1;
 
-      container.scrollBy({left: distance * logicalDirection, behavior: 'smooth'});
+      container.scrollBy({left: distance * scrollDirection, behavior: 'smooth'});
     },
-    [isAr, slidesPerScroll]
+    [slidesPerScroll]
   );
 
   return (
     <section className="w-full bg-[#6440fb] py-28">
       <div className="mx-auto flex w-full flex-col px-4 sm:px-6 lg:px-0">
         <div className="text-center">
-          <p className="text-4xl font-semibold uppercase tracking-[4px] text-[#00ff84]">What People Say</p>
+          <p className="text-4xl font-semibold uppercase tracking-[4px] text-[#00ff84]">{t('title')}</p>
           <h3 className="mx-auto mt-3 max-w-[640px] text-base font-semibold leading-[1.35] text-white sm:text-base">
-            Learn ipsum dolor sit amet, consectetur.
+            {t('subtitle')}
           </h3>
         </div>
 
@@ -180,10 +143,10 @@ const PeopleSay = () => {
             ref={sliderRef}
             onScroll={handleScroll}
             className="flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-smooth px-2 pb-9 [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden"
-            aria-label="Testimonial slider"
+            aria-label={tAria('slider')}
             dir="ltr"
           >
-            {TESTIMONIALS.map((testimonial) => (
+            {extendedTestimonials.map((testimonial) => (
               <article
                 key={testimonial.id}
                 data-testimonial-card
@@ -212,30 +175,30 @@ const PeopleSay = () => {
           <div className="mt-12 flex justify-center gap-5">
             <button
               type="button"
-              onClick={() => scrollBySlides(isAr ? 'next' : 'prev')}
+              onClick={() => scrollBySlides('prev')}
               className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#2f19ff] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
-              aria-label="Previous testimonials"
-              disabled={isAr ? isAtEnd : isAtStart}
+              aria-label={tAria('prev')}
+              disabled={isAtStart}
             >
-              <IoArrowBack className={`h-5 w-5 ${isAr ? 'rotate-180' : ''}`} />
+              <IoArrowBack className="h-5 w-5" />
             </button>
             <button
               type="button"
-              onClick={() => scrollBySlides(isAr ? 'prev' : 'next')}
+              onClick={() => scrollBySlides('next')}
               className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#2f19ff] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
-              aria-label="Next testimonials"
-              disabled={isAr ? isAtStart : isAtEnd}
+              aria-label={tAria('next')}
+              disabled={isAtEnd}
             >
-              <IoArrowForward className={`h-5 w-5 ${isAr ? 'rotate-180' : ''}`} />
+              <IoArrowForward className="h-5 w-5" />
             </button>
           </div>
         </div>
 
         <div className="mt-24 grid gap-8 text-center mx-auto max-w-[1540px] sm:grid-cols-2 lg:grid-cols-4">
-          {COUNTERS.map((counter) => (
+          {counters.map((counter) => (
             <div
               key={counter.id}
-              className="rounded-[12px]  px-8 py-10"
+              className="rounded-xl px-8 py-10"
             >
               <p className="text-[34px] font-semibold leading-[42px] text-[#00ff84]">{counter.value}</p>
               <p className="mt-3 text-[13px] font-medium uppercase tracking-[3px] text-white">{counter.label}</p>

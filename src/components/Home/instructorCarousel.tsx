@@ -5,63 +5,40 @@ import Link from 'next/link';
 import {LuCirclePlay, LuStar, LuUsers} from 'react-icons/lu';
 import {FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter} from 'react-icons/fa';
 import {HiOutlineArrowUpRight} from 'react-icons/hi2';
+import {useLocale, useTranslations} from 'next-intl';
 
 const SOCIAL_LINKS = [
-  {label: 'Facebook', href: '#', Icon: FaFacebookF},
-  {label: 'Twitter', href: '#', Icon: FaTwitter},
-  {label: 'Instagram', href: '#', Icon: FaInstagram},
-  {label: 'LinkedIn', href: '#', Icon: FaLinkedinIn}
+  {label: 'facebook', href: '#', Icon: FaFacebookF},
+  {label: 'twitter', href: '#', Icon: FaTwitter},
+  {label: 'instagram', href: '#', Icon: FaInstagram},
+  {label: 'linkedin', href: '#', Icon: FaLinkedinIn}
 ] as const;
 
-const INSTRUCTORS = [
-  {
-    id: 1,
-    name: 'Floyd Miles',
-    role: 'President of Sales',
-    image: 'https://educrat-react.vercel.app/assets/img/team/1.png',
-    rating: '4.5',
-    students: '692 Students',
-    courses: '15 Course'
-  },
-  {
-    id: 2,
-    name: 'Cameron Williamson',
-    role: 'Web Designer',
-    image: 'https://educrat-react.vercel.app/assets/img/team/2.png',
-    rating: '3.8',
-    students: '692 Students',
-    courses: '15 Course'
-  },
-  {
-    id: 3,
-    name: 'Brooklyn Simmons',
-    role: 'Dog Trainer',
-    image: 'https://educrat-react.vercel.app/assets/img/team/3.png',
-    rating: '5.0',
-    students: '692 Students',
-    courses: '15 Course'
-  },
-  {
-    id: 4,
-    name: 'Wade Warren',
-    role: 'Marketing Coordinator',
-    image: 'https://educrat-react.vercel.app/assets/img/team/4.png',
-    rating: '4.2',
-    students: '692 Students',
-    courses: '15 Course'
-  }
-] as const;
 
 const InstructorCarousel = () => {
+  const locale = useLocale();
+  const t = useTranslations('instructorCarousel');
+  const tSocial = useTranslations('instructorCarousel.social');
+  const instructorsRaw = t.raw('instructors');
+  const instructors = Array.isArray(instructorsRaw) 
+    ? (instructorsRaw as Array<{name: string; role: string; students: string; courses: string}>) 
+    : [];
+  
+  const INSTRUCTORS = instructors.map((inst, idx) => ({
+    id: idx + 1,
+    ...inst,
+    image: `https://educrat-react.vercel.app/assets/img/team/${idx + 1}.png`,
+    rating: ['4.5', '3.8', '5.0', '4.2'][idx] || '4.5'
+  }));
   return (
     <section className="w-full bg-white py-24 sm:py-28">
       <div className="mx-auto w-full max-w-[1380px] px-4 sm:px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div className="space-y-4" data-aos="fade-left" data-aos-duration="600">
             <h2 className="text-[32px] font-semibold text-[#131022] sm:text-[36px]">
-              Learn from the best instructors
+              {t('title')}
             </h2>
-            <p className="text-[15px] text-[#4f4a63]">Lorem ipsum dolor sit amet, consectetur.</p>
+            <p className="text-[15px] text-[#4f4a63]">{t('subtitle')}</p>
           </div>
 
           <div data-aos="fade-left" data-aos-duration="600">
@@ -69,7 +46,7 @@ const InstructorCarousel = () => {
               href="/instructors-list"
               className="inline-flex items-center gap-3 rounded-full border border-[#d5d6e6] bg-white px-6 py-3 text-[15px] font-medium text-[#4b35f5] shadow-[0_12px_24px_rgba(45,27,153,0.08)] transition hover:border-[#4b35f5] hover:bg-[#4b35f5] hover:text-white"
             >
-              View All Instructors
+              {t('viewAll')}
               <HiOutlineArrowUpRight className="h-5 w-5" aria-hidden />
             </Link>
           </div>
@@ -101,7 +78,7 @@ const InstructorCarousel = () => {
                         <Link
                           key={label}
                           href={href}
-                          aria-label={label}
+                          aria-label={tSocial(label as 'facebook' | 'twitter' | 'instagram' | 'linkedin')}
                           className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white hover:text-[#4b35f5]"
                         >
                           <Icon className="h-4 w-4" aria-hidden />
@@ -136,9 +113,9 @@ const InstructorCarousel = () => {
         </div>
 
         <div className="mt-16 text-center text-[15px] text-[#4f4a63]" data-aos="fade-left" data-aos-duration="600">
-          Want to help people learn, grow and achieve more in life?{' '}
-          <Link href="/instructor-become" className="text-[#4b35f5] underline decoration-2 underline-offset-4">
-            Become an instructor
+          {t('becomeInstructor')}{' '}
+          <Link href={`/${locale}/signup`} className="text-[#4b35f5] underline decoration-2 underline-offset-4">
+            {t('becomeInstructorLink')}
           </Link>
         </div>
       </div>

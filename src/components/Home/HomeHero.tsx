@@ -2,11 +2,12 @@
 
 import React, {useRef, useState} from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {useLocale, useTranslations} from 'next-intl';
 
-const portraitSrc = '/heroImages/hero-img1.avif';
-const smileSrc = '/heroImages/hero-img2.avif';
-const teamSrc = '/heroImages/hero-img3.avif';
+const portraitSrc = '/heroImages/homehero-2.jpg';
+const smileSrc = '/heroImages/homehero-3.jpg';
+const teamSrc = '/heroImages/homehero-1.jpg';
 
 const HomeHero = () => {
   const t = useTranslations('homeHero');
@@ -62,7 +63,7 @@ const HomeHero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative flex min-h-[90vh] w-full items-center overflow-hidden bg-gradient-to-b from-[#0b0440] via-[#0b0440] to-[#1a0c7a] text-white pt-24 md:pt-28"
+  className="relative flex min-h-[90vh] w-full items-center overflow-hidden bg-linear-to-b from-[#0b0440] via-[#0b0440] to-[#1a0c7a] text-white pt-24 md:pt-28"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
@@ -89,9 +90,9 @@ const HomeHero = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <button className="rounded-sm border border-transparent bg-[#6440fb] px-12 py-4 text-lg font-semibold text-white shadow-[0_18px_38px_rgba(79,47,255,0.45)] transition-colors duration-300 hover:border-[#6440fb] hover:bg-transparent hover:text-[#6440fb] cursor-pointer">
+            <Link href={`/${locale}/signup`} className="rounded-sm border border-transparent bg-[#6440fb] px-12 py-4 text-lg font-semibold text-white shadow-[0_18px_38px_rgba(79,47,255,0.45)] transition-colors duration-300 hover:border-[#6440fb] hover:bg-transparent hover:text-[#6440fb]">
               {t('primaryCta')}
-            </button>
+            </Link>
             <button className=" rounded-sm border-2 border-emerald-400 px-12 py-4 text-lg font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-white cursor-pointer">
               {t('secondaryCta')}
             </button>
@@ -121,14 +122,21 @@ const HomeHero = () => {
               className="pointer-events-none absolute left-6 bottom-16 w-[200px] rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_24px_70px_rgba(18,12,68,0.35)] transition-transform duration-300 ease-out"
               style={parallaxStyle(16, -12)}
             >
-              <Image src={teamSrc} priority alt={t('images.collaborativeLearning')} width={240} height={200} className="h-[160px] w-full rounded-[22px] object-cover" />
+              <Image src={teamSrc} priority alt={t('images.collaborativeLearning')} width={240} height={200} className="h-40 w-full rounded-[22px] object-cover" />
             </div>
 
             <div
               className="pointer-events-none absolute -left-8 top-6 w-32 rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
               style={parallaxStyle(22, 18)}
             >
-              <div className="mb-3 h-10 w-10 rounded-full bg-[radial-gradient(circle_at_top_left,#5f4bff,rgba(255,255,255,0.2))]" />
+              <Image
+                src="/heroImages/instructor-avatar.webp"
+                alt={t('cards.instructor.name')}
+                width={40}
+                height={40}
+                className="mb-3 h-10 w-10 rounded-full object-cover"
+                priority
+              />
               <p className="font-semibold text-white">{t('cards.instructor.name')}</p>
               <p className="text-[11px] text-emerald-300">{t('cards.instructor.role')}</p>
               <p className="mt-2 text-[11px] text-amber-300">★★★★★</p>
