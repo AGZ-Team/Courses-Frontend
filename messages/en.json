@@ -212,27 +212,41 @@
       "instagram": "Instagram",
       "linkedin": "LinkedIn"
     },
-    "groups": {
-      "company": {
-        "title": "Company",
-        "links": {
-          "home": "Home",
-          "contact": "Contact"
-        }
+    "linkGroups": {
+      "about": {
+        "title": "About",
+        "aboutUs": "About Us",
+        "learnerStories": "Learner Stories",
+        "careers": "Careers",
+        "press": "Press",
+        "leadership": "Leadership",
+        "contactUs": "Contact Us"
       },
-      "legal": {
-        "title": "Legal",
-        "links": {
-          "terms": "Terms of Use",
-          "privacy": "Privacy Policy"
-        }
+      "categories": {
+        "title": "Categories",
+        "development": "Development",
+        "business": "Business",
+        "financeAccounting": "Finance & Accounting",
+        "itSoftware": "IT & Software",
+        "officeProductivity": "Office Productivity",
+        "design": "Design",
+        "marketing": "Marketing"
       },
-      "account": {
-        "title": "Account",
-        "links": {
-          "login": "Log in",
-          "signup": "Create Account"
-        }
+      "others": {
+        "title": "Others",
+        "lifestyle": "Lifestyle",
+        "photographyVideo": "Photography & Video",
+        "healthFitness": "Health & Fitness",
+        "music": "Music",
+        "uxDesign": "UX Design",
+        "seo": "SEO"
+      },
+      "support": {
+        "title": "Support",
+        "documentation": "Documentation",
+        "faqs": "FAQs",
+        "dashboard": "Dashboard",
+        "contact": "Contact"
       }
     },
     "newsletter": {
@@ -242,11 +256,240 @@
       "placeholder": "Email...",
       "submit": "Submit"
     },
-    "legal": " 2024 Educrat. All rights reserved.",
+    "copyright": "© {year} Educrat. All rights reserved.",
     "legalLinks": {
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
       "cookies": "Cookie Policy"
     }
+  },
+  "popularCourses": {
+    "title": "Our Most Popular Courses",
+    "subtitle": "10,000+ unique online course list designs",
+    "categories": {
+      "all": "All Categories",
+      "animation": "Animation",
+      "design": "Design",
+      "development": "Development",
+      "photography": "Photography",
+      "art": "Art",
+      "programming": "Programming",
+      "writing": "Writing"
+    },
+    "courseCard": {
+      "lessons": "lesson",
+      "level": {
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "expert": "Expert"
+      },
+      "badges": {
+        "popular": "Popular",
+        "bestSellers": "Best Sellers"
+      },
+      "free": "Free"
+    },
+    "courses": [
+      {
+        "title": "Learn Figma – UI/UX Design Essential Training",
+        "imageAlt": "Students collaborating on a UI design project"
+      },
+      {
+        "title": "Complete Python Bootcamp From Zero to Hero in Python",
+        "imageAlt": "Instructor teaching a Python course online"
+      },
+      {
+        "title": "Angular – The Complete Guide (2022 Edition)",
+        "imageAlt": "Angular developer working on a laptop"
+      },
+      {
+        "title": "The Ultimate Drawing Course Beginner to Advanced",
+        "imageAlt": "Artist practicing drawing techniques"
+      },
+      {
+        "title": "Photography Masterclass: Complete Guide to Photography",
+        "imageAlt": "Photographer capturing a portrait in a studio"
+      },
+      {
+        "title": "Animation Fundamentals: Bring Characters to Life",
+        "imageAlt": "Animator working on character designs"
+      },
+      {
+        "title": "Modern Web Development: Build Responsive Experiences",
+        "imageAlt": "Developer coding a modern web application"
+      },
+      {
+        "title": "Creative Writing Mastery: Craft Compelling Stories",
+        "imageAlt": "Writer drafting a story on a laptop"
+      }
+    ],
+    "authors": {
+      "janeCooper": "Jane Cooper",
+      "jennyWilson": "Jenny Wilson",
+      "albertFlores": "Albert Flores",
+      "jacobJones": "Jacob Jones",
+      "theresaWebb": "Theresa Webb",
+      "courtneyHenry": "Courtney Henry",
+      "guyHawkins": "Guy Hawkins",
+      "savannahNguyen": "Savannah Nguyen"
+    }
+  },
+  "peopleSay": {
+    "title": "What People Say",
+    "subtitle": "Learn ipsum dolor sit amet, consectetur.",
+    "testimonials": [
+      {
+        "heading": "Great Work",
+        "quote": "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "name": "Courtney Henry",
+        "role": "Web Designer"
+      },
+      {
+        "heading": "Great Work",
+        "quote": "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "name": "Ronald Richards",
+        "role": "President of Sales"
+      },
+      {
+        "heading": "Great Work",
+        "quote": "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "name": "Annette Black",
+        "role": "Nursing Assistant"
+      }
+    ],
+    "counters": {
+      "studentsWorldwide": {
+        "value": "350,000+",
+        "label": "Students worldwide"
+      },
+      "courseViews": {
+        "value": "496,000+",
+        "label": "Total course views"
+      },
+      "fiveStarReviews": {
+        "value": "19,000+",
+        "label": "Five-star course reviews"
+      },
+      "community": {
+        "value": "987,000+",
+        "label": "Students community"
+      }
+    },
+    "aria": {
+      "slider": "Testimonial slider",
+      "prev": "Previous testimonials",
+      "next": "Next testimonials"
+    }
+  },
+  "joinUs": {
+    "titlePart1": "Learn",
+    "titlePart2": "new skills when and where you like.",
+    "description": "Use the list below to bring attention to your product's key differentiator.",
+    "highlights": [
+      "Hand-picked authors",
+      "Easy to follow curriculum",
+      "Free courses",
+      "Money-back guarantee"
+    ],
+    "cta": "Join Free",
+    "imageAlt": "Student learning online"
+  },
+  "coursesReasons": {
+    "title": "Why learn with our courses?",
+    "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+    "reasons": [
+      {
+        "title": "01. Learn",
+        "description": "Lorem ipsum dolor sit amet, consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+      },
+      {
+        "title": "02. Graduate",
+        "description": "Lorem ipsum dolor sit amet, consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+      },
+      {
+        "title": "03. Work",
+        "description": "Lorem ipsum dolor sit amet, consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+      }
+    ]
+  },
+  "instructorCarousel": {
+    "title": "Learn from the best instructors",
+    "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+    "viewAll": "View All Instructors",
+    "becomeInstructor": "Want to help people learn, grow and achieve more in life?",
+    "becomeInstructorLink": "Become an instructor",
+    "instructors": [
+      {
+        "name": "Floyd Miles",
+        "role": "President of Sales",
+        "students": "692 Students",
+        "courses": "15 Course"
+      },
+      {
+        "name": "Cameron Williamson",
+        "role": "Web Designer",
+        "students": "692 Students",
+        "courses": "15 Course"
+      },
+      {
+        "name": "Brooklyn Simmons",
+        "role": "Dog Trainer",
+        "students": "692 Students",
+        "courses": "15 Course"
+      },
+      {
+        "name": "Wade Warren",
+        "role": "Marketing Coordinator",
+        "students": "692 Students",
+        "courses": "15 Course"
+      }
+    ],
+    "social": {
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "news": {
+    "title": "Resources & News",
+    "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+    "browseBlog": "Browse Blog",
+    "blogPosts": [
+      {
+        "category": "Writing",
+        "title": "Eco-Education in Our Lives: We Can Change the Future",
+        "date": "January 5, 2023"
+      },
+      {
+        "category": "Education",
+        "title": "Engendering a culture of professional development",
+        "date": "February 18, 2023"
+      }
+    ],
+    "events": [
+      {
+        "category": "Design",
+        "title": "Summer School 2022",
+        "date": "6 April, 2022"
+      },
+      {
+        "category": "Animation",
+        "title": "Summer School 2022",
+        "date": "6 April, 2022"
+      },
+      {
+        "category": "Writing",
+        "title": "Summer School 2022",
+        "date": "6 April, 2022"
+      }
+    ]
+  },
+  "ad": {
+    "title": "Join more than",
+    "count": "8 million",
+    "subtitle": "learners worldwide",
+    "cta": "Start Learning For Free"
   }
 }

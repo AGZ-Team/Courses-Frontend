@@ -1,52 +1,52 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import {FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter} from 'react-icons/fa';
 import LanguageSwitcher from '@/components/Navbar/LanguageSwitcher';
+import {useTranslations} from 'next-intl';
 
 const FOOTER_LINK_GROUPS = [
   {
-    title: 'About',
+    key: 'about',
     links: [
-      {label: 'About Us', href: '/about'},
-      {label: 'Learner Stories', href: '/blog'},
-      {label: 'Careers', href: '/careers'},
-      {label: 'Press', href: '/press'},
-      {label: 'Leadership', href: '/leadership'},
-      {label: 'Contact Us', href: '/contact'}
+      {key: 'aboutUs', href: '/about'},
+      {key: 'learnerStories', href: '/blog'},
+      {key: 'careers', href: '/careers'},
+      {key: 'press', href: '/press'},
+      {key: 'leadership', href: '/leadership'},
+      {key: 'contactUs', href: '/contact'}
     ]
   },
   {
-    title: 'Categories',
+    key: 'categories',
     links: [
-      {label: 'Development', href: '/categories/development'},
-      {label: 'Business', href: '/categories/business'},
-      {label: 'Finance & Accounting', href: '/categories/finance'},
-      {label: 'IT & Software', href: '/categories/it-software'},
-      {label: 'Office Productivity', href: '/categories/office-productivity'},
-      {label: 'Design', href: '/categories/design'},
-      {label: 'Marketing', href: '/categories/marketing'}
+      {key: 'development', href: '/categories/development'},
+      {key: 'business', href: '/categories/business'},
+      {key: 'financeAccounting', href: '/categories/finance'},
+      {key: 'itSoftware', href: '/categories/it-software'},
+      {key: 'officeProductivity', href: '/categories/office-productivity'},
+      {key: 'design', href: '/categories/design'},
+      {key: 'marketing', href: '/categories/marketing'}
     ]
   },
   {
-    title: 'Others',
+    key: 'others',
     links: [
-      {label: 'Lifestyle', href: '/categories/lifestyle'},
-      {label: 'Photography & Video', href: '/categories/photography-video'},
-      {label: 'Health & Fitness', href: '/categories/health-fitness'},
-      {label: 'Music', href: '/categories/music'},
-      {label: 'UX Design', href: '/categories/ux-design'},
-      {label: 'SEO', href: '/categories/seo'}
+      {key: 'lifestyle', href: '/categories/lifestyle'},
+      {key: 'photographyVideo', href: '/categories/photography-video'},
+      {key: 'healthFitness', href: '/categories/health-fitness'},
+      {key: 'music', href: '/categories/music'},
+      {key: 'uxDesign', href: '/categories/ux-design'},
+      {key: 'seo', href: '/categories/seo'}
     ]
   },
   {
-    title: 'Support',
+    key: 'support',
     links: [
-      {label: 'Documentation', href: '/support/documentation'},
-      {label: 'FAQs', href: '/support/faqs'},
-      {label: 'Dashboard', href: '/dashboard'},
-      {label: 'Contact', href: '/contact'}
+      {key: 'documentation', href: '/support/documentation'},
+      {key: 'faqs', href: '/support/faqs'},
+      {key: 'dashboard', href: '/dashboard'},
+      {key: 'contact', href: '/contact'}
     ]
   }
 ] as const;
@@ -59,6 +59,7 @@ const SOCIAL_LINKS = [
 ] as const;
 
 const Footer = () => {
+  const t = useTranslations('footer');
   const year = new Date().getFullYear();
 
   return (
@@ -86,18 +87,18 @@ const Footer = () => {
                 <path d="M12 12.5v6" />
               </svg>
             </span>
-            <span className="text-[20px] font-semibold">Educrat</span>
+            <span className="text-[20px] font-semibold">{t('brandName')}</span>
           </div>
 
           <div className="space-y-3 text-right md:text-left">
-            <p className="text-[14px] text-white/70">Follow us on social media</p>
+            <p className="text-[14px] text-white/70">{t('socialPrompt')}</p>
             <div className="flex items-center gap-4">
               {SOCIAL_LINKS.map(({label, href, Icon}) => (
                 <Link
                   key={label}
                   href={href}
-                  aria-label={label}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:-translate-y-[2px] hover:border-[#44ffae] hover:text-[#44ffae]"
+                  aria-label={t(`social.${label.toLowerCase()}`)}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:-translate-y-0.5 hover:border-[#44ffae] hover:text-[#44ffae]"
                 >
                   <Icon className="h-4 w-4" aria-hidden />
                 </Link>
@@ -108,13 +109,15 @@ const Footer = () => {
 
         <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-5" data-aos="fade-up" data-aos-duration="700">
           {FOOTER_LINK_GROUPS.map((group) => (
-            <div key={group.title} className="space-y-5">
-              <h3 className="text-[15px] font-semibold uppercase tracking-[0.18em] text-white/80">{group.title}</h3>
+            <div key={group.key} className="space-y-5">
+              <h3 className="text-[15px] font-semibold uppercase tracking-[0.18em] text-white/80">
+                {t(`linkGroups.${group.key}.title`)}
+              </h3>
               <ul className="space-y-3 text-[14px] text-white/70">
                 {group.links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.key}>
                     <Link href={link.href} className="transition hover:text-[#44ffae]">
-                      {link.label}
+                      {t(`linkGroups.${group.key}.${link.key}`)}
                     </Link>
                   </li>
                 ))}
@@ -123,44 +126,44 @@ const Footer = () => {
           ))}
 
           <div className="space-y-5 lg:col-span-1">
-            <h3 className="text-[15px] font-semibold uppercase tracking-[0.18em] text-white/80">Get in touch</h3>
-            <p className="text-[14px] text-white/70">We don’t send spam so don’t worry.</p>
+            <h3 className="text-[15px] font-semibold uppercase tracking-[0.18em] text-white/80">{t('newsletter.title')}</h3>
+            <p className="text-[14px] text-white/70">{t('newsletter.subtitle')}</p>
             <form
-              className="flex items-center gap-3 rounded-full border border-white/15 bg-white/5 p-2 pl-5"
+              className="flex flex-col gap-3"
               onSubmit={(event) => event.preventDefault()}
             >
               <label htmlFor="footer-email" className="sr-only">
-                Email address
+                {t('newsletter.emailLabel')}
               </label>
               <input
                 id="footer-email"
                 type="email"
                 required
-                placeholder="Email..."
-                className="flex-1 bg-transparent text-[14px] text-white placeholder:text-white/50 focus:outline-none"
+                placeholder={t('newsletter.placeholder')}
+                className="w-full rounded-full border border-white/15 bg-white/5 py-3 px-5 text-[14px] text-white placeholder:text-white/50 focus:outline-none"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-[#4b35f5] px-5 py-2 text-[14px] font-semibold text-white transition hover:bg-[#3420d9]"
+                className="ms-auto inline-flex items-center justify-center rounded-full bg-[#4b35f5] px-5 py-2 text-[14px] font-semibold text-white transition hover:bg-[#3420d9]"
               >
-                Submit
+                {t('newsletter.submit')}
               </button>
             </form>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 text-[13px] text-white/60 md:flex-row md:items-center md:justify-between" data-aos="fade-up" data-aos-duration="700">
-          <p>© {year} Educrat. All rights reserved.</p>
+          <p>{t('copyright', {year})}</p>
 
           <div className="flex flex-wrap items-center gap-5">
             <Link href="/terms" className="transition hover:text-[#44ffae]">
-              Terms of Service
+              {t('legalLinks.terms')}
             </Link>
             <Link href="/privacy" className="transition hover:text-[#44ffae]">
-              Privacy Policy
+              {t('legalLinks.privacy')}
             </Link>
             <Link href="/cookies" className="transition hover:text-[#44ffae]">
-              Cookie Policy
+              {t('legalLinks.cookies')}
             </Link>
             <div className="inline-flex items-center rounded-full border border-white/20 p-1 transition hover:border-[#44ffae]">
               <LanguageSwitcher placement="up" />

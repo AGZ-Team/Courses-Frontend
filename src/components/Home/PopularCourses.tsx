@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {useMemo, useState} from 'react';
 import {FaStar} from 'react-icons/fa';
 import {LuCirclePlay, LuClock3, LuTrendingUp} from 'react-icons/lu';
+import {useTranslations, useLocale} from 'next-intl';
 
 const CATEGORY_OPTIONS = [
   'All Categories',
@@ -195,6 +196,8 @@ const formatDuration = (minutes: number) => {
 };
 
 const PopularCourses = () => {
+  const t = useTranslations('popularCourses');
+  const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<CourseCategory>('All Categories');
 
   const filteredCourses = useMemo(() => {
@@ -205,19 +208,30 @@ const PopularCourses = () => {
     return POPULAR_COURSES.filter((course) => course.category === activeCategory);
   }, [activeCategory]);
 
+  const categoryMap: Record<CourseCategory, string> = {
+    'All Categories': t('categories.all'),
+    'Animation': t('categories.animation'),
+    'Design': t('categories.design'),
+    'Development': t('categories.development'),
+    'Photography': t('categories.photography'),
+    'Art': t('categories.art'),
+    'Programming': t('categories.programming'),
+    'Writing': t('categories.writing')
+  };
+
   return (
-    <section className="w-full bg-white py-24">
-      <div className="mx-auto max-w-[1240px] px-3 sm:px-6 lg:px-0">
+    <section className="w-full bg-white py-16 sm:py-20 md:py-24">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-[32px] font-semibold leading-tight text-[#221f3d] sm:text-[36px]">
-            Our Most Popular Courses
+          <h2 className="text-[28px] sm:text-[32px] md:text-[36px] font-semibold leading-tight text-[#221f3d]">
+            {t('title')}
           </h2>
-          <p className="mt-3 text-base text-[#6f7289] sm:text-lg">
-            10,000+ unique online course list designs
+          <p className="mt-3 text-sm sm:text-base md:text-lg text-[#6f7289]">
+            {t('subtitle')}
           </p>
         </div>
 
-        <div className="mt-12 flex flex-wrap justify-center gap-2">
+        <div className="mt-8 sm:mt-10 md:mt-12 flex flex-wrap justify-center gap-2">
           {CATEGORY_OPTIONS.map((category) => {
             const isActive = category === activeCategory;
 
@@ -226,13 +240,13 @@ const PopularCourses = () => {
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
-                className={`rounded-lg border border-transparent px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+                className={`rounded-lg border border-transparent px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold transition-all duration-200 ${
                   isActive
                     ? 'border-[#6440fb] bg-[#6440fb] text-white shadow-[0_20px_40px_rgba(100,64,251,0.25)]'
                     : 'border-[#e6e7f2] bg-white text-[#6f7289] hover:border-[#6440fb] hover:text-[#1f1c3a]'
                 }`}
               >
-                {category}
+                {categoryMap[category]}
               </button>
             );
           })}

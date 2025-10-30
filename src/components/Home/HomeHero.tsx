@@ -62,7 +62,7 @@ const HomeHero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative flex min-h-[90vh] w-full items-center overflow-hidden bg-gradient-to-b from-[#0b0440] via-[#0b0440] to-[#1a0c7a] text-white"
+      className="relative flex min-h-[90vh] w-full items-center overflow-hidden bg-gradient-to-b from-[#0b0440] via-[#0b0440] to-[#1a0c7a] text-white pt-24 md:pt-28"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
@@ -96,20 +96,11 @@ const HomeHero = () => {
               {t('secondaryCta')}
             </button>
           </div>
-
-          <div className="flex flex-col gap-4 text-base text-white/70 sm:flex-row sm:items-center">
-            {stats.map((item) => (
-              <div key={item} className="flex items-center gap-3">
-                <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div
           ref={cardsRef}
-          className="relative flex w-full max-w-[700px] items-start justify-center pt-4 lg:pt-0"
+          className="relative hidden w-full max-w-[700px] items-start justify-center pt-4 md:flex lg:pt-0"
         >
           <div className="relative h-[660px] w-full">
             <div

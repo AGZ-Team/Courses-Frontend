@@ -212,27 +212,41 @@
             "instagram": "إنستغرام",
             "linkedin": "لينكدإن"
         },
-        "groups": {
-            "company": {
-                "title": "الشركة",
-                "links": {
-                    "home": "الرئيسية",
-                    "contact": "اتصل بنا"
-                }
+        "linkGroups": {
+            "about": {
+                "title": "حول",
+                "aboutUs": "من نحن",
+                "learnerStories": "قصص المتعلمين",
+                "careers": "الوظائف",
+                "press": "الصحافة",
+                "leadership": "القيادة",
+                "contactUs": "اتصل بنا"
             },
-            "legal": {
-                "title": "قانوني",
-                "links": {
-                    "terms": "شروط الاستخدام",
-                    "privacy": "سياسة الخصوصية"
-                }
+            "categories": {
+                "title": "الفئات",
+                "development": "التطوير",
+                "business": "الأعمال",
+                "financeAccounting": "المالية والمحاسبة",
+                "itSoftware": "تكنولوجيا المعلومات والبرمجيات",
+                "officeProductivity": "إنتاجية المكتب",
+                "design": "التصميم",
+                "marketing": "التسويق"
             },
-            "account": {
-                "title": "الحساب",
-                "links": {
-                    "login": "تسجيل الدخول",
-                    "signup": "إنشاء حساب"
-                }
+            "others": {
+                "title": "أخرى",
+                "lifestyle": "نمط الحياة",
+                "photographyVideo": "التصوير والفيديو",
+                "healthFitness": "الصحة واللياقة",
+                "music": "الموسيقى",
+                "uxDesign": "تصميم تجربة المستخدم",
+                "seo": "تحسين محركات البحث"
+            },
+            "support": {
+                "title": "الدعم",
+                "documentation": "التوثيق",
+                "faqs": "الأسئلة الشائعة",
+                "dashboard": "لوحة التحكم",
+                "contact": "اتصل"
             }
         },
         "newsletter": {
@@ -242,11 +256,240 @@
             "placeholder": "البريد الإلكتروني...",
             "submit": "إرسال"
         },
-        "legal": "© {year} إديوكرات. جميع الحقوق محفوظة.",
+        "copyright": "© {year} إديوكرات. جميع الحقوق محفوظة.",
         "legalLinks": {
             "terms": "شروط الخدمة",
             "privacy": "سياسة الخصوصية",
             "cookies": "سياسة ملفات تعريف الارتباط"
         }
+    },
+    "popularCourses": {
+        "title": "دوراتنا الأكثر شعبية",
+        "subtitle": "+10,000 تصميم فريد لقوائم الدورات عبر الإنترنت",
+        "categories": {
+            "all": "جميع الفئات",
+            "animation": "الرسوم المتحركة",
+            "design": "التصميم",
+            "development": "التطوير",
+            "photography": "التصوير الفوتوغرافي",
+            "art": "الفنون",
+            "programming": "البرمجة",
+            "writing": "الكتابة"
+        },
+        "courseCard": {
+            "lessons": "درس",
+            "level": {
+                "beginner": "مبتدئ",
+                "intermediate": "متوسط",
+                "advanced": "متقدم",
+                "expert": "خبير"
+            },
+            "badges": {
+                "popular": "شائع",
+                "bestSellers": "الأكثر مبيعاً"
+            },
+            "free": "مجاني"
+        },
+        "courses": [
+            {
+                "title": "تعلم فيجما - التدريب الأساسي لتصميم UI/UX",
+                "imageAlt": "طلاب يتعاونون في مشروع تصميم واجهة المستخدم"
+            },
+            {
+                "title": "دورة بايثون الشاملة من الصفر إلى الاحتراف",
+                "imageAlt": "مدرب يعلم دورة بايثون عبر الإنترنت"
+            },
+            {
+                "title": "أنجولار - الدليل الكامل (إصدار 2022)",
+                "imageAlt": "مطور أنجولار يعمل على كمبيوتر محمول"
+            },
+            {
+                "title": "دورة الرسم المتكاملة من المبتدئ إلى المتقدم",
+                "imageAlt": "فنان يمارس تقنيات الرسم"
+            },
+            {
+                "title": "دورة التصوير الفوتوغرافي الشاملة: الدليل الكامل للتصوير",
+                "imageAlt": "مصور يلتقط صورة في استوديو"
+            },
+            {
+                "title": "أساسيات الرسوم المتحركة: أضف الحياة للشخصيات",
+                "imageAlt": "رسام يعمل على تصميمات الشخصيات"
+            },
+            {
+                "title": "تطوير الويب الحديث: بناء تجارب متجاوبة",
+                "imageAlt": "مطور يكتب تطبيق ويب حديث"
+            },
+            {
+                "title": "إتقان الكتابة الإبداعية: اصنع قصصاً مذهلة",
+                "imageAlt": "كاتب يكتب قصة على كمبيوتر محمول"
+            }
+        ],
+        "authors": {
+            "janeCooper": "جين كوبر",
+            "jennyWilson": "جيني ويلسون",
+            "albertFlores": "ألبرت فلوريس",
+            "jacobJones": "جاكوب جونز",
+            "theresaWebb": "تيريزا ويب",
+            "courtneyHenry": "كورتني هنري",
+            "guyHawkins": "جاي هوكينز",
+            "savannahNguyen": "سافانا نجوين"
+        }
+    },
+    "peopleSay": {
+        "title": "ماذا يقول الناس",
+        "subtitle": "تعلم ipsum dolor sit amet, consectetur.",
+        "testimonials": [
+            {
+                "heading": "عمل رائع",
+                "quote": "أعتقد أن إديوكرات هو أفضل قالب رأيته هذا العام. تصميم مذهل، سهل التخصيص وجودة تصميم رائعة على منصته السحابية للأداء الأمثل.",
+                "name": "كورتني هنري",
+                "role": "مصممة ويب"
+            },
+            {
+                "heading": "عمل رائع",
+                "quote": "أعتقد أن إديوكرات هو أفضل قالب رأيته هذا العام. تصميم مذهل، سهل التخصيص وجودة تصميم رائعة على منصته السحابية للأداء الأمثل.",
+                "name": "رونالد ريتشاردز",
+                "role": "رئيس المبيعات"
+            },
+            {
+                "heading": "عمل رائع",
+                "quote": "أعتقد أن إديوكرات هو أفضل قالب رأيته هذا العام. تصميم مذهل، سهل التخصيص وجودة تصميم رائعة على منصته السحابية للأداء الأمثل.",
+                "name": "أنيت بلاك",
+                "role": "مساعدة تمريض"
+            }
+        ],
+        "counters": {
+            "studentsWorldwide": {
+                "value": "+350,000",
+                "label": "طالب حول العالم"
+            },
+            "courseViews": {
+                "value": "+496,000",
+                "label": "إجمالي مشاهدات الدورات"
+            },
+            "fiveStarReviews": {
+                "value": "+19,000",
+                "label": "تقييمات خمس نجوم"
+            },
+            "community": {
+                "value": "+987,000",
+                "label": "مجتمع الطلاب"
+            }
+        },
+        "aria": {
+            "slider": "شريط التقييمات",
+            "prev": "التقييمات السابقة",
+            "next": "التقييمات التالية"
+        }
+    },
+    "joinUs": {
+        "titlePart1": "تعلّم",
+        "titlePart2": "مهارات جديدة متى وأينما تريد.",
+        "description": "استخدم القائمة أدناه لإبراز المميزات الرئيسية لمنتجك.",
+        "highlights": [
+            "مؤلفون مختارون بعناية",
+            "منهج سهل المتابعة",
+            "دورات مجانية",
+            "ضمان استرداد الأموال"
+        ],
+        "cta": "انضم مجانًا",
+        "imageAlt": "طالب يتعلم عبر الإنترنت"
+    },
+    "coursesReasons": {
+        "title": "لماذا تتعلم مع دوراتنا؟",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur.",
+        "reasons": [
+            {
+                "title": "01. تعلّم",
+                "description": "Lorem ipsum dolor sit amet، consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+            },
+            {
+                "title": "02. تخرّج",
+                "description": "Lorem ipsum dolor sit amet، consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+            },
+            {
+                "title": "03. اعمل",
+                "description": "Lorem ipsum dolor sit amet، consectetur dolori id adipiscing elit. Felis donec massa aliquam."
+            }
+        ]
+    },
+    "instructorCarousel": {
+        "title": "تعلّم من أفضل المدربين",
+        "subtitle": "Lorem ipsum dolor sit amet، consectetur.",
+        "viewAll": "عرض جميع المدربين",
+        "becomeInstructor": "هل تريد مساعدة الناس على التعلم والنمو وتحقيق المزيد في الحياة؟",
+        "becomeInstructorLink": "كن مدرباً",
+        "instructors": [
+            {
+                "name": "فلويد مايلز",
+                "role": "رئيس المبيعات",
+                "students": "692 طالب",
+                "courses": "15 دورة"
+            },
+            {
+                "name": "كاميرون ويليامسون",
+                "role": "مصمم ويب",
+                "students": "692 طالب",
+                "courses": "15 دورة"
+            },
+            {
+                "name": "بروكلين سيمونز",
+                "role": "مدرب كلاب",
+                "students": "692 طالب",
+                "courses": "15 دورة"
+            },
+            {
+                "name": "ويد وارين",
+                "role": "منسق التسويق",
+                "students": "692 طالب",
+                "courses": "15 دورة"
+            }
+        ],
+        "social": {
+            "facebook": "فيسبوك",
+            "twitter": "تويتر",
+            "instagram": "إنستغرام",
+            "linkedin": "لينكدإن"
+        }
+    },
+    "news": {
+        "title": "الموارد والأخبار",
+        "subtitle": "Lorem ipsum dolor sit amet، consectetur.",
+        "browseBlog": "تصفح المدونة",
+        "blogPosts": [
+            {
+                "category": "الكتابة",
+                "title": "التعليم البيئي في حياتنا: يمكننا تغيير المستقبل",
+                "date": "5 يناير، 2023"
+            },
+            {
+                "category": "التعليم",
+                "title": "إيجاد ثقافة التطوير المهني",
+                "date": "18 فبراير، 2023"
+            }
+        ],
+        "events": [
+            {
+                "category": "التصميم",
+                "title": "المدرسة الصيفية 2022",
+                "date": "6 أبريل، 2022"
+            },
+            {
+                "category": "الرسوم المتحركة",
+                "title": "المدرسة الصيفية 2022",
+                "date": "6 أبريل، 2022"
+            },
+            {
+                "category": "الكتابة",
+                "title": "المدرسة الصيفية 2022",
+                "date": "6 أبريل، 2022"
+            }
+        ]
+    },
+    "ad": {
+        "title": "انضم إلى أكثر من",
+        "count": "8 ملايين",
+        "subtitle": "متعلم حول العالم",
+        "cta": "ابدأ التعلم مجاناً"
     }
 }
