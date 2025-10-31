@@ -1,11 +1,11 @@
 'use client';
 
-import {Link} from '@/i18n/routing';
+import {Link, usePathname} from '@/i18n/routing';
 import LanguageSwitcher from '@/components/Navbar/LanguageSwitcher';
 import {useTranslations, useLocale} from 'next-intl';
 import { LuSearch } from 'react-icons/lu';
-import { CgShoppingCart } from 'react-icons/cg';
 import { useState } from 'react';
+import { RiShoppingCart2Fill } from 'react-icons/ri';
 
 type NavItem = {
   labelKey: string;
@@ -17,6 +17,7 @@ type NavItem = {
 const MainNavbar = () => {
   const t = useTranslations('nav');
   const locale = useLocale();
+  const pathname = usePathname();
   const isAr = locale === 'ar';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -29,11 +30,25 @@ const MainNavbar = () => {
     {labelKey: 'contact', href: '/contact'}
   ];
 
+  const isActive = (href: string) => {
+    // Remove locale prefix from pathname for comparison
+    const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
+    
+    if (href === '/') {
+      return pathWithoutLocale === '/' || pathWithoutLocale === '';
+    }
+    
+    // Check if the path starts with href or matches exactly
+    return pathWithoutLocale.startsWith(href) && (pathWithoutLocale === href || pathWithoutLocale.startsWith(href + '/'));
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#0b0440] text-white shadow-[0_8px_24px_rgba(7,5,48,0.25)]">
-      <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1300px] items-center justify-between px-6`}>
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
+      <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1600px] items-center px-6`}>
+        {/* Left group: Logo + Explore */}
+        <div className="flex items-center gap-4 shrink-0">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3">
           <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
             <svg
               aria-hidden="true"
@@ -50,7 +65,7 @@ const MainNavbar = () => {
               <path d="M12 12.5v6" />
             </svg>
           </span>
-          <span className={`${isAr ? 'text-[22px]' : 'text-[20px]'} whitespace-nowrap font-semibold`}>{t('brandName')}</span>
+          <span className={`${isAr ? 'text-[22px]' : 'text-[18px]'} whitespace-nowrap font-semibold`}>{t('brandName')}</span>
         </Link>
 
         {/* Desktop Explore Button */}
@@ -71,24 +86,26 @@ const MainNavbar = () => {
           </svg>
           <span className="whitespace-nowrap">{t('explore')}</span>
         </button>
+        </div>
 
         {/* Desktop Navigation */}
-        <nav className={`hidden items-center gap-8 ${isAr ? ' px-4 text-[15px]' : 'px-2 text-[18px]'}  font-medium md:flex`} aria-label={t('ariaLabel')}>
+        <nav className={`hidden flex-1 items-center justify-center gap-8 ${isAr ? 'px-4 text-[15px]' : 'px-2 text-[15px]'} font-medium md:flex`} aria-label={t('ariaLabel')}>
           {navItems.map((item) => (
             <Link
               key={item.labelKey}
               href={item.href}
               className={
-                'relative flex items-center gap-1 whitespace-nowrap transition hover:text-emerald-300' +
-                (item.isActive ? ' text-white' : ' text-white/70')
+                'relative flex items-center gap-1 whitespace-nowrap transition ' +
+                (isActive(item.href) ? 'text-[#44ffae]' : 'text-white/80 hover:text-white')
               }
+              aria-current={isActive(item.href) ? 'page' : undefined}
             >
               <span className="whitespace-nowrap">{t(item.labelKey)}</span>
               {item.hasDropdown && (
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 12 12"
-                  className="h-3 w-3"
+                  className={`h-3 w-3 ${isActive(item.href) ? 'text-[#44ffae]' : 'opacity-70'}`}
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={1.6}
@@ -98,16 +115,15 @@ const MainNavbar = () => {
                   <path d="m2.5 4.5 3.5 3 3.5-3" />
                 </svg>
               )}
-              {item.isActive && (
-                <span className={`pointer-events-none absolute -bottom-6 left-0 right-0 h-px bg-white/15`} />
+              {isActive(item.href) && (
+                <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-[#44ffae]" />
               )}
             </Link>
           ))}
         </nav>
 
         {/* Right Side Actions */}
-        <div className="flex items-center gap-3 text-sm font-medium md:gap-6 md:px-6">
-          {/* Burger Menu Button - Mobile Only */}
+        <div className="ml-auto flex items-center gap-3 text-sm font-medium md:gap-6 shrink-0">
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -132,7 +148,7 @@ const MainNavbar = () => {
             className="hidden rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 md:block"
             aria-label={t('search')}
           >
-            <LuSearch className={`h-5 w-5`} />
+            <LuSearch className={`h-6 w-6`} />
           </button>
 
           {/* Cart - Always Visible */}
@@ -141,7 +157,7 @@ const MainNavbar = () => {
             className="relative rounded-full bg-white/10 p-2.5 transition hover:bg-white/20"
             aria-label={t('cart')}
           >
-            <CgShoppingCart className={`h-5 w-5`} />
+            <RiShoppingCart2Fill className={`h-6 w-6`} />
             <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white">
               3
             </span>
@@ -153,14 +169,14 @@ const MainNavbar = () => {
           </div>
 
           {/* Login - Desktop Only */}
-          <Link href="/login" className={`hidden ${isAr ? 'text-[16px]' : 'text-[15px]'} whitespace-nowrap text-white/80 transition hover:text-white md:block`}>
+          <Link href="/login" className={`hidden ${isAr ? 'text-[16px]' : 'text-[14px]'} whitespace-nowrap text-white/80 transition hover:text-white md:block`}>
             {t('login')}
           </Link>
 
           {/* Signup - Always Visible */}
           <Link
             href="/signup"
-            className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[15px]'} font-semibold text-[#0b0440] transition hover:bg-white/90`}
+            className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-[#0b0440] transition hover:bg-white/90`}
           >
             {t('signup')}
           </Link>
@@ -197,7 +213,7 @@ const MainNavbar = () => {
                   key={item.labelKey}
                   href={item.href}
                   className={`flex items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${
-                    item.isActive ? 'text-white' : 'text-white/70'
+                    isActive(item.href) ? 'text-[#44ffae]' : 'text-white/70'
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
@@ -226,10 +242,10 @@ const MainNavbar = () => {
               className="mt-4 flex w-full items-center gap-3 rounded-lg bg-white/5 px-4 py-3 transition hover:bg-white/10"
               aria-label={t('search')}
             >
-              <LuSearch className="h-5 w-5" />
+              <LuSearch className='h-6 w-6' />
               <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium text-white/80`}>{t('search')}</span>
             </button>
-
+              
             {/* Login Button */}
             <Link 
               href="/login" 

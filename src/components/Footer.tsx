@@ -87,20 +87,20 @@ const Footer = () => {
                 <path d="M12 12.5v6" />
               </svg>
             </span>
-            <span className="text-[20px] font-semibold">{t('brandName')}</span>
+            <span className="text-[28px] font-semibold">{t('brandName')}</span>
           </div>
 
           <div className="space-y-3 text-right md:text-left">
-            <p className="text-[14px] text-white/70">{t('socialPrompt')}</p>
-            <div className="flex items-center gap-4">
+            <p className="text-[16px] text-[#00FF91]">{t('socialPrompt')}</p>
+            <div className="flex items-center gap-3">
               {SOCIAL_LINKS.map(({label, href, Icon}) => (
                 <Link
                   key={label}
                   href={href}
                   aria-label={t(`social.${label.toLowerCase()}`)}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:-translate-y-0.5 hover:border-[#44ffae] hover:text-[#44ffae]"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/70 transition hover:bg-[#00FF91] hover:text-black"
                 >
-                  <Icon className="h-4 w-4" aria-hidden />
+                  <Icon className="h-[15px] w-[15px]" aria-hidden />
                 </Link>
               ))}
             </div>
@@ -110,13 +110,13 @@ const Footer = () => {
         <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-5" data-aos="fade-up" data-aos-duration="700">
           {FOOTER_LINK_GROUPS.map((group) => (
             <div key={group.key} className="space-y-5">
-              <h3 className="text-[15px] font-semibold uppercase tracking-[0.18em] text-white/80">
+              <h3 className="text-[17px] font-bold uppercase tracking-[0.15em] text-[#00FF91]">
                 {t(`linkGroups.${group.key}.title`)}
               </h3>
-              <ul className="space-y-3 text-[14px] text-white/70">
+              <ul className="space-y-3 text-[14px] text-white font-semibold">
                 {group.links.map((link) => (
                   <li key={link.key}>
-                    <Link href={link.href} className="transition hover:text-[#44ffae]">
+                    <Link href={link.href} className="transition hover:text-[#00FF91] hover:underline">
                       {t(`linkGroups.${group.key}.${link.key}`)}
                     </Link>
                   </li>
@@ -126,8 +126,8 @@ const Footer = () => {
           ))}
 
           <div className="space-y-5 lg:col-span-1">
-            <h3 className="text-[15px] font-semibold uppercase tracking-[0.18em] text-white/80">{t('newsletter.title')}</h3>
-            <p className="text-[14px] text-white/70">{t('newsletter.subtitle')}</p>
+            <h3 className="text-[14px] font-semibold uppercase tracking-[0.15em] text-white">{t('newsletter.title')}</h3>
+            <p className="text-[13px] text-white/70">{t('newsletter.subtitle')}</p>
             <form
               className="flex flex-col gap-3"
               onSubmit={(event) => event.preventDefault()}
@@ -140,11 +140,11 @@ const Footer = () => {
                 type="email"
                 required
                 placeholder={t('newsletter.placeholder')}
-                className="w-full rounded-full border border-white/15 bg-white/5 py-3 px-5 text-[14px] text-white placeholder:text-white/50 focus:outline-none"
+                className="w-full rounded-lg border border-white/15 bg-white/5 py-3 px-4 text-[13px] text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none transition"
               />
               <button
                 type="submit"
-                className="ms-auto inline-flex items-center justify-center rounded-full bg-[#4b35f5] px-5 py-2 text-[14px] font-semibold text-white transition hover:bg-[#3420d9]"
+                className="ms-auto inline-flex items-center justify-center rounded-lg bg-[#6d61ff] px-6 py-3 text-[13px] font-semibold text-white transition hover:bg-[#00FF91] hover:text-black"
               >
                 {t('newsletter.submit')}
               </button>
@@ -152,20 +152,20 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 text-[13px] text-white/60 md:flex-row md:items-center md:justify-between" data-aos="fade-up" data-aos-duration="700">
+        <div className="mt-12 flex flex-col font-semibold gap-6 border-t border-white/10 pt-8 text-[14px] text-white md:flex-row md:items-center md:justify-between" data-aos="fade-up" data-aos-duration="700">
           <p>{t('copyright', {year})}</p>
 
           <div className="flex flex-wrap items-center gap-5">
-            <Link href="/terms" className="transition hover:text-[#44ffae]">
+            <Link href="/terms" className="transition hover:text-[#00FF91]">
               {t('legalLinks.terms')}
             </Link>
-            <Link href="/privacy" className="transition hover:text-[#44ffae]">
+            <Link href="/privacy" className="transition hover:text-[#00FF91]">
               {t('legalLinks.privacy')}
             </Link>
-            <Link href="/cookies" className="transition hover:text-[#44ffae]">
+            <Link href="/cookies" className="transition hover:text-[#00FF91]">
               {t('legalLinks.cookies')}
             </Link>
-            <div className="inline-flex items-center rounded-full border border-white/20 p-1 transition hover:border-[#44ffae]">
+            <div className="inline-flex items-center rounded-full border border-white/20 p-1 transition hover:border-white/40">
               <LanguageSwitcher placement="up" />
             </div>
           </div>

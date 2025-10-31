@@ -148,6 +148,19 @@
     "signup": "Sign up",
     "brandName": "Educrat"
   },
+  "breadcrumb": {
+    "home": "Home",
+    "ariaLabel": "Breadcrumb navigation",
+    "courses": "All Courses",
+    "events": "Events",
+    "blog": "Blog",
+    "pages": "Pages",
+    "contact": "Contact",
+    "login": "Log In",
+    "signup": "Sign Up",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  },
   "login": {
     "title": "Login",
     "subtitlePrefix": "Don't have an account yet?",

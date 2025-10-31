@@ -93,9 +93,11 @@ const HomeHero = () => {
             <Link href={`/${locale}/signup`} className="rounded-sm border border-transparent bg-[#6440fb] px-12 py-4 text-lg font-semibold text-white shadow-[0_18px_38px_rgba(79,47,255,0.45)] transition-colors duration-300 hover:border-[#6440fb] hover:bg-transparent hover:text-[#6440fb]">
               {t('primaryCta')}
             </Link>
+            <Link href={`/${locale}/courses`}>
             <button className=" rounded-sm border-2 border-emerald-400 px-12 py-4 text-lg font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-white cursor-pointer">
               {t('secondaryCta')}
             </button>
+            </Link>
           </div>
         </div>
 

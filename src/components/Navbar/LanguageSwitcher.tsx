@@ -3,13 +3,7 @@
 import {useEffect, useRef, useState, useTransition} from 'react';
 import {useLocale} from 'next-intl';
 import {routing, usePathname, useRouter, Locale} from '@/i18n/routing';
-import { FaGlobe, FaLanguage } from 'react-icons/fa';
-import { BiGlobe } from 'react-icons/bi';
-import { BsGlobe2 } from 'react-icons/bs';
 import { GrLanguage } from 'react-icons/gr';
-import { HiMiniGlobeAlt } from 'react-icons/hi2';
-import { IoLanguageOutline } from 'react-icons/io5';
-import { LuGlobe, LuGlobeLock, LuLanguages } from 'react-icons/lu';
 
 const localeLabels: Record<Locale, string> = {
   en: 'English',
@@ -73,7 +67,7 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
         aria-expanded={isOpen}
         aria-label={`Change language, current: ${localeLabels[locale]}`}
       >
-        <LuLanguages className={`h-4 w-5`} />
+        <GrLanguage className={`h-6 w-6`} />
         <span className="pointer-events-none absolute -bottom-1 right-1 rounded-full bg-emerald-400 px-1 text-[10px] font-semibold text-[#0b0440]">
           {locale.toUpperCase()}
         </span>
