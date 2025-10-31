@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState, type ReactNode} from 'react';
+import {useEffect, useRef, useState, type Dispatch, type ReactNode, type SetStateAction} from 'react';
 import Image from 'next/image';
 import {useTranslations} from 'next-intl';
 import {FaStar} from 'react-icons/fa';
@@ -701,10 +701,37 @@ type CourseCardItemProps = {
   index: number;
   columns: number;
   hoveredCourseId: number | null;
-  onHoverChange: (courseId: number | null) => void;
+  onHoverChange: Dispatch<SetStateAction<number | null>>;
 };
 
 function CourseCardItem({course, index, columns, hoveredCourseId, onHoverChange}: CourseCardItemProps) {
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeout.current) {
+        clearTimeout(hoverTimeout.current);
+      }
+    };
+  }, []);
+
+  const handleEnter = () => {
+    if (hoverTimeout.current) {
+      clearTimeout(hoverTimeout.current);
+      hoverTimeout.current = null;
+    }
+    onHoverChange(course.id);
+  };
+
+  const handleLeave = () => {
+    if (hoverTimeout.current) {
+      clearTimeout(hoverTimeout.current);
+    }
+    hoverTimeout.current = setTimeout(() => {
+      onHoverChange((current) => (current === course.id ? null : current));
+    }, 140);
+  };
+
   const isSingleColumn = columns <= 1;
   const columnIndex = columns > 0 ? index % columns : 0;
   const hoverDirection = isSingleColumn ? 'bottom' : columnIndex === columns - 1 ? 'left' : 'right';
@@ -731,8 +758,8 @@ function CourseCardItem({course, index, columns, hoveredCourseId, onHoverChange}
   return (
     <article
       className="relative h-full"
-      onMouseEnter={() => onHoverChange(course.id)}
-      onMouseLeave={() => onHoverChange(null)}
+      onMouseEnter={() => handleEnter()}
+      onMouseLeave={() => handleLeave()}
     >
       <div
         className={`flex h-full flex-col overflow-hidden rounded-3xl border border-[#e5e7fb] bg-white shadow-[0_24px_60px_rgba(12,10,78,0.08)] transition duration-300 ${
