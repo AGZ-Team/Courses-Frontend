@@ -434,6 +434,8 @@
       "rating": "Rating"
     },
     "filters": {
+      "title": "Filters",
+      "filterButton": "Filter",
       "category": {
         "title": "Category",
         "options": {
@@ -455,10 +457,10 @@
         "title": "Instructors",
         "options": {
           "all": "All",
-          "janeCooper": "Jane Cooper",
-          "jennyWilson": "Jenny Wilson",
-          "albertFlores": "Albert Flores",
-          "jacobJones": "Jacob Jones"
+          "janecooper": "Jane Cooper",
+          "jennywilson": "Jenny Wilson",
+          "albertflores": "Albert Flores",
+          "jacobjones": "Jacob Jones"
         },
         "footer": "Show more"
       },
@@ -494,10 +496,10 @@
         "title": "Duration",
         "options": {
           "all": "All",
-          "range0To1": "0 - 1 hour",
-          "range1To3": "1 - 3 hours",
-          "range3To6": "3 - 6 hours",
-          "range6Plus": "6+ hours"
+          "01hour": "0 - 1 hour",
+          "13hours": "1 - 3 hours",
+          "36hours": "3 - 6 hours",
+          "6hours": "6+ hours"
         }
       }
     },

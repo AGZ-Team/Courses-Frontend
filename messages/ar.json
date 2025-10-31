@@ -434,6 +434,8 @@
             "rating": "التقييم"
         },
         "filters": {
+            "title": "تصفيات",
+            "filterButton": "تصفية",
             "category": {
                 "title": "الفئة",
                 "options": {
@@ -455,10 +457,10 @@
                 "title": "المدربون",
                 "options": {
                     "all": "الكل",
-                    "janeCooper": "جين كوبر",
-                    "jennyWilson": "جيني ويلسون",
-                    "albertFlores": "ألبرت فلوريس",
-                    "jacobJones": "جاكوب جونز"
+                    "janecooper": "جين كوبر",
+                    "jennywilson": "جيني ويلسون",
+                    "albertflores": "ألبرت فلوريس",
+                    "jacobjones": "جاكوب جونز"
                 },
                 "footer": "عرض المزيد"
             },
@@ -494,10 +496,10 @@
                 "title": "المدة",
                 "options": {
                     "all": "الكل",
-                    "range0To1": "0 - 1 ساعة",
-                    "range1To3": "1 - 3 ساعات",
-                    "range3To6": "3 - 6 ساعات",
-                    "range6Plus": "6+ ساعات"
+                    "01hour": "0 - 1 ساعة",
+                    "13hours": "1 - 3 ساعات",
+                    "36hours": "3 - 6 ساعات",
+                    "6hours": "6+ ساعات"
                 }
             }
         },

@@ -5,10 +5,10 @@ import {useLocale, useTranslations} from 'next-intl';
 import {usePathname} from 'next/navigation';
 import {Fragment, useMemo} from 'react';
 
-export type BreadcrumbItem = {
+export interface BreadcrumbItem {
   label: string;
   href?: string;
-};
+}
 
 export type BreadCrumbProps = {
   /**
