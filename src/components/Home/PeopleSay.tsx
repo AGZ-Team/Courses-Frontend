@@ -172,7 +172,7 @@ const PeopleSay = () => {
             ))}
           </div>
 
-          <div className="mt-12 flex justify-center gap-5">
+          <div className="mt-12 flex justify-center gap-5" dir="ltr">
             <button
               type="button"
               onClick={() => scrollBySlides('prev')}

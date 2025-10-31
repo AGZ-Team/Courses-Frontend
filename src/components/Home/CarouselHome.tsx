@@ -238,7 +238,7 @@ const CarouselHome = () => {
           </div>
 
           <div className="pointer-events-none absolute -bottom-12 left-1/2 flex -translate-x-1/2 flex-col items-center gap-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4" dir='ltr'>
               <button
                 type="button"
                 onClick={() => handleScroll(isAr ? 'right' : 'left')}
@@ -250,7 +250,6 @@ const CarouselHome = () => {
                   viewBox="0 0 16 13"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className={isAr ? 'rotate-180' : ''}
                 >
                   <path d="M5.5 12.5L0 6.5L5.5 0.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M0.75 6.5H15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -268,7 +267,6 @@ const CarouselHome = () => {
                   viewBox="0 0 16 13"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className={isAr ? 'rotate-180' : ''}
                 >
                   <path d="M10.5 0.5L16 6.5L10.5 12.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M15.25 6.5H0.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

@@ -6,6 +6,7 @@ import MainNavbar from '@/components/Navbar/MainNavbar';
 import {Cairo} from 'next/font/google';
 import ConditionalFooter from '@/components/ConditionalFooter';
 import ArrowBtn from '@/components/Home/arrowBtn';
+import BreadCrumb from '@/components/BreadCrumb';
 
 const cairo = Cairo({subsets: ['arabic', 'latin'], variable: '--font-cairo'});
 
@@ -37,6 +38,7 @@ export default async function LocaleLayout({children, params}: Props) {
         <NextIntlClientProvider locale={locale} messages={messages}>
           <header>
             <MainNavbar />
+            <BreadCrumb />
           </header>
           <main>{children}</main>
       <ConditionalFooter />

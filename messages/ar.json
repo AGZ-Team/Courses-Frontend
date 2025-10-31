@@ -415,6 +415,99 @@
             "next": "التقييمات التالية"
         }
     },
+    "coursesPage": {
+        "header": {
+            "eyebrow": "استكشف",
+            "title": "دورات واجهات المستخدم",
+            "description": "اكتب وصفاً تمهيدياً للفئة. اكتشف تجارب منسقة مصممة لرفع مستوى سير عمل التصميم لديك."
+        },
+        "summary": {
+            "showing": "عرض",
+            "totalResults": "نتيجة إجمالية",
+            "sortBy": "ترتيب حسب:"
+        },
+        "sortOptions": {
+            "default": "افتراضي",
+            "popular": "الأكثر شيوعاً",
+            "priceLowHigh": "السعر (من الأقل إلى الأعلى)",
+            "priceHighLow": "السعر (من الأعلى إلى الأقل)",
+            "rating": "التقييم"
+        },
+        "filters": {
+            "category": {
+                "title": "الفئة",
+                "options": {
+                    "all": "الكل",
+                    "art": "الفنون",
+                    "animation": "الرسوم المتحركة",
+                    "design": "التصميم",
+                    "photography": "التصوير",
+                    "programming": "البرمجة",
+                    "writing": "الكتابة"
+                },
+                "footer": "عرض المزيد"
+            },
+            "ratings": {
+                "title": "التقييمات",
+                "all": "الكل"
+            },
+            "instructors": {
+                "title": "المدربون",
+                "options": {
+                    "all": "الكل",
+                    "janeCooper": "جين كوبر",
+                    "jennyWilson": "جيني ويلسون",
+                    "albertFlores": "ألبرت فلوريس",
+                    "jacobJones": "جاكوب جونز"
+                },
+                "footer": "عرض المزيد"
+            },
+            "price": {
+                "title": "السعر",
+                "options": {
+                    "all": "الكل",
+                    "free": "مجاني",
+                    "paid": "مدفوع"
+                }
+            },
+            "level": {
+                "title": "المستوى",
+                "options": {
+                    "all": "الكل",
+                    "beginner": "مبتدئ",
+                    "intermediate": "متوسط",
+                    "advanced": "متقدم",
+                    "expert": "خبير"
+                }
+            },
+            "language": {
+                "title": "اللغة",
+                "options": {
+                    "all": "الكل",
+                    "english": "الإنجليزية",
+                    "spanish": "الإسبانية",
+                    "german": "الألمانية",
+                    "french": "الفرنسية"
+                }
+            },
+            "duration": {
+                "title": "المدة",
+                "options": {
+                    "all": "الكل",
+                    "range0To1": "0 - 1 ساعة",
+                    "range1To3": "1 - 3 ساعات",
+                    "range3To6": "3 - 6 ساعات",
+                    "range6Plus": "6+ ساعات"
+                }
+            }
+        },
+        "ratingFilters": {
+            "fourPointFive": "4.5 فأعلى",
+            "fourPointZero": "4.0 فأعلى",
+            "threePointFive": "3.5 فأعلى",
+            "threePointZero": "3.0 فأعلى"
+        }
+    },
     "joinUs": {
         "titlePart1": "تعلّم",
         "titlePart2": "مهارات جديدة متى وأينما تريد.",

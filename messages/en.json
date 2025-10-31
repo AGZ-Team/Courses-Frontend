@@ -415,6 +415,99 @@
       "next": "Next testimonials"
     }
   },
+  "coursesPage": {
+    "header": {
+      "eyebrow": "Explore",
+      "title": "User Interface Courses",
+      "description": "Write an introductory description of the category. Discover curated experiences designed to elevate your design workflow."
+    },
+    "summary": {
+      "showing": "Showing",
+      "totalResults": "total results",
+      "sortBy": "Sort by:"
+    },
+    "sortOptions": {
+      "default": "Default",
+      "popular": "Popular",
+      "priceLowHigh": "Price (low to high)",
+      "priceHighLow": "Price (high to low)",
+      "rating": "Rating"
+    },
+    "filters": {
+      "category": {
+        "title": "Category",
+        "options": {
+          "all": "All",
+          "art": "Art",
+          "animation": "Animation",
+          "design": "Design",
+          "photography": "Photography",
+          "programming": "Programming",
+          "writing": "Writing"
+        },
+        "footer": "Show more"
+      },
+      "ratings": {
+        "title": "Ratings",
+        "all": "All"
+      },
+      "instructors": {
+        "title": "Instructors",
+        "options": {
+          "all": "All",
+          "janeCooper": "Jane Cooper",
+          "jennyWilson": "Jenny Wilson",
+          "albertFlores": "Albert Flores",
+          "jacobJones": "Jacob Jones"
+        },
+        "footer": "Show more"
+      },
+      "price": {
+        "title": "Price",
+        "options": {
+          "all": "All",
+          "free": "Free",
+          "paid": "Paid"
+        }
+      },
+      "level": {
+        "title": "Level",
+        "options": {
+          "all": "All",
+          "beginner": "Beginner",
+          "intermediate": "Intermediate",
+          "advanced": "Advanced",
+          "expert": "Expert"
+        }
+      },
+      "language": {
+        "title": "Language",
+        "options": {
+          "all": "All",
+          "english": "English",
+          "spanish": "Spanish",
+          "german": "German",
+          "french": "French"
+        }
+      },
+      "duration": {
+        "title": "Duration",
+        "options": {
+          "all": "All",
+          "range0To1": "0 - 1 hour",
+          "range1To3": "1 - 3 hours",
+          "range3To6": "3 - 6 hours",
+          "range6Plus": "6+ hours"
+        }
+      }
+    },
+    "ratingFilters": {
+      "fourPointFive": "4.5 & up",
+      "fourPointZero": "4.0 & up",
+      "threePointFive": "3.5 & up",
+      "threePointZero": "3.0 & up"
+    }
+  },
   "joinUs": {
     "titlePart1": "Learn",
     "titlePart2": "new skills when and where you like.",

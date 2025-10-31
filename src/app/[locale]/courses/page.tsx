@@ -1,13 +1,10 @@
-import type {ReactNode} from 'react';
+"use client";
+
+import {useEffect, useState, type ReactNode} from 'react';
 import Image from 'next/image';
-import {setRequestLocale} from 'next-intl/server';
+import {useTranslations} from 'next-intl';
 import {FaStar} from 'react-icons/fa';
-import {LuCircleCheck, LuClock3, LuCirclePlay, LuGraduationCap} from 'react-icons/lu';
-
-type Props = {
-  params: Promise<{locale: string}>;
-};
-
+import {LuBookmark, LuCircleCheck, LuClock3, LuCirclePlay, LuGraduationCap} from 'react-icons/lu';
 type CourseCard = {
   id: number;
   title: string;
@@ -32,6 +29,7 @@ type CourseCard = {
 };
 
 type FilterOption = {
+  id?: string;
   label: string;
   count?: number;
   type?: 'checkbox' | 'radio';
@@ -42,6 +40,7 @@ type FilterGroup = {
   title: string;
   options: FilterOption[];
   footerLabel?: string;
+  isExpanded?: boolean;
 };
 
 type RatingFilter = {
@@ -326,19 +325,101 @@ const RATING_FILTERS: RatingFilter[] = [
 
 const SORT_OPTIONS = ['Default', 'Popular', 'Price (low to high)', 'Price (high to low)', 'Rating'];
 
-export async function generateMetadata({params}: Props) {
-  const {locale} = await params;
-  setRequestLocale(locale);
+export default function CoursesPage() {
+  const [filterGroups, setFilterGroups] = useState<FilterGroup[]>(() =>
+    FILTER_GROUPS.map((group) => ({
+      ...group,
+      isExpanded: true,
+      options: group.options.map((option, index) => ({
+        ...option,
+        id: `${group.title}-${index}`
+      }))
+    }))
+  );
+  const [isRatingsExpanded, setIsRatingsExpanded] = useState(true);
+  const [gridColumns, setGridColumns] = useState(1);
+  const [hoveredCourseId, setHoveredCourseId] = useState<number | null>(null);
 
-  return {
-    title: 'Courses | Educrat',
-    description: 'Browse curated user interface courses tailored to your interests.'
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 1280) {
+        setGridColumns(3);
+      } else if (width >= 640) {
+        setGridColumns(2);
+      } else {
+        setGridColumns(1);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleToggle = (groupIndex: number, optionIndex: number) => {
+    setFilterGroups((prev) =>
+      prev.map((group, gIdx) => {
+        if (gIdx !== groupIndex) {
+          return group;
+        }
+
+        const clickedOption = group.options[optionIndex];
+        if (!clickedOption) {
+          return group;
+        }
+
+        if (clickedOption.type === 'radio') {
+          const updatedRadioOptions = group.options.map((option, oIdx) => ({
+            ...option,
+            isActive: oIdx === optionIndex
+          }));
+          return {...group, options: updatedRadioOptions};
+        }
+
+        let updatedOptions = group.options.map((option, oIdx) => {
+          if (oIdx === optionIndex) {
+            const nextActive = !Boolean(option.isActive);
+            return {...option, isActive: nextActive};
+          }
+          return option;
+        });
+
+        if (updatedOptions.length > 0) {
+          if (optionIndex === 0) {
+            if (updatedOptions[0]?.isActive) {
+              updatedOptions = updatedOptions.map((option, idx) =>
+                idx === 0 ? option : {...option, isActive: false}
+              );
+            }
+          } else {
+            const selectedNonAllCount = updatedOptions.filter(
+              (option, idx) => idx !== 0 && option.isActive
+            ).length;
+            updatedOptions[0] = {
+              ...updatedOptions[0],
+              isActive: selectedNonAllCount === 0
+            };
+          }
+        }
+
+        return {...group, options: updatedOptions};
+      })
+    );
   };
-}
 
-export default async function CoursesPage({params}: Props) {
-  const {locale} = await params;
-  setRequestLocale(locale);
+  const [primaryGroup, ...additionalGroups] = filterGroups;
+
+  const handleSectionToggle = (groupIndex: number) => {
+    setFilterGroups((prev) =>
+      prev.map((group, idx) => {
+        if (idx !== groupIndex) {
+          return group;
+        }
+        return {...group, isExpanded: !group.isExpanded};
+      })
+    );
+  };
 
   return (
     <main className="w-full bg-white pb-24 text-[#1f1c3b]">
@@ -350,13 +431,13 @@ export default async function CoursesPage({params}: Props) {
             Showing <span className="text-[#120a5d]">43</span> total results
           </p>
 
-          <div className="flex items-center gap-3 text-sm text-[#433f74]">
+          <div className="flex w-full items-center gap-3 text-sm text-[#433f74] md:w-auto">
             <span className="hidden font-medium md:inline">Sort by:</span>
-            <div className="relative">
+            <div className="relative w-full md:w-48">
               <select
                 aria-label="Sort courses"
                 defaultValue="Default"
-                className="h-11 w-48 appearance-none rounded-xl border border-[#d9d7f0] bg-white px-4 pr-10 text-sm font-semibold text-[#433f74] shadow-[0_12px_30px_rgba(12,10,78,0.08)] transition focus:border-[#7c5cff] focus:outline-none"
+                className="h-11 w-full appearance-none rounded-xl border border-[#d9d7f0] bg-white px-4 pr-10 text-sm font-semibold text-[#433f74] shadow-[0_12px_30px_rgba(12,10,78,0.08)] transition focus:border-[#7c5cff] focus:outline-none"
               >
                 {SORT_OPTIONS.map((option) => (
                   <option key={option}>{option}</option>
@@ -373,25 +454,58 @@ export default async function CoursesPage({params}: Props) {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,300px)_1fr]">
           <aside className="hidden space-y-6 lg:block">
-            <FilterSection title="Category" footerLabel="Show more">
-              <FilterList options={FILTER_GROUPS[0].options} />
+            {primaryGroup ? (
+              <FilterSection
+                title={primaryGroup.title}
+                footerLabel={primaryGroup.footerLabel}
+                isCollapsible
+                isOpen={primaryGroup.isExpanded !== false}
+                onToggle={() => handleSectionToggle(0)}
+              >
+                <FilterList
+                  options={primaryGroup.options}
+                  onOptionToggle={(optionIndex) => handleToggle(0, optionIndex)}
+                />
+              </FilterSection>
+            ) : null}
+
+            <FilterSection
+              title="Ratings"
+              isCollapsible
+              isOpen={isRatingsExpanded}
+              onToggle={() => setIsRatingsExpanded((prev) => !prev)}
+            >
+              {isRatingsExpanded ? <RatingList ratings={RATING_FILTERS} /> : null}
             </FilterSection>
 
-            <FilterSection title="Ratings">
-              <RatingList ratings={RATING_FILTERS} />
-            </FilterSection>
-
-            {FILTER_GROUPS.slice(1).map((group) => (
-              <FilterSection key={group.title} title={group.title} footerLabel={group.footerLabel}>
-                <FilterList options={group.options} />
+            {additionalGroups.map((group, groupIndex) => (
+              <FilterSection
+                key={group.title}
+                title={group.title}
+                footerLabel={group.footerLabel}
+                isCollapsible
+                isOpen={group.isExpanded !== false}
+                onToggle={() => handleSectionToggle(groupIndex + 1)}
+              >
+                <FilterList
+                  options={group.options}
+                  onOptionToggle={(optionIndex) => handleToggle(groupIndex + 1, optionIndex)}
+                />
               </FilterSection>
             ))}
           </aside>
 
           <div className="space-y-10">
             <div className="grid auto-rows-[1fr] items-start gap-8 sm:grid-cols-2 xl:grid-cols-3">
-              {COURSES.map((course) => (
-                <CourseCardItem key={course.id} course={course} />
+              {COURSES.map((course, index) => (
+                <CourseCardItem
+                  key={course.id}
+                  course={course}
+                  index={index}
+                  columns={gridColumns}
+                  hoveredCourseId={hoveredCourseId}
+                  onHoverChange={setHoveredCourseId}
+                />
               ))}
             </div>
 
@@ -427,19 +541,55 @@ type FilterSectionProps = {
   title: string;
   children: ReactNode;
   footerLabel?: string;
+  isCollapsible?: boolean;
+  isOpen?: boolean;
+  onToggle?: () => void;
 };
 
-function FilterSection({title, footerLabel, children}: FilterSectionProps) {
+function FilterSection({title, footerLabel, children, isCollapsible = false, isOpen = true, onToggle}: FilterSectionProps) {
+  const contentId = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-content`;
+  const isContentVisible = !isCollapsible || isOpen;
+
   return (
     <section className="rounded-3xl border border-[#e5e7fb] bg-white px-6 py-6 shadow-[0_18px_50px_rgba(12,10,78,0.08)]">
       <header className="flex items-center justify-between text-sm font-semibold text-[#120a5d]">
         <span>{title}</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c5cff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
+        {isCollapsible ? (
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-expanded={isOpen}
+            aria-controls={contentId}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-[#7c5cff] transition hover:bg-[#f2f1ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7c5cff]"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+        ) : (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c5cff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        )}
       </header>
-      <div className="mt-5 space-y-3 text-sm text-[#514d78]">{children}</div>
-      {footerLabel ? (
+      <div
+        id={contentId}
+        aria-hidden={isCollapsible && !isOpen}
+        className={`grid transition-all duration-300 ease-out ${isContentVisible ? 'mt-5 grid-rows-[1fr] opacity-100' : 'mt-0 grid-rows-[0fr] opacity-0 pointer-events-none'}`}
+      >
+        <div className="overflow-hidden space-y-3 text-sm text-[#514d78]">{children}</div>
+      </div>
+      {footerLabel && isContentVisible ? (
         <button className="mt-4 text-sm font-semibold text-[#6440fb] transition hover:text-[#8360ff]">
           {footerLabel}
         </button>
@@ -450,43 +600,51 @@ function FilterSection({title, footerLabel, children}: FilterSectionProps) {
 
 type FilterListProps = {
   options: FilterOption[];
+  onOptionToggle: (optionIndex: number) => void;
 };
 
-function FilterList({options}: FilterListProps) {
+function FilterList({options, onOptionToggle}: FilterListProps) {
   return (
     <ul className="space-y-3">
-      {options.map((option) => (
-        <li key={option.label} className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 text-sm">
-            <span
-              className={`flex h-[18px] w-[18px] items-center justify-center border ${
-                option.type === 'radio' ? 'rounded-full' : 'rounded-[6px]'
-              } ${option.isActive ? 'border-[#6440fb] bg-[#6440fb] text-white' : 'border-[#c9c7e6] bg-white text-transparent'}`}
-            >
-              {option.isActive ? (
-                option.type === 'radio' ? (
-                  <span className="block h-[8px] w-[8px] rounded-full bg-white" />
-                ) : (
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="2 6.5 4.5 9 10 3" />
-                  </svg>
-                )
-              ) : null}
+      {options.map((option, index) => (
+        <li key={option.id ?? option.label}>
+          <button
+            type="button"
+            onClick={() => onOptionToggle(index)}
+            className="flex w-full items-center justify-between gap-3 rounded-[10px] px-2 py-1.5 text-left transition hover:bg-[#f4f3ff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7c5cff]"
+            aria-pressed={Boolean(option.isActive)}
+          >
+            <span className="flex items-center gap-3 text-sm">
+              <span
+                className={`flex h-[18px] w-[18px] items-center justify-center border ${
+                  option.type === 'radio' ? 'rounded-full' : 'rounded-[6px]'
+                } ${option.isActive ? 'border-[#6440fb] bg-[#6440fb] text-white' : 'border-[#c9c7e6] bg-white text-transparent'}`}
+              >
+                {option.isActive ? (
+                  option.type === 'radio' ? (
+                    <span className="block h-[8px] w-[8px] rounded-full bg-white" />
+                  ) : (
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="2 6.5 4.5 9 10 3" />
+                    </svg>
+                  )
+                ) : null}
+              </span>
+              <span>{option.label}</span>
             </span>
-            <span>{option.label}</span>
-          </div>
-          {typeof option.count === 'number' ? (
-            <span className="text-xs font-medium text-[#8e8aa9]">({option.count})</span>
-          ) : null}
+            {typeof option.count === 'number' ? (
+              <span className="text-xs font-medium text-[#8e8aa9]">({option.count})</span>
+            ) : null}
+          </button>
         </li>
       ))}
     </ul>
@@ -540,12 +698,47 @@ function StarRow({value}: StarRowProps) {
 
 type CourseCardItemProps = {
   course: CourseCard;
+  index: number;
+  columns: number;
+  hoveredCourseId: number | null;
+  onHoverChange: (courseId: number | null) => void;
 };
 
-function CourseCardItem({course}: CourseCardItemProps) {
+function CourseCardItem({course, index, columns, hoveredCourseId, onHoverChange}: CourseCardItemProps) {
+  const isSingleColumn = columns <= 1;
+  const columnIndex = columns > 0 ? index % columns : 0;
+  const hoverDirection = isSingleColumn ? 'bottom' : columnIndex === columns - 1 ? 'left' : 'right';
+  const isHovered = hoveredCourseId === course.id;
+
+  const positionClass =
+    hoverDirection === 'bottom'
+      ? 'left-1/2 top-full mt-4 -translate-x-1/2'
+      : hoverDirection === 'left'
+        ? 'right-full top-1/2 mr-4 -translate-y-1/2'
+        : 'left-full top-1/2 ml-4 -translate-y-1/2';
+
+  const transformClass =
+    hoverDirection === 'bottom'
+      ? isHovered ? 'translate-y-0' : 'translate-y-2'
+      : hoverDirection === 'left'
+        ? isHovered ? 'translate-x-0' : '-translate-x-2'
+        : isHovered ? 'translate-x-0' : 'translate-x-2';
+
+  const panelVisibilityClass = isHovered
+    ? 'pointer-events-auto opacity-100'
+    : 'pointer-events-none opacity-0';
+
   return (
-    <article className="group relative h-full">
-      <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-[#e5e7fb] bg-white shadow-[0_24px_60px_rgba(12,10,78,0.08)] transition duration-300 group-hover:translate-y-2 group-hover:shadow-[0_38px_90px_rgba(12,10,78,0.18)]">
+    <article
+      className="relative h-full"
+      onMouseEnter={() => onHoverChange(course.id)}
+      onMouseLeave={() => onHoverChange(null)}
+    >
+      <div
+        className={`flex h-full flex-col overflow-hidden rounded-3xl border border-[#e5e7fb] bg-white shadow-[0_24px_60px_rgba(12,10,78,0.08)] transition duration-300 ${
+          isHovered ? 'translate-y-2 shadow-[0_38px_90px_rgba(12,10,78,0.18)]' : ''
+        }`}
+      >
         <div className="relative">
           <div className="relative aspect-[4/3] overflow-hidden">
             <Image
@@ -553,10 +746,14 @@ function CourseCardItem({course}: CourseCardItemProps) {
               alt={course.title}
               fill
               sizes="(min-width: 1280px) 320px, (min-width: 768px) 45vw, 90vw"
-              className="object-cover transition duration-500 group-hover:scale-105"
+              className={`object-cover transition duration-500 ${isHovered ? 'scale-105' : ''}`}
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
+            <div
+              className={`absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent transition ${
+                isHovered ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
           </div>
           {course.badges?.length ? (
             <div className="absolute inset-x-5 top-5 flex flex-wrap gap-2">
@@ -574,7 +771,7 @@ function CourseCardItem({course}: CourseCardItemProps) {
           ) : null}
         </div>
 
-        <div className="flex flex-1 flex-col gap-4 px-6 pb-6 pt-5 transition-opacity duration-300 group-hover:opacity-0">
+        <div className="flex flex-1 flex-col gap-4 px-6 pb-6 pt-5">
           <div className="flex items-center gap-2 text-sm text-[#514d78]">
             <span className="flex items-center gap-1 text-[#f6c160]">
               <FaStar size={14} />
@@ -583,9 +780,9 @@ function CourseCardItem({course}: CourseCardItemProps) {
             <span className="text-xs text-[#8e8aa9]">({course.ratingCount.toLocaleString()})</span>
           </div>
 
-        <h3 className="text-lg font-semibold leading-snug text-[#120a5d] transition group-hover:text-[#6440fb]">
-          {course.title}
-        </h3>
+          <h3 className={`text-lg font-semibold leading-snug transition ${isHovered ? 'text-[#6440fb]' : 'text-[#120a5d]'}`}>
+            {course.title}
+          </h3>
 
           <div className="flex flex-wrap gap-4 text-xs font-medium text-[#6e6b8f]">
             <span className="inline-flex items-center gap-1">
@@ -601,6 +798,8 @@ function CourseCardItem({course}: CourseCardItemProps) {
               {course.level}
             </span>
           </div>
+
+          <p className="text-sm leading-6 text-[#433f74]">{course.summary}</p>
 
           <div className="mt-auto flex items-center justify-between border-t border-[#eceaf8] pt-4">
             <div className="flex items-center gap-3">
@@ -632,23 +831,57 @@ function CourseCardItem({course}: CourseCardItemProps) {
         </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 -bottom-16 z-10 translate-y-6 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-hover:pointer-events-auto">
-        <div className="mx-4 rounded-3xl border border-[#e5e7fb] bg-white p-6 shadow-[0_32px_80px_rgba(12,10,78,0.16)]">
-          <p className="text-sm font-medium text-[#433f74]">{course.summary}</p>
-
-          <ul className="mt-4 space-y-2 text-sm text-[#5f5c7b]">
-            {course.highlights.map((highlight) => (
-              <li key={highlight} className="flex items-start gap-2">
-                <LuCircleCheck className="mt-[2px] text-[#50f0a9]" size={18} />
-                <span>{highlight}</span>
-              </li>
+      <div
+        className={`absolute z-20 w-[360px] max-w-[calc(100vw-48px)] rounded-3xl border border-[#e5e7fb] bg-white p-6 shadow-[0_32px_80px_rgba(12,10,78,0.16)] transition duration-200 ease-out ${positionClass} ${transformClass} ${panelVisibilityClass}`}
+      >
+        {course.badges?.length ? (
+          <div className="mb-3 flex flex-wrap gap-2">
+            {course.badges.map((badge) => (
+              <span
+                key={`detail-${badge.label}`}
+                className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
+                  badge.variant === 'accent' ? 'bg-[#6440fb] text-white' : 'bg-[#50f0a9] text-[#10213a]'
+                }`}
+              >
+                {badge.label}
+              </span>
             ))}
-          </ul>
+          </div>
+        ) : null}
 
-          <div className="mt-5 flex items-center justify-between">
-            <span className="text-lg font-semibold text-[#6440fb]">
-              {course.price.isFree ? 'Free' : `$${course.price.current}`}
-            </span>
+        <h3 className="text-xl font-semibold leading-snug text-[#120a5d]">{course.title}</h3>
+
+        <div className="mt-3 flex flex-wrap gap-4 text-sm font-medium text-[#6e6b8f]">
+          <span className="inline-flex items-center gap-2">
+            <LuCirclePlay className="text-[#6440fb]" />
+            {course.lessons} lesson{course.lessons > 1 ? 's' : ''}
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <LuClock3 className="text-[#6440fb]" />
+            {Math.floor(course.durationMinutes / 60)}h {course.durationMinutes % 60}m
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <LuGraduationCap className="text-[#6440fb]" />
+            {course.level}
+          </span>
+        </div>
+
+        <p className="mt-4 text-sm leading-6 text-[#433f74]">{course.summary}</p>
+
+        <ul className="mt-4 space-y-2 text-sm text-[#5f5c7b]">
+          {course.highlights.map((highlight) => (
+            <li key={`highlight-${highlight}`} className="flex items-start gap-2">
+              <LuCircleCheck className="mt-[2px] text-[#50f0a9]" size={18} />
+              <span>{highlight}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+          <span className="text-xl font-semibold text-[#6440fb]">
+            {course.price.isFree ? 'Free' : `$${course.price.current}`}
+          </span>
+          <div className="flex items-center gap-3">
             {course.ctaHref ? (
               <a
                 href={course.ctaHref}
@@ -664,6 +897,13 @@ function CourseCardItem({course}: CourseCardItemProps) {
                 {course.ctaLabel}
               </button>
             )}
+            <button
+              type="button"
+              aria-label="Save course"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#e5e7fb] text-[#6440fb] transition hover:border-[#6440fb]"
+            >
+              <LuBookmark size={20} />
+            </button>
           </div>
         </div>
       </div>
