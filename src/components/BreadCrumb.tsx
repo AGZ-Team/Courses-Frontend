@@ -41,6 +41,10 @@ export default function BreadCrumb({items, className}: BreadCrumbProps) {
 
   const shouldHide = !pathname || localeSegments.length === 0 || (localeSegments.length === 1 && localeSegments[0] === 'contact');
 
+   const shouldHide2 = !pathname || localeSegments.length === 0 || (localeSegments.length === 1 && localeSegments[0] === 'login');
+
+   const shouldHide3 = !pathname || localeSegments.length === 0 || (localeSegments.length === 1 && localeSegments[0] === 'signup');
+
   const autoItems = useMemo(() => {
     const crumbs: BreadcrumbItem[] = [
       {label: t('home'), href: `/${locale}`}
@@ -81,6 +85,13 @@ export default function BreadCrumb({items, className}: BreadCrumbProps) {
   if (shouldHide || trail.length === 0) {
     return null;
   }
+  if (shouldHide2 || trail.length === 0) {
+    return null;
+  }
+  if (shouldHide3 || trail.length === 0) {
+    return null;
+  }
+
 
   return (
     <nav
