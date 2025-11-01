@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Star, Users, Clock, Play } from 'lucide-react';
+import { Star, Users, Clock, Play, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { CourseCard } from '../CourseCard';
@@ -13,6 +13,13 @@ export function CourseHero({ course }: CourseHeroProps) {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const duration = Math.floor(course.durationMinutes / 60);
   const t = useTranslations('courseDetails');
+
+  const socials: { name: string; Icon: React.ComponentType<{ className?: string }> }[] = [
+    { name: 'facebook', Icon: Facebook },
+    { name: 'instagram', Icon: Instagram },
+    { name: 'x', Icon: Twitter },
+    { name: 'linkedin', Icon: Linkedin },
+  ];
 
   const getBadgeStyles = (variant: string) => {
     switch (variant) {
@@ -109,13 +116,13 @@ export function CourseHero({ course }: CourseHeroProps) {
 
               {/* Social Share */}
               <div className="flex gap-3 pt-2">
-                {['facebook', 'twitter', 'instagram', 'linkedin'].map((social) => (
+                {socials.map(({ name, Icon }) => (
                   <button
-                    key={social}
+                    key={name}
                     className="w-10 h-10 rounded-full border border-[#e6e4f5] hover:bg-blue-50 transition-colors flex items-center justify-center text-[#6e6b8f] hover:text-blue-900"
-                    aria-label={`Share on ${social}`}
+                    aria-label={`Share on ${name}`}
                   >
-                    <span className="text-sm">f</span>
+                    <Icon className="w-4 h-4" />
                   </button>
                 ))}
               </div>
