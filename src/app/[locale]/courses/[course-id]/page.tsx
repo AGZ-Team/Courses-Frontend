@@ -1,7 +1,4 @@
-'use client';
-
-import { useParams, notFound } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { notFound } from 'next/navigation';
 import { CourseHero } from '@/components/Courses/CourseDetails/CourseHero';
 import { CourseContent } from '@/components/Courses/CourseDetails/CourseContent';
 import { RelatedCourses } from '@/components/Courses/CourseDetails/RelatedCourses';
@@ -269,10 +266,13 @@ const COURSES: CourseCard[] = [
   }
 ];
 
-export default function CourseDetailsPage() {
-  const params = useParams();
-  const t = useTranslations('courseDetails');
-  const courseId = parseInt(params['course-id'] as string);
+interface CourseDetailsPageProps {
+  params: Promise<{ 'course-id': string }>;
+}
+
+export default async function CourseDetailsPage({ params }: CourseDetailsPageProps) {
+  const { 'course-id': courseIdStr } = await params;
+  const courseId = parseInt(courseIdStr);
   
   const course = COURSES.find(c => c.id === courseId);
   

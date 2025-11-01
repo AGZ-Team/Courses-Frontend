@@ -1,11 +1,9 @@
-﻿'use client';
-
 import { HeaderSection } from '@/components/Courses/HeaderSection';
 import { CoursesClient } from '@/components/Courses/CoursesClient';
 import type { CourseCard } from '@/components/Courses/CourseCard';
 import type { FilterGroup } from '@/components/Courses/CoursesClient';
 import type { RatingFilter } from '@/components/Courses/RatingList';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 const COURSES: CourseCard[] = [
   {
@@ -348,49 +346,26 @@ const SORT_OPTIONS_KEYS = [
   'rating'
 ];
 
-export default function CoursesPage() {
-  return (
-    <main className="w-full bg-white pb-24 text-[#1f1c3b]">
-      <HeaderSection />
-      <CoursesPageContent
-        courses={COURSES}
-        filterGroups={FILTER_GROUPS}
-        ratingFiltersKeys={RATING_FILTERS_KEYS}
-        sortOptionsKeys={SORT_OPTIONS_KEYS}
-      />
-    </main>
-  );
-}
-
-type CoursesPageContentProps = {
-  courses: CourseCard[];
-  filterGroups: FilterGroup[];
-  ratingFiltersKeys: Array<{ labelKey: string; count: number; threshold: number }>;
-  sortOptionsKeys: string[];
-};
-
-function CoursesPageContent({
-  courses,
-  filterGroups,
-  ratingFiltersKeys,
-  sortOptionsKeys
-}: CoursesPageContentProps) {
-  const t = useTranslations('coursesPage');
-
-  const ratingFilters: RatingFilter[] = ratingFiltersKeys.map((item) => ({
+export default async function CoursesPage() {
+  const t = await getTranslations('coursesPage');
+  
+  const ratingFilters: RatingFilter[] = RATING_FILTERS_KEYS.map((item) => ({
     label: t(`ratingFilters.${item.labelKey}`),
     count: item.count,
     threshold: item.threshold
   }));
 
-  const sortOptions = sortOptionsKeys.map((key) => t(`sortOptions.${key}`));
+  const sortOptions = SORT_OPTIONS_KEYS.map((key) => t(`sortOptions.${key}`));
 
   return (
-    <CoursesClient
-      courses={courses}
-      filterGroups={filterGroups}
-      ratingFilters={ratingFilters}
-      sortOptions={sortOptions}
-    />
+    <main className="w-full bg-white pb-24 text-[#1f1c3b]">
+      <HeaderSection />
+      <CoursesClient
+        courses={COURSES}
+        filterGroups={FILTER_GROUPS}
+        ratingFilters={ratingFilters}
+        sortOptions={sortOptions}
+      />
+    </main>
   );
 }

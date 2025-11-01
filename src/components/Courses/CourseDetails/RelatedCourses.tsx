@@ -1,16 +1,14 @@
-'use client';
-
 import Link from 'next/link';
 import { Star } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { getLocale } from 'next-intl/server';
 import type { CourseCard } from '../CourseCard';
 
 interface RelatedCoursesProps {
   courses: CourseCard[];
 }
 
-export function RelatedCourses({ courses }: RelatedCoursesProps) {
-  const locale = useLocale();
+export async function RelatedCourses({ courses }: RelatedCoursesProps) {
+  const locale = await getLocale();
   return (
     <section className="py-16 lg:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
