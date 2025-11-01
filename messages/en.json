@@ -415,6 +415,70 @@
       "next": "Next testimonials"
     }
   },
+  "courseDetails": {
+    "enrolledCount": "enrolled on this course",
+    "lastUpdated": "Last updated",
+    "addToCart": "Add To Cart",
+    "buyNow": "Buy Now",
+    "alreadyAdded": "Already Added",
+    "moneyBackGuarantee": "30-Day Money-Back Guarantee",
+    "lessons": "Lessons",
+    "quizzes": "Quizzes",
+    "duration": "Duration",
+    "hours": "Hours",
+    "skillLevel": "Skill level",
+    "language": "Language",
+    "certificate": "Certificate",
+    "lifetimeAccess": "Full lifetime access",
+    "yes": "Yes",
+    "english": "English",
+    "tabs": {
+      "overview": "Overview",
+      "content": "Course Content",
+      "instructor": "Instructor",
+      "reviews": "Reviews"
+    },
+    "overview": {
+      "description": "Description",
+      "whatYouLearn": "What you'll learn",
+      "requirements": "Requirements",
+      "p1": "Phasellus enim magna, varius et commodo ut, ultricies vitae velit. Ut nulla tellus, eleifend euismod pellentesque vel, sagittis vel justo. In libero urna, venenatis sit amet ornare non, suscipit nec risus. Sed consequat justo non mauris pretium at tempor justo sodales.",
+      "p2": "This course is aimed at people interested in UI/UX Design. We'll start from the very beginning and work all the way through, step by step. If you already have some UI/UX Design experience but want to get up to speed then this course is perfect for you too!",
+      "p3": "First, we will go over the differences between UX and UI Design. We will look at what our brief for this real-world project is, then we will learn about low-fidelity wireframes and how to make use of existing UI design kits.",
+      "req1": "You will need a copy of Adobe XD 2019 or above. A free trial can be downloaded from Adobe.",
+      "req2": "No previous design experience is needed.",
+      "req3": "No previous Adobe XD skills are needed.",
+      "showMore": "Show more",
+      "showLess": "Show less"
+    },
+    "content": {
+      "sections": "sections",
+      "lectures": "lectures",
+      "expandAll": "Expand All Sections",
+      "preview": "Preview"
+    },
+    "instructor": {
+      "title": "Instructor",
+      "rating": "Instructor Rating",
+      "reviews": "Reviews",
+      "students": "Students",
+      "courses": "Courses"
+    },
+    "reviews": {
+      "studentFeedback": "Student feedback",
+      "courseRating": "Course Rating",
+      "reviewsTitle": "Reviews",
+      "wasHelpful": "Was this review helpful?",
+      "yes": "Yes",
+      "no": "No",
+      "viewAll": "View All Reviews",
+      "writeReview": "Write a Review",
+      "reviewTitle": "Review Title",
+      "reviewContent": "Review Content",
+      "submit": "Submit Review"
+    },
+    "relatedCourses": "Related Courses"
+  },
   "coursesPage": {
     "header": {
       "eyebrow": "Explore",

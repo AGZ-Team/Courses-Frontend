@@ -54,11 +54,27 @@ export default function BreadCrumb({items, className}: BreadCrumbProps) {
       return crumbs;
     }
 
+    // Known translatable segments
+    const knownSegments = ['courses', 'events', 'blog', 'pages', 'contact', 'login', 'signup', 'privacy', 'terms'];
+
     localeSegments.forEach((segment, index) => {
       const href = `/${[locale, ...localeSegments.slice(0, index + 1)].join('/')}`;
-      const label = t(segment as Parameters<typeof t>[0], {
-        defaultValue: formatSegment(segment)
-      });
+      let label: string;
+      
+      // Check if it's a dynamic segment (contains numbers or special patterns)
+      const isDynamic = /^\d+$/.test(segment) || segment.match(/^[a-z]+-\d+$/);
+      
+      if (isDynamic) {
+        // For dynamic segments like course IDs, skip them in breadcrumb
+        return;
+      } else if (knownSegments.includes(segment)) {
+        // Use translation for known segments
+        label = t(segment as Parameters<typeof t>[0]);
+      } else {
+        // Format unknown segments
+        label = formatSegment(segment);
+      }
+      
       crumbs.push({label, href});
     });
 

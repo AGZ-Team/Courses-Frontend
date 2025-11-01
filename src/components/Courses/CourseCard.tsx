@@ -1,6 +1,7 @@
 "use client";
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { FaStar } from 'react-icons/fa';
 import { LuCirclePlay, LuClock3, LuGraduationCap } from 'react-icons/lu';
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
@@ -126,7 +127,8 @@ export function CourseCardItem({
       onMouseEnter={() => handleEnter()}
       onMouseLeave={() => handleLeave()}
     >
-      <div
+      <Link
+        href={`/${locale}/courses/${course.id}`}
         className={`flex h-full flex-col overflow-hidden rounded-2xl border border-[#e5e7fb] bg-white shadow-[0_24px_60px_rgba(12,10,78,0.08)] transition duration-300 sm:rounded-3xl ${
           isHovered ? 'sm:translate-y-2 sm:shadow-[0_38px_90px_rgba(12,10,78,0.18)]' : ''
         }`}
@@ -223,7 +225,7 @@ export function CourseCardItem({
             </div>
           </div>
         </div>
-      </div>
+      </Link>
 
       <div
         className={`absolute z-20 hidden w-[360px] max-w-[calc(100vw-48px)] rounded-3xl border border-[#e5e7fb] bg-white p-6 shadow-[0_32px_80px_rgba(12,10,78,0.16)] transition duration-200 ease-out lg:block ${positionClass} ${transformClass} ${panelVisibilityClass}`}
