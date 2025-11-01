@@ -21,7 +21,7 @@ export function CourseHero({ course }: CourseHeroProps) {
       case 'accent':
         return 'bg-orange-500 text-white';
       default:
-        return 'bg-purple-600 text-white';
+        return 'bg-blue-900 text-white';
     }
   };
 
@@ -112,7 +112,7 @@ export function CourseHero({ course }: CourseHeroProps) {
                 {['facebook', 'twitter', 'instagram', 'linkedin'].map((social) => (
                   <button
                     key={social}
-                    className="w-10 h-10 rounded-full border border-[#e6e4f5] hover:bg-[#f3f2ff] transition-colors flex items-center justify-center text-[#6e6b8f] hover:text-[#5f58c6]"
+                    className="w-10 h-10 rounded-full border border-[#e6e4f5] hover:bg-blue-50 transition-colors flex items-center justify-center text-[#6e6b8f] hover:text-blue-900"
                     aria-label={`Share on ${social}`}
                   >
                     <span className="text-sm">f</span>
@@ -168,7 +168,7 @@ export function CourseHero({ course }: CourseHeroProps) {
                     className="w-16 h-16 rounded-full bg-white hover:bg-gray-100 transition-all transform hover:scale-110 flex items-center justify-center shadow-xl"
                     aria-label="Play video"
                   >
-                    <Play className="w-6 h-6 text-purple-600 ml-1 fill-purple-600" />
+                    <Play className="w-6 h-6 text-blue-600 ml-1 fill-blue-600" />
                   </button>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export function CourseHero({ course }: CourseHeroProps) {
                 </div>
 
                 <div className="grid grid-cols-1 gap-3">
-                  <button className="px-6 py-3 bg-[#6440fb] hover:bg-[#5533db] text-white font-semibold rounded-md transition-colors">
+                  <button className="px-6 py-3 bg-[#6440fb] hover:bg-blue-900 text-white font-semibold rounded-md transition-colors">
                     {t('addToCart')}
                   </button>
                   <button className="px-6 py-3 border-2 border-[#1f1c3b] text-[#1f1c3b] hover:bg-[#1f1c3b] hover:text-white font-semibold rounded-md transition-colors">

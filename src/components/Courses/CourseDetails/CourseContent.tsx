@@ -92,7 +92,7 @@ export function CourseContent({ course }: CourseContentProps) {
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full text-left px-6 py-4 rounded-lg font-medium transition-all ${
                     activeTab === tab.id
-                      ? 'bg-purple-600 text-white shadow-lg'
+                      ? 'bg-blue-900 text-white shadow-lg'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -117,7 +117,7 @@ export function CourseContent({ course }: CourseContentProps) {
                 </div>
                 <button
                   onClick={() => setShowFullDescription(!showFullDescription)}
-                  className="mt-4 text-purple-600 font-medium hover:text-purple-700 underline"
+                  className="mt-4 text-blue-600 font-medium hover:text-blue-900 underline"
                 >
                   {showFullDescription ? t('overview.showLess') : t('overview.showMore')}
                 </button>
@@ -142,9 +142,9 @@ export function CourseContent({ course }: CourseContentProps) {
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('overview.requirements')}</h2>
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-gray-700"><span className="text-purple-600 mt-1">•</span><span>{t('overview.req1')}</span></li>
-                  <li className="flex items-start gap-3 text-gray-700"><span className="text-purple-600 mt-1">•</span><span>{t('overview.req2')}</span></li>
-                  <li className="flex items-start gap-3 text-gray-700"><span className="text-purple-600 mt-1">•</span><span>{t('overview.req3')}</span></li>
+                  <li className="flex items-start gap-3 text-gray-700"><span className="text-blue-600 mt-1">•</span><span>{t('overview.req1')}</span></li>
+                  <li className="flex items-start gap-3 text-gray-700"><span className="text-blue-600 mt-1">•</span><span>{t('overview.req2')}</span></li>
+                  <li className="flex items-start gap-3 text-gray-700"><span className="text-blue-600 mt-1">•</span><span>{t('overview.req3')}</span></li>
                 </ul>
               </div>
             </div>
@@ -155,7 +155,7 @@ export function CourseContent({ course }: CourseContentProps) {
             <div className="space-y-6 animate-in fade-in duration-300">
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-gray-900">{t('tabs.content')}</h2>
-                <button className="text-purple-600 hover:text-purple-700 font-medium underline">
+                <button className="text-blue-600 hover:text-blue-900 font-medium underline">
                   {t('content.expandAll')}
                 </button>
               </div>
@@ -190,13 +190,13 @@ export function CourseContent({ course }: CourseContentProps) {
                           {section.lessons.map((lesson, idx) => (
                             <div key={idx} className="flex items-center justify-between py-2">
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                                  <Play className="w-3 h-3 text-purple-600 fill-purple-600" />
+                                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                                  <Play className="w-3 h-3 text-blue-600 fill-blue-900" />
                                 </div>
                                 <span className="text-gray-700">{lesson.title}</span>
                               </div>
                               <div className="flex items-center gap-4">
-                                <button className="text-purple-600 hover:text-purple-700 text-sm underline">
+                                <button className="text-blue-600 hover:text-blue-900 text-sm underline">
                                   {t('content.preview')}
                                 </button>
                                 <span className="text-sm text-gray-500">{lesson.duration}</span>
@@ -283,7 +283,7 @@ export function CourseContent({ course }: CourseContentProps) {
                       <div key={rating.stars} className="flex items-center gap-4">
                         <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-purple-600 rounded-full"
+                            className="h-full bg-blue-900 rounded-full"
                             style={{ width: `${rating.percentage}%` }}
                           />
                         </div>
@@ -326,8 +326,8 @@ export function CourseContent({ course }: CourseContentProps) {
                             This course is very applicable. Professor Ng explains precisely each algorithm and even tries to give an intuition for mathematical and statistic concepts behind each algorithm. Thank you very much.
                           </p>
                           <div className="flex gap-2 mt-4">
-                            <span className="text-sm text-purple-600">{t('reviews.wasHelpful')}</span>
-                            <button className="px-4 py-1 bg-purple-600 text-white text-sm rounded hover:bg-purple-700">
+                            <span className="text-sm text-blue-600">{t('reviews.wasHelpful')}</span>
+                            <button className="px-4 py-1 bg-blue-900 text-white text-sm rounded hover:bg-blue-800">
                               {t('reviews.yes')}
                             </button>
                             <button className="px-4 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300">
@@ -338,7 +338,7 @@ export function CourseContent({ course }: CourseContentProps) {
                       </div>
                     </div>
                   ))}
-                  <button className="text-purple-600 hover:text-purple-700 font-medium underline">
+                  <button className="text-blue-900 hover:text-blue-900 font-medium underline">
                     {t('reviews.viewAll')}
                   </button>
                 </div>
@@ -354,7 +354,7 @@ export function CourseContent({ course }: CourseContentProps) {
                       <input
                         type="text"
                         placeholder={t('reviews.reviewTitle')}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-transparent"
                       />
                     </div>
                     <div>
@@ -364,12 +364,12 @@ export function CourseContent({ course }: CourseContentProps) {
                       <textarea
                         rows={6}
                         placeholder={t('reviews.reviewContent')}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-transparent"
                       />
                     </div>
                     <button
                       type="submit"
-                      className="px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+                      className="px-8 py-3 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors"
                     >
                       {t('reviews.submit')}
                     </button>
