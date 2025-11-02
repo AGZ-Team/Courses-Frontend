@@ -30,6 +30,14 @@
     "privacy": {
       "title": "Privacy Policy | Educrat",
       "description": "Discover how Educrat protects learner privacy, keeps your data safe, and gives you control over your information."
+    },
+    "courses": {
+      "title": "Courses - Educrat",
+      "description": "Explore courses designed to elevate your design and development skills. Join thousands of students today."
+    },
+    "about": {
+      "title": "About Us - Educrat",
+      "description": "Learn more about Educrat's mission to deliver engaging, curated courses at a reasonable price."
     }
   },
   "home": {
@@ -134,7 +142,6 @@
     "ariaLabel": "Main Navigation",
     "home": "Home",
     "courses": "Courses",
-    "events": "Events",
     "blog": "Blog",
     "about": "About",
     "projects": "Projects",
@@ -151,7 +158,6 @@
     "home": "Home",
     "ariaLabel": "Breadcrumb navigation",
     "courses": "All Courses",
-    "events": "Events",
     "blog": "Blog",
     "about": "About",
     "contact": "Contact",
@@ -808,6 +814,158 @@
           "Update email preferences directly from any Educrat email footer.",
           "Reach out to support for enterprise privacy agreements or data processing addendums."
         ]
+      }
+    }
+  },
+  "about": {
+    "hero": {
+      "badge": "About Us",
+      "title": "We're on a mission to deliver engaging, curated courses",
+      "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting with a group of friends.",
+      "images": {
+        "collaboration": "Team collaboration",
+        "learning": "Active learning environment",
+        "community": "Learning community"
+      }
+    },
+    "welcome": {
+      "title": "Welcome to Educrat",
+      "highlight": "Enhance your skills with best Online courses",
+      "description": "You can start and finish one of these popular courses in under a day – for free! Check out the list below. Take the course for free.",
+      "subdescription": "Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt egetnvallis a cras semper auctonvallis a cras semper aucto. Neque convallis a cras semper auctor.",
+      "cta": "Start Learning For Free",
+      "stats": {
+        "courses": {
+          "value": "10,000+",
+          "label": "Online courses"
+        },
+        "students": {
+          "value": "8M+",
+          "label": "Active students"
+        },
+        "instructors": {
+          "value": "200+",
+          "label": "Expert instructors"
+        },
+        "satisfaction": {
+          "value": "98%",
+          "label": "Satisfaction rate"
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "How it works?",
+      "subtitle": "10,000+ unique online course list designs",
+      "steps": {
+        "browse": {
+          "title": "Browse courses from our expert contributors",
+          "description": "Explore thousands of courses across multiple categories and find the perfect match for your learning goals."
+        },
+        "purchase": {
+          "title": "Purchase quickly and securely",
+          "description": "Easy checkout process with multiple payment options and instant access to your courses."
+        },
+        "learn": {
+          "title": "That's it! Start learning right away",
+          "description": "Begin your learning journey immediately with lifetime access to course materials and resources."
+        }
+      }
+    },
+    "learningJourney": {
+      "title": "Start your Learning Journey Today!",
+      "subtitle": "Discover the benefits of learning with Educrat",
+      "features": {
+        "experts": {
+          "title": "Learn with Experts",
+          "description": "Gain insights and knowledge from industry leaders and experienced professionals."
+        },
+        "anything": {
+          "title": "Learn Anything",
+          "description": "Explore a wide range of topics and find courses that match your interests."
+        },
+        "flexible": {
+          "title": "Flexible Learning",
+          "description": "Study at your own pace with lifetime access to course materials."
+        },
+        "standard": {
+          "title": "Industrial Standard",
+          "description": "Courses designed to meet industry standards and requirements."
+        }
+      }
+    },
+    "whyChooseUs": {
+      "title": "Why FutureLearn?",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.",
+      "features": [
+        "Learn anything",
+        "Learn together",
+        "Learn with experts",
+        "Life Time Access"
+      ],
+      "instructor": {
+        "title": "Become an Instructor",
+        "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.",
+        "cta": "Apply Now",
+        "imageAlt": "Instructor teaching"
+      },
+      "student": {
+        "title": "Become a Student",
+        "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.",
+        "cta": "Apply Now",
+        "imageAlt": "Student learning"
+      }
+    },
+    "trustedBy": {
+      "title": "Trusted by the world's best"
+    },
+    "getApp": {
+      "title": "Learn From",
+      "highlight": "Anywhere",
+      "description": "Take classes on the go with the educrat app. Stream or download to watch on the plane, the subway, or wherever you learn best.",
+      "imageAlt": "Mobile and tablet preview of the Educrat app",
+      "apple": {
+        "href": "/#",
+        "aria": "Download on the Apple Store",
+        "alt": "Download on the Apple Store"
+      },
+      "google": {
+        "href": "/#",
+        "aria": "Get it on Google Play",
+        "alt": "Get it on Google Play"
+      }
+    },
+    "testimonials": {
+      "title": "Testimonials",
+      "subtitle": "10,000+ unique online course list designs",
+      "aria": {
+        "showBy": "Show testimonial by {name}"
+      },
+      "items": {
+        "1": {
+          "name": "Ali Tufan",
+          "role": "Product Manager, Apple Inc",
+          "quote": "It is no exaggeration to say this Educrat experience was transformative—both professionally and personally. This workshop will long remain a high point of my life."
+        },
+        "2": {
+          "name": "Courtney Henry",
+          "role": "Product Designer",
+          "quote": "The lessons are concise, practical, and immediately applicable to real projects."
+        },
+        "3": {
+          "name": "Albert Flores",
+          "role": "Frontend Engineer",
+          "quote": "Clear structure and great instructors. I advanced my skills in weeks, not months."
+        },
+        "4": {
+          "name": "Wade Warren",
+          "role": "Data Analyst",
+          "quote": "Flexible learning paths let me study around work and still make steady progress."
+        },
+        "5": {
+          "name": "Charlotte",
+          "role": "Instructor",
+          "quote": "A supportive community and quality content—this is how online learning should be."
+        }
       }
     }
   }

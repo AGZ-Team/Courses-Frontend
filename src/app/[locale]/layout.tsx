@@ -3,12 +3,13 @@ import {notFound} from 'next/navigation';
 import {getMessages, setRequestLocale} from 'next-intl/server';
 import {routing, isLocale} from '@/i18n/routing';
 import MainNavbar from '@/components/Navbar/MainNavbar';
-import {Cairo} from 'next/font/google';
+import {Cairo, Jost} from 'next/font/google';
 import ConditionalFooter from '@/components/ConditionalFooter';
 import ArrowBtn from '@/components/Home/arrowBtn';
 import BreadCrumb from '@/components/BreadCrumb';
 
 const cairo = Cairo({subsets: ['arabic', 'latin'], variable: '--font-cairo'});
+const jost = Jost({subsets: ['latin'], variable: '--font-jost'});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
@@ -30,7 +31,7 @@ export default async function LocaleLayout({children, params}: Props) {
 
   const messages = await getMessages();
   const dir = locale === 'ar' ? 'rtl' : 'ltr';
-  const fontClass = locale === 'ar' ? cairo.className : '';
+  const fontClass = locale === 'ar' ? cairo.className : jost.className;
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>

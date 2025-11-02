@@ -24,7 +24,6 @@ const MainNavbar = () => {
   const navItems: NavItem[] = [
     {labelKey: 'home', href: '/', isActive: true},
     {labelKey: 'courses', href: '/courses', hasDropdown: true},
-    {labelKey: 'events', href: '/events'},
     {labelKey: 'blog', href: '/blog'},
     {labelKey: 'about', href: '/about' },
     {labelKey: 'contact', href: '/contact'}

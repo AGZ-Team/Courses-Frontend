@@ -6,7 +6,7 @@
     font-family: var(--font-cairo), system-ui, sans-serif;
   }
   html[lang="en"] {
-    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    font-family: var(--font-jost), system-ui, sans-serif;
   }
 
 }
