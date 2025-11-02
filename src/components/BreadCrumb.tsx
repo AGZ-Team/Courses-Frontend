@@ -55,7 +55,7 @@ export default function BreadCrumb({items, className}: BreadCrumbProps) {
     }
 
     // Known translatable segments
-    const knownSegments = ['courses', 'events', 'blog', 'pages', 'contact', 'login', 'signup', 'privacy', 'terms'];
+    const knownSegments = ['courses', 'events', 'blog', 'about', 'contact', 'login', 'signup', 'privacy', 'terms'];
 
     localeSegments.forEach((segment, index) => {
       const href = `/${[locale, ...localeSegments.slice(0, index + 1)].join('/')}`;

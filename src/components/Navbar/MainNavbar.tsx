@@ -22,11 +22,11 @@ const MainNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems: NavItem[] = [
-    {labelKey: 'home', href: '/', hasDropdown: true, isActive: true},
+    {labelKey: 'home', href: '/', isActive: true},
     {labelKey: 'courses', href: '/courses', hasDropdown: true},
-    {labelKey: 'events', href: '/events', hasDropdown: true},
-    {labelKey: 'blog', href: '/blog', hasDropdown: true},
-    {labelKey: 'pages', href: '/pages', hasDropdown: true},
+    {labelKey: 'events', href: '/events'},
+    {labelKey: 'blog', href: '/blog'},
+    {labelKey: 'about', href: '/about' },
     {labelKey: 'contact', href: '/contact'}
   ];
 
