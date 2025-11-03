@@ -112,7 +112,7 @@ export default function BreadCrumb({items, className}: BreadCrumbProps) {
   return (
     <nav
       aria-label={t('ariaLabel')}
-      className={`w-full border-y mt-25 border-[#e6e4f5] bg-[#fafafaef] ${className ?? ''}`.trim()}
+      className={`w-full border-y mt-25 border-[#e6e4f5] bg-slate-100 ${className ?? ''}`.trim()}
     >
       <div className="mx-auto  flex w-full max-w-[1480px] items-center justify-left px-4 py-4 text-xs font-medium text-[#6e6b8f]">
         {trail.map((item, index) => {

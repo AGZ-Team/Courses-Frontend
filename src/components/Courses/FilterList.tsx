@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 export type FilterOption = {
   id?: string;
-  label: string;
+  labelKey: string;
   count?: number;
   type?: 'checkbox' | 'radio';
   isActive?: boolean;
@@ -19,26 +19,23 @@ type FilterListProps = {
 export function FilterList({ options, onOptionToggle, filterKey }: FilterListProps) {
   const t = useTranslations('coursesPage.filters');
 
-  const getTranslatedLabel = (label: string) => {
-    if (!filterKey) return label;
-
-    // Convert label to key format (e.g., "All" -> "all", "Free" -> "free")
-    const labelKey = label.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/gi, '');
+  const getTranslatedLabel = (labelKey: string) => {
+    if (!filterKey) return labelKey;
 
     try {
       const translationKey = `${filterKey}.options.${labelKey}`;
       const translated = t(translationKey);
-      // If translation returns the key itself, return original label
-      return translated === translationKey ? label : translated;
+      // If translation returns the key itself, return original labelKey
+      return translated === translationKey ? labelKey : translated;
     } catch {
-      return label;
+      return labelKey;
     }
   };
 
   return (
     <ul className="space-y-3">
       {options.map((option, index) => (
-        <li key={option.id ?? option.label}>
+        <li key={option.id ?? option.labelKey}>
           <button
             type="button"
             onClick={() => onOptionToggle(index)}
@@ -80,7 +77,7 @@ export function FilterList({ options, onOptionToggle, filterKey }: FilterListPro
                   </svg>
                 )}
               </span>
-              <span>{getTranslatedLabel(option.label)}</span>
+              <span>{getTranslatedLabel(option.labelKey)}</span>
             </span>
             {typeof option.count === 'number' ? (
               <span className="text-xs font-medium text-[#8e8aa9]">({option.count})</span>

@@ -4,8 +4,10 @@ import {Link, usePathname} from '@/i18n/routing';
 import LanguageSwitcher from '@/components/Navbar/LanguageSwitcher';
 import {useTranslations, useLocale} from 'next-intl';
 import { LuSearch } from 'react-icons/lu';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { RiShoppingCart2Fill } from 'react-icons/ri';
+import { NavDropdown, DropdownItem } from './NavDropdown';
+import NavRightBanner from './NavRightBanner';
 
 type NavItem = {
   labelKey: string;
@@ -20,6 +22,26 @@ const MainNavbar = () => {
   const pathname = usePathname();
   const isAr = locale === 'ar';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState<{lessons: boolean; courses: boolean}>({lessons: false, courses: false});
+
+  // Course categories dropdown items
+  const courseCategoriesItems: DropdownItem[] = useMemo(() => [
+    { labelKey: 'all', label: t('courseCategories.all'), href: '/courses' },
+    { labelKey: 'design', label: t('courseCategories.design'), href: '/courses?category=design' },
+    { labelKey: 'development', label: t('courseCategories.development'), href: '/courses?category=development' },
+    { labelKey: 'business', label: t('courseCategories.business'), href: '/courses?category=business' },
+    { labelKey: 'marketing', label: t('courseCategories.marketing'), href: '/courses?category=marketing' },
+    { labelKey: 'photography', label: t('courseCategories.photography'), href: '/courses?category=photography' },
+    { labelKey: 'art', label: t('courseCategories.art'), href: '/courses?category=art' },
+  ], [t]);
+
+  // My Lessons dropdown items
+  const myLessonsItems: DropdownItem[] = useMemo(() => [
+    { labelKey: 'lesson1', label: t('myLessonsDropdown.lesson1'), href: '/lesson' },
+    { labelKey: 'lesson2', label: t('myLessonsDropdown.lesson2'), href: '/lesson' },
+    { labelKey: 'lesson3', label: t('myLessonsDropdown.lesson3'), href: '/lesson' },
+    { labelKey: 'allLessons', label: t('myLessonsDropdown.allLessons'), href: '/lesson' },
+  ], [t]);
 
   const navItems: NavItem[] = [
     {labelKey: 'home', href: '/', isActive: true},
@@ -42,7 +64,7 @@ const MainNavbar = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#0b0440] text-white shadow-[0_8px_24px_rgba(7,5,48,0.25)]">
+    <header className="fixed inset-x-0 top-0 z-100 border-b border-white/10 bg-[#0b0440] text-white shadow-[0_8px_24px_rgba(7,5,48,0.25)]">
       <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1600px] items-center px-6`}>
         {/* Left group: Logo + Explore */}
         <div className="flex items-center gap-4 shrink-0">
@@ -67,58 +89,99 @@ const MainNavbar = () => {
           <span className={`${isAr ? 'text-[22px]' : 'text-[18px]'} whitespace-nowrap font-semibold`}>{t('brandName')}</span>
         </Link>
 
-        {/* Desktop Explore Button */}
-        <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-emerald-400 transition hover:text-emerald-300 lg:flex`}>
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={1.8}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M4 6h16" />
-            <path d="M4 12h16" />
-            <path d="M4 18h10" />
-          </svg>
-          <span className="whitespace-nowrap">{t('explore')}</span>
-        </button>
+        {/* Desktop My Lessons Dropdown */}
+        <NavDropdown
+          trigger={
+            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-emerald-400 transition hover:text-emerald-300 lg:flex`}>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.8}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 6h16" />
+                <path d="M4 12h16" />
+                <path d="M4 18h10" />
+              </svg>
+              <span className="whitespace-nowrap">{t('myLessons')}</span>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 12 12"
+                className="h-3 w-3"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m2.5 4.5 3.5 3 3.5-3" />
+              </svg>
+            </button>
+          }
+          items={myLessonsItems}
+          align="left"
+          rightPanel = {<NavRightBanner />}
+        />
+
         </div>
 
         {/* Desktop Navigation */}
         <nav className={`hidden flex-1 items-center justify-center gap-8 ${isAr ? 'px-4 text-[15px]' : 'px-2 text-[15px]'} font-medium md:flex`} aria-label={t('ariaLabel')}>
-          {navItems.map((item) => (
-            <Link
-              key={item.labelKey}
-              href={item.href}
-              className={
-                'relative flex items-center gap-1 whitespace-nowrap transition ' +
-                (isActive(item.href) ? 'text-[#44ffae]' : 'text-white/80 hover:text-white')
-              }
-              aria-current={isActive(item.href) ? 'page' : undefined}
-            >
-              <span className="whitespace-nowrap">{t(item.labelKey)}</span>
-              {item.hasDropdown && (
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 12 12"
-                  className={`h-3 w-3 ${isActive(item.href) ? 'text-[#44ffae]' : 'opacity-70'}`}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.6}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m2.5 4.5 3.5 3 3.5-3" />
-                </svg>
-              )}
-              {isActive(item.href) && (
-                <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-[#44ffae]" />
-              )}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            if (item.hasDropdown && item.labelKey === 'courses') {
+              return (
+                <NavDropdown
+                  key={item.labelKey}
+                  trigger={
+                    <div className={
+                      'relative flex items-center gap-1 whitespace-nowrap transition cursor-pointer ' +
+                      (isActive(item.href) ? 'text-[#44ffae]' : 'text-white/80 hover:text-white')
+                    }>
+                      <span className="whitespace-nowrap">{t(item.labelKey)}</span>
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 12 12"
+                        className={`h-3 w-3 ${isActive(item.href) ? 'text-[#44ffae]' : 'opacity-70'}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.6}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="m2.5 4.5 3.5 3 3.5-3" />
+                      </svg>
+                      {isActive(item.href) && (
+                        <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-[#44ffae]" />
+                      )}
+                    </div>
+                  }
+                  items={courseCategoriesItems}
+                  align="center"
+                  rightPanel={<NavRightBanner />}
+                />
+              );
+            }
+            return (
+              <Link
+                key={item.labelKey}
+                href={item.href}
+                className={
+                  'relative flex items-center gap-1 whitespace-nowrap transition ' +
+                  (isActive(item.href) ? 'text-[#44ffae]' : 'text-white/80 hover:text-white')
+                }
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                <span className="whitespace-nowrap">{t(item.labelKey)}</span>
+                {isActive(item.href) && (
+                  <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-[#44ffae]" />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Right Side Actions */}
@@ -186,53 +249,87 @@ const MainNavbar = () => {
       {isMobileMenuOpen && (
         <div className="border-t border-white/10 bg-[#0b0440] md:hidden">
           <nav className="mx-auto max-w-[1300px] px-6 py-6">
-            {/* Explore Button */}
-            <button className={`flex w-full items-center gap-2 rounded-lg ${isAr ? 'px-5 py-3 text-[16px]' : 'px-4 py-2.5 text-[14px]'} font-medium text-emerald-400 transition hover:bg-white/5 mb-4`}>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {/* My Lessons - mobile accordion */}
+            <div className="mb-4">
+              <button
+                type="button"
+                className={`flex w-full items-center justify-between rounded-lg ${isAr ? 'px-5 py-3 text-[16px]' : 'px-4 py-2.5 text-[14px]'} font-medium text-emerald-400 bg-white/5`}
+                aria-expanded={mobileOpen.lessons}
+                onClick={() => setMobileOpen((s) => ({...s, lessons: !s.lessons}))}
               >
-                <path d="M4 6h16" />
-                <path d="M4 12h16" />
-                <path d="M4 18h10" />
-              </svg>
-              <span>{t('explore')}</span>
-            </button>
+                <span className="flex items-center gap-2">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 6h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 18h10" />
+                  </svg>
+                  {t('myLessons')}
+                </span>
+                <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${mobileOpen.lessons ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m2.5 4.5 3.5 3 3.5-3" />
+                </svg>
+              </button>
+              <div className={`mt-2 space-y-1 pl-4 overflow-hidden transition-all duration-300 ease-out ${mobileOpen.lessons ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                {myLessonsItems.map((lesson) => (
+                  <Link
+                    key={lesson.labelKey}
+                    href={lesson.href}
+                    className={`block rounded-lg px-4 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {lesson.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
-            {/* Navigation Links */}
+            {/* Navigation Links (with Courses accordion) */}
             <div className="space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.labelKey}
-                  href={item.href}
-                  className={`flex items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${
-                    isActive(item.href) ? 'text-[#44ffae]' : 'text-white/70'
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium`}>{t(item.labelKey)}</span>
-                  {item.hasDropdown && (
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 12 12"
-                      className="h-3 w-3"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={1.6}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="m2.5 4.5 3.5 3 3.5-3" />
-                    </svg>
-                  )}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                if (item.hasDropdown && item.labelKey === 'courses') {
+                  return (
+                    <div key={item.labelKey} className="rounded-lg">
+                      <button
+                        type="button"
+                        className={`flex w-full items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${isActive(item.href) ? 'text-[#44ffae]' : 'text-white/70'}`}
+                        aria-expanded={mobileOpen.courses}
+                        onClick={() => setMobileOpen((s) => ({...s, courses: !s.courses}))}
+                      >
+                        <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium`}>{t(item.labelKey)}</span>
+                        <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${mobileOpen.courses ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m2.5 4.5 3.5 3 3.5-3" />
+                        </svg>
+                      </button>
+                      <div className={`pl-4 overflow-hidden transition-all duration-300 ease-out ${mobileOpen.courses ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                        <div className="mt-1 space-y-1">
+                          {courseCategoriesItems.map((cat) => (
+                            <Link
+                              key={cat.labelKey}
+                              href={cat.href}
+                              className="block rounded-lg px-4 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {cat.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.labelKey}
+                    href={item.href}
+                    className={`flex items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${
+                      isActive(item.href) ? 'text-[#44ffae]' : 'text-white/70'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium`}>{t(item.labelKey)}</span>
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Search */}

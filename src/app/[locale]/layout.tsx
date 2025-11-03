@@ -8,8 +8,8 @@ import ConditionalFooter from '@/components/ConditionalFooter';
 import ArrowBtn from '@/components/Home/arrowBtn';
 import BreadCrumb from '@/components/BreadCrumb';
 
-const cairo = Cairo({subsets: ['arabic', 'latin'], variable: '--font-cairo'});
-const jost = Jost({subsets: ['latin'], variable: '--font-jost'});
+const cairo = Cairo({subsets: ['arabic', 'latin'], variable: '--font-cairo', preload: false});
+const jost = Jost({subsets: ['latin'], variable: '--font-jost', preload: false});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));

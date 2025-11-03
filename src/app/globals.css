@@ -28,6 +28,68 @@
   display: none;
 }
 
+/* Global scrollbar theme across the app */
+html, body {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #5f58c6 #f3f2ff;
+}
+button:hover{
+  cursor: pointer;
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+  background-color: #5f58c6;
+  border-radius: 9999px;
+  border: 2px solid #f3f2ff;
+}
+
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+  background: #f3f2ff;
+}
+
+/* Themed custom scrollbar: hidden by default, visible on hover for specific containers */
+/* Keep constant width; change opacity on hover to avoid layout shift */
+.custom-scroll {
+  /* Firefox */
+  scrollbar-width: thin; /* always thin (no size change) */
+  scrollbar-color: transparent transparent; /* transparent by default */
+}
+
+.custom-scroll:hover {
+  scrollbar-color: #5f58c6 #f3f2ff; /* show colors on hover */
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px; /* constant width */
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(95, 88, 198, 0); /* transparent by default */
+  border-radius: 9999px;
+  border: 2px solid rgba(243, 242, 255, 0); /* transparent border */
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.custom-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: #5f58c6; /* brand indigo */
+  border-color: #f3f2ff;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent; /* no track color by default */
+}
+
+.custom-scroll:hover::-webkit-scrollbar-track {
+  background: #f3f2ff; /* show on hover */
+}
+
 .waves {
   position: absolute;
   bottom: 0;

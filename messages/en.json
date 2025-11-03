@@ -148,11 +148,27 @@
     "services": "Services",
     "contact": "Contact",
     "explore": "Explore",
+    "myLessons": "My Lessons",
     "search": "Search",
     "cart": "Cart",
     "login": "Log in",
     "signup": "Sign up",
-    "brandName": "Educrat"
+    "brandName": "Educrat",
+    "courseCategories": {
+      "all": "All Courses",
+      "design": "Design",
+      "development": "Development",
+      "business": "Business",
+      "marketing": "Marketing",
+      "photography": "Photography",
+      "art": "Art & Creativity"
+    },
+    "myLessonsDropdown": {
+      "lesson1": "UI/UX Design Fundamentals",
+      "lesson2": "Advanced Web Development",
+      "lesson3": "Digital Marketing Mastery",
+      "allLessons": "View All Lessons"
+    }
   },
   "breadcrumb": {
     "home": "Home",
@@ -520,16 +536,20 @@
       },
       "ratings": {
         "title": "Ratings",
-        "all": "All"
+        "all": "All",
+        "fourPointFive": "4.5 & up",
+        "fourPointZero": "4.0 & up",
+        "threePointFive": "3.5 & up",
+        "threePointZero": "3.0 & up"
       },
       "instructors": {
         "title": "Instructors",
         "options": {
           "all": "All",
-          "janecooper": "Jane Cooper",
-          "jennywilson": "Jenny Wilson",
-          "albertflores": "Albert Flores",
-          "jacobjones": "Jacob Jones"
+          "janeCooper": "Jane Cooper",
+          "jennyWilson": "Jenny Wilson",
+          "albertFlores": "Albert Flores",
+          "jacobJones": "Jacob Jones"
         },
         "footer": "Show more"
       },
@@ -565,10 +585,10 @@
         "title": "Duration",
         "options": {
           "all": "All",
-          "01hour": "0 - 1 hour",
-          "13hours": "1 - 3 hours",
-          "36hours": "3 - 6 hours",
-          "6hours": "6+ hours"
+          "zeroToOneHour": "0 - 1 hour",
+          "oneToThreeHours": "1 - 3 hours",
+          "threeToSixHours": "3 - 6 hours",
+          "sixPlusHours": "6+ hours"
         }
       }
     },
@@ -967,6 +987,59 @@
           "quote": "A supportive community and quality content—this is how online learning should be."
         }
       }
+    }
+  },
+  "lessonPage": {
+    "header": {
+      "backToCourse": "Back to Course"
+    },
+    "sidebar": {
+      "courseContent": "Course Content",
+      "search": "Search lessons",
+      "lessons": "Lessons",
+      "duration": "Duration",
+      "preview": "Preview",
+      "courseDetails": "Course Details",
+      "certificate": "Certificate of Completion",
+      "enrolled": "enrolled",
+      "language": "English Language"
+    },
+    "video": {
+      "share": "Share",
+      "like": "Like",
+      "comment": "Comment"
+    },
+    "description": {
+      "title": "Description"
+    },
+    "whatYouLearn": {
+      "title": "What you'll learn"
+    },
+    "requirements": {
+      "title": "Requirements"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "reviewerName": "Ali Tufan",
+      "daysAgo": "Days ago",
+      "reviewTitle": "The best LMS Design",
+      "reviewText": "This course is very applicable. Professor Ng explains precisely each algorithm and even tries to give an intuition for mathematical and statistic concepts behind each algorithm. Thank you very much.",
+      "wasHelpful": "Was this review helpful?",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "writeReview": {
+      "title": "Write a Review",
+      "reviewTitle": "Review Title",
+      "reviewTitlePlaceholder": "Great Courses",
+      "reviewContent": "Review Content",
+      "reviewContentPlaceholder": "Message",
+      "submit": "Submit Review"
+    },
+    "sections": {
+      "courseContent": "Course Content",
+      "theBrief": "The Brief",
+      "typeColorIcon": "Type, Color & Icon Introduction"
     }
   }
 }

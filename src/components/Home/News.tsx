@@ -14,7 +14,7 @@ const News = () => {
     ? (blogPostsRaw as Array<{category: string; title: string; date: string}>).map((post, idx) => ({
         id: idx + 1,
         ...post,
-        image: `https://educrat-react.vercel.app/assets/img/blog-list/${idx + 1}.png`
+        image: `/newsImg/${idx + 1}.png`
       }))
     : [];
     
@@ -22,7 +22,7 @@ const News = () => {
     ? (eventsRaw as Array<{category: string; title: string; date: string}>).map((event, idx) => ({
         id: idx + 1,
         ...event,
-        image: `https://educrat-react.vercel.app/assets/img/courses-list/${idx + 1}.png`
+        image: `/newsImg/n${idx + 1}.png`
       }))
     : [];
   return (
@@ -58,9 +58,11 @@ const News = () => {
                   <Image
                     src={post.image}
                     alt={post.title}
-                    fill
+                    width={600}
+                    height={220}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+                    loading="lazy"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.05]"
                   />
                 </div>
 
@@ -89,9 +91,11 @@ const News = () => {
                   <Image
                     src={event.image}
                     alt={event.title}
-                    fill
+                    width={110}
+                    height={96}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+                    loading="lazy"
                     sizes="110px"
-                    className="object-cover transition duration-500 group-hover:scale-[1.05]"
                   />
                 </div>
 

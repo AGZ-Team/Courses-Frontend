@@ -51,7 +51,7 @@ const JoinUs = () => {
               }}
             >
               <Image
-                src="https://educrat-react.vercel.app/assets/img/about/1.png"
+                src="/heroImages/joinUs.png"
                 alt={t('imageAlt')}
                 width={520}
                 height={520}

@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {useLocale} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 
 type SortDropdownProps = {
   options: string[];
@@ -16,6 +16,7 @@ export function SortDropdown({options, onChange, className}: SortDropdownProps) 
   const listRef = useRef<HTMLDivElement | null>(null);
   const locale = useLocale();
   const isRTL = locale === 'ar';
+  const t = useTranslations('coursesPage.sortOptions');
 
   const selected = useMemo(() => options[activeIndex] ?? '', [options, activeIndex]);
 
@@ -70,7 +71,7 @@ export function SortDropdown({options, onChange, className}: SortDropdownProps) 
         aria-expanded={open}
         className={`h-11 w-full rounded-xl border border-[#d9d7f0] bg-white px-4 ${paddingEndClass} text-start font-semibold text-[#433f74] shadow-[0_12px_30px_rgba(12,10,78,0.08)] transition hover:border-[#7c5cff] focus:border-[#7c5cff] focus:outline-none focus:ring-2 focus:ring-[#7c5cff]/20 md:w-48`}
       >
-        <span className="block truncate">{selected}</span>
+        <span className="block truncate">{t(selected)}</span>
         <svg
           className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-[#433f74] ${caretSideClass}`}
           width="18"
@@ -115,7 +116,7 @@ export function SortDropdown({options, onChange, className}: SortDropdownProps) 
                     : 'text-[#433f74] hover:bg-[#f7f7ff]'
                 }`}
               >
-                <span className="truncate">{opt}</span>
+                <span className="truncate">{t(opt)}</span>
                 {selected ? (
                   <svg
                     className="text-[#6440fb]"

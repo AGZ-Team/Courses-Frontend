@@ -27,7 +27,7 @@ const InstructorCarousel = () => {
   const INSTRUCTORS = instructors.map((inst, idx) => ({
     id: idx + 1,
     ...inst,
-    image: `https://educrat-react.vercel.app/assets/img/team/${idx + 1}.png`,
+    image: `/instructors/${idx + 1}.png`,
     rating: ['4.5', '3.8', '5.0', '4.2'][idx] || '4.5'
   }));
   return (

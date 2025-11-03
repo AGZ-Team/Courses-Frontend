@@ -3,7 +3,9 @@ import { CoursesClient } from '@/components/Courses/CoursesClient';
 import type { CourseCard } from '@/components/Courses/CourseCard';
 import type { FilterGroup } from '@/components/Courses/CoursesClient';
 import type { RatingFilter } from '@/components/Courses/RatingList';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+export const dynamic = 'force-dynamic';
 
 const COURSES: CourseCard[] = [
   {
@@ -270,63 +272,63 @@ const FILTER_GROUPS: FilterGroup[] = [
   {
     title: 'Category',
     options: [
-      { label: 'All', count: 43, type: 'checkbox', isActive: true },
-      { label: 'Art', count: 4, type: 'checkbox' },
-      { label: 'Animation', count: 6, type: 'checkbox' },
-      { label: 'Design', count: 10, type: 'checkbox' },
-      { label: 'Photography', count: 9, type: 'checkbox' },
-      { label: 'Programming', count: 7, type: 'checkbox' },
-      { label: 'Writing', count: 7, type: 'checkbox' }
+      { labelKey: 'all', count: 43, type: 'checkbox', isActive: true },
+      { labelKey: 'art', count: 4, type: 'checkbox' },
+      { labelKey: 'animation', count: 6, type: 'checkbox' },
+      { labelKey: 'design', count: 10, type: 'checkbox' },
+      { labelKey: 'photography', count: 9, type: 'checkbox' },
+      { labelKey: 'programming', count: 7, type: 'checkbox' },
+      { labelKey: 'writing', count: 7, type: 'checkbox' }
     ],
     footerLabel: 'Show more'
   },
   {
     title: 'Instructors',
     options: [
-      { label: 'All', count: 43, type: 'checkbox', isActive: true },
-      { label: 'Jane Cooper', count: 9, type: 'checkbox' },
-      { label: 'Jenny Wilson', count: 7, type: 'checkbox' },
-      { label: 'Albert Flores', count: 6, type: 'checkbox' },
-      { label: 'Jacob Jones', count: 6, type: 'checkbox' }
+      { labelKey: 'all', count: 43, type: 'checkbox', isActive: true },
+      { labelKey: 'janeCooper', count: 9, type: 'checkbox' },
+      { labelKey: 'jennyWilson', count: 7, type: 'checkbox' },
+      { labelKey: 'albertFlores', count: 6, type: 'checkbox' },
+      { labelKey: 'jacobJones', count: 6, type: 'checkbox' }
     ],
     footerLabel: 'Show more'
   },
   {
     title: 'Price',
     options: [
-      { label: 'All', count: 43, type: 'radio', isActive: true },
-      { label: 'Free', count: 11, type: 'radio' },
-      { label: 'Paid', count: 32, type: 'radio' }
+      { labelKey: 'all', count: 43, type: 'radio', isActive: true },
+      { labelKey: 'free', count: 11, type: 'radio' },
+      { labelKey: 'paid', count: 32, type: 'radio' }
     ]
   },
   {
     title: 'Level',
     options: [
-      { label: 'All', count: 43, type: 'checkbox', isActive: true },
-      { label: 'Beginner', count: 12, type: 'checkbox' },
-      { label: 'Intermediate', count: 14, type: 'checkbox' },
-      { label: 'Advanced', count: 10, type: 'checkbox' },
-      { label: 'Expert', count: 7, type: 'checkbox' }
+      { labelKey: 'all', count: 43, type: 'checkbox', isActive: true },
+      { labelKey: 'beginner', count: 12, type: 'checkbox' },
+      { labelKey: 'intermediate', count: 14, type: 'checkbox' },
+      { labelKey: 'advanced', count: 10, type: 'checkbox' },
+      { labelKey: 'expert', count: 7, type: 'checkbox' }
     ]
   },
   {
     title: 'Language',
     options: [
-      { label: 'All', count: 43, type: 'checkbox', isActive: true },
-      { label: 'English', count: 18, type: 'checkbox' },
-      { label: 'Spanish', count: 7, type: 'checkbox' },
-      { label: 'German', count: 6, type: 'checkbox' },
-      { label: 'French', count: 5, type: 'checkbox' }
+      { labelKey: 'all', count: 43, type: 'checkbox', isActive: true },
+      { labelKey: 'english', count: 18, type: 'checkbox' },
+      { labelKey: 'spanish', count: 7, type: 'checkbox' },
+      { labelKey: 'german', count: 6, type: 'checkbox' },
+      { labelKey: 'french', count: 5, type: 'checkbox' }
     ]
   },
   {
     title: 'Duration',
     options: [
-      { label: 'All', count: 43, type: 'checkbox', isActive: true },
-      { label: '0 - 1 hour', count: 8, type: 'checkbox' },
-      { label: '1 - 3 hours', count: 14, type: 'checkbox' },
-      { label: '3 - 6 hours', count: 11, type: 'checkbox' },
-      { label: '6+ hours', count: 10, type: 'checkbox' }
+      { labelKey: 'all', count: 43, type: 'checkbox', isActive: true },
+      { labelKey: 'zeroToOneHour', count: 8, type: 'checkbox' },
+      { labelKey: 'oneToThreeHours', count: 14, type: 'checkbox' },
+      { labelKey: 'threeToSixHours', count: 11, type: 'checkbox' },
+      { labelKey: 'sixPlusHours', count: 10, type: 'checkbox' }
     ]
   }
 ];
@@ -346,20 +348,26 @@ const SORT_OPTIONS_KEYS = [
   'rating'
 ];
 
-export default async function CoursesPage() {
+interface CoursesPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function CoursesPage({ params }: CoursesPageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations('coursesPage');
   
   const ratingFilters: RatingFilter[] = RATING_FILTERS_KEYS.map((item) => ({
-    label: t(`ratingFilters.${item.labelKey}`),
+    labelKey: item.labelKey,
     count: item.count,
     threshold: item.threshold
   }));
 
-  const sortOptions = SORT_OPTIONS_KEYS.map((key) => t(`sortOptions.${key}`));
+  const sortOptions = SORT_OPTIONS_KEYS;
 
   return (
     <main className="w-full bg-white pb-24 text-[#1f1c3b]">
-      <HeaderSection />
+      <HeaderSection locale={locale} />
       <CoursesClient
         courses={COURSES}
         filterGroups={FILTER_GROUPS}

@@ -1,4 +1,4 @@
-﻿{
+{
     "welcome_message": "مرحبًا بك في تطبيقنا!",
     "login_button": "تسجيل الدخول",
     "signup_button": "إنشاء حساب",
@@ -164,11 +164,27 @@
         "services": "الخدمات",
         "contact": "اتصل بنا",
         "explore": "استكشف",
+        "myLessons": "دروسي",
         "search": "بحث",
         "cart": "السلة",
         "login": "تسجيل الدخول",
         "signup": "إنشاء حساب",
-        "brandName": "إديوكرات"
+        "brandName": "إديوكرات",
+        "courseCategories": {
+            "all": "جميع الدورات",
+            "design": "التصميم",
+            "development": "البرمجة",
+            "business": "الأعمال",
+            "marketing": "التسويق",
+            "photography": "التصوير",
+            "art": "الفن والإبداع"
+        },
+        "myLessonsDropdown": {
+            "lesson1": "أساسيات تصميم واجهة المستخدم",
+            "lesson2": "تطوير الويب المتقدم",
+            "lesson3": "إتقان التسويق الرقمي",
+            "allLessons": "عرض جميع الدروس"
+        }
     },
     "breadcrumb": {
         "home": "الرئيسية",
@@ -472,16 +488,20 @@
             },
             "ratings": {
                 "title": "التقييمات",
-                "all": "الكل"
+                "all": "الكل",
+                "fourPointFive": "4.5 فأعلى",
+                "fourPointZero": "4.0 فأعلى",
+                "threePointFive": "3.5 فأعلى",
+                "threePointZero": "3.0 فأعلى"
             },
             "instructors": {
                 "title": "المدربون",
                 "options": {
                     "all": "الكل",
-                    "janecooper": "جين كوبر",
-                    "jennywilson": "جيني ويلسون",
-                    "albertflores": "ألبرت فلوريس",
-                    "jacobjones": "جاكوب جونز"
+                    "janeCooper": "جين كوبر",
+                    "jennyWilson": "جيني ويلسون",
+                    "albertFlores": "ألبرت فلوريس",
+                    "jacobJones": "جاكوب جونز"
                 },
                 "footer": "عرض المزيد"
             },
@@ -517,10 +537,10 @@
                 "title": "المدة",
                 "options": {
                     "all": "الكل",
-                    "01hour": "0 - 1 ساعة",
-                    "13hours": "1 - 3 ساعات",
-                    "36hours": "3 - 6 ساعات",
-                    "6hours": "6+ ساعات"
+                    "zeroToOneHour": "0 - 1 ساعة",
+                    "oneToThreeHours": "1 - 3 ساعات",
+                    "threeToSixHours": "3 - 6 ساعات",
+                    "sixPlusHours": "6+ ساعات"
                 }
             }
         },
@@ -951,6 +971,59 @@
                     "quote": "مجتمع داعم ومحتوى عالي الجودة — هكذا يجب أن يكون التعلم عبر الإنترنت."
                 }
             }
+        }
+    },
+    "lessonPage": {
+        "header": {
+            "backToCourse": "العودة إلى الدورة"
+        },
+        "sidebar": {
+            "courseContent": "محتوى الدورة",
+            "search": "البحث في الدروس",
+            "lessons": "الدروس",
+            "duration": "المدة",
+            "preview": "معاينة",
+            "courseDetails": "تفاصيل الدورة",
+            "certificate": "شهادة إتمام",
+            "enrolled": "مسجل",
+            "language": "اللغة الإنجليزية"
+        },
+        "video": {
+            "share": "مشاركة",
+            "like": "إعجاب",
+            "comment": "تعليق"
+        },
+        "description": {
+            "title": "الوصف"
+        },
+        "whatYouLearn": {
+            "title": "ما ستتعلمه"
+        },
+        "requirements": {
+            "title": "المتطلبات"
+        },
+        "reviews": {
+            "title": "التقييمات",
+            "reviewerName": "علي طوفان",
+            "daysAgo": "أيام مضت",
+            "reviewTitle": "أفضل تصميم LMS",
+            "reviewText": "هذه الدورة قابلة للتطبيق بشكل كبير. يشرح البروفيسور Ng بدقة كل خوارزمية ويحاول حتى إعطاء حدس للمفاهيم الرياضية والإحصائية وراء كل خوارزمية. شكراً جزيلاً.",
+            "wasHelpful": "هل كان هذا التقييم مفيداً؟",
+            "yes": "نعم",
+            "no": "لا"
+        },
+        "writeReview": {
+            "title": "اكتب تقييماً",
+            "reviewTitle": "عنوان التقييم",
+            "reviewTitlePlaceholder": "دورات رائعة",
+            "reviewContent": "محتوى التقييم",
+            "reviewContentPlaceholder": "رسالة",
+            "submit": "إرسال التقييم"
+        },
+        "sections": {
+            "courseContent": "محتوى الدورة",
+            "theBrief": "الملخص",
+            "typeColorIcon": "مقدمة الطباعة واللون والأيقونة"
         }
     }
 }

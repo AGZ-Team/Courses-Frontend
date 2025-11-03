@@ -4,7 +4,7 @@ import { FaStar } from 'react-icons/fa';
 import { useTranslations } from 'next-intl';
 
 export type RatingFilter = {
-  label: string;
+  labelKey: string;
   count: number;
   threshold: number;
 };
@@ -41,10 +41,10 @@ export function RatingList({ ratings }: RatingListProps) {
         <span className="text-xs font-medium text-[#8e8aa9]">(43)</span>
       </li>
       {ratings.map((rating) => (
-        <li key={rating.label} className="flex items-center justify-between gap-3">
+        <li key={rating.labelKey} className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-sm">
             <StarRow value={rating.threshold} />
-            {rating.label}
+            {t(`filters.ratings.${rating.labelKey}`)}
           </div>
           <span className="text-xs font-medium text-[#8e8aa9]">({rating.count})</span>
         </li>

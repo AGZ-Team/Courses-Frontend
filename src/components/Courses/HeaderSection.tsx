@@ -1,7 +1,14 @@
-import { useTranslations } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-export function HeaderSection() {
-  const t = useTranslations('coursesPage.header');
+interface HeaderSectionProps {
+  locale?: string;
+}
+
+export async function HeaderSection({ locale }: HeaderSectionProps = {}) {
+  if (locale) {
+    setRequestLocale(locale);
+  }
+  const t = await getTranslations('coursesPage.header');
   return (
     <header className="w-full border-b border-[#e6e4f5] bg-white">
       <div className="mx-auto w-full max-w-[1180px] px-4 py-14 sm:px-6 sm:py-16">

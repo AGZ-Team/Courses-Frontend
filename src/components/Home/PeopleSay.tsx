@@ -3,6 +3,7 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useLocale, useTranslations} from 'next-intl';
 import {IoArrowBack, IoArrowForward} from 'react-icons/io5';
+import Image from 'next/image';
 
 const POSITION_TOLERANCE = 6;
 
@@ -50,7 +51,7 @@ const PeopleSay = () => {
     ? (testimonialsRaw as Array<{heading: string; quote: string; name: string; role: string}>).map((item, idx) => ({
         id: idx,
         ...item,
-        avatar: `https://educrat-react.vercel.app/assets/img/testimonials/${(idx % 4) + 1}.png`
+        avatar: `/peopleImages/${(idx % 4) + 1}.png`
       }))
     : [];
 
@@ -157,9 +158,11 @@ const PeopleSay = () => {
                 <p className="mt-4 text-[15px] leading-[30px] text-[#221f3d]">“{testimonial.quote}”</p>
                 <div className="mt-5 h-px w-full bg-[#ededed]" />
                 <div className="mt-6 flex items-center gap-4">
-                  <img
+                  <Image
                     src={testimonial.avatar}
                     alt={testimonial.name}
+                    width={60}
+                    height={60}
                     className="h-15 w-15 rounded-full object-cover"
                     loading="lazy"
                   />

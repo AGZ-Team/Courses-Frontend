@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import {useMemo, useState} from 'react';
+import Image from 'next/image';
+import {useMemo, useState, memo} from 'react';
 import {FaStar} from 'react-icons/fa';
 import {LuCirclePlay, LuClock3, LuTrendingUp} from 'react-icons/lu';
 import {useTranslations, useLocale} from 'next-intl';
@@ -195,6 +196,114 @@ const formatDuration = (minutes: number) => {
   return `${hours}h ${mins.toString().padStart(2, '0')}m`;
 };
 
+// Memoized Course Card Component
+const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
+  <article
+    className="flex h-full flex-col overflow-hidden rounded-xl border border-[#e6e7f2] bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_25px_55px_rgba(32,36,69,0.12)]"
+  >
+    <div className="relative h-[220px] w-full overflow-hidden">
+      <Image
+        src={course.image}
+        alt={course.imageAlt}
+        width={400}
+        height={220}
+        className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+        loading="lazy"
+        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+      />
+
+      {course.badges && (
+        <div className="absolute left-4 right-4 top-4 flex items-center gap-3">
+          {course.badges.map((badge) => (
+            <span
+              key={badge.label}
+              className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[1.2px] ${
+                badge.variant === 'accent'
+                  ? 'bg-[#6440fb] text-white'
+                  : 'bg-[#22c55e] text-[#10254d]'
+              }`}
+            >
+              {badge.label === 'Popular' ? t('courseCard.badges.popular') : t('courseCard.badges.bestSellers')}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div className="flex flex-1 flex-col px-6 pb-7 pt-6">
+      <div className="flex items-center gap-2 text-sm font-medium text-[#f7b347]">
+        <span className="flex items-center gap-1 text-[15px] text-[#f58634]">
+          {course.rating.toFixed(1)}
+          <FaStar className="h-4 w-4" />
+        </span>
+        <span className="text-xs font-normal text-[#8b8fad]">
+          ({course.ratingCount.toLocaleString()})
+        </span>
+      </div>
+
+      <h3 className="mt-4 text-[18px] font-semibold leading-[1.35] text-[#221f3d]">
+        <Link
+          href={course.href ?? '#'}
+          className="block max-w-full overflow-hidden text-ellipsis transition-colors hover:text-[#6440fb]"
+          style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
+          title={course.title}
+        >
+          {course.title}
+        </Link>
+      </h3>
+
+      <dl className="mt-5 flex flex-wrap gap-x-2 text-[13px] text-[#6f7289]">
+        <div className="flex items-center gap-2">
+          <LuCirclePlay className="h-4 w-4 text-[#6440fb]" />
+          <dt className="sr-only">Lessons</dt>
+          <dd>{course.lessonCount} {t('courseCard.lessons')}</dd>
+        </div>
+        <div className="flex items-center gap-2">
+          <LuClock3 className="h-4 w-4 text-[#6440fb]" />
+          <dt className="sr-only">Duration</dt>
+          <dd>{formatDuration(course.durationMinutes)}</dd>
+        </div>
+        <div className="flex items-center gap-2">
+          <LuTrendingUp className="h-4 w-4 text-[#6440fb]" />
+          <dt className="sr-only">Level</dt>
+          <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as any)}</dd>
+        </div>
+      </dl>
+
+      <div className="flex items-center justify-between pt-6">
+        <div className="flex items-center gap-3">
+          <Image
+            src={course.author.avatar}
+            alt={course.author.name}
+            width={44}
+            height={44}
+            className="rounded-full object-cover"
+            loading="lazy"
+          />
+          <span className="text-sm font-semibold text-[#221f3d]">{course.author.name}</span>
+        </div>
+
+        <div className="text-right">
+          {course.price.isFree ? (
+            <span className="text-lg font-semibold text-[#22c55e]">{t('courseCard.free')}</span>
+          ) : (
+            <>
+              <span className="block text-[13px] text-[#8b8fad] line-through">
+                ${course.price.original}
+              </span>
+              <span className="text-lg font-semibold text-[#221f3d]">
+                ${course.price.discounted}
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  </article>
+));
+
+CourseCard.displayName = 'CourseCard';
+
 const PopularCourses = () => {
   const t = useTranslations('popularCourses');
   const locale = useLocale();
@@ -254,104 +363,7 @@ const PopularCourses = () => {
 
         <div className="mt-16 grid gap-7 sm:grid-cols-2 xl:grid-cols-4">
           {filteredCourses.map((course) => (
-            <article
-              key={course.id}
-              className="flex h-full flex-col overflow-hidden rounded-xl border border-[#e6e7f2] bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_25px_55px_rgba(32,36,69,0.12)]"
-            >
-              <div className="relative h-[220px] w-full overflow-hidden">
-                <img
-                  src={course.image}
-                  alt={course.imageAlt}
-                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                  loading="lazy"
-                />
-
-                {course.badges && (
-                  <div className="absolute left-4 right-4 top-4 flex items-center gap-3">
-                    {course.badges.map((badge) => (
-                      <span
-                        key={badge.label}
-                        className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[1.2px] ${
-                          badge.variant === 'accent'
-                            ? 'bg-[#6440fb] text-white'
-                            : 'bg-[#22c55e] text-[#10254d]'
-                        }`}
-                      >
-                        {badge.label === 'Popular' ? t('courseCard.badges.popular') : t('courseCard.badges.bestSellers')}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-1 flex-col px-6 pb-7 pt-6">
-                <div className="flex items-center gap-2 text-sm font-medium text-[#f7b347]">
-                  <span className="flex items-center gap-1 text-[15px] text-[#f58634]">
-                    {course.rating.toFixed(1)}
-                    <FaStar className="h-4 w-4" />
-                  </span>
-                  <span className="text-xs font-normal text-[#8b8fad]">
-                    ({course.ratingCount.toLocaleString()})
-                  </span>
-                </div>
-
-                <h3 className="mt-4 text-[18px] font-semibold leading-[1.35] text-[#221f3d]">
-                  <Link
-                    href={course.href ?? '#'}
-                    className="block max-w-full overflow-hidden text-ellipsis transition-colors hover:text-[#6440fb]"
-                    style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
-                    title={course.title}
-                  >
-                    {course.title}
-                  </Link>
-                </h3>
-
-                <dl className="mt-5 flex flex-wrap gap-x-2 text-[13px] text-[#6f7289]">
-                  <div className="flex items-center gap-2">
-                    <LuCirclePlay className="h-4 w-4 text-[#6440fb]" />
-                    <dt className="sr-only">Lessons</dt>
-                    <dd>{course.lessonCount} {t('courseCard.lessons')}</dd>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <LuClock3 className="h-4 w-4 text-[#6440fb]" />
-                    <dt className="sr-only">Duration</dt>
-                    <dd>{formatDuration(course.durationMinutes)}</dd>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <LuTrendingUp className="h-4 w-4 text-[#6440fb]" />
-                    <dt className="sr-only">Level</dt>
-                    <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as any)}</dd>
-                  </div>
-                </dl>
-
-                <div className=" flex items-center justify-between pt-6">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={course.author.avatar}
-                      alt={course.author.name}
-                      className="h-11 w-11 rounded-full object-cover"
-                      loading="lazy"
-                    />
-                    <span className="text-sm font-semibold text-[#221f3d]">{course.author.name}</span>
-                  </div>
-
-                  <div className="text-right">
-                    {course.price.isFree ? (
-                      <span className="text-lg font-semibold text-[#22c55e]">{t('courseCard.free')}</span>
-                    ) : (
-                      <>
-                        <span className="block text-[13px] text-[#8b8fad] line-through">
-                          ${course.price.original}
-                        </span>
-                        <span className="text-lg font-semibold text-[#221f3d]">
-                          ${course.price.discounted}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </article>
+            <CourseCard key={course.id} course={course} t={t} />
           ))}
         </div>
       </div>
