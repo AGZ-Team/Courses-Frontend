@@ -237,7 +237,7 @@ const MainNavbar = () => {
 
           {/* Signup - Always Visible */}
           <Link
-            href={`/${locale}/signup`}
+            href={`/signup`}
             className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-[#0b0440] transition hover:bg-white/90`}
           >
             {t('signup')}
