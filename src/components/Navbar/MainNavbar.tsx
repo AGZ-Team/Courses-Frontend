@@ -64,7 +64,7 @@ const MainNavbar = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-100 border-b border-white/10 bg-[#0b0440] text-white shadow-[0_8px_24px_rgba(7,5,48,0.25)]">
+    <header className="fixed inset-x-0 top-0 z-100 border-b border-white/10 bg-[#0ABAB5] text-white shadow-[0_8px_24px_rgba(10,186,181,0.25)]">
       <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1600px] items-center px-6`}>
         {/* Left group: Logo + Explore */}
         <div className="flex items-center gap-4 shrink-0">
@@ -74,7 +74,7 @@ const MainNavbar = () => {
             <svg
               aria-hidden="true"
               viewBox="0 0 24 24"
-              className="h-7 w-7 text-emerald-400"
+              className="h-7 w-7 text-white"
               fill="none"
               stroke="currentColor"
               strokeWidth={1.6}
@@ -92,7 +92,7 @@ const MainNavbar = () => {
         {/* Desktop My Lessons Dropdown */}
         <NavDropdown
           trigger={
-            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-emerald-400 transition hover:text-emerald-300 lg:flex`}>
+            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 lg:flex`}>
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -139,13 +139,13 @@ const MainNavbar = () => {
                   trigger={
                     <div className={
                       'relative flex items-center gap-1 whitespace-nowrap transition cursor-pointer ' +
-                      (isActive(item.href) ? 'text-[#44ffae]' : 'text-white/80 hover:text-white')
+                      (isActive(item.href) ? 'text-white' : 'text-white/80 hover:text-white')
                     }>
                       <span className="whitespace-nowrap">{t(item.labelKey)}</span>
                       <svg
                         aria-hidden="true"
                         viewBox="0 0 12 12"
-                        className={`h-3 w-3 ${isActive(item.href) ? 'text-[#44ffae]' : 'opacity-70'}`}
+                        className={`h-3 w-3 ${isActive(item.href) ? 'text-white' : 'opacity-70'}`}
                         fill="none"
                         stroke="currentColor"
                         strokeWidth={1.6}
@@ -155,7 +155,7 @@ const MainNavbar = () => {
                         <path d="m2.5 4.5 3.5 3 3.5-3" />
                       </svg>
                       {isActive(item.href) && (
-                        <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-[#44ffae]" />
+                        <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-white" />
                       )}
                     </div>
                   }
@@ -171,13 +171,13 @@ const MainNavbar = () => {
                 href={item.href}
                 className={
                   'relative flex items-center gap-1 whitespace-nowrap transition ' +
-                  (isActive(item.href) ? 'text-[#44ffae]' : 'text-white/80 hover:text-white')
+                  (isActive(item.href) ? 'text-white' : 'text-white/80 hover:text-white')
                 }
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
                 <span className="whitespace-nowrap">{t(item.labelKey)}</span>
                 {isActive(item.href) && (
-                  <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-[#44ffae]" />
+                  <span className="pointer-events-none absolute -bottom-6 left-0 right-0 h-1 bg-white" />
                 )}
               </Link>
             );
@@ -238,7 +238,7 @@ const MainNavbar = () => {
           {/* Signup - Always Visible */}
           <Link
             href={`/signup`}
-            className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-[#0b0440] transition hover:bg-white/90`}
+            className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-[#0ABAB5] transition hover:bg-white/90`}
           >
             {t('signup')}
           </Link>
@@ -247,13 +247,13 @@ const MainNavbar = () => {
       
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="border-t border-white/10 bg-[#0b0440] md:hidden">
+        <div className="border-t border-white/10 bg-[#0ABAB5] md:hidden">
           <nav className="mx-auto max-w-[1300px] px-6 py-6">
             {/* My Lessons - mobile accordion */}
             <div className="mb-4">
               <button
                 type="button"
-                className={`flex w-full items-center justify-between rounded-lg ${isAr ? 'px-5 py-3 text-[16px]' : 'px-4 py-2.5 text-[14px]'} font-medium text-emerald-400 bg-white/5`}
+                className={`flex w-full items-center justify-between rounded-lg ${isAr ? 'px-5 py-3 text-[16px]' : 'px-4 py-2.5 text-[14px]'} font-medium text-white bg-white/5`}
                 aria-expanded={mobileOpen.lessons}
                 onClick={() => setMobileOpen((s) => ({...s, lessons: !s.lessons}))}
               >
@@ -291,7 +291,7 @@ const MainNavbar = () => {
                     <div key={item.labelKey} className="rounded-lg">
                       <button
                         type="button"
-                        className={`flex w-full items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${isActive(item.href) ? 'text-[#44ffae]' : 'text-white/70'}`}
+                        className={`flex w-full items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${isActive(item.href) ? 'text-white' : 'text-white/70'}`}
                         aria-expanded={mobileOpen.courses}
                         onClick={() => setMobileOpen((s) => ({...s, courses: !s.courses}))}
                       >
@@ -322,7 +322,7 @@ const MainNavbar = () => {
                     key={item.labelKey}
                     href={item.href}
                     className={`flex items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${
-                      isActive(item.href) ? 'text-[#44ffae]' : 'text-white/70'
+                      isActive(item.href) ? 'text-white' : 'text-white/70'
                     }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -345,7 +345,7 @@ const MainNavbar = () => {
             {/* Login Button */}
             <Link 
               href="/login" 
-              className={`mt-4 block rounded-full border-2 border-emerald-400 px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-white`}
+              className={`mt-4 block rounded-full border-2 border-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5]`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {t('login')}

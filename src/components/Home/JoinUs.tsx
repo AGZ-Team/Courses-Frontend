@@ -13,7 +13,7 @@ const JoinUs = () => {
       <div className="mx-auto flex w-full max-w-[1380px] flex-col gap-16 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-xl text-left" data-aos="fade-up">
           <h2 className="text-[38px] font-semibold leading-[1.18] text-[#120f2d] sm:text-[44px]">
-            <span className="text-[#6440fb]">{t('titlePart1')}</span> {t('titlePart2')}
+            <span className="text-[#0ABAB5]">{t('titlePart1')}</span> {t('titlePart2')}
           </h2>
           <p className="mt-5 text-[15px] leading-[26px] text-[#4d4a63]" data-aos="fade-up" data-aos-delay="50">
             {t('description')}
@@ -22,7 +22,7 @@ const JoinUs = () => {
           <ul className="mt-8 space-y-4" data-aos="fade-up" data-aos-delay="100">
             {highlights.map((item, index) => (
               <li key={index} className="flex items-center gap-4 text-[15px] text-[#171435]">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#6440fb] text-white shadow-[0_12px_28px_rgba(57,26,170,0.22)]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0ABAB5] text-white shadow-[0_12px_28px_rgba(10,186,181,0.22)]">
                   <FiCheck className="h-4 w-4" aria-hidden />
                 </span>
                 <span className="font-medium">{item}</span>
@@ -32,7 +32,7 @@ const JoinUs = () => {
 
           <Link
             href={`/${locale}/signup`}
-            className="mt-10 inline-flex h-[58px] items-center justify-center rounded-lg bg-[#120f2d] px-16 text-[15px] font-medium text-white transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#120f2d] hover:bg-transparent hover:border hover:border-[#120f2d] hover:text-[#120f2d]"
+            className="mt-10 inline-flex h-[58px] items-center justify-center rounded-lg bg-[#0ABAB5] px-16 text-[15px] font-medium text-white transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0ABAB5] hover:bg-transparent hover:border hover:border-[#0ABAB5] hover:text-[#0ABAB5]"
             data-aos="fade-up"
             data-aos-delay="150"
           >

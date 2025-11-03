@@ -219,8 +219,8 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
               key={badge.label}
               className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[1.2px] ${
                 badge.variant === 'accent'
-                  ? 'bg-[#6440fb] text-white'
-                  : 'bg-[#22c55e] text-[#10254d]'
+                  ? 'bg-[#0ABAB5] text-white'
+                  : 'bg-white text-[#0ABAB5]'
               }`}
             >
               {badge.label === 'Popular' ? t('courseCard.badges.popular') : t('courseCard.badges.bestSellers')}
@@ -232,7 +232,7 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
 
     <div className="flex flex-1 flex-col px-6 pb-7 pt-6">
       <div className="flex items-center gap-2 text-sm font-medium text-[#f7b347]">
-        <span className="flex items-center gap-1 text-[15px] text-[#f58634]">
+        <span className="flex items-center gap-1 text-[15px] text-[#0ABAB5]">
           {course.rating.toFixed(1)}
           <FaStar className="h-4 w-4" />
         </span>
@@ -244,7 +244,7 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
       <h3 className="mt-4 text-[18px] font-semibold leading-[1.35] text-[#221f3d]">
         <Link
           href={course.href ?? '#'}
-          className="block max-w-full overflow-hidden text-ellipsis transition-colors hover:text-[#6440fb]"
+          className="block max-w-full overflow-hidden text-ellipsis transition-colors hover:text-[#0ABAB5]"
           style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
           title={course.title}
         >
@@ -254,17 +254,17 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
 
       <dl className="mt-5 flex flex-wrap gap-x-2 text-[13px] text-[#6f7289]">
         <div className="flex items-center gap-2">
-          <LuCirclePlay className="h-4 w-4 text-[#6440fb]" />
+          <LuCirclePlay className="h-4 w-4 text-[#0ABAB5]" />
           <dt className="sr-only">Lessons</dt>
           <dd>{course.lessonCount} {t('courseCard.lessons')}</dd>
         </div>
         <div className="flex items-center gap-2">
-          <LuClock3 className="h-4 w-4 text-[#6440fb]" />
+          <LuClock3 className="h-4 w-4 text-[#0ABAB5]" />
           <dt className="sr-only">Duration</dt>
           <dd>{formatDuration(course.durationMinutes)}</dd>
         </div>
         <div className="flex items-center gap-2">
-          <LuTrendingUp className="h-4 w-4 text-[#6440fb]" />
+          <LuTrendingUp className="h-4 w-4 text-[#0ABAB5]" />
           <dt className="sr-only">Level</dt>
           <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as any)}</dd>
         </div>
@@ -285,7 +285,7 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
 
         <div className="text-right">
           {course.price.isFree ? (
-            <span className="text-lg font-semibold text-[#22c55e]">{t('courseCard.free')}</span>
+            <span className="text-lg font-semibold text-[#0ABAB5]">{t('courseCard.free')}</span>
           ) : (
             <>
               <span className="block text-[13px] text-[#8b8fad] line-through">
@@ -351,8 +351,8 @@ const PopularCourses = () => {
                 onClick={() => setActiveCategory(category)}
                 className={`rounded-lg border border-transparent px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold transition-all duration-200 ${
                   isActive
-                    ? 'border-[#6440fb] bg-[#6440fb] text-white shadow-[0_20px_40px_rgba(100,64,251,0.25)]'
-                    : 'border-[#e6e7f2] bg-white text-[#6f7289] hover:border-[#6440fb] hover:text-[#1f1c3a]'
+                    ? 'border-[#0ABAB5] bg-[#0ABAB5] text-white shadow-[0_20px_40px_rgba(10,186,181,0.25)]'
+                    : 'border-[#e6e7f2] bg-white text-[#6f7289] hover:border-[#0ABAB5] hover:text-[#1f1c3a]'
                 }`}
               >
                 {categoryMap[category]}

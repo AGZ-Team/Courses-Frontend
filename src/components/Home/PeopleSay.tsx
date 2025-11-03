@@ -130,10 +130,10 @@ const PeopleSay = () => {
   );
 
   return (
-    <section className="w-full bg-[#6440fb] py-28">
+    <section className="w-full bg-[#0ABAB5] py-28">
       <div className="mx-auto flex w-full flex-col px-4 sm:px-6 lg:px-0">
         <div className="text-center">
-          <p className="text-4xl font-semibold uppercase tracking-[4px] text-[#00ff84]">{t('title')}</p>
+          <p className="text-4xl font-semibold uppercase tracking-[4px] text-white">{t('title')}</p>
           <h3 className="mx-auto mt-3 max-w-[640px] text-base font-semibold leading-[1.35] text-white sm:text-base">
             {t('subtitle')}
           </h3>
@@ -154,8 +154,8 @@ const PeopleSay = () => {
                 className="snap-start rounded-[10px] border border-[#e0e4f5] bg-white px-8 pb-7 pt-8 shadow-[0_25px_45px_rgba(12,5,78,0.14)] transition-transform duration-300 hover:-translate-y-1"
                 style={{minWidth: '440px', maxWidth: '480px'}}
               >
-                <h3 className="text-[18px] font-normal leading-9 text-[#6440fb]">{testimonial.heading}</h3>
-                <p className="mt-4 text-[15px] leading-[30px] text-[#221f3d]">“{testimonial.quote}”</p>
+                <h3 className="text-[18px] font-normal leading-9 text-[#0ABAB5]">{testimonial.heading}</h3>
+                <p className="mt-4 text-[15px] leading-[30px] text-[#221f3d]">"{testimonial.quote}"</p>
                 <div className="mt-5 h-px w-full bg-[#ededed]" />
                 <div className="mt-6 flex items-center gap-4">
                   <Image
@@ -179,7 +179,7 @@ const PeopleSay = () => {
             <button
               type="button"
               onClick={() => scrollBySlides('prev')}
-              className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#2f19ff] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
+              className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#0ABAB5] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
               aria-label={tAria('prev')}
               disabled={isAtStart}
             >
@@ -188,7 +188,7 @@ const PeopleSay = () => {
             <button
               type="button"
               onClick={() => scrollBySlides('next')}
-              className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#2f19ff] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
+              className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-white/80 text-white transition hover:bg-white hover:cursor-pointer hover:text-[#0ABAB5] disabled:cursor-not-allowed disabled:border-white/40 disabled:text-white/40"
               aria-label={tAria('next')}
               disabled={isAtEnd}
             >
@@ -203,7 +203,7 @@ const PeopleSay = () => {
               key={counter.id}
               className="rounded-xl px-8 py-10"
             >
-              <p className="text-[34px] font-semibold leading-[42px] text-[#00ff84]">{counter.value}</p>
+              <p className="text-[34px] font-semibold leading-[42px] text-white">{counter.value}</p>
               <p className="mt-3 text-[13px] font-medium uppercase tracking-[3px] text-white">{counter.label}</p>
             </div>
           ))}

@@ -103,7 +103,7 @@ export function NavDropdown({
                   key={item.labelKey}
                   href={item.href}
                   onClick={handleItemClick}
-                  className={`flex items-center gap-3 px-5 py-3 text-sm font-medium text-[#0b0440] transition-colors hover:bg-blue-900/10 hover:text-blue-900 rounded-lg`}
+                  className={`flex items-center gap-3 px-5 py-3 text-sm font-medium text-[#0ABAB5] transition-colors hover:bg-[#0ABAB5]/10 hover:text-[#0ABAB5] rounded-lg`}
                 >
                   {item.icon && <span className="shrink-0">{item.icon}</span>}
                   <span className={isAr ? 'text-[15px]' : 'text-[14px]'}>{item.label}</span>

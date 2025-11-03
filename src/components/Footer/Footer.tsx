@@ -63,7 +63,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-[#100b44] text-white">
+    <footer className="w-full bg-[#0ABAB5] text-white">
       <div className="mx-auto w-full max-w-[1180px] px-4 pb-16 pt-10 sm:px-6">
         <div
           className="flex flex-col gap-8 border-b border-white/10 pb-12 md:flex-row md:items-center md:justify-between"
@@ -75,7 +75,7 @@ const Footer = () => {
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
-                className="h-7 w-7 text-emerald-400"
+                className="h-7 w-7 text-white"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={1.6}
@@ -91,14 +91,14 @@ const Footer = () => {
           </div>
 
           <div className="space-y-3 text-right md:text-left">
-            <p className="text-[16px] text-[#00FF91]">{t('socialPrompt')}</p>
+            <p className="text-[16px] text-white">{t('socialPrompt')}</p>
             <div className="flex items-center gap-3">
               {SOCIAL_LINKS.map(({label, href, Icon}) => (
                 <Link
                   key={label}
                   href={href}
                   aria-label={t(`social.${label.toLowerCase()}`)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/70 transition hover:bg-[#00FF91] hover:text-black"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white/70 transition hover:bg-white hover:text-[#0ABAB5]"
                 >
                   <Icon className="h-[15px] w-[15px]" aria-hidden />
                 </Link>
@@ -110,13 +110,13 @@ const Footer = () => {
         <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-5" data-aos="fade-up" data-aos-duration="700">
           {FOOTER_LINK_GROUPS.map((group) => (
             <div key={group.key} className="space-y-5">
-              <h3 className="text-[17px] font-bold uppercase tracking-[0.15em] text-[#00FF91]">
+              <h3 className="text-[17px] font-bold uppercase tracking-[0.15em] text-white">
                 {t(`linkGroups.${group.key}.title`)}
               </h3>
               <ul className="space-y-3 text-[14px] text-white font-semibold">
                 {group.links.map((link) => (
                   <li key={link.key}>
-                    <Link href={link.href} className="transition hover:text-[#00FF91] hover:underline">
+                    <Link href={link.href} className="transition hover:text-white/80 hover:underline">
                       {t(`linkGroups.${group.key}.${link.key}`)}
                     </Link>
                   </li>
@@ -144,7 +144,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="ms-auto inline-flex items-center justify-center rounded-lg bg-[#6d61ff] px-6 py-3 text-[13px] font-semibold text-white transition hover:bg-[#00FF91] hover:text-black"
+                className="ms-auto inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-[13px] font-semibold text-[#0ABAB5] transition hover:bg-white/90"
               >
                 {t('newsletter.submit')}
               </button>
@@ -156,13 +156,13 @@ const Footer = () => {
           <p>{t('copyright', {year})}</p>
 
           <div className="flex flex-wrap items-center gap-5">
-            <Link href="/terms" className="transition hover:text-[#00FF91]">
+            <Link href="/terms" className="transition hover:text-white/80">
               {t('legalLinks.terms')}
             </Link>
-            <Link href="/privacy" className="transition hover:text-[#00FF91]">
+            <Link href="/privacy" className="transition hover:text-white/80">
               {t('legalLinks.privacy')}
             </Link>
-            <Link href="/cookies" className="transition hover:text-[#00FF91]">
+            <Link href="/cookies" className="transition hover:text-white/80">
               {t('legalLinks.cookies')}
             </Link>
             <div className="inline-flex items-center rounded-full border border-white/20 p-1 transition hover:border-white/40">

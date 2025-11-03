@@ -162,7 +162,7 @@ const CarouselHome = () => {
       <div className="mx-auto flex w-full max-w-[1380px] flex-col items-center gap-16 px-4 text-center sm:px-6">
         <div className="space-y-10">
           <div className="space-y-6">
-            <p className="text-base font-semibold uppercase tracking-[0.32em] text-[#6c63ff] mb-10">
+            <p className="text-base font-semibold uppercase tracking-[0.32em] text-[#0ABAB5] mb-10">
               {t('trustedHeading')}
             </p>
 
@@ -212,12 +212,12 @@ const CarouselHome = () => {
               return (
                 <article
                   key={translationKey}
-                  className={`group relative flex min-w-[208px] max-w-[248px] flex-1 snap-center flex-col items-center gap-6  bg-slate-100 px-8 py-10 text-center text-[#140a5b]  transition duration-300 ease-out  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#5b47f7] hover:bg-blue-950 hover:text-white`}
+                  className={`group relative flex min-w-[208px] max-w-[248px] flex-1 snap-center flex-col items-center gap-6  bg-slate-100 px-8 py-10 text-center text-[#140a5b]  transition duration-300 ease-out  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white`}
                   
                   tabIndex={0}
                 >
                   <span
-                    className={`flex h-[88px] w-[88px] items-center justify-center rounded-[28px] bg-white text-[#4b35f5] transition duration-300`}
+                    className={`flex h-[88px] w-[88px] items-center justify-center rounded-[28px] bg-white text-[#0ABAB5] transition duration-300`}
                     aria-hidden
                   >
                     <div className={`flex h-[72px] w-[72px] items-center justify-center`}>
@@ -230,7 +230,7 @@ const CarouselHome = () => {
                       <span className="block">{firstLine}</span>
                       <span className="block">{secondLine}</span>
                     </h3>
-                    <p className={`text-[13px] font-medium 'text-[#716f86] group-hover:text-[#d9d6ff]'}`}>{courses}</p>
+                    <p className={`text-[13px] font-medium 'text-[#716f86] group-hover:text-white/90'}`}>{courses}</p>
                   </div>
                 </article>
               );
@@ -242,7 +242,7 @@ const CarouselHome = () => {
               <button
                 type="button"
                 onClick={() => handleScroll(isAr ? 'right' : 'left')}
-                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#120a5c] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#5b47f7] hover:text-[#5b47f7]"
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#0ABAB5] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#0ABAB5] hover:text-[#0ABAB5]"
               >
                 <svg
                   width="16"
@@ -259,7 +259,7 @@ const CarouselHome = () => {
               <button
                 type="button"
                 onClick={() => handleScroll(isAr ? 'left' : 'right')}
-                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#120a5c] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#5b47f7] hover:text-[#5b47f7]"
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#0ABAB5] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#0ABAB5] hover:text-[#0ABAB5]"
               >
                 <svg
                   width="16"
@@ -280,7 +280,7 @@ const CarouselHome = () => {
                 <span
                   key={index}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    index === activeDot ? 'w-7 bg-[#5b47f7]' : 'w-3 bg-[#d8d7e9]'
+                    index === activeDot ? 'w-7 bg-[#0ABAB5]' : 'w-3 bg-[#d8d7e9]'
                   }`}
                 />
               ))}

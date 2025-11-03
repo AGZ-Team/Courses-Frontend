@@ -9,7 +9,6 @@ import CoursesReasons from '@/components/Home/CoursesReasons';
 import InstructorCarousel from '@/components/Home/instructorCarousel';
 import News from '@/components/Home/News';
 import Ad from '@/components/Home/Ad';
-import Footer from '@/components/Footer/Footer';
 
 type PageProps = {
   params: Promise<{locale: string}>;
@@ -32,9 +31,7 @@ export default async function HomePage({params}: PageProps) {
   return (
     <section>
       <HomeHero />
-
       <CarouselHome />
-
       <PopularCourses />
       <PeopleSay />
       <JoinUs />

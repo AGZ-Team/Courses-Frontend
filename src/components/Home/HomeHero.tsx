@@ -18,7 +18,7 @@ const HomeHero = () => {
   const headlineLineB = t.rich('headline.lineBRich', {
     highlight: (chunks) => (
       <span
-        className={`inline-block border-b-[6px] border-emerald-400 text-emerald-300 ${isAr ? 'mr-2' : 'ml-2'}`}
+        className={`inline-block border-b-[6px] border-white text-white ${isAr ? 'mr-2' : 'ml-2'}`}
       >
         {chunks}
       </span>
@@ -63,19 +63,19 @@ const HomeHero = () => {
   return (
     <section
       ref={heroRef}
-  className="relative flex min-h-[90vh] w-full items-center overflow-hidden bg-linear-to-b from-[#0b0440] via-[#0b0440] to-[#1a0c7a] text-white pt-24 md:pt-28"
+  className="relative flex min-h-[90vh] w-full items-center overflow-hidden bg-linear-to-b from-[#0ABAB5] via-[#0ABAB5] to-[#08a39e] text-white pt-24 md:pt-28"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
       <div className="absolute inset-0">
-        <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-[#140a70] opacity-60 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 bottom-16 h-64 w-64 rounded-full bg-[#120b68] opacity-65 blur-3xl" />
+        <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-[#099691] opacity-60 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 bottom-16 h-64 w-64 rounded-full bg-[#088984] opacity-65 blur-3xl" />
         <div className="pointer-events-none absolute left-1/4 top-1/3 h-16 w-16 rounded-full border border-white/10 bg-white/10" />
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-8 py-16 sm:px-12 lg:flex-row lg:items-start lg:justify-between lg:gap-24 lg:px-16">
         <div className="max-w-3xl space-y-10">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-white">
             {t('eyebrow')}
           </span>
 
@@ -90,11 +90,11 @@ const HomeHero = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <Link href={`/${locale}/signup`} className="rounded-sm border border-transparent bg-[#6440fb] px-12 py-4 text-lg font-semibold text-white shadow-[0_18px_38px_rgba(79,47,255,0.45)] transition-colors duration-300 hover:border-[#6440fb] hover:bg-transparent hover:text-[#6440fb]">
+            <Link href={`/${locale}/signup`} className="rounded-sm border border-transparent bg-white px-12 py-4 text-lg font-semibold text-[#0ABAB5] shadow-[0_18px_38px_rgba(10,186,181,0.45)] transition-colors duration-300 hover:border-white hover:bg-transparent hover:text-white">
               {t('primaryCta')}
             </Link>
             <Link href={`/${locale}/courses`}>
-            <button className=" rounded-sm border-2 border-emerald-400 px-12 py-4 text-lg font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-white cursor-pointer">
+            <button className=" rounded-sm border-2 border-white px-12 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5] cursor-pointer">
               {t('secondaryCta')}
             </button>
             </Link>
@@ -140,8 +140,8 @@ const HomeHero = () => {
                 priority
               />
               <p className="font-semibold text-white">{t('cards.instructor.name')}</p>
-              <p className="text-[11px] text-emerald-300">{t('cards.instructor.role')}</p>
-              <p className="mt-2 text-[11px] text-amber-300">★★★★★</p>
+              <p className="text-[11px] text-white">{t('cards.instructor.role')}</p>
+              <p className="mt-2 text-[11px] text-white">★★★★★</p>
             </div>
 
             <div
@@ -156,7 +156,7 @@ const HomeHero = () => {
               className="pointer-events-none absolute left-1/2 bottom-6 w-44 -translate-x-1/2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
               style={parallaxStyle(14, -10)}
             >
-              <span className="text-lg font-semibold text-emerald-300">{t('cards.freeCourses.count')}</span>
+              <span className="text-lg font-semibold text-white">{t('cards.freeCourses.count')}</span>
               <span className="text-[11px] text-white/70"> {t('cards.freeCourses.label')}</span>
             </div>
           </div>

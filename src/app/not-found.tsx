@@ -3,7 +3,6 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import { Cairo, Jost } from 'next/font/google'
 import './globals.css'
-import NotFound from './[locale]/not-found'
 import NotFoundNavbar from '@/components/Navbar/NotFoundNavbar'
 import NotFoundFooter from '@/components/Footer/NotFoundFooter'
 

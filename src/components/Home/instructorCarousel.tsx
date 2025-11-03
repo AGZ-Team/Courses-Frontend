@@ -44,7 +44,7 @@ const InstructorCarousel = () => {
           <div data-aos="fade-left" data-aos-duration="600">
             <Link
               href="/instructors-list"
-              className="inline-flex items-center gap-3 rounded-full border border-[#d5d6e6] bg-white px-6 py-3 text-[15px] font-medium text-[#4b35f5] shadow-[0_12px_24px_rgba(45,27,153,0.08)] transition hover:border-[#4b35f5] hover:bg-[#4b35f5] hover:text-white"
+              className="inline-flex items-center gap-3 rounded-full border border-[#d5d6e6] bg-white px-6 py-3 text-[15px] font-medium text-[#0ABAB5] shadow-[0_12px_24px_rgba(45,27,153,0.08)] transition hover:border-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white"
             >
               {t('viewAll')}
               <HiOutlineArrowUpRight className="h-5 w-5" aria-hidden />
@@ -72,14 +72,14 @@ const InstructorCarousel = () => {
                     priority={index === 0}
                   />
 
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#1a064fcc] opacity-0 transition duration-300 group-hover:opacity-100">
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#0ABAB5cc] opacity-0 transition duration-300 group-hover:opacity-100">
                     <div className="pointer-events-auto flex items-center gap-3 text-white">
                       {SOCIAL_LINKS.map(({label, href, Icon}) => (
                         <Link
                           key={label}
                           href={href}
                           aria-label={tSocial(label as 'facebook' | 'twitter' | 'instagram' | 'linkedin')}
-                          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white hover:text-[#4b35f5]"
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white hover:text-[#0ABAB5]"
                         >
                           <Icon className="h-4 w-4" aria-hidden />
                         </Link>
@@ -94,7 +94,7 @@ const InstructorCarousel = () => {
                 <p className="mt-1 text-[14px] text-[#6b6a82]">{instructor.role}</p>
 
                 <div className="mt-5 flex flex-wrap items-center gap-4 text-[14px] text-[#292845]">
-                  <span className="flex items-center gap-2 text-[#fbaf37]">
+                  <span className="flex items-center gap-2 text-[#0ABAB5]">
                     <LuStar className="h-4 w-4" aria-hidden />
                     {instructor.rating}
                   </span>
@@ -114,7 +114,7 @@ const InstructorCarousel = () => {
 
         <div className="mt-16 text-center text-[15px] text-[#4f4a63]" data-aos="fade-left" data-aos-duration="600">
           {t('becomeInstructor')}{' '}
-          <Link href={`/${locale}/signup`} className="text-[#4b35f5] underline decoration-2 underline-offset-4">
+          <Link href={`/${locale}/signup`} className="text-[#0ABAB5] underline decoration-2 underline-offset-4">
             {t('becomeInstructorLink')}
           </Link>
         </div>

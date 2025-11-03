@@ -43,7 +43,6 @@ export default async function LocaleLayout({children, params}: Props) {
           </header>
           <main>{children}</main>
       <ConditionalFooter />
-
       <ArrowBtn />
         </NextIntlClientProvider>
       </body>

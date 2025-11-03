@@ -36,7 +36,7 @@ const News = () => {
 
           <Link
             href="/blog"
-            className="inline-flex items-center gap-3 rounded-full border border-[#d5d6e6] bg-white px-6 py-3 text-[15px] font-medium text-[#4b35f5] shadow-[0_12px_24px_rgba(45,27,153,0.08)] transition hover:border-[#4b35f5] hover:bg-[#4b35f5] hover:text-white"
+            className="inline-flex items-center gap-3 rounded-full border border-[#d5d6e6] bg-white px-6 py-3 text-[15px] font-medium text-[#0ABAB5] shadow-[0_12px_24px_rgba(45,27,153,0.08)] transition hover:border-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white"
             data-aos="fade-left"
             data-aos-duration="700"
           >
@@ -67,9 +67,9 @@ const News = () => {
                 </div>
 
                 <div className="flex flex-1 flex-col space-y-4 px-8 pb-9 pt-8">
-                  <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#4b35f5]">{post.category}</span>
+                  <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#0ABAB5]">{post.category}</span>
                   <h3 className="text-[20px] font-semibold text-[#131022]">
-                    <Link href={`/blog/${post.id}`} className="transition hover:text-[#4b35f5]">
+                    <Link href={`/blog/${post.id}`} className="transition hover:text-[#0ABAB5]">
                       {post.title}
                     </Link>
                   </h3>
@@ -83,7 +83,7 @@ const News = () => {
             {events.map((event, index) => (
               <article
                 key={event.id}
-                className="group flex gap-5 rounded-[18px] border border-[#e2ddff] bg-white p-5 shadow-[0_18px_40px_rgba(19,16,34,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#4b35f5]/60 hover:shadow-[0_24px_60px_rgba(19,16,34,0.12)]"
+                className="group flex gap-5 rounded-[18px] border border-[#e2ddff] bg-white p-5 shadow-[0_18px_40px_rgba(19,16,34,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#0ABAB5]/60 hover:shadow-[0_24px_60px_rgba(19,16,34,0.12)]"
                 data-aos="fade-left"
                 data-aos-delay={index * 120}
               >
@@ -100,9 +100,9 @@ const News = () => {
                 </div>
 
                 <div className="flex flex-col justify-center gap-2">
-                  <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#4b35f5]">{event.category}</span>
+                  <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#0ABAB5]">{event.category}</span>
                   <h3 className="text-[16px] font-semibold text-[#131022]">
-                    <Link href={`/events/${event.id}`} className="transition hover:text-[#4b35f5]">
+                    <Link href={`/events/${event.id}`} className="transition hover:text-[#0ABAB5]">
                       {event.title}
                     </Link>
                   </h3>

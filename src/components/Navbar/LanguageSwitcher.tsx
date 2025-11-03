@@ -68,7 +68,7 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
         aria-label={`Change language, current: ${localeLabels[locale]}`}
       >
         <GrLanguage className={`h-6 w-6`} />
-        <span className="pointer-events-none absolute -bottom-1 right-1 rounded-full bg-emerald-400 px-1 text-[10px] font-semibold text-[#0b0440]">
+        <span className="pointer-events-none absolute -bottom-1 right-1 rounded-full bg-white px-1 text-[10px] font-semibold text-[#0ABAB5]">
           {locale.toUpperCase()}
         </span>
       </button>
@@ -77,7 +77,7 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
         <div
           role="listbox"
           aria-label="Select language"
-          className={`absolute right-0 ${placement === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'} w-36 rounded-md border border-white/10 bg-[#0b0440] py-1 text-sm shadow-lg`}
+          className={`absolute right-0 ${placement === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'} w-36 rounded-md border border-white/10 bg-[#0ABAB5] py-1 text-sm shadow-lg`}
         >
           {routing.locales.map((availableLocale) => {
             const isActive = availableLocale === locale;
@@ -91,7 +91,7 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
                 disabled={isPending}
                 onClick={() => handleSelect(availableLocale)}
                 className={`flex w-full items-center justify-between px-3 py-1.5 text-left transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70 ${
-                  isActive ? 'text-emerald-400' : 'text-white/80'
+                  isActive ? 'text-white' : 'text-white/80'
                 }`}
               >
                 <span>{localeLabels[availableLocale]}</span>
