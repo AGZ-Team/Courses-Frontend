@@ -4,7 +4,7 @@ import {getMessages, setRequestLocale} from 'next-intl/server';
 import {routing, isLocale} from '@/i18n/routing';
 import MainNavbar from '@/components/Navbar/MainNavbar';
 import {Cairo, Jost} from 'next/font/google';
-import ConditionalFooter from '@/components/ConditionalFooter';
+import ConditionalFooter from '@/components/Footer/ConditionalFooter';
 import ArrowBtn from '@/components/Home/arrowBtn';
 import BreadCrumb from '@/components/BreadCrumb';
 

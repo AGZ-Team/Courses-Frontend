@@ -38,6 +38,10 @@
     "about": {
       "title": "About Us - Educrat",
       "description": "Learn more about Educrat's mission to deliver engaging, curated courses at a reasonable price."
+    },
+    "notFound": {
+      "title": "404 - Page Not Found | Educrat",
+      "description": "The page you are looking for does not exist. Return to the homepage to continue exploring our courses."
     }
   },
   "home": {
@@ -1041,5 +1045,11 @@
       "theBrief": "The Brief",
       "typeColorIcon": "Type, Color & Icon Introduction"
     }
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Oops! It looks like you're lost.",
+    "description": "The page you're looking for isn't available. Try to search again or use the go to.",
+    "backToHome": "Go Back To Homepage"
   }
 }
