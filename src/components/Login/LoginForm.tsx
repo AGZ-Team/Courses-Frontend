@@ -155,12 +155,12 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
             />
             <span>{t.rememberMe}</span>
           </label>
-          <a
-            href="#"
+          <Link
+            href="/auth/reset-password?uid=test&token=test"
             className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
           >
             {t.forgotPassword}
-          </a>
+          </Link>
         </div>
 
         <button

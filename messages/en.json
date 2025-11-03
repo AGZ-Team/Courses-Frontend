@@ -42,6 +42,14 @@
     "notFound": {
       "title": "404 - Page Not Found | Educrat",
       "description": "The page you are looking for does not exist. Return to the homepage to continue exploring our courses."
+    },
+    "resetPassword": {
+      "title": "Reset Password - Educrat",
+      "description": "Reset your Educrat account password securely."
+    },
+    "verifyEmail": {
+      "title": "Verify Email - Educrat",
+      "description": "Verify your email address to activate your Educrat account."
     }
   },
   "home": {
@@ -1051,5 +1059,30 @@
     "heading": "Oops! It looks like you're lost.",
     "description": "The page you're looking for isn't available. Try to search again or use the go to.",
     "backToHome": "Go Back To Homepage"
+  },
+  "resetPassword": {
+    "title": "Reset Your Password",
+    "subtitle": "Enter your new password below. Make sure it's strong and secure.",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "passwordRequirements": "Password must be at least 8 characters long",
+    "passwordMismatch": "Passwords do not match",
+    "submit": "Reset Password",
+    "success": "Password reset successfully! Redirecting to login...",
+    "error": "Failed to reset password. Please try again.",
+    "invalidToken": "This password reset link is invalid or has expired.",
+    "backToLogin": "Back to Login"
+  },
+  "verifyEmail": {
+    "title": "Verify Your Email",
+    "subtitle": "We're verifying your email address. Please wait...",
+    "verifying": "Verifying your email...",
+    "success": "Email verified successfully! Redirecting to login...",
+    "error": "Failed to verify email. Please try again.",
+    "invalidToken": "This verification link is invalid or has expired.",
+    "resendEmail": "Resend Verification Email",
+    "backToLogin": "Back to Login"
   }
 }
