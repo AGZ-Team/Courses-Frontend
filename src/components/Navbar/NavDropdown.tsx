@@ -93,7 +93,7 @@ export function NavDropdown({
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className={`absolute top-full ${alignmentClasses[align]} mt-2 z-50 max-h-[80vh] overflow-y-auto rounded-xl border border-white/15 bg-[#0b0440]/95 backdrop-blur-lg shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-[calc(100vw-2rem)] md:w-auto`}
+          className={`absolute top-full ${alignmentClasses[align]} mt-2 z-50 max-h-[80vh] overflow-y-auto rounded-xl border border-white/15 bg-white backdrop-blur-lg shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-[calc(100vw-2rem)] md:w-auto`}
         >
           <div className={`grid grid-cols-1 gap-3 p-2 ${rightPanel ? 'md:grid-cols-[minmax(240px,1fr)_minmax(260px,320px)] md:gap-4' : ''}`}> 
             {/* Items column */}
@@ -103,7 +103,7 @@ export function NavDropdown({
                   key={item.labelKey}
                   href={item.href}
                   onClick={handleItemClick}
-                  className={`flex items-center gap-3 px-5 py-3 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white rounded-lg`}
+                  className={`flex items-center gap-3 px-5 py-3 text-sm font-medium text-[#0b0440] transition-colors hover:bg-blue-900/10 hover:text-blue-900 rounded-lg`}
                 >
                   {item.icon && <span className="shrink-0">{item.icon}</span>}
                   <span className={isAr ? 'text-[15px]' : 'text-[14px]'}>{item.label}</span>
