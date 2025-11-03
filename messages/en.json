@@ -922,17 +922,17 @@
         "Learn with experts",
         "Life Time Access"
       ],
-      "instructor": {
-        "title": "Become an Instructor",
+      "influencer": {
+        "title": "Become an Influencer",
         "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.",
         "cta": "Apply Now",
-        "imageAlt": "Instructor teaching"
+        "imageAlt": "Influencer teaching"
       },
-      "student": {
-        "title": "Become a Student",
+      "user": {
+        "title": "Become a User",
         "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.",
         "cta": "Apply Now",
-        "imageAlt": "Student learning"
+        "imageAlt": "User learning"
       }
     },
     "trustedBy": {

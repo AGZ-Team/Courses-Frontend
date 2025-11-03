@@ -3,8 +3,8 @@ import React from "react";
 import Image from "next/image";
 import {useTranslations, useLocale} from "next-intl";
 
-export default function BecomeStudent() {
-  const t = useTranslations('about.whyChooseUs.student');
+export default function BecomeUser() {
+  const t = useTranslations('about.whyChooseUs.user');
   const locale = useLocale();
   return (
     <section className="bg-white">

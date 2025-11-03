@@ -3,8 +3,8 @@ import React from "react";
 import Image from "next/image";
 import {useTranslations, useLocale} from "next-intl";
 
-export default function BecomeInstructor() {
-  const t = useTranslations('about.whyChooseUs.instructor');
+export default function BecomeInfluencer() {
+  const t = useTranslations('about.whyChooseUs.influencer');
   const locale = useLocale();
   return (
     <section className="bg-slate-50">
