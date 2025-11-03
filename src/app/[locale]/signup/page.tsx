@@ -65,6 +65,8 @@ export default async function SignupPage({params}: PageProps) {
             className="pointer-events-none absolute left-[-140px] top-1/2 w-[920px] max-w-none -translate-y-1/2 opacity-95 animate-float-slow"
           />
           <LoginDecor side="left" />
+          {/* Cover any sub-pixel seam on the right edge */}
+          <div className="absolute right-0 top-0 z-10 h-full w-[2px] bg-[#0b0440]" />
         </div>
       </div>
 

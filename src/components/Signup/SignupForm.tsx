@@ -54,7 +54,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
   };
 
   return (
-    <div className="w-full max-w-7xl rounded-3xl bg-white p-6 shadow-[0_10px_40px_rgba(13,13,18,0.08)] ring-1 ring-black/5 md:p-8">
+    <div className="w-full max-w-7xl rounded-3xl mb-auto mt-[18vw]  lg:mt-[8vw] mx-auto  bg-white p-6 shadow-[0_10px_40px_rgba(13,13,18,0.08)] ring-1 ring-black/5 md:p-8">
       <div className={`${isAr ? 'text-right' : ''}`}>
         <h1 className="mb-2 text-[26px] font-bold leading-tight text-[#0b0b2b]">
           {t.title}
