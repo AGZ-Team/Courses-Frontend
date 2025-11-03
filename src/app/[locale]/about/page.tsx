@@ -5,8 +5,8 @@ import AboutHero from '@/components/About/AboutHero';
 import HowItWorks from '@/components/About/HowItWorks';
 import LearningJourney from '@/components/About/LearningJourney';
 import Testimonials from '@/components/About/Testimonials';
-import BecomeInstructor from '@/components/About/BecomeInstructor';
-import BecomeStudent from '@/components/About/BecomeStudent';
+import BecomeInstructor from '@/components/About/BecomeInfluencer';
+import BecomeStudent from '@/components/About/BecomeUser';
 import GetApp from '@/components/About/GetApp';
 import Ad from '@/components/Home/Ad';
 
