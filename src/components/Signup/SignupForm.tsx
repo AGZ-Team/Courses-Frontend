@@ -4,6 +4,8 @@ import React, {useState} from 'react';
 import {FaFacebook, FaGooglePlusG} from 'react-icons/fa';
 import {MdCloudUpload} from 'react-icons/md';
 import {Link} from '@/i18n/routing';
+import {signup} from '@/lib/auth';
+import {useRouter} from 'next/navigation';
 
 type Translations = {
   title: string;
@@ -35,9 +37,23 @@ type SignupFormProps = {
 };
 
 export default function SignupForm({isAr, translations: t}: SignupFormProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'student' | 'instructor'>('student');
-  const [idFrontFile, setIdFrontFile] = useState<string>('');
-  const [idBackFile, setIdBackFile] = useState<string>('');
+  const [idFrontFile, setIdFrontFile] = useState<File | null>(null);
+  const [idBackFile, setIdBackFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    expertise: '',
+  });
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -46,10 +62,85 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
     const file = e.target.files?.[0];
     if (file) {
       if (type === 'front') {
-        setIdFrontFile(file.name);
+        setIdFrontFile(file);
       } else {
-        setIdBackFile(file.name);
+        setIdBackFile(file);
       }
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(false);
+
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError(isAr ? 'كلمات المرور غير متطابقة' : 'Passwords do not match');
+      return;
+    }
+
+    // Validate instructor fields
+    if (activeTab === 'instructor') {
+      if (!formData.phoneNumber || !formData.expertise) {
+        setError(
+          isAr
+            ? 'يرجى ملء جميع الحقول المطلوبة'
+            : 'Please fill in all required fields'
+        );
+        return;
+      }
+      if (!idFrontFile || !idBackFile) {
+        setError(
+          isAr
+            ? 'يرجى تحميل صور الهوية (الأمامية والخلفية)'
+            : 'Please upload both ID photos (front and back)'
+        );
+        return;
+      }
+    }
+
+    setLoading(true);
+
+    try {
+      await signup({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        re_password: formData.confirmPassword,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        phone_number: activeTab === 'instructor' ? formData.phoneNumber : undefined,
+        expertise: activeTab === 'instructor' ? formData.expertise : undefined,
+        id_front: activeTab === 'instructor' ? idFrontFile || undefined : undefined,
+        id_back: activeTab === 'instructor' ? idBackFile || undefined : undefined,
+        is_instructor: activeTab === 'instructor',
+      });
+
+      setSuccess(true);
+      
+      // Redirect to login page after 2 seconds
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : isAr
+          ? 'فشل التسجيل. يرجى المحاولة مرة أخرى.'
+          : 'Signup failed. Please try again.'
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,6 +161,20 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
           </Link>
         </p>
       </div>
+
+      {error && (
+        <div className="mb-4 rounded-xl bg-red-50 p-4 text-sm text-red-600">
+          {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="mb-4 rounded-xl bg-green-50 p-4 text-sm text-green-600">
+          {isAr
+            ? 'تم التسجيل بنجاح! جارٍ التحويل إلى صفحة تسجيل الدخول...'
+            : 'Signup successful! Redirecting to login page...'}
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="mb-4 flex gap-2 rounded-xl bg-gray-100 p-1">
@@ -97,7 +202,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
         </button>
       </div>
 
-      <form className="space-y-3.5" action="#" method="post">
+      <form className="space-y-3.5" onSubmit={handleSubmit}>
         {/* Row 1: Username and Email */}
         <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
           {/* Username */}
@@ -114,9 +219,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               type="text"
               autoComplete="username"
               required
+              value={formData.username}
+              onChange={handleChange}
               className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
               placeholder={isAr ? 'اسم المستخدم' : 'Username'}
               dir={isAr ? 'rtl' : 'ltr'}
+              disabled={loading}
             />
           </div>
 
@@ -134,9 +242,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               type="email"
               autoComplete="email"
               required
+              value={formData.email}
+              onChange={handleChange}
               className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
               placeholder={isAr ? 'البريد الإلكتروني' : 'Email'}
               dir={isAr ? 'rtl' : 'ltr'}
+              disabled={loading}
             />
           </div>
         </div>
@@ -157,9 +268,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               type="text"
               autoComplete="given-name"
               required
+              value={formData.firstName}
+              onChange={handleChange}
               className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
               placeholder={isAr ? 'الاسم الأول' : 'First Name'}
               dir={isAr ? 'rtl' : 'ltr'}
+              disabled={loading}
             />
           </div>
 
@@ -177,9 +291,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               type="text"
               autoComplete="family-name"
               required
+              value={formData.lastName}
+              onChange={handleChange}
               className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
               placeholder={isAr ? 'اسم العائلة' : 'Last Name'}
               dir={isAr ? 'rtl' : 'ltr'}
+              disabled={loading}
             />
           </div>
         </div>
@@ -200,9 +317,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               type="password"
               autoComplete="new-password"
               required
+              value={formData.password}
+              onChange={handleChange}
               className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
               placeholder="••••••••"
               dir={isAr ? 'rtl' : 'ltr'}
+              disabled={loading}
             />
           </div>
 
@@ -220,9 +340,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               type="password"
               autoComplete="new-password"
               required
+              value={formData.confirmPassword}
+              onChange={handleChange}
               className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
               placeholder="••••••••"
               dir={isAr ? 'rtl' : 'ltr'}
+              disabled={loading}
             />
           </div>
         </div>
@@ -245,9 +368,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                   type="tel"
                   autoComplete="tel"
                   required
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
                   className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
                   placeholder={isAr ? 'رقم الهاتف' : 'Phone Number'}
                   dir={isAr ? 'rtl' : 'ltr'}
+                  disabled={loading}
                 />
               </div>
 
@@ -264,9 +390,12 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                   name="expertise"
                   type="text"
                   required
+                  value={formData.expertise}
+                  onChange={handleChange}
                   className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
                   placeholder={isAr ? 'مجال التخصص' : 'e.g., Web Development'}
                   dir={isAr ? 'rtl' : 'ltr'}
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -284,7 +413,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 >
                   <MdCloudUpload className="mb-1 text-xl text-gray-400" />
                   <span className="text-xs text-gray-600 truncate max-w-full px-2">
-                    {idFrontFile || t.uploadIdFront}
+                    {idFrontFile?.name || t.uploadIdFront}
                   </span>
                   <input
                     id="idFront"
@@ -309,7 +438,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 >
                   <MdCloudUpload className="mb-1 text-xl text-gray-400" />
                   <span className="text-xs text-gray-600 truncate max-w-full px-2">
-                    {idBackFile || t.uploadIdBack}
+                    {idBackFile?.name || t.uploadIdBack}
                   </span>
                   <input
                     id="idBack"
@@ -329,9 +458,14 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
         {/* Submit Button */}
         <button
           type="submit"
-          className="inline-flex w-full items-center justify-center rounded-xl bg-[#00FF91] px-4 py-3 text-center text-base font-semibold text-black shadow-sm transition hover:brightness-95 focus-visible:outline-none"
+          disabled={loading || success}
+          className="inline-flex w-full items-center justify-center rounded-xl bg-[#00FF91] px-4 py-3 text-center text-base font-semibold text-black shadow-sm transition hover:brightness-95 focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {t.submit}
+          {loading
+            ? isAr
+              ? 'جارٍ التسجيل...'
+              : 'Signing up...'
+            : t.submit}
         </button>
 
         {/* Divider and Social buttons - only for students */}
