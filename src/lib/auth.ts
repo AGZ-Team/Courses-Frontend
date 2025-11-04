@@ -118,7 +118,17 @@ export async function login(data: LoginData): Promise<JWTResponse> {
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || error.error || 'Login failed');
+    
+    // Throw the entire error object as JSON string so LoginForm can parse it
+    // This preserves all error details from the backend
+    if (error.detail) {
+      throw new Error(error.detail);
+    } else if (error.error) {
+      throw new Error(error.error);
+    } else {
+      // If error is an object with field-specific errors, stringify it
+      throw new Error(JSON.stringify(error));
+    }
   }
 
   const tokens = await response.json();

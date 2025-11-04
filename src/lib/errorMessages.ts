@@ -71,20 +71,24 @@ export const loginErrors: ErrorMessages = {
     ar: 'كلمة المرور مطلوبة',
   },
   invalid_credentials: {
-    en: 'Invalid username/email or password. Please check and try again',
-    ar: 'اسم المستخدم أو البريد الإلكتروني أو كلمة المرور غير صحيحة',
+    en: 'Invalid username/email or password. Please check your credentials and try again',
+    ar: 'اسم المستخدم أو البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى التحقق والمحاولة مرة أخرى',
   },
   no_active_account: {
-    en: 'No active account found with these credentials. Please sign up first',
-    ar: 'لم يتم العثور على حساب نشط بهذه البيانات. يرجى التسجيل أولاً',
+    en: 'Invalid username/email or password. Please check your credentials and try again',
+    ar: 'اسم المستخدم أو البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى التحقق والمحاولة مرة أخرى',
   },
   account_disabled: {
     en: 'This account has been disabled. Please contact support',
     ar: 'تم تعطيل هذا الحساب. يرجى الاتصال بالدعم',
   },
+  email_not_verified: {
+    en: 'Email not verified. Please check your email and verify your account',
+    ar: 'البريد الإلكتروني غير مُتحقق منه. يرجى التحقق من بريدك الإلكتروني',
+  },
   non_field_errors: {
-    en: 'Login failed. Please try again',
-    ar: 'فشل تسجيل الدخول. يرجى المحاولة مرة أخرى',
+    en: 'Login failed. Please check your credentials and try again',
+    ar: 'فشل تسجيل الدخول. يرجى التحقق من بياناتك والمحاولة مرة أخرى',
   },
 };
 
@@ -266,20 +270,37 @@ export function getUserFriendlyErrorMessage(
       // Not JSON, treat as string
     }
 
-    // Check for common error patterns
-    if (
-      message.toLowerCase().includes('credential') ||
-      message.toLowerCase().includes('invalid')
-    ) {
-      return errorMap['invalid_credentials']?.[language] ||
-        loginErrors['invalid_credentials'][language];
+    // Check for common error patterns in login context
+    const lowerMessage = message.toLowerCase();
+    
+    if (context === 'login') {
+      // Check for "No active account" - this is Djoser's way of saying wrong credentials
+      if (lowerMessage.includes('no active account')) {
+        return loginErrors['no_active_account'][language];
+      }
+      
+      // Check for invalid credentials
+      if (lowerMessage.includes('credential') || lowerMessage.includes('invalid')) {
+        return loginErrors['invalid_credentials'][language];
+      }
+      
+      // Check for email verification issues
+      if (
+        (lowerMessage.includes('email') && lowerMessage.includes('not verified')) ||
+        lowerMessage.includes('e-mail is not verified') ||
+        lowerMessage.includes('account is not activated')
+      ) {
+        return loginErrors['email_not_verified'][language];
+      }
     }
-    if (message.toLowerCase().includes('duplicate')) {
+    
+    // Common patterns for both signup and login
+    if (lowerMessage.includes('duplicate')) {
       return language === 'ar'
         ? 'هذا الحساب موجود بالفعل'
         : 'This account already exists';
     }
-    if (message.toLowerCase().includes('network')) {
+    if (lowerMessage.includes('network') || lowerMessage.includes('fetch')) {
       return language === 'ar'
         ? 'خطأ في الاتصال. يرجى التحقق من الإنترنت'
         : 'Network error. Please check your internet connection';
