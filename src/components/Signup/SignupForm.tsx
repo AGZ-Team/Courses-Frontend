@@ -1,11 +1,12 @@
 'use client';
 
 import React, {useState} from 'react';
-import {FaFacebook, FaGooglePlusG} from 'react-icons/fa';
 import {MdCloudUpload} from 'react-icons/md';
+import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 import {Link} from '@/i18n/routing';
 import {signup} from '@/lib/auth';
 import {useRouter} from 'next/navigation';
+import {parseSignupErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
 
 type Translations = {
   title: string;
@@ -36,14 +37,20 @@ type SignupFormProps = {
   translations: Translations;
 };
 
+type FieldErrors = Record<string, string>;
+
 export default function SignupForm({isAr, translations: t}: SignupFormProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'student' | 'instructor'>('student');
   const [idFrontFile, setIdFrontFile] = useState<File | null>(null);
   const [idBackFile, setIdBackFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [generalError, setGeneralError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [countryCode, setCountryCode] = useState('+966'); // Default to Saudi Arabia
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -51,9 +58,24 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
     confirmPassword: '',
     firstName: '',
     lastName: '',
-    phoneNumber: '',
+    phone: '',
     expertise: '',
   });
+
+  // Country list with flags and codes
+  const countries = [
+    { code: '+966', flag: '🇸🇦', name: 'Saudi Arabia', label: 'SA' },
+    { code: '+971', flag: '🇦🇪', name: 'UAE', label: 'AE' },
+    { code: '+974', flag: '🇶🇦', name: 'Qatar', label: 'QA' },
+    { code: '+968', flag: '🇴🇲', name: 'Oman', label: 'OM' },
+    { code: '+965', flag: '🇰🇼', name: 'Kuwait', label: 'KW' },
+    { code: '+973', flag: '🇧🇭', name: 'Bahrain', label: 'BH' },
+    { code: '+966', flag: '🇯🇴', name: 'Jordan', label: 'JO' },
+    { code: '+20', flag: '🇪🇬', name: 'Egypt', label: 'EG' },
+    { code: '+966', flag: '🇦🇪', name: 'UAE', label: 'AE' },
+    { code: '+1', flag: '🇺🇸', name: 'United States', label: 'US' },
+    { code: '+44', flag: '🇬🇧', name: 'United Kingdom', label: 'UK' },
+  ];
 
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -79,31 +101,50 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
+    setGeneralError(null);
+    setFieldErrors({});
     setSuccess(false);
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      setError(isAr ? 'كلمات المرور غير متطابقة' : 'Passwords do not match');
+      setFieldErrors({
+        confirmPassword: isAr
+          ? 'كلمات المرور غير متطابقة'
+          : 'Passwords do not match',
+      });
+      return;
+    }
+
+    // Validate phone is provided for all users
+    if (!formData.phone) {
+      setFieldErrors({
+        phone: isAr ? 'يرجى إدخال رقم الهاتف' : 'Please enter your phone number',
+      });
       return;
     }
 
     // Validate instructor fields
     if (activeTab === 'instructor') {
-      if (!formData.phoneNumber || !formData.expertise) {
-        setError(
-          isAr
-            ? 'يرجى ملء جميع الحقول المطلوبة'
-            : 'Please fill in all required fields'
-        );
-        return;
+      const instructorErrors: FieldErrors = {};
+      
+      if (!formData.expertise) {
+        instructorErrors.expertise = isAr
+          ? 'حقل التخصص مطلوب'
+          : 'Expertise field is required';
       }
-      if (!idFrontFile || !idBackFile) {
-        setError(
-          isAr
-            ? 'يرجى تحميل صور الهوية (الأمامية والخلفية)'
-            : 'Please upload both ID photos (front and back)'
-        );
+      if (!idFrontFile) {
+        instructorErrors.id_front = isAr
+          ? 'صورة الهوية الأمامية مطلوبة'
+          : 'Front ID photo is required';
+      }
+      if (!idBackFile) {
+        instructorErrors.id_back = isAr
+          ? 'صورة الهوية الخلفية مطلوبة'
+          : 'Back ID photo is required';
+      }
+      
+      if (Object.keys(instructorErrors).length > 0) {
+        setFieldErrors(instructorErrors);
         return;
       }
     }
@@ -115,10 +156,9 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
         username: formData.username,
         email: formData.email,
         password: formData.password,
-        re_password: formData.confirmPassword,
         first_name: formData.firstName,
         last_name: formData.lastName,
-        phone_number: activeTab === 'instructor' ? formData.phoneNumber : undefined,
+        phone: `${countryCode}${formData.phone}`,
         expertise: activeTab === 'instructor' ? formData.expertise : undefined,
         id_front: activeTab === 'instructor' ? idFrontFile || undefined : undefined,
         id_back: activeTab === 'instructor' ? idBackFile || undefined : undefined,
@@ -132,16 +172,38 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
         router.push('/login');
       }, 2000);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : isAr
-          ? 'فشل التسجيل. يرجى المحاولة مرة أخرى.'
-          : 'Signup failed. Please try again.'
+      // Parse error and show field-specific or general message
+      let errorMessage: string = getUserFriendlyErrorMessage(
+        err,
+        'signup',
+        isAr ? 'ar' : 'en'
       );
+      
+      // Try to extract field-specific errors
+      if (err instanceof Error) {
+        try {
+          const errorData = JSON.parse(err.message);
+          if (typeof errorData === 'object') {
+            const parsed = parseSignupErrors(errorData, isAr ? 'ar' : 'en');
+            if (Object.keys(parsed).length > 0) {
+              setFieldErrors(parsed);
+              return;
+            }
+          }
+        } catch {
+          // Not JSON, treat as general error
+        }
+      }
+      
+      setGeneralError(errorMessage);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Helper function to get field error
+  const getFieldError = (fieldName: string): string | null => {
+    return fieldErrors[fieldName] || null;
   };
 
   return (
@@ -162,9 +224,9 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
         </p>
       </div>
 
-      {error && (
+      {generalError && (
         <div className="mb-4 rounded-xl bg-red-50 p-4 text-sm text-red-600">
-          {error}
+          {generalError}
         </div>
       )}
 
@@ -221,11 +283,18 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               required
               value={formData.username}
               onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
+              className={`block w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                getFieldError('username')
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-gray-200 focus:border-indigo-500'
+              }`}
               placeholder={isAr ? 'اسم المستخدم' : 'Username'}
               dir={isAr ? 'rtl' : 'ltr'}
               disabled={loading}
             />
+            {getFieldError('username') && (
+              <p className="mt-1 text-xs text-red-600">{getFieldError('username')}</p>
+            )}
           </div>
 
           {/* Email */}
@@ -244,11 +313,18 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               required
               value={formData.email}
               onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
+              className={`block w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                getFieldError('email')
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-gray-200 focus:border-indigo-500'
+              }`}
               placeholder={isAr ? 'البريد الإلكتروني' : 'Email'}
               dir={isAr ? 'rtl' : 'ltr'}
               disabled={loading}
             />
+            {getFieldError('email') && (
+              <p className="mt-1 text-xs text-red-600">{getFieldError('email')}</p>
+            )}
           </div>
         </div>
 
@@ -311,19 +387,42 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
             >
               {t.password} *
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
-              placeholder="••••••••"
-              dir={isAr ? 'rtl' : 'ltr'}
-              disabled={loading}
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="new-password"
+                required
+                value={formData.password}
+                onChange={handleChange}
+                className={`block w-full rounded-xl border bg-white px-4 py-2.5 pr-10 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                  getFieldError('password')
+                    ? 'border-red-500 focus:border-red-500'
+                    : 'border-gray-200 focus:border-indigo-500'
+                }`}
+                placeholder="••••••••"
+                dir={isAr ? 'rtl' : 'ltr'}
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition ${
+                  isAr ? 'left-3' : 'right-3'
+                }`}
+                tabIndex={-1}
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible className="text-lg" />
+                ) : (
+                  <AiOutlineEye className="text-lg" />
+                )}
+              </button>
+            </div>
+            {getFieldError('password') && (
+              <p className="mt-1 text-xs text-red-600">{getFieldError('password')}</p>
+            )}
           </div>
 
           {/* Confirm Password */}
@@ -334,47 +433,152 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
             >
               {t.confirmPassword} *
             </label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              autoComplete="new-password"
-              required
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
-              placeholder="••••••••"
-              dir={isAr ? 'rtl' : 'ltr'}
-              disabled={loading}
-            />
+            <div className="relative">
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showConfirmPassword ? 'text' : 'password'}
+                autoComplete="new-password"
+                required
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className={`block w-full rounded-xl border bg-white px-4 py-2.5 pr-10 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                  getFieldError('confirmPassword')
+                    ? 'border-red-500 focus:border-red-500'
+                    : 'border-gray-200 focus:border-indigo-500'
+                }`}
+                placeholder="••••••••"
+                dir={isAr ? 'rtl' : 'ltr'}
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className={`absolute top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition ${
+                  isAr ? 'left-3' : 'right-3'
+                }`}
+                tabIndex={-1}
+              >
+                {showConfirmPassword ? (
+                  <AiOutlineEyeInvisible className="text-lg" />
+                ) : (
+                  <AiOutlineEye className="text-lg" />
+                )}
+              </button>
+            </div>
+            {getFieldError('confirmPassword') && (
+              <p className="mt-1 text-xs text-red-600">{getFieldError('confirmPassword')}</p>
+            )}
           </div>
         </div>
+
+        {/* Phone Number - Required for all users, but only show for students */}
+        {activeTab === 'student' && (
+          <div>
+            <label
+              htmlFor="phone"
+              className="mb-1 block text-sm font-medium text-gray-700"
+            >
+              {t.phoneNumber} *
+            </label>
+            <div className="flex gap-2">
+              {/* Country Code Selector */}
+              <select
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+                className={`rounded-xl border bg-white px-3 py-2.5 text-sm text-gray-900 shadow-sm outline-none ring-0 transition ${
+                  getFieldError('phone')
+                    ? 'border-red-500 focus:border-red-500'
+                    : 'border-gray-200 focus:border-indigo-500'
+                }`}
+                disabled={loading}
+              >
+                {countries.map((country) => (
+                  <option key={`${country.code}-${country.label}`} value={country.code}>
+                    {country.flag} {country.code}
+                  </option>
+                ))}
+              </select>
+              
+              {/* Phone Number Input */}
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                className={`block flex-1 rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                  getFieldError('phone')
+                    ? 'border-red-500 focus:border-red-500'
+                    : 'border-gray-200 focus:border-indigo-500'
+                }`}
+                placeholder={isAr ? 'رقم الهاتف' : 'Phone Number'}
+                dir={isAr ? 'rtl' : 'ltr'}
+                disabled={loading}
+              />
+            </div>
+            {getFieldError('phone') && (
+              <p className="mt-1 text-xs text-red-600">{getFieldError('phone')}</p>
+            )}
+          </div>
+        )}
 
         {/* Instructor-specific fields */}
         {activeTab === 'instructor' && (
           <>
-            <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+            {/* Phone Number and Expertise on same line */}
+            <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
               {/* Phone Number */}
               <div>
                 <label
-                  htmlFor="phoneNumber"
+                  htmlFor="instructor-phone"
                   className="mb-1 block text-sm font-medium text-gray-700"
                 >
                   {t.phoneNumber} *
                 </label>
-                <input
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  type="tel"
-                  autoComplete="tel"
-                  required
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
-                  placeholder={isAr ? 'رقم الهاتف' : 'Phone Number'}
-                  dir={isAr ? 'rtl' : 'ltr'}
-                  disabled={loading}
-                />
+                <div className="flex gap-1.5">
+                  {/* Country Code Selector */}
+                  <select
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    className={`rounded-xl border bg-white px-2.5 py-2 text-xs text-gray-900 shadow-sm outline-none ring-0 transition ${
+                      getFieldError('phone')
+                        ? 'border-red-500 focus:border-red-500'
+                        : 'border-gray-200 focus:border-indigo-500'
+                    }`}
+                    disabled={loading}
+                  >
+                    {countries.map((country) => (
+                      <option key={`${country.code}-${country.label}`} value={country.code}>
+                        {country.flag} {country.code}
+                      </option>
+                    ))}
+                  </select>
+                  
+                  {/* Phone Number Input */}
+                  <input
+                    id="instructor-phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    required
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={`block flex-1 rounded-xl border bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                      getFieldError('phone')
+                        ? 'border-red-500 focus:border-red-500'
+                        : 'border-gray-200 focus:border-indigo-500'
+                    }`}
+                    placeholder={isAr ? 'رقم الهاتف' : 'Phone Number'}
+                    dir={isAr ? 'rtl' : 'ltr'}
+                    disabled={loading}
+                  />
+                </div>
+                {getFieldError('phone') && (
+                  <p className="mt-1 text-xs text-red-600">{getFieldError('phone')}</p>
+                )}
               </div>
 
               {/* Expertise */}
@@ -392,11 +596,18 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                   required
                   value={formData.expertise}
                   onChange={handleChange}
-                  className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
+                  className={`block w-full rounded-xl border bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                    getFieldError('expertise')
+                      ? 'border-red-500 focus:border-red-500'
+                      : 'border-gray-200 focus:border-indigo-500'
+                  }`}
                   placeholder={isAr ? 'مجال التخصص' : 'e.g., Web Development'}
                   dir={isAr ? 'rtl' : 'ltr'}
                   disabled={loading}
                 />
+                {getFieldError('expertise') && (
+                  <p className="mt-1 text-xs text-red-600">{getFieldError('expertise')}</p>
+                )}
               </div>
             </div>
 
@@ -409,7 +620,11 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 </label>
                 <label
                   htmlFor="idFront"
-                  className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-4 py-3 transition hover:border-indigo-500 hover:bg-indigo-50"
+                  className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-4 py-3 transition ${
+                    getFieldError('id_front')
+                      ? 'border-red-500 bg-red-50 hover:border-red-600 hover:bg-red-100'
+                      : 'border-gray-300 bg-gray-50 hover:border-indigo-500 hover:bg-indigo-50'
+                  }`}
                 >
                   <MdCloudUpload className="mb-1 text-xl text-gray-400" />
                   <span className="text-xs text-gray-600 truncate max-w-full px-2">
@@ -425,6 +640,9 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                     onChange={(e) => handleFileChange(e, 'front')}
                   />
                 </label>
+                {getFieldError('id_front') && (
+                  <p className="mt-1 text-xs text-red-600">{getFieldError('id_front')}</p>
+                )}
               </div>
 
               {/* ID Back */}
@@ -434,7 +652,11 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 </label>
                 <label
                   htmlFor="idBack"
-                  className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-4 py-3 transition hover:border-indigo-500 hover:bg-indigo-50"
+                  className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-4 py-3 transition ${
+                    getFieldError('id_back')
+                      ? 'border-red-500 bg-red-50 hover:border-red-600 hover:bg-red-100'
+                      : 'border-gray-300 bg-gray-50 hover:border-indigo-500 hover:bg-indigo-50'
+                  }`}
                 >
                   <MdCloudUpload className="mb-1 text-xl text-gray-400" />
                   <span className="text-xs text-gray-600 truncate max-w-full px-2">
@@ -450,6 +672,9 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                     onChange={(e) => handleFileChange(e, 'back')}
                   />
                 </label>
+                {getFieldError('id_back') && (
+                  <p className="mt-1 text-xs text-red-600">{getFieldError('id_back')}</p>
+                )}
               </div>
             </div>
           </>
@@ -476,29 +701,6 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-gray-200" />
               </div>
-              <div className="relative flex justify-center">
-                <span className="bg-white px-2 text-[10px] uppercase tracking-wide text-gray-400">
-                  {t.orUsing}
-                </span>
-              </div>
-            </div>
-
-            {/* Social buttons */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <button
-                type="button"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#2563EB] bg-white px-4 py-2.5 text-sm font-medium text-[#2563EB] transition hover:bg-blue-50"
-              >
-                <FaFacebook className="text-xl" />
-                {t.facebook}
-              </button>
-              <button
-                type="button"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#EF4444] bg-white px-4 py-2.5 text-sm font-medium text-[#EF4444] transition hover:bg-red-50"
-              >
-                <FaGooglePlusG className="text-xl" />
-                {t.google}
-              </button>
             </div>
           </>
         )}

@@ -2,9 +2,10 @@
 
 import React, {useState} from 'react';
 import {Link} from '@/i18n/routing';
-import {FaFacebook, FaGooglePlusG} from 'react-icons/fa';
+import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 import {login} from '@/lib/auth';
 import {useRouter} from 'next/navigation';
+import {parseLoginErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
 
 type Translations = {
   title: string;
@@ -25,19 +26,50 @@ type LoginFormProps = {
   translations: Translations;
 };
 
+type FieldErrors = Record<string, string>;
+
 export default function LoginForm({isAr, translations: t}: LoginFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [generalError, setGeneralError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
     rememberMe: false,
   });
 
+  // Helper function to get field error
+  const getFieldError = (fieldName: string): string | null => {
+    return fieldErrors[fieldName] || null;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
+    setGeneralError(null);
+    setFieldErrors({});
+
+    // Frontend validation
+    const errors: FieldErrors = {};
+    
+    if (!formData.username) {
+      errors.username = isAr
+        ? 'اسم المستخدم أو البريد الإلكتروني مطلوب'
+        : 'Username or email is required';
+    }
+
+    if (!formData.password) {
+      errors.password = isAr
+        ? 'كلمة المرور مطلوبة'
+        : 'Password is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -46,10 +78,38 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
         password: formData.password,
       });
 
+      // Store remember me preference
+      if (formData.rememberMe && typeof window !== 'undefined') {
+        localStorage.setItem('rememberMe', formData.username);
+      }
+
       // Redirect to home page or dashboard after successful login
       router.push('/');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed. Please try again.');
+      // Parse error and show field-specific or general message
+      let errorMessage: string = getUserFriendlyErrorMessage(
+        err,
+        'login',
+        isAr ? 'ar' : 'en'
+      );
+      
+      // Try to extract field-specific errors
+      if (err instanceof Error) {
+        try {
+          const errorData = JSON.parse(err.message);
+          if (typeof errorData === 'object') {
+            const parsed = parseLoginErrors(errorData, isAr ? 'ar' : 'en');
+            if (Object.keys(parsed).length > 0) {
+              setFieldErrors(parsed);
+              return;
+            }
+          }
+        } catch {
+          // Not JSON, treat as general error
+        }
+      }
+      
+      setGeneralError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -83,9 +143,9 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
         </p>
       </div>
 
-      {error && (
+      {generalError && (
         <div className="mb-4 rounded-xl bg-red-50 p-4 text-sm text-red-600">
-          {error}
+          {generalError}
         </div>
       )}
 
@@ -98,21 +158,26 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
           >
             {t.usernameOrEmail}
           </label>
-          <div className="relative">
-            <input
-              id="username"
-              name="username"
-              type="text"
-              autoComplete="username"
-              required
-              value={formData.username}
-              onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
-              placeholder={isAr ? 'الاسم' : 'Username'}
-              dir={isAr ? 'rtl' : 'ltr'}
-              disabled={loading}
-            />
-          </div>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            autoComplete="username"
+            required
+            value={formData.username}
+            onChange={handleChange}
+            className={`block w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+              getFieldError('username')
+                ? 'border-red-500 focus:border-red-500'
+                : 'border-gray-200 focus:border-indigo-500'
+            }`}
+            placeholder={isAr ? 'الاسم أو البريد الإلكتروني' : 'Username or Email'}
+            dir={isAr ? 'rtl' : 'ltr'}
+            disabled={loading}
+          />
+          {getFieldError('username') && (
+            <p className="mt-1 text-xs text-red-600">{getFieldError('username')}</p>
+          )}
         </div>
 
         {/* Password */}
@@ -123,19 +188,42 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
           >
             {t.password}
           </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-            value={formData.password}
-            onChange={handleChange}
-            className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
-            placeholder="••••••••"
-            dir={isAr ? 'rtl' : 'ltr'}
-            disabled={loading}
-          />
+          <div className="relative">
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              autoComplete="current-password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className={`block w-full rounded-xl border bg-white px-4 py-3 pr-10 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                getFieldError('password')
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-gray-200 focus:border-indigo-500'
+              }`}
+              placeholder="••••••••"
+              dir={isAr ? 'rtl' : 'ltr'}
+              disabled={loading}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className={`absolute top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition ${
+                isAr ? 'left-3' : 'right-3'
+              }`}
+              tabIndex={-1}
+            >
+              {showPassword ? (
+                <AiOutlineEyeInvisible className="text-lg" />
+              ) : (
+                <AiOutlineEye className="text-lg" />
+              )}
+            </button>
+          </div>
+          {getFieldError('password') && (
+            <p className="mt-1 text-xs text-red-600">{getFieldError('password')}</p>
+          )}
         </div>
 
         {/* Actions */}
@@ -170,36 +258,6 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
         >
           {loading ? (isAr ? 'جارٍ تسجيل الدخول...' : 'Logging in...') : t.submit}
         </button>
-
-        {/* Divider */}
-        <div className="relative py-2">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-200" />
-          </div>
-          <div className="relative flex justify-center">
-            <span className="bg-white px-2 text-xs uppercase tracking-wide text-gray-400">
-              {t.orUsing}
-            </span>
-          </div>
-        </div>
-
-        {/* Social buttons */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <button
-            type="button"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#2563EB] bg-white px-4 py-2.5 text-sm font-medium text-[#2563EB] transition hover:bg-blue-50"
-          >
-            <FaFacebook className="text-3xl" />
-            {t.facebook}
-          </button>
-          <button
-            type="button"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#EF4444] bg-white px-4 py-2.5 text-sm font-medium text-[#EF4444] transition hover:bg-red-50"
-          >
-            <FaGooglePlusG className="text-3xl" />
-            {t.google}
-          </button>
-        </div>
       </form>
     </div>
   );

@@ -6,10 +6,9 @@ export interface SignupData {
   username: string;
   email: string;
   password: string;
-  re_password: string;
   first_name: string;
   last_name: string;
-  phone_number?: string;
+  phone: string;
   expertise?: string;
   id_front?: File;
   id_back?: File;
@@ -40,41 +39,48 @@ export interface SignupResponse {
 export async function signup(data: SignupData): Promise<SignupResponse> {
   const formData = new FormData();
   
-  formData.append('username', data.username);
-  formData.append('email', data.email);
+  // Append required fields
+  formData.append('username', data.username.trim());
+  formData.append('email', data.email.trim().toLowerCase());
   formData.append('password', data.password);
-  formData.append('re_password', data.re_password);
-  formData.append('first_name', data.first_name);
-  formData.append('last_name', data.last_name);
+  formData.append('first_name', data.first_name.trim());
+  formData.append('last_name', data.last_name.trim());
+  formData.append('phone', data.phone.trim());
+  formData.append('is_instructor', String(data.is_instructor || false));
   
-  if (data.phone_number) {
-    formData.append('phone_number', data.phone_number);
+  // Only append optional fields if they have values
+  if (data.expertise && data.expertise.trim()) {
+    formData.append('expertise', data.expertise.trim());
   }
   
-  if (data.expertise) {
-    formData.append('expertise', data.expertise);
-  }
-  
-  if (data.is_instructor !== undefined) {
-    formData.append('is_instructor', String(data.is_instructor));
-  }
-  
-  if (data.id_front) {
+  // Only append files if they exist
+  if (data.id_front && data.id_front instanceof File) {
     formData.append('id_front', data.id_front);
   }
   
-  if (data.id_back) {
+  if (data.id_back && data.id_back instanceof File) {
     formData.append('id_back', data.id_back);
   }
 
   const response = await fetch(`${API_BASE_URL}/auth/users/`, {
     method: 'POST',
     body: formData,
+    // Don't set Content-Type header - browser will set it automatically for FormData
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || error.message || 'Signup failed');
+    try {
+      const error = await response.json();
+      console.error('Signup error details:', error);
+      throw new Error(
+        error.detail || 
+        error.message || 
+        JSON.stringify(error) || 
+        'Signup failed'
+      );
+    } catch (parseError) {
+      throw new Error(`Signup failed with status ${response.status}`);
+    }
   }
 
   return response.json();
