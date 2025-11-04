@@ -178,14 +178,17 @@ export function parseLoginErrors(
 
   if (typeof errorResponse === 'string') {
     // Handle string error responses
+    const lowerError = errorResponse.toLowerCase();
+    
     if (
-      errorResponse.toLowerCase().includes('credential') ||
-      errorResponse.toLowerCase().includes('invalid')
+      lowerError.includes('credential') ||
+      lowerError.includes('invalid')
     ) {
       errors['credentials'] = loginErrors['invalid_credentials'][language];
-    } else if (errorResponse.toLowerCase().includes('active')) {
+    } else if (lowerError.includes('no active account')) {
+      // "No active account" means wrong credentials, not unverified email
       errors['credentials'] = loginErrors['no_active_account'][language];
-    } else if (errorResponse.toLowerCase().includes('disabled')) {
+    } else if (lowerError.includes('disabled')) {
       errors['credentials'] = loginErrors['account_disabled'][language];
     } else {
       errors['general'] = errorResponse;
@@ -194,14 +197,17 @@ export function parseLoginErrors(
     // Handle object error responses
     if (errorResponse.detail) {
       const detail = errorResponse.detail;
+      const lowerDetail = detail.toLowerCase();
+      
       if (
-        detail.toLowerCase().includes('credential') ||
-        detail.toLowerCase().includes('invalid')
+        lowerDetail.includes('credential') ||
+        lowerDetail.includes('invalid')
       ) {
         errors['credentials'] = loginErrors['invalid_credentials'][language];
-      } else if (detail.toLowerCase().includes('active')) {
+      } else if (lowerDetail.includes('no active account')) {
+        // "No active account" means wrong credentials, not unverified email
         errors['credentials'] = loginErrors['no_active_account'][language];
-      } else if (detail.toLowerCase().includes('disabled')) {
+      } else if (lowerDetail.includes('disabled')) {
         errors['credentials'] = loginErrors['account_disabled'][language];
       } else {
         errors['general'] = detail;

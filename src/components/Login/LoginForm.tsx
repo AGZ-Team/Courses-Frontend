@@ -100,13 +100,12 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
         rawError = err.message.toLowerCase();
       }
 
-      // Check if email is not verified (check raw error first)
+      // Check SPECIFICALLY for email not verified error
+      // Be more precise to avoid false positives with wrong credentials
       const isEmailNotVerifiedError =
-        rawError.includes('not verified') ||
-        rawError.includes('not activated') ||
-        rawError.includes('not active') ||
-        rawError.includes('no active account') ||
-        rawError.includes('inactive');
+        (rawError.includes('email') && (rawError.includes('not verified') || rawError.includes('not activated'))) ||
+        rawError.includes('e-mail is not verified') ||
+        rawError.includes('account is not activated');
 
       if (isEmailNotVerifiedError) {
         setIsEmailNotVerified(true);
