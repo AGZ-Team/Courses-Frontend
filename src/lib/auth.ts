@@ -135,6 +135,11 @@ export async function login(data: LoginData): Promise<JWTResponse> {
       localStorage.setItem('verification_uid', tokens.uid);
       localStorage.setItem('verification_token', tokens.token);
     }
+
+    // Notify UI that auth state changed (same-tab listeners)
+    try {
+      window.dispatchEvent(new Event('auth-changed'));
+    } catch {}
   }
   
   return tokens;
@@ -186,6 +191,11 @@ export function clearTokens(): void {
   localStorage.removeItem('username');
   localStorage.removeItem('verification_uid');
   localStorage.removeItem('verification_token');
+
+  // Notify UI that auth state changed (same-tab listeners)
+  try {
+    window.dispatchEvent(new Event('auth-changed'));
+  } catch {}
 }
 
 /**

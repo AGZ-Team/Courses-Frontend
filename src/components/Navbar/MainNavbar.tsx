@@ -8,6 +8,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { RiShoppingCart2Fill } from 'react-icons/ri';
 import { NavDropdown, DropdownItem } from './NavDropdown';
 import NavRightBanner from './NavRightBanner';
+import { clearTokens } from '@/lib/auth';
 
 type NavItem = {
   labelKey: string;
@@ -35,14 +36,34 @@ const MainNavbar = () => {
       setIsLoggedIn(true);
       setUsername(storedUsername || 'User');
     }
+
+    // Listen for auth change events within the same tab
+    const onAuthChanged = () => {
+      const nextToken = localStorage.getItem('access');
+      const nextUsername = localStorage.getItem('username') || '';
+      setIsLoggedIn(!!nextToken);
+      setUsername(nextUsername || (nextToken ? 'User' : ''));
+    };
+
+    // Listen for cross-tab changes
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'access' || e.key === 'username' || e.key === 'access_token' || e.key === null) {
+        onAuthChanged();
+      }
+    };
+
+    window.addEventListener('auth-changed', onAuthChanged);
+    window.addEventListener('storage', onStorage);
+
+    return () => {
+      window.removeEventListener('auth-changed', onAuthChanged);
+      window.removeEventListener('storage', onStorage);
+    };
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
-    localStorage.removeItem('uid');
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    // Clear tokens centrally and notify listeners
+    clearTokens();
     setIsLoggedIn(false);
     setUsername('');
     router.push('/login');
