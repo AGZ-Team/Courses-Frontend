@@ -50,6 +50,10 @@
     "verifyEmail": {
       "title": "Verify Email - Educrat",
       "description": "Verify your email address to activate your Educrat account."
+    },
+    "forgotPassword": {
+      "title": "Forgot Password - Educrat",
+      "description": "Reset your Educrat account password securely."
     }
   },
   "home": {
@@ -1083,6 +1087,14 @@
     "error": "Failed to verify email. Please try again.",
     "invalidToken": "This verification link is invalid or has expired.",
     "resendEmail": "Resend Verification Email",
+    "backToLogin": "Back to Login"
+  },
+  "forgotPassword": {
+    "title": "Forgot Your Password?",
+    "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+    "emailLabel": "Email Address",
+    "submitButton": "Send Reset Link",
+    "successMessage": "Password reset link sent successfully!",
     "backToLogin": "Back to Login"
   }
 }

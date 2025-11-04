@@ -11,28 +11,35 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 export async function POST(request: NextRequest) {
   try {
-    // Get uid and token from secure cookie
-    const cookieStore = await cookies();
-    const verifyContextCookie = cookieStore.get('verify_context');
+    const body = await request.json();
+    let uid = body.uid;
+    let token = body.token;
 
-    if (!verifyContextCookie) {
-      return NextResponse.json(
-        { success: false, message: 'Verification session expired. Please request a new verification email.' },
-        { status: 401 }
-      );
+    // If uid and token not in body, try to get from cookie
+    if (!uid || !token) {
+      const cookieStore = await cookies();
+      const verifyContextCookie = cookieStore.get('verify_context');
+
+      if (!verifyContextCookie) {
+        return NextResponse.json(
+          { success: false, message: 'Verification session expired. Please request a new verification email.' },
+          { status: 401 }
+        );
+      }
+
+      let verifyContext;
+      try {
+        verifyContext = JSON.parse(verifyContextCookie.value);
+      } catch {
+        return NextResponse.json(
+          { success: false, message: 'Invalid verification session' },
+          { status: 401 }
+        );
+      }
+
+      uid = verifyContext.uid;
+      token = verifyContext.token;
     }
-
-    let verifyContext;
-    try {
-      verifyContext = JSON.parse(verifyContextCookie.value);
-    } catch {
-      return NextResponse.json(
-        { success: false, message: 'Invalid verification session' },
-        { status: 401 }
-      );
-    }
-
-    const { uid, token } = verifyContext;
 
     if (!uid || !token) {
       return NextResponse.json(
@@ -55,13 +62,16 @@ export async function POST(request: NextRequest) {
         }),
       }
     );
+    
+    const responseText = await response.text();
+    const hasBody = responseText && responseText.trim().length > 0;
+    const responseData = hasBody ? JSON.parse(responseText) : {};
 
     if (!response.ok) {
-      const errorData = await response.json();
       return NextResponse.json(
         {
           success: false,
-          message: errorData.detail || 'Failed to verify email. Please try again.',
+          message: responseData.detail || 'Failed to verify email. Please try again.',
         },
         { status: response.status }
       );

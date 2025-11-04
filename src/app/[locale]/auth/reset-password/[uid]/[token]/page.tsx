@@ -1,28 +1,18 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
+import ResetPasswordFormAuto from '@/components/Auth/ResetPasswordFormAuto';
 import LoginDecor from '@/components/Login/LoginDecor';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import type { ComponentType } from 'react';
-
-interface VerifyEmailInstructionsProps {
-  locale: string;
-}
-
-const VerifyEmailInstructions = dynamic(
-  () => import('@/components/Auth/VerifyEmailInstructions'),
-  { ssr: false }
-) as ComponentType<VerifyEmailInstructionsProps>;
 
 type PageProps = {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string; uid: string; token: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ namespace: 'metadata.verifyEmail', locale });
+  const t = await getTranslations({ namespace: 'metadata.resetPassword', locale });
 
   return {
     title: t('title'),
@@ -30,12 +20,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function VerifyEmailPage({ params }: PageProps) {
-  const { locale } = await params;
+export default async function ResetPasswordPage({ params }: PageProps) {
+  const { locale, uid, token } = await params;
   setRequestLocale(locale);
 
   const isAr = locale === 'ar';
-  const t = await getTranslations({ namespace: 'verifyEmail', locale });
+  const t = await getTranslations({ namespace: 'resetPassword', locale });
 
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-white">
@@ -72,7 +62,16 @@ export default async function VerifyEmailPage({ params }: PageProps) {
                 <p className="mb-6 text-[15px] text-gray-500">{t('subtitle')}</p>
               </div>
 
-              <VerifyEmailInstructions locale={locale} />
+              <ResetPasswordFormAuto locale={locale} uid={uid} token={token} />
+
+              <div className={`mt-6 text-center ${isAr ? 'text-right' : ''}`}>
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  {t('backToLogin')}
+                </Link>
+              </div>
             </div>
           </div>
         </div>

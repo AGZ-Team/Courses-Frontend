@@ -26,16 +26,18 @@ export async function middleware(request: NextRequest) {
       const cookieName =
         pathname.includes('/verify-email') ? 'verify_context' : 'reset_context';
 
-      const response = NextResponse.redirect(
-        new URL(pathname, request.url)
-      );
+      // Create clean URL without query params
+      const cleanUrl = new URL(pathname, request.url);
+      cleanUrl.search = '';
+
+      const response = NextResponse.redirect(cleanUrl);
 
       response.cookies.set(cookieName, JSON.stringify({ uid, token }), {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: 15 * 60,
-        path: pathname.split('?')[0],
+        path: '/', // Set to root so it's available everywhere
       });
 
       return response;

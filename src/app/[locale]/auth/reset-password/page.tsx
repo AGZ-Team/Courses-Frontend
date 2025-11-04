@@ -1,14 +1,13 @@
 import React from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
-import ResetPasswordForm from '@/components/Auth/ResetPasswordForm';
+import ResetPasswordInstructions from '@/components/Auth/ResetPasswordInstructions';
 import LoginDecor from '@/components/Login/LoginDecor';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 
 type PageProps = {
   params: Promise<{ locale: string }>;
-  searchParams?: Promise<{ uid?: string; token?: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -63,16 +62,7 @@ export default async function ResetPasswordPage({ params }: PageProps) {
                 <p className="mb-6 text-[15px] text-gray-500">{t('subtitle')}</p>
               </div>
 
-              <ResetPasswordForm locale={locale} />
-
-              <div className={`mt-6 text-center ${isAr ? 'text-right' : ''}`}>
-                <Link
-                  href="/login"
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  {t('backToLogin')}
-                </Link>
-              </div>
+              <ResetPasswordInstructions locale={locale} />
             </div>
           </div>
         </div>

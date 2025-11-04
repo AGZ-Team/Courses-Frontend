@@ -34,6 +34,7 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [showPassword, setShowPassword] = useState(false);
+  const [isEmailNotVerified, setIsEmailNotVerified] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -83,9 +84,33 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
         localStorage.setItem('rememberMe', formData.username);
       }
 
-      // Redirect to home page or dashboard after successful login
-      router.push('/');
+      // Redirect to email verification page after successful login
+      // User must verify email before accessing the app
+      router.push('/auth/verify-email');
     } catch (err) {
+      // Get raw error message from backend
+      let rawError = '';
+      if (err instanceof Error) {
+        rawError = err.message.toLowerCase();
+      }
+
+      // Check if email is not verified (check raw error first)
+      const isEmailNotVerifiedError =
+        rawError.includes('not verified') ||
+        rawError.includes('not activated') ||
+        rawError.includes('not active') ||
+        rawError.includes('no active account') ||
+        rawError.includes('inactive');
+
+      if (isEmailNotVerifiedError) {
+        setIsEmailNotVerified(true);
+        const verificationMessage = isAr
+          ? 'البريد الإلكتروني غير مُتحقق منه. يرجى التحقق من بريدك الإلكتروني أولاً'
+          : 'Email not verified. Please verify your email first';
+        setGeneralError(verificationMessage);
+        return;
+      }
+
       // Parse error and show field-specific or general message
       let errorMessage: string = getUserFriendlyErrorMessage(
         err,
@@ -144,8 +169,23 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
       </div>
 
       {generalError && (
-        <div className="mb-4 rounded-xl bg-red-50 p-4 text-sm text-red-600">
-          {generalError}
+        <div className="mb-4 rounded-xl bg-red-50 p-4">
+          <p className="text-sm text-red-600 mb-3 font-medium">{generalError}</p>
+          {isEmailNotVerified && (
+            <div className="text-sm space-y-3">
+              <p className="text-red-700">
+                {isAr
+                  ? 'تحقق من بريدك الإلكتروني للحصول على رابط التحقق'
+                  : 'Check your email for the verification link'}
+              </p>
+              <Link
+                href="/auth/verify-email"
+                className="inline-block bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition font-medium"
+              >
+                {isAr ? 'انتقل إلى صفحة التحقق' : 'Go to Verification Page'}
+              </Link>
+            </div>
+          )}
         </div>
       )}
 
@@ -244,7 +284,7 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
             <span>{t.rememberMe}</span>
           </label>
           <Link
-            href="/auth/reset-password?uid=test&token=test"
+            href="/auth/reset-password"
             className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
           >
             {t.forgotPassword}

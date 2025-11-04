@@ -3,15 +3,19 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
-import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
+import { AlertCircle, CheckCircle, Eye, EyeOff, Loader } from 'lucide-react';
 
-interface ResetPasswordFormProps {
+interface ResetPasswordFormAutoProps {
   locale: string;
+  uid: string;
+  token: string;
 }
 
-export default function ResetPasswordForm({
+export default function ResetPasswordFormAuto({
   locale,
-}: ResetPasswordFormProps) {
+  uid,
+  token,
+}: ResetPasswordFormAutoProps) {
   const t = useTranslations('resetPassword');
   const router = useRouter();
   const isAr = locale === 'ar';
@@ -26,6 +30,45 @@ export default function ResetPasswordForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [validating, setValidating] = useState(true);
+  const [isTokenValid, setIsTokenValid] = useState(false);
+
+  // Validate token on component mount
+  React.useEffect(() => {
+    const validateToken = async () => {
+      try {
+        const response = await fetch(
+          `https://alaaelgharably248.pythonanywhere.com/resetpassword/${uid}/${token}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        if (!response.ok) {
+          const data = await response.json().catch(() => ({}));
+          const errorMsg = 
+            (data as any)?.detail || 
+            (data as any)?.message || 
+            t('invalidToken');
+          throw new Error(errorMsg);
+        }
+
+        setIsTokenValid(true);
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : t('invalidToken');
+        setError(errorMessage);
+        setIsTokenValid(false);
+      } finally {
+        setValidating(false);
+      }
+    };
+
+    validateToken();
+  }, [uid, token, t]);
 
   const validatePassword = (password: string): string | null => {
     if (password.length < 8) {
@@ -63,24 +106,41 @@ export default function ResetPasswordForm({
     setLoading(true);
 
     try {
-      // Call our secure API route instead of Djoser directly
-      // The API route will read uid/token from the secure HttpOnly cookie
-      const response = await fetch('/api/auth/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          newPassword: formData.newPassword,
-          confirmPassword: formData.confirmPassword,
-        }),
-        credentials: 'include', // Include cookies in the request
-      });
+      // Call backend directly with uid, token, and new password
+      const response = await fetch(
+        'https://alaaelgharably248.pythonanywhere.com/auth/users/reset_password_confirm/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid,
+            token,
+            new_password: formData.newPassword,
+            re_new_password: formData.confirmPassword,
+          }),
+        }
+      );
 
-      const data = await response.json();
+      // Handle both JSON and non-JSON responses
+      let data = {};
+      const contentType = response.headers.get('content-type');
+      
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (e) {
+          console.error('Failed to parse JSON response:', e);
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.message || t('error'));
+        const errorMsg = 
+          (data as any)?.detail || 
+          (data as any)?.message || 
+          t('error');
+        throw new Error(errorMsg);
       }
 
       setSuccess(true);
@@ -99,6 +159,39 @@ export default function ResetPasswordForm({
     }
   };
 
+  // Show loading state while validating token
+  if (validating) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-center py-8">
+          <Loader className="h-6 w-6 animate-spin text-indigo-600" />
+        </div>
+        <p className="text-center text-sm text-gray-600">
+          {isAr ? 'جارٍ التحقق من الرابط...' : 'Verifying reset link...'}
+        </p>
+      </div>
+    );
+  }
+
+  // Show error if token is invalid
+  if (!isTokenValid) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-start gap-3 rounded-lg bg-red-50 p-4">
+          <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-600 mt-0.5" />
+          <div>
+            <p className="text-sm font-medium text-red-900">{error}</p>
+            <p className="text-xs text-red-700 mt-2">
+              {isAr
+                ? 'قد يكون الرابط منتهي الصلاحية. يرجى طلب رابط جديد.'
+                : 'The link may have expired. Please request a new reset link.'}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (success) {
     return (
       <div className="space-y-4">
@@ -106,6 +199,11 @@ export default function ResetPasswordForm({
           <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-600 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-green-900">{t('success')}</p>
+            <p className="text-xs text-green-700 mt-2">
+              {isAr
+                ? 'جارٍ إعادة التوجيه إلى صفحة تسجيل الدخول...'
+                : 'Redirecting to login page...'}
+            </p>
           </div>
         </div>
       </div>
@@ -204,7 +302,7 @@ export default function ResetPasswordForm({
       >
         {loading ? (
           <>
-            <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
+            <Loader className="h-4 w-4 animate-spin mr-2" />
             {t('submit')}
           </>
         ) : (

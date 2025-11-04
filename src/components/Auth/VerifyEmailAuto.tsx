@@ -5,13 +5,17 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
 import { AlertCircle, CheckCircle, Loader } from 'lucide-react';
 
-interface VerifyEmailFormProps {
+interface VerifyEmailAutoProps {
   locale: string;
+  uid: string;
+  token: string;
 }
 
-export default function VerifyEmailForm({
+export default function VerifyEmailAuto({
   locale,
-}: VerifyEmailFormProps) {
+  uid,
+  token,
+}: VerifyEmailAutoProps) {
   const t = useTranslations('verifyEmail');
   const router = useRouter();
   const isAr = locale === 'ar';
@@ -23,23 +27,33 @@ export default function VerifyEmailForm({
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        // Call our secure API route instead of Djoser directly
-        // The API route will read uid/token from the secure HttpOnly cookie
+        if (typeof window === 'undefined') return;
+
+        // Call verification endpoint with uid and token from URL
         const response = await fetch('/api/auth/verify-email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include', // Include cookies in the request
+          body: JSON.stringify({
+            uid,
+            token,
+          }),
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message || t('error'));
+          const errorMsg = data.message || data.detail || t('error');
+          throw new Error(errorMsg);
         }
 
         setSuccess(true);
+
+        // Mark email as verified in sessionStorage
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('email_verified', 'true');
+        }
 
         // Redirect to login after 2 seconds
         setTimeout(() => {
@@ -49,13 +63,12 @@ export default function VerifyEmailForm({
         const errorMessage =
           err instanceof Error ? err.message : t('error');
         setError(errorMessage);
-      } finally {
         setLoading(false);
       }
     };
 
     verifyEmail();
-  }, [t, router]);
+  }, [uid, token, t, router]);
 
   if (loading) {
     return (
@@ -72,9 +85,18 @@ export default function VerifyEmailForm({
     return (
       <div className="space-y-4">
         <div className="flex items-start gap-3 rounded-lg bg-green-50 p-4">
-          <CheckCircle className="h-5 w-5 flex-shrink-0 text-green-600 mt-0.5" />
+          <CheckCircle className="h-5 w-5 shrink-0 text-green-600 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-green-900">{t('success')}</p>
+            <p className="text-sm font-medium text-green-900">
+              {isAr
+                ? 'تم التحقق من بريدك الإلكتروني بنجاح'
+                : 'Email verified successfully'}
+            </p>
+            <p className="text-xs text-green-700 mt-2">
+              {isAr
+                ? 'جارٍ إعادة التوجيه إلى صفحة تسجيل الدخول...'
+                : 'Redirecting to login page...'}
+            </p>
           </div>
         </div>
       </div>
@@ -85,7 +107,7 @@ export default function VerifyEmailForm({
     return (
       <div className="space-y-4">
         <div className="flex items-start gap-3 rounded-lg bg-red-50 p-4">
-          <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-600 mt-0.5" />
+          <AlertCircle className="h-5 w-5 shrink-0 text-red-600 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-red-900">{error}</p>
           </div>
@@ -95,7 +117,7 @@ export default function VerifyEmailForm({
           onClick={() => window.location.reload()}
           className="inline-flex w-full items-center justify-center rounded-xl bg-[#00FF91] px-4 py-3 text-center text-[15px] font-semibold text-black shadow-sm transition hover:brightness-95 focus-visible:outline-none"
         >
-          {t('resendEmail')}
+          {isAr ? 'حاول مرة أخرى' : 'Try Again'}
         </button>
       </div>
     );

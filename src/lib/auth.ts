@@ -23,6 +23,8 @@ export interface LoginData {
 export interface JWTResponse {
   access: string;
   refresh: string;
+  uid?: string;
+  token?: string;
 }
 
 export interface SignupResponse {
@@ -71,14 +73,30 @@ export async function signup(data: SignupData): Promise<SignupResponse> {
   if (!response.ok) {
     try {
       const error = await response.json();
-      console.error('Signup error details:', error);
-      throw new Error(
-        error.detail || 
-        error.message || 
-        JSON.stringify(error) || 
-        'Signup failed'
-      );
+      console.error('Signup error details:', {
+        status: response.status,
+        error,
+        formDataEntries: Array.from(formData.entries()),
+      });
+
+      // Extract error message from various formats
+      let errorMessage = 'Signup failed';
+
+      if (error.detail) {
+        errorMessage = error.detail;
+      } else if (error.message) {
+        errorMessage = error.message;
+      } else if (error.email && Array.isArray(error.email)) {
+        errorMessage = error.email[0];
+      } else if (error.username && Array.isArray(error.username)) {
+        errorMessage = error.username[0];
+      } else if (error.password && Array.isArray(error.password)) {
+        errorMessage = error.password[0];
+      }
+
+      throw new Error(errorMessage);
     } catch (parseError) {
+      console.error('Signup parse error:', parseError);
       throw new Error(`Signup failed with status ${response.status}`);
     }
   }
@@ -100,7 +118,7 @@ export async function login(data: LoginData): Promise<JWTResponse> {
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || 'Login failed');
+    throw new Error(error.detail || error.error || 'Login failed');
   }
 
   const tokens = await response.json();
@@ -109,6 +127,12 @@ export async function login(data: LoginData): Promise<JWTResponse> {
   if (typeof window !== 'undefined') {
     localStorage.setItem('access_token', tokens.access);
     localStorage.setItem('refresh_token', tokens.refresh);
+    
+    // Store uid and token for email verification if provided by backend
+    if (tokens.uid && tokens.token) {
+      localStorage.setItem('verification_uid', tokens.uid);
+      localStorage.setItem('verification_token', tokens.token);
+    }
   }
   
   return tokens;

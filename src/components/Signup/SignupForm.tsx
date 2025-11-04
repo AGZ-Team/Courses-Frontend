@@ -167,9 +167,15 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
 
       setSuccess(true);
       
-      // Redirect to login page after 2 seconds
+      // Store email in localStorage for resend verification if needed
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('signup_email', formData.email);
+      }
+      
+      // Redirect to verification instructions page after 2 seconds
+      // User will receive verification email and click the link to verify
       setTimeout(() => {
-        router.push('/login');
+        router.push('/auth/verify-email');
       }, 2000);
     } catch (err) {
       // Parse error and show field-specific or general message
