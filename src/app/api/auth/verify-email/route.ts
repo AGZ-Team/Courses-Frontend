@@ -14,10 +14,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     let uid = body.uid;
     let token = body.token;
+    const cookieStore = await cookies();
 
     // If uid and token not in body, try to get from cookie
     if (!uid || !token) {
-      const cookieStore = await cookies();
       const verifyContextCookie = cookieStore.get('verify_context');
 
       if (!verifyContextCookie) {
@@ -64,21 +64,33 @@ export async function POST(request: NextRequest) {
     );
     
     const responseText = await response.text();
-    const hasBody = responseText && responseText.trim().length > 0;
-    const responseData = hasBody ? JSON.parse(responseText) : {};
+    let responseData = {};
+    
+    // Try to parse JSON response if there is one
+    if (responseText && responseText.trim().length > 0) {
+      try {
+        responseData = JSON.parse(responseText);
+      } catch (e) {
+        console.error('Failed to parse backend response:', e);
+      }
+    }
 
     if (!response.ok) {
       return NextResponse.json(
         {
           success: false,
-          message: responseData.detail || 'Failed to verify email. Please try again.',
+          message: (responseData as any)?.detail || 'Failed to verify email. Please try again.',
         },
         { status: response.status }
       );
     }
 
-    // Clear the verify context cookie on success
-    cookieStore.delete('verify_context');
+    // Clear the verify context cookie on success (if it exists)
+    try {
+      cookieStore.delete('verify_context');
+    } catch (e) {
+      // Cookie might not exist, that's okay
+    }
 
     return NextResponse.json(
       { success: true, message: 'Email verified successfully' },

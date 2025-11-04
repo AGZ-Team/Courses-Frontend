@@ -285,7 +285,7 @@ const MainNavbar = () => {
               {/* Logout Button */}
               <button
                 onClick={handleLogout}
-                className={`whitespace-nowrap rounded-full bg-red-500 ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-white transition hover:bg-red-600`}
+                className={`whitespace-nowrap rounded-full bg-red-500 ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-white transition hover:cursor-pointer hover:bg-red-600`}
               >
                 {t('logout') || 'Logout'}
               </button>
