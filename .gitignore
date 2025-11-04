@@ -37,7 +37,6 @@ yarn-error.log*
 .vercel
 
 # local demo projects
-Kodr-react/
 
 # typescript
 *.tsbuildinfo
