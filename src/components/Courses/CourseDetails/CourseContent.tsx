@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, ChevronDown, ChevronUp, Play, Star } from 'lucide-react';
 import type { CourseCard } from '../CourseCard';
+import Image from 'next/image';
 
 interface CourseContentProps {
   course: CourseCard;
@@ -217,9 +218,11 @@ export function CourseContent({ course }: CourseContentProps) {
                 <h2 className="text-2xl font-bold text-gray-900">{t('instructor.title')}</h2>
                 
                 <div className="flex gap-6 items-start">
-                  <img
+                  <Image
                     src={course.authorAvatar}
                     alt={course.author}
+                    width={128}
+                    height={128}
                     className="w-32 h-32 rounded-lg object-cover"
                   />
                   <div className="flex-1">
@@ -309,9 +312,11 @@ export function CourseContent({ course }: CourseContentProps) {
                   {[1, 2].map((review) => (
                     <div key={review} className="border-b border-gray-200 pb-6">
                       <div className="flex gap-4">
-                        <img
+                        <Image
                           src="/coursesImages/avatar-1.png"
                           alt="Reviewer"
+                          width={48}
+                          height={48}
                           className="w-12 h-12 rounded-full object-cover"
                         />
                         <div className="flex-1">

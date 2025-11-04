@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, {useEffect, useRef} from 'react';
 
 type Props = {
@@ -55,25 +56,31 @@ export default function LoginDecor({side = 'right'}: Props) {
       aria-hidden="true"
     >
       {/* top small avatar (outer edge) */}
-      <img
+      <Image
         src="/assets/2.png"
         alt=""
+        width={500}
+        height={500}
         className={`absolute ${outerEdge} top-[18%] w-24 md:w-28 translate-x-[calc(var(--parallax-x,0)*6px)] translate-y-[calc(var(--parallax-y,0)*6px)] animate-float-slower`}
       />
 
       {/* big center avatar (exact middle) */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <img
+        <Image
           src="/assets/1.png"
           alt=""
+          width={500}
+          height={500}
           className="w-[360px] md:w-[420px] lg:w-[460px] translate-x-[calc(var(--parallax-x,0)*4px)] translate-y-[calc(var(--parallax-y,0)*4px)] animate-float-slower"
         />
       </div>
 
       {/* bottom small avatar (inner edge) */}
-      <img
+      <Image
         src="/assets/3.png"
         alt=""
+        width={500}
+        height={500}
         className={`absolute ${innerEdge} bottom-[12%] w-24 md:w-28 translate-x-[calc(var(--parallax-x,0)*8px)] translate-y-[calc(var(--parallax-y,0)*8px)] animate-float-slower`}
       />
     </div>

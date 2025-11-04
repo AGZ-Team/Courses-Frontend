@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { Play, Clock, Volume2, Download, Share2, ThumbsUp, MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 interface LessonVideoProps {
   title: string;
@@ -32,9 +33,11 @@ export function LessonVideo({
       >
         {/* Video Background */}
         <div className="absolute inset-0 bg-linear-to-br from-blue-200 to-blue-600/75 flex items-center justify-center">
-          <img
+          <Image 
             src={thumbnailUrl}
             alt="Course"
+            width={500}
+            height={500}
             className="w-full h-full object-cover opacity-40"
           />
         </div>

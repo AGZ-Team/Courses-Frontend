@@ -4,6 +4,7 @@ import { Star, Users, Clock, Play, Facebook, Instagram, Twitter, Linkedin } from
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { CourseCard } from '../CourseCard';
+import Image from 'next/image';
 
 interface CourseHeroProps {
   course: CourseCard;
@@ -106,9 +107,11 @@ export function CourseHero({ course }: CourseHeroProps) {
 
               {/* Author */}
               <div className="flex items-center gap-3">
-                <img
+                <Image
                   src={course.authorAvatar}
                   alt={course.author}
+                  width={500}
+                  height={500}
                   className="w-10 h-10 rounded-full object-cover"
                 />
                 <span className="text-[#6e6b8f]">{course.author}</span>
@@ -164,9 +167,11 @@ export function CourseHero({ course }: CourseHeroProps) {
             <div className="lg:col-span-1 space-y-6 sticky top-24">
               {/* Course Image with Play Button */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                <img
+                <Image 
                   src={course.image}
                   alt={course.title}
+                  width={500}
+                  height={500}
                   className="w-full aspect-video object-cover"
                 />
                 <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">

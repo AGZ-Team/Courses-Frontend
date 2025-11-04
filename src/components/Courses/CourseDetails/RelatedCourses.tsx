@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Star } from 'lucide-react';
 import { getLocale } from 'next-intl/server';
 import type { CourseCard } from '../CourseCard';
+import Image from 'next/image';
 
 interface RelatedCoursesProps {
   courses: CourseCard[];
@@ -21,7 +22,7 @@ export async function RelatedCourses({ courses }: RelatedCoursesProps) {
               href={`/${locale}/courses/${course.id}`}
               className="group pb-auto bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all"
             >
-              <img src={course.image} alt={course.title} className="w-full aspect-video object-cover group-hover:scale-105 transition-transform" />
+              <Image src={course.image} alt={course.title} width={500} height={500} className="w-full aspect-video object-cover group-hover:scale-105 transition-transform" />
               <div className="p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-900">{course.title}</h3>
                 <div className="flex items-center gap-2 mb-4">
