@@ -127,6 +127,8 @@ export async function login(data: LoginData): Promise<JWTResponse> {
   if (typeof window !== 'undefined') {
     localStorage.setItem('access_token', tokens.access);
     localStorage.setItem('refresh_token', tokens.refresh);
+    localStorage.setItem('access', tokens.access); // Also store as 'access' for compatibility
+    localStorage.setItem('username', data.username); // Store username for navbar
     
     // Store uid and token for email verification if provided by backend
     if (tokens.uid && tokens.token) {
@@ -180,6 +182,10 @@ export function clearTokens(): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');
+  localStorage.removeItem('access');
+  localStorage.removeItem('username');
+  localStorage.removeItem('verification_uid');
+  localStorage.removeItem('verification_token');
 }
 
 /**

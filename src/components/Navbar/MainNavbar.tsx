@@ -1,10 +1,10 @@
 'use client';
 
-import {Link, usePathname} from '@/i18n/routing';
+import {Link, usePathname, useRouter} from '@/i18n/routing';
 import LanguageSwitcher from '@/components/Navbar/LanguageSwitcher';
 import {useTranslations, useLocale} from 'next-intl';
 import { LuSearch } from 'react-icons/lu';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { RiShoppingCart2Fill } from 'react-icons/ri';
 import { NavDropdown, DropdownItem } from './NavDropdown';
 import NavRightBanner from './NavRightBanner';
@@ -20,9 +20,33 @@ const MainNavbar = () => {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
+  const router = useRouter();
   const isAr = locale === 'ar';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState<{lessons: boolean; courses: boolean}>({lessons: false, courses: false});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('access');
+    const storedUsername = localStorage.getItem('username');
+    if (token) {
+      setIsLoggedIn(true);
+      setUsername(storedUsername || 'User');
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    localStorage.removeItem('uid');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    setIsLoggedIn(false);
+    setUsername('');
+    router.push('/login');
+  };
 
   // Course categories dropdown items
   const courseCategoriesItems: DropdownItem[] = useMemo(() => [
@@ -230,18 +254,37 @@ const MainNavbar = () => {
             <LanguageSwitcher />
           </div>
 
-          {/* Login - Desktop Only */}
-          <Link href="/login" className={`hidden ${isAr ? 'text-[16px]' : 'text-[14px]'} whitespace-nowrap text-white/80 transition hover:text-white md:block`}>
-            {t('login')}
-          </Link>
+          {isLoggedIn ? (
+            <>
+              {/* Username - Desktop Only */}
+              <span className={`hidden ${isAr ? 'text-[16px]' : 'text-[14px]'} whitespace-nowrap text-white/80 md:block`}>
+                {username}
+              </span>
 
-          {/* Signup - Always Visible */}
-          <Link
-            href={`/signup`}
-            className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-[#0ABAB5] transition hover:bg-white/90`}
-          >
-            {t('signup')}
-          </Link>
+              {/* Logout Button */}
+              <button
+                onClick={handleLogout}
+                className={`whitespace-nowrap rounded-full bg-red-500 ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-white transition hover:bg-red-600`}
+              >
+                {t('logout') || 'Logout'}
+              </button>
+            </>
+          ) : (
+            <>
+              {/* Login - Desktop Only */}
+              <Link href="/login" className={`hidden ${isAr ? 'text-[16px]' : 'text-[14px]'} whitespace-nowrap text-white/80 transition hover:text-white md:block`}>
+                {t('login')}
+              </Link>
+
+              {/* Signup - Always Visible */}
+              <Link
+                href={`/signup`}
+                className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-[#0ABAB5] transition hover:bg-white/90`}
+              >
+                {t('signup')}
+              </Link>
+            </>
+          )}
         </div>
       </div>
       
@@ -341,15 +384,48 @@ const MainNavbar = () => {
               <LuSearch className='h-6 w-6' />
               <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium text-white/80`}>{t('search')}</span>
             </button>
-              
-            {/* Login Button */}
-            <Link 
-              href="/login" 
-              className={`mt-4 block rounded-full border-2 border-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5]`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {t('login')}
-            </Link>
+
+            {isLoggedIn ? (
+              <>
+                {/* Username - Mobile */}
+                <div className="mt-4 rounded-lg bg-white/5 px-4 py-3">
+                  <p className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium text-white/80`}>
+                    {isAr ? 'مرحبا' : 'Hello'}, {username}
+                  </p>
+                </div>
+
+                {/* Logout Button - Mobile */}
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`mt-4 block w-full rounded-full bg-red-500 px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-red-600`}
+                >
+                  {t('logout') || 'Logout'}
+                </button>
+              </>
+            ) : (
+              <>
+                {/* Login Button */}
+                <Link 
+                  href="/login" 
+                  className={`mt-4 block rounded-full border-2 border-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5]`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {t('login')}
+                </Link>
+
+                {/* Signup Button - Mobile */}
+                <Link
+                  href="/signup"
+                  className={`mt-2 block rounded-full bg-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-[#0ABAB5] transition hover:bg-white/90`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {t('signup')}
+                </Link>
+              </>
+            )}
 
             {/* Language Switcher */}
             <div className="mt-4 flex justify-center">
