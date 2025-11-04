@@ -65,7 +65,7 @@ export default async function LoginPage({params}: PageProps) {
 
           {/* Right: form card */}
           <div className="flex items-center justify-center px-6 py-10 md:py-12 md:col-start-2 overflow-y-auto scrollbar-hide min-h-screen">
-            <LoginForm isAr={isAr} translations={translations} />
+            <LoginForm isAr={isAr} locale={locale} translations={translations} />
           </div>
         </div>
       </div>

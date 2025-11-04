@@ -23,12 +23,13 @@ type Translations = {
 
 type LoginFormProps = {
   isAr: boolean;
+  locale: string;
   translations: Translations;
 };
 
 type FieldErrors = Record<string, string>;
 
-export default function LoginForm({isAr, translations: t}: LoginFormProps) {
+export default function LoginForm({isAr, locale, translations: t}: LoginFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
@@ -74,7 +75,7 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
     setLoading(true);
 
     try {
-      await login({
+      const tokens = await login({
         username: formData.username,
         password: formData.password,
       });
@@ -84,9 +85,14 @@ export default function LoginForm({isAr, translations: t}: LoginFormProps) {
         localStorage.setItem('rememberMe', formData.username);
       }
 
-      // Redirect to email verification page after successful login
-      // User must verify email before accessing the app
-      router.push('/auth/verify-email');
+      // Check if backend returned uid and token (user not yet verified)
+      if (tokens.uid && tokens.token) {
+        // Redirect to email verification with uid and token
+        router.push(`/${locale}/auth/verify-email/${tokens.uid}/${tokens.token}`);
+      } else {
+        // User already verified, redirect to home
+        router.push(`/${locale}`);
+      }
     } catch (err) {
       // Get raw error message from backend
       let rawError = '';
