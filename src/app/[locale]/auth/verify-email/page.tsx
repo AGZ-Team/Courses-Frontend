@@ -1,20 +1,10 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
 import LoginDecor from '@/components/Login/LoginDecor';
+import VerifyEmailInstructions from '@/components/Auth/VerifyEmailInstructions';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import type { ComponentType } from 'react';
-
-interface VerifyEmailInstructionsProps {
-  locale: string;
-}
-
-const VerifyEmailInstructions = dynamic(
-  () => import('@/components/Auth/VerifyEmailInstructions'),
-  { ssr: false }
-) as ComponentType<VerifyEmailInstructionsProps>;
 
 type PageProps = {
   params: Promise<{ locale: string }>;
