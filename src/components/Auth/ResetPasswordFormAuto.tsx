@@ -30,45 +30,6 @@ export default function ResetPasswordFormAuto({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [validating, setValidating] = useState(true);
-  const [isTokenValid, setIsTokenValid] = useState(false);
-
-  // Validate token on component mount
-  React.useEffect(() => {
-    const validateToken = async () => {
-      try {
-        const response = await fetch(
-          `https://alaaelgharably248.pythonanywhere.com/resetpassword/${uid}/${token}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-
-        if (!response.ok) {
-          const data = await response.json().catch(() => ({}));
-          const errorMsg = 
-            (data as any)?.detail || 
-            (data as any)?.message || 
-            t('invalidToken');
-          throw new Error(errorMsg);
-        }
-
-        setIsTokenValid(true);
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : t('invalidToken');
-        setError(errorMessage);
-        setIsTokenValid(false);
-      } finally {
-        setValidating(false);
-      }
-    };
-
-    validateToken();
-  }, [uid, token, t]);
 
   const validatePassword = (password: string): string | null => {
     if (password.length < 8) {
@@ -158,39 +119,6 @@ export default function ResetPasswordFormAuto({
       setLoading(false);
     }
   };
-
-  // Show loading state while validating token
-  if (validating) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-center py-8">
-          <Loader className="h-6 w-6 animate-spin text-indigo-600" />
-        </div>
-        <p className="text-center text-sm text-gray-600">
-          {isAr ? 'جارٍ التحقق من الرابط...' : 'Verifying reset link...'}
-        </p>
-      </div>
-    );
-  }
-
-  // Show error if token is invalid
-  if (!isTokenValid) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-start gap-3 rounded-lg bg-red-50 p-4">
-          <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-600 mt-0.5" />
-          <div>
-            <p className="text-sm font-medium text-red-900">{error}</p>
-            <p className="text-xs text-red-700 mt-2">
-              {isAr
-                ? 'قد يكون الرابط منتهي الصلاحية. يرجى طلب رابط جديد.'
-                : 'The link may have expired. Please request a new reset link.'}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (success) {
     return (
