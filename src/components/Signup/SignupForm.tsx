@@ -239,8 +239,8 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
       {success && (
         <div className="mb-4 rounded-xl bg-green-50 p-4 text-sm text-green-600">
           {isAr
-            ? 'تم التسجيل بنجاح! جارٍ التحويل إلى صفحة تسجيل الدخول...'
-            : 'Signup successful! Redirecting to login page...'}
+            ? 'تم التسجيل بنجاح! جارٍ التحويل إلى صفحة التحقق من البريد الإلكتروني...'
+            : 'Signup successful! Redirecting to email verification...'}
         </div>
       )}
 
