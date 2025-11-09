@@ -110,7 +110,6 @@ export function NavDropdown({
           setIsOpen((v) => !v);
         }}
         onTouchStart={(e) => {
-          e.preventDefault();
           e.stopPropagation();
           setIsOpen((v) => !v);
         }}
