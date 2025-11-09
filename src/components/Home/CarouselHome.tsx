@@ -177,6 +177,7 @@ const CarouselHome = () => {
                       width={width}
                       height={height}
                       className="h-auto w-full max-w-[102px] object-contain opacity-70 transition hover:opacity-100"
+                      style={{ width: 'auto', height: 'auto' }}
                     />
                   </div>
                 );
@@ -221,7 +222,7 @@ const CarouselHome = () => {
                     aria-hidden
                   >
                     <div className={`flex h-[72px] w-[72px] items-center justify-center`}>
-                      <Image src={image} alt="" width={42} height={42} className="h-10 w-10 object-contain" />
+                      <Image src={image} alt="" width={42} height={42} className="h-10 w-10 object-contain" style={{ width: 'auto', height: 'auto' }} />
                     </div>
                   </span>
 

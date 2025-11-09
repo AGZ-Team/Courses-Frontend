@@ -152,7 +152,7 @@ export function CoursesClient({
         <div className="flex w-full items-center gap-3 text-sm text-[#433f74] md:w-auto">
           <button
             onClick={() => setIsMobileFilterOpen(true)}
-            className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-[#d9d7f0] bg-white px-4 font-semibold text-[#433f74] shadow-[0_12px_30px_rgba(12,10,78,0.08)] transition hover:border-[#7c5cff] lg:hidden"
+            className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-[#d9d7f0] bg-white px-4 font-semibold text-[#433f74] shadow-[0_12px_30px_rgba(12,10,78,0.08)] transition hover:border-primary lg:hidden"
           >
             <LuFilter size={18} />
             {t('filters.filterButton')}
@@ -176,7 +176,7 @@ export function CoursesClient({
                 <h2 className="text-lg font-bold text-[#120a5d]">{t('filters.title')}</h2>
                 <button
                   onClick={() => setIsMobileFilterOpen(false)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-[#433f74] transition hover:bg-[#f4f3ff] hover:text-[#6440fb]"
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-[#433f74] transition hover:bg-primary/10 hover:text-primary"
                 >
                   <svg
                     width="20"

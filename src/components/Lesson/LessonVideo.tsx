@@ -32,7 +32,7 @@ export function LessonVideo({
         style={{ aspectRatio: '16 / 9' }}
       >
         {/* Video Background */}
-        <div className="absolute inset-0 bg-linear-to-br from-blue-200 to-blue-600/75 flex items-center justify-center">
+        <div className="absolute inset-0 bg-primary/30 flex items-center justify-center">
           <Image 
             src={thumbnailUrl}
             alt="Course"
@@ -49,7 +49,7 @@ export function LessonVideo({
               onClick={() => setIsVideoPlaying(true)}
               className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300"
             >
-              <Play className="w-8 h-8 text-blue-600 fill-blue-600 ml-1" />
+              <Play className="w-8 h-8 text-primary fill-primary ml-1" />
             </button>
           </div>
         )}
@@ -95,7 +95,7 @@ export function LessonVideo({
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-4 pt-4">
-          <button className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors font-medium">
+          <button className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors font-medium">
             <Share2 className="w-4 h-4" />
             {t('share')}
           </button>

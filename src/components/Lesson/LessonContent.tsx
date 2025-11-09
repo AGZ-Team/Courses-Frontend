@@ -48,7 +48,7 @@ export function LessonContent({
         <ul className="space-y-3">
           {requirements.map((item: string, i: number) => (
             <li key={i} className="flex items-start gap-3 text-slate-700">
-              <span className="mt-1 text-blue-700">•</span>
+              <span className="mt-1 text-primary">•</span>
               <span>{item}</span>
             </li>
           ))}
@@ -79,8 +79,8 @@ export function LessonContent({
                 <h5 className="font-medium text-slate-900 mt-3">{t('reviews.reviewTitle')}</h5>
                 <p className="text-slate-600 mt-2">{t('reviews.reviewText')}</p>
                 <div className="flex gap-2 mt-4 items-center">
-                  <span className="text-sm text-blue-700">{t('reviews.wasHelpful')}</span>
-                  <button className="px-3 py-1 rounded bg-blue-900 text-white text-sm hover:bg-blue-800">
+                  <span className="text-sm text-primary">{t('reviews.wasHelpful')}</span>
+                  <button className="px-3 py-1 rounded bg-primary text-white text-sm hover:bg-primary/90">
                     {t('reviews.yes')}
                   </button>
                   <button className="px-3 py-1 rounded bg-slate-200 text-slate-700 text-sm hover:bg-slate-300">
@@ -104,7 +104,7 @@ export function LessonContent({
             <input
               type="text"
               placeholder={t('writeReview.reviewTitlePlaceholder')}
-              className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
           <div>
@@ -114,12 +114,12 @@ export function LessonContent({
             <textarea
               rows={6}
               placeholder={t('writeReview.reviewContentPlaceholder')}
-              className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-900 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
           <button
             type="submit"
-            className="px-8 py-4 rounded-lg bg-blue-900 text-white font-semibold hover:bg-transparent hover:border hover:border-blue-900 hover:text-blue-900 transition-colors"
+            className="px-8 py-4 rounded-lg border-2 border-primary bg-primary text-white font-semibold hover:bg-transparent hover:text-primary transition-colors hover:cursor-pointer"
           >
             {t('writeReview.submit')}
           </button>

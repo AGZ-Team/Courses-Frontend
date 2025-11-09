@@ -141,7 +141,7 @@ export function CourseCardItem({
               fill
               sizes="(min-width: 1280px) 320px, (min-width: 768px) 45vw, 90vw"
               className={`object-cover transition duration-500 ${isHovered ? 'scale-105' : ''}`}
-              priority
+              
             />
             <div
               className={`absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent transition ${
@@ -156,7 +156,7 @@ export function CourseCardItem({
                   key={badge.label}
                   className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
                     badge.variant === 'accent'
-                      ? 'bg-[#6440fb] text-white'
+                      ? 'bg-primary text-white'
                       : 'bg-[#00d97e] text-white'
                   }`}
                 >
@@ -178,7 +178,7 @@ export function CourseCardItem({
 
           <h3
             className={`text-base font-semibold leading-snug transition sm:text-lg ${
-              isHovered ? 'sm:text-[#6440fb]' : 'text-[#120a5d]'
+              isHovered ? 'sm:text-primary' : 'text-[#120a5d]'
             }`}
           >
             {course.title}
@@ -186,15 +186,15 @@ export function CourseCardItem({
 
           <div className="flex flex-wrap gap-3 text-xs font-medium text-[#6e6b8f] sm:gap-4">
             <span className="inline-flex items-center gap-1">
-              <LuCirclePlay className="text-[#6440fb]" size={16} />
+              <LuCirclePlay className="text-primary" size={16} />
               {course.lessons} lesson{course.lessons !== 1 ? 's' : ''}
             </span>
             <span className="inline-flex items-center gap-1">
-              <LuClock3 className="text-[#6440fb]" size={16} />
+              <LuClock3 className="text-primary" size={16} />
               {Math.floor(course.durationMinutes / 60)}h {course.durationMinutes % 60}m
             </span>
             <span className="inline-flex items-center gap-1">
-              <LuGraduationCap className="text-[#6440fb]" size={16} />
+              <LuGraduationCap className="text-primary" size={16} />
               {course.level}
             </span>
           </div>
@@ -209,6 +209,7 @@ export function CourseCardItem({
                 width={32}
                 height={32}
                 className="rounded-full"
+                style={{ width: 'auto', height: 'auto' }}
               />
               <span className="text-sm font-medium text-[#433f74]">{course.author}</span>
             </div>
@@ -219,7 +220,7 @@ export function CourseCardItem({
                   ${course.price.previous}
                 </span>
               ) : null}
-              <span className="block text-lg font-bold text-[#6440fb]">
+              <span className="block text-lg font-bold text-primary">
                 ${course.price.current}
               </span>
             </div>
@@ -237,7 +238,7 @@ export function CourseCardItem({
                 key={badge.label}
                 className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
                   badge.variant === 'accent'
-                    ? 'bg-[#6440fb] text-white'
+                    ? 'bg-primary text-white'
                     : 'bg-[#00d97e] text-white'
                 }`}
               >
@@ -251,15 +252,15 @@ export function CourseCardItem({
 
         <div className="mt-3 flex flex-wrap gap-4 text-sm font-medium text-[#6e6b8f]">
           <span className="inline-flex items-center gap-2">
-            <LuCirclePlay className="text-[#6440fb]" />
+            <LuCirclePlay className="text-primary" />
             {course.lessons} lesson{course.lessons !== 1 ? 's' : ''}
           </span>
           <span className="inline-flex items-center gap-2">
-            <LuClock3 className="text-[#6440fb]" />
+            <LuClock3 className="text-primary" />
             {Math.floor(course.durationMinutes / 60)}h {course.durationMinutes % 60}m
           </span>
           <span className="inline-flex items-center gap-2">
-            <LuGraduationCap className="text-[#6440fb]" />
+            <LuGraduationCap className="text-primary" />
             {course.level}
           </span>
         </div>
@@ -270,7 +271,7 @@ export function CourseCardItem({
           {course.highlights.map((highlight) => (
             <li key={highlight} className="flex items-start gap-2">
               <svg
-                className="mt-0.5 shrink-0 text-[#6440fb]"
+                className="mt-0.5 shrink-0 text-primary"
                 width="16"
                 height="16"
                 viewBox="0 0 16 16"
@@ -284,9 +285,9 @@ export function CourseCardItem({
         </ul>
 
         <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-          <span className="text-xl font-semibold text-[#6440fb]">${course.price.current}</span>
+          <span className="text-xl font-semibold text-primary">${course.price.current}</span>
           <div className="flex items-center gap-3">
-            <button className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9d7f0] text-[#433f74] transition hover:border-[#6440fb] hover:text-[#6440fb]">
+            <button className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9d7f0] text-[#433f74] transition hover:border-primary hover:text-primary">
               <svg
                 width="18"
                 height="18"
@@ -300,7 +301,7 @@ export function CourseCardItem({
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </button>
-            <button className="rounded-xl bg-[#6440fb] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(100,64,251,0.35)] transition hover:bg-[#5533db]">
+            <button className="rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(10,186,181,0.35)] transition hover:bg-primary/90">
               {course.ctaLabel}
             </button>
           </div>

@@ -109,7 +109,7 @@ const MainNavbar = () => {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-100 border-b border-white/10 bg-[#0ABAB5] text-white shadow-[0_8px_24px_rgba(10,186,181,0.25)]">
+    <header className="fixed inset-x-0 top-0 z-100 border-b border-white/10 bg-primary text-white shadow-[0_8px_24px_rgba(10,186,181,0.25)]">
       <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1600px] items-center px-6`}>
         {/* Left group: Logo + Explore */}
         <div className="flex items-center gap-4 shrink-0">
@@ -137,7 +137,7 @@ const MainNavbar = () => {
         {/* Desktop My Lessons Dropdown */}
         <NavDropdown
           trigger={
-            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 lg:flex`}>
+            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 md:flex`}>
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -300,7 +300,7 @@ const MainNavbar = () => {
               {/* Signup - Always Visible */}
               <Link
                 href={`/signup`}
-                className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-[#0ABAB5] transition hover:bg-white/90`}
+                className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-primary transition hover:bg-white/90`}
               >
                 {t('signup')}
               </Link>
@@ -311,7 +311,7 @@ const MainNavbar = () => {
       
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="border-t border-white/10 bg-[#0ABAB5] md:hidden">
+        <div className="border-t border-white/10 bg-primary md:hidden">
           <nav className="mx-auto max-w-[1300px] px-6 py-6">
             {/* My Lessons - mobile accordion */}
             <div className="mb-4">
@@ -431,7 +431,7 @@ const MainNavbar = () => {
                 {/* Login Button */}
                 <Link 
                   href="/login" 
-                  className={`mt-4 block rounded-full border-2 border-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5]`}
+                  className={`mt-4 block rounded-full border-2 border-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-primary`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {t('login')}
@@ -440,7 +440,7 @@ const MainNavbar = () => {
                 {/* Signup Button - Mobile */}
                 <Link
                   href="/signup"
-                  className={`mt-2 block rounded-full bg-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-[#0ABAB5] transition hover:bg-white/90`}
+                  className={`mt-2 block rounded-full bg-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-primary transition hover:bg-white/90`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {t('signup')}

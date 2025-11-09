@@ -33,20 +33,33 @@ export function NavDropdown({
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const locale = useLocale();
   const isAr = locale === 'ar';
+  const [supportsHover, setSupportsHover] = useState(true);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    // Determine if the device supports hover (e.g., desktop vs touch devices)
+    if (typeof window !== 'undefined' && 'matchMedia' in window) {
+      const mq = window.matchMedia('(hover: hover)');
+      setSupportsHover(mq.matches);
+      const handler = (e: MediaQueryListEvent) => setSupportsHover(e.matches);
+      mq.addEventListener?.('change', handler);
+      return () => mq.removeEventListener?.('change', handler);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handlePointerOutside = (event: Event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('mousedown', handlePointerOutside);
+      document.addEventListener('touchstart', handlePointerOutside, { passive: true });
     }
-
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handlePointerOutside);
+      document.removeEventListener('touchstart', handlePointerOutside);
     };
   }, [isOpen]);
 
@@ -78,14 +91,29 @@ export function NavDropdown({
     <div
       className={`relative ${className}`}
       ref={dropdownRef}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
+      onMouseEnter={supportsHover ? onEnter : undefined}
+      onMouseLeave={supportsHover ? onLeave : undefined}
+      onMouseDown={(e) => {
+        // Prevent outside handlers from firing while interacting with dropdown
+        e.stopPropagation();
+      }}
+      onTouchStart={(e) => {
+        // Prevent outside touchstart from closing immediately on open
+        e.stopPropagation();
+      }}
     >
       {/* Trigger */}
       <div
         className="cursor-pointer"
-        onClick={() => setIsOpen((v) => !v)}
-        onTouchStart={() => setIsOpen((v) => !v)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen((v) => !v);
+        }}
+        onTouchStart={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsOpen((v) => !v);
+        }}
       >
         {trigger}
       </div>

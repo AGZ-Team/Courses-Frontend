@@ -108,12 +108,20 @@ export async function signup(data: SignupData): Promise<SignupResponse> {
  * Login and get JWT tokens
  */
 export async function login(data: LoginData): Promise<JWTResponse> {
+  // Normalize username/email: trim and lowercase if it looks like an email
+  const normalizedUsername = data.username.trim();
+  const isEmail = normalizedUsername.includes('@');
+  const username = isEmail ? normalizedUsername.toLowerCase() : normalizedUsername;
+  
   const response = await fetch(`${API_BASE_URL}/auth/jwt/create/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      username,
+      password: data.password,
+    }),
   });
 
   if (!response.ok) {

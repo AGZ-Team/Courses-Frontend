@@ -11,7 +11,7 @@ export function Pagination() {
       className="flex items-center justify-center gap-2 pt-6 sm:gap-3"
       aria-label="Courses pagination"
     >
-      <button className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9d7f0] text-[#433f74] transition hover:border-[#6440fb] hover:text-[#6440fb] sm:h-11 sm:w-11">
+      <button className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9d7f0] text-[#433f74] transition hover:border-primary hover:text-primary sm:h-11 sm:w-11">
         <svg
           width="18"
           height="18"
@@ -30,14 +30,14 @@ export function Pagination() {
           key={page}
           className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm font-semibold transition sm:h-11 sm:w-11 ${
             page === 1
-              ? 'border-[#6440fb] bg-[#6440fb] text-white shadow-[0_12px_30px_rgba(100,64,251,0.35)]'
-              : 'border-transparent text-[#433f74] hover:border-[#6440fb] hover:text-[#6440fb]'
+              ? 'border-primary bg-primary text-white shadow-[0_12px_30px_rgba(10,186,181,0.35)]'
+              : 'border-transparent text-[#433f74] hover:border-primary hover:text-primary'
           }`}
         >
           {page}
         </button>
       ))}
-      <button className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9d7f0] text-[#433f74] transition hover:border-[#6440fb] hover:text-[#6440fb] sm:h-11 sm:w-11">
+      <button className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9d7f0] text-[#433f74] transition hover:border-primary hover:text-primary sm:h-11 sm:w-11">
         <svg
           width="18"
           height="18"

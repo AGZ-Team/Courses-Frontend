@@ -69,7 +69,7 @@ export function SortDropdown({options, onChange, className}: SortDropdownProps) 
         onKeyDown={onKeyDown}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`h-11 w-full rounded-xl border border-[#d9d7f0] bg-white px-4 ${paddingEndClass} text-start font-semibold text-[#433f74] shadow-[0_12px_30px_rgba(12,10,78,0.08)] transition hover:border-[#7c5cff] focus:border-[#7c5cff] focus:outline-none focus:ring-2 focus:ring-[#7c5cff]/20 md:w-48`}
+        className={`h-11 w-full rounded-xl border border-[#d9d7f0] bg-white px-4 ${paddingEndClass} text-start font-semibold text-[#433f74] shadow-[0_12px_30px_rgba(12,10,78,0.08)] transition hover:border-primary focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 md:w-48`}
       >
         <span className="block truncate">{t(selected)}</span>
         <svg
@@ -119,7 +119,7 @@ export function SortDropdown({options, onChange, className}: SortDropdownProps) 
                 <span className="truncate">{t(opt)}</span>
                 {selected ? (
                   <svg
-                    className="text-[#6440fb]"
+                    className="text-primary"
                     width="16"
                     height="16"
                     viewBox="0 0 16 16"

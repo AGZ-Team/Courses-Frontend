@@ -39,7 +39,7 @@ export function FilterList({ options, onOptionToggle, filterKey }: FilterListPro
           <button
             type="button"
             onClick={() => onOptionToggle(index)}
-            className="flex w-full items-center justify-between gap-3 rounded-[10px] px-2 py-1.5 text-left transition hover:bg-[#f4f3ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7c5cff] focus-visible:ring-offset-2"
+            className="flex w-full items-center justify-between gap-3 rounded-[10px] px-2 py-1.5 text-left transition hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             aria-pressed={Boolean(option.isActive)}
           >
             <span className="flex items-center gap-3 text-sm">
@@ -48,7 +48,7 @@ export function FilterList({ options, onOptionToggle, filterKey }: FilterListPro
                   option.type === 'radio' ? 'rounded-full' : 'rounded-md'
                 } ${
                   option.isActive
-                    ? 'border-[#6440fb] bg-[#6440fb] text-white'
+                    ? 'border-primary bg-primary text-white'
                     : 'border-[#c9c7e6] bg-white text-transparent'
                 }`}
               >

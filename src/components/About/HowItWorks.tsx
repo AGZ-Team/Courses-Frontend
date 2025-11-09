@@ -48,9 +48,9 @@ export default function HowItWorks() {
             <div key={s.id} className="text-center">
               <div className="mx-auto w-22 h-22 sm:w-28 sm:h-28 relative">
                 {/* light circle */}
-                <div className="absolute inset-0 rounded-full bg-indigo-50" />
+                <div className="absolute inset-0 rounded-full bg-primary/10" />
                 {/* step label */}
-                <div className={`absolute -top-2 h-10 w-10 rounded-full bg-indigo-900 text-white text-[10px] font-semibold flex items-center justify-center shadow-md ${isRTL ? '-right-2' : '-left-2'}`}>
+                <div className={`absolute -top-2 h-10 w-10 rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center shadow-md ${isRTL ? '-right-2' : '-left-2'}`}>
                   {s.label}
                 </div>
                 {/* icon */}

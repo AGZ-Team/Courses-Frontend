@@ -45,8 +45,8 @@ export default function ContactContent() {
             <div className="space-y-6">
               {/* Address */}
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#6440fb]/10">
-                  <MdLocationOn className="text-2xl text-[#6440fb]" />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                  <MdLocationOn className="text-2xl text-primary" />
                 </div>
                 <div className="flex-1">
                   <p className="text-[18px] leading-relaxed text-gray-700">
@@ -57,8 +57,8 @@ export default function ContactContent() {
 
               {/* Phone */}
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#6440fb]/10">
-                  <MdPhone className="text-2xl text-[#6440fb]" />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                  <MdPhone className="text-2xl text-primary" />
                 </div>
                 <div className="flex-1">
                   <p className="text-[18px] leading-relaxed text-gray-700">
@@ -69,8 +69,8 @@ export default function ContactContent() {
 
               {/* Email */}
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#6440fb]/10">
-                  <MdEmail className="text-2xl text-[#6440fb]" />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                  <MdEmail className="text-2xl text-primary" />
                 </div>
                 <div className="flex-1">
                   <p className="text-[18px] leading-relaxed text-gray-700">
@@ -96,7 +96,7 @@ export default function ContactContent() {
                   type="text"
                   name="name"
                   placeholder={t('nameLabel')}
-                  className="block w-full rounded-lg border border-gray-200 bg-white px-5 py-4 text-[15px] text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#6440fb] focus:ring-2 focus:ring-[#6440fb]/20"
+                  className="block w-full rounded-lg border border-gray-200 bg-white px-5 py-4 text-[15px] text-gray-900 placeholder-gray-400 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                   dir={isAr ? 'rtl' : 'ltr'}
                 />
               </div>
@@ -106,7 +106,7 @@ export default function ContactContent() {
                   type="email"
                   name="email"
                   placeholder={t('emailLabel')}
-                  className="block w-full rounded-lg border border-gray-200 bg-white px-5 py-4 text-[15px] text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#6440fb] focus:ring-2 focus:ring-[#6440fb]/20"
+                  className="block w-full rounded-lg border border-gray-200 bg-white px-5 py-4 text-[15px] text-gray-900 placeholder-gray-400 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                   dir={isAr ? 'rtl' : 'ltr'}
                 />
               </div>
@@ -116,14 +116,14 @@ export default function ContactContent() {
                   name="message"
                   rows={6}
                   placeholder={t('messageLabel')}
-                  className="block w-full rounded-lg border border-gray-200 bg-white px-5 py-4 text-[15px] text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#6440fb] focus:ring-2 focus:ring-[#6440fb]/20"
+                  className="block w-full rounded-lg border border-gray-200 bg-white px-5 py-4 text-[15px] text-gray-900 placeholder-gray-400 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                   dir={isAr ? 'rtl' : 'ltr'}
                 />
               </div>
 
               <button
                 type="submit"
-                className="inline-flex w-full items-center justify-center rounded-lg bg-[#6440fb] px-8 py-4 text-base font-semibold text-white shadow-sm transition hover:bg-[#5835e7]"
+                className="inline-flex w-full items-center justify-center border rounded-lg bg-primary px-8 py-4 text-base font-semibold text-white shadow-sm transition hover:bg-transparent hover:text-primary hover:border-primary hover:cursor-pointer"
               >
                 {t('submit')}
               </button>
@@ -157,7 +157,7 @@ export default function ContactContent() {
                   <span className="text-[15px] font-semibold text-[#1a0b40]">
                     {faq.question}
                   </span>
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e8e5ff] text-[#6440fb] transition-transform">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform">
                     {activeAccordion === index ? (
                       <FiMinus className="text-sm" />
                     ) : (

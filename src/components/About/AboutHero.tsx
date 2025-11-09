@@ -79,7 +79,7 @@ export default function AboutHero() {
 
           {/* Text (right on desktop) */}
           <div className="order-last lg:order-last">
-            <p className="text-3xl font-semibold tracking-widest uppercase text-indigo-600 mb-3">
+            <p className="text-3xl font-semibold tracking-widest uppercase text-primary mb-3">
               {tHero('badge')}
             </p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-slate-900">
@@ -94,7 +94,7 @@ export default function AboutHero() {
             <div className="mt-8">
               <a
                 href={`/${locale}/signup`}
-                className="inline-flex h-16 items-center justify-center rounded-xl border-2 border-indigo-600 bg-transparent px-12 text-indigo-600 font-bold hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-colors duration-200"
+                className="inline-flex h-16 items-center justify-center rounded-xl border-2 border-primary bg-transparent px-12 text-primary font-bold hover:bg-primary hover:text-white focus:outline-none focus:ring-2 ring-primary/50 transition-colors duration-200"
               >
                 {tWelcome('cta')}
               </a>

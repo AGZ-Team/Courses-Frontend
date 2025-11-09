@@ -32,7 +32,7 @@ export function FilterSection({
             onClick={onToggle}
             aria-expanded={isOpen}
             aria-controls={contentId}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-[#7c5cff] transition hover:bg-[#f2f1ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7c5cff] focus-visible:ring-offset-2"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-primary transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <svg
               width="18"
@@ -54,7 +54,7 @@ export function FilterSection({
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#7c5cff"
+            stroke="var(--color-primary)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -75,7 +75,7 @@ export function FilterSection({
         <div className="overflow-hidden space-y-3 text-sm text-[#514d78]">{children}</div>
       </div>
       {footerLabel && isContentVisible ? (
-        <button className="mt-4 text-sm font-semibold text-[#6440fb] transition hover:text-[#8360ff]">
+        <button className="mt-4 text-sm font-semibold text-primary transition hover:text-primary/80">
           {footerLabel}
         </button>
       ) : null}

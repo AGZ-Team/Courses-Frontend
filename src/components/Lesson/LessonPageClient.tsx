@@ -65,7 +65,7 @@ export function LessonPageClient({ courseData, sections, locale }: LessonPageCli
         <aside
           className={`${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0 bg-linear-to-br from-slate-50 to-slate-100 fixed lg:static inset-y-0 left-0 w-full xs:w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[420px] max-w-full bg-white/95 backdrop-blur border-r border-slate-200 shadow-sm overflow-y-auto custom-scroll transition-transform duration-300 z-30 lg:z-0`}
+          } lg:translate-x-0 bg-linear-to-br from-slate-50 to-slate-100 fixed lg:static inset-y-0 left-0 w-full xs:w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[420px] max-w-full bg-white/95 backdrop-blur border-r border-slate-200 shadow-sm overflow-y-auto scrollbar-hide gutter-stable transition-transform duration-300 z-30 lg:z-0`}
         >
           {/* Sidebar header with close button (mobile) */}
           <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 flex items-center justify-between lg:hidden">
@@ -92,7 +92,7 @@ export function LessonPageClient({ courseData, sections, locale }: LessonPageCli
         </aside>
 
         {/* Main Content (RIGHT SIDE) */}
-        <main className="flex-1 overflow-y-auto custom-scroll w-full">
+        <main className="flex-1 overflow-y-auto gutter-stable w-full">
           <div className="w-full max-w-4xl sm:max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-6 sm:py-8 md:py-10 lg:py-12">
             <LessonVideo
               title={currentLesson?.title || 'Introduction to the User'}

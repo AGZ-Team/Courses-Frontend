@@ -27,15 +27,15 @@ export function CourseHero({ course }: CourseHeroProps) {
       case 'success':
         return 'bg-green-500 text-white';
       case 'accent':
-        return 'bg-orange-500 text-white';
+        return 'bg-primary text-white';
       default:
-        return 'bg-blue-900 text-white';
+        return 'bg-primary text-white';
     }
   };
 
   return (
     <>
-      <section className="relative bg-white text-[#1f1c3b]">
+      <section className="relative bg-white text-slate-900">
         <div className="container mx-auto px-4 py-10 lg:py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start" id="course-hero">
             {/* Left Column (2/3) */}
@@ -55,13 +55,13 @@ export function CourseHero({ course }: CourseHeroProps) {
               )}
 
               {/* Title */}
-              <h1 className="text-[28px] lg:text-[32px] xl:text-[36px] font-bold leading-tight text-[#120a5d]">
+              <h1 className="text-[28px] lg:text-[32px] xl:text-[36px] font-bold leading-tight text-slate-900">
                 {course.title}
               </h1>
 
               {/* Description */}
               {course.summary && (
-                <p className="text-[#5f5c7b] leading-relaxed">
+                <p className="text-slate-600 leading-relaxed">
                   {course.summary}
                 </p>
               )}
@@ -70,26 +70,26 @@ export function CourseHero({ course }: CourseHeroProps) {
               <div className="flex flex-wrap gap-6">
                 {/* Rating */}
                 <div className="flex items-center gap-2">
-                  <span className="text-[#f6c160] font-semibold">
+                  <span className="text-amber-400 font-semibold">
                     {course.rating}
                   </span>
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-4 h-4 ${
+                        className={`w-4 h-4 fill-current ${
                           i < Math.floor(course.rating)
-                            ? 'fill-[#f6c160] text-[#f6c160]'
-                            : 'text-[#c1bfd7]'
+                            ? 'text-amber-300'
+                            : 'text-slate-300'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-[#8e8aa9]">({course.ratingCount})</span>
+                  <span className="text-slate-400">({course.ratingCount})</span>
                 </div>
 
                 {/* Enrolled */}
-                <div className="flex items-center gap-2 text-[#6e6b8f]">
+                <div className="flex items-center gap-2 text-slate-500">
                   <Users className="w-4 h-4" />
                   <span>
                     853 {t('enrolledCount')}
@@ -97,7 +97,7 @@ export function CourseHero({ course }: CourseHeroProps) {
                 </div>
 
                 {/* Last Updated */}
-                <div className="flex items-center gap-2 text-[#6e6b8f]">
+                <div className="flex items-center gap-2 text-slate-500">
                   <Clock className="w-4 h-4" />
                   <span>
                     {t('lastUpdated')} 11/2021
@@ -114,7 +114,7 @@ export function CourseHero({ course }: CourseHeroProps) {
                   height={500}
                   className="w-10 h-10 rounded-full object-cover"
                 />
-                <span className="text-[#6e6b8f]">{course.author}</span>
+                <span className="text-slate-500">{course.author}</span>
               </div>
 
               {/* Social Share */}
@@ -122,7 +122,7 @@ export function CourseHero({ course }: CourseHeroProps) {
                 {socials.map(({ name, Icon }) => (
                   <button
                     key={name}
-                    className="w-10 h-10 rounded-full border border-[#e6e4f5] hover:bg-blue-50 transition-colors flex items-center justify-center text-[#6e6b8f] hover:text-blue-900"
+                    className="w-10 h-10 rounded-full border border-slate-200 hover:bg-primary/10 transition-colors flex items-center justify-center text-slate-500 hover:text-primary"
                     aria-label={`Share on ${name}`}
                   >
                     <Icon className="w-4 h-4" />
@@ -132,8 +132,8 @@ export function CourseHero({ course }: CourseHeroProps) {
 
               <div className="mt-10 space-y-10">
                 <div>
-                  <h2 className="text-xl font-bold text-[#120a5d]">{t('overview.description')}</h2>
-                  <div className="mt-4 text-[#5f5c7b] leading-relaxed space-y-4">
+                  <h2 className="text-xl font-bold text-slate-900">{t('overview.description')}</h2>
+                  <div className="mt-4 text-slate-600 leading-relaxed space-y-4">
                     <p>{t('overview.p1')}</p>
                     <p>{t('overview.p2')}</p>
                     <p>{t('overview.p3')}</p>
@@ -141,23 +141,23 @@ export function CourseHero({ course }: CourseHeroProps) {
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-bold text-[#120a5d]">{t('overview.whatYouLearn')}</h2>
+                  <h2 className="text-xl font-bold text-slate-900">{t('overview.whatYouLearn')}</h2>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     {course.highlights.map((highlight, i) => (
                       <div key={i} className="flex items-start gap-3">
-                        <span className="mt-1 inline-block h-4 w-4 rounded-full border-2 border-[#d9d7f0]" />
-                        <span className="text-[#433f74]">{highlight}</span>
+                        <span className="mt-1 inline-block h-4 w-4 rounded-full border-2 border-primary/30" />
+                        <span className="text-slate-600">{highlight}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-bold text-[#120a5d]">{t('overview.requirements')}</h2>
-                  <ul className="mt-4 space-y-3 text-[#433f74]">
-                    <li className="flex items-start gap-3"><span className="mt-1 text-[#6440fb]">•</span><span>{t('overview.req1')}</span></li>
-                    <li className="flex items-start gap-3"><span className="mt-1 text-[#6440fb]">•</span><span>{t('overview.req2')}</span></li>
-                    <li className="flex items-start gap-3"><span className="mt-1 text-[#6440fb]">•</span><span>{t('overview.req3')}</span></li>
+                  <h2 className="text-xl font-bold text-slate-900">{t('overview.requirements')}</h2>
+                  <ul className="mt-4 space-y-3 text-slate-600">
+                    <li className="flex items-start gap-3"><span className="mt-1 text-primary">•</span><span>{t('overview.req1')}</span></li>
+                    <li className="flex items-start gap-3"><span className="mt-1 text-primary">•</span><span>{t('overview.req2')}</span></li>
+                    <li className="flex items-start gap-3"><span className="mt-1 text-primary">•</span><span>{t('overview.req3')}</span></li>
                   </ul>
                 </div>
               </div>
@@ -180,32 +180,32 @@ export function CourseHero({ course }: CourseHeroProps) {
                     className="w-16 h-16 rounded-full bg-white hover:bg-gray-100 transition-all transform hover:scale-110 flex items-center justify-center shadow-xl"
                     aria-label="Play video"
                   >
-                    <Play className="w-6 h-6 text-blue-600 ml-1 fill-blue-600" />
+                    <Play className="w-6 h-6 text-primary ml-1 fill-primary" />
                   </button>
                 </div>
               </div>
 
               {/* Price Card */}
-              <div className="rounded-2xl border border-[#eceaf8] bg-white p-6 shadow-[0_20px_50px_rgba(12,10,78,0.08)]">
+              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
                 <div className="flex items-end justify-between mb-6">
                   <div className="flex items-baseline gap-3">
-                    <span className="text-3xl font-bold text-[#120a5d]">${course.price.current}</span>
+                    <span className="text-3xl font-bold text-slate-900">${course.price.current}</span>
                     {course.price.previous && (
-                      <span className="text-base text-[#8e8aa9] line-through">${course.price.previous}</span>
+                      <span className="text-base text-slate-400 line-through">${course.price.previous}</span>
                     )}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-3">
-                  <button className="px-6 py-3 bg-[#6440fb] hover:bg-blue-900 text-white font-semibold rounded-md transition-colors">
+                  <button className="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-semibold rounded-md transition-colors">
                     {t('addToCart')}
                   </button>
-                  <button className="px-6 py-3 border-2 border-[#1f1c3b] text-[#1f1c3b] hover:bg-[#1f1c3b] hover:text-white font-semibold rounded-md transition-colors">
+                  <button className="px-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold rounded-md transition-colors">
                     {t('buyNow')}
                   </button>
                 </div>
 
-                <p className="text-center text-xs text-[#6e6b8f] mt-4">{t('moneyBackGuarantee')}</p>
+                <p className="text-center text-xs text-slate-500 mt-4">{t('moneyBackGuarantee')}</p>
 
                 <div className="mt-6 space-y-3">
                   <DetailRow label={t('lessons')} value={course.lessons.toString()} />
@@ -249,9 +249,9 @@ export function CourseHero({ course }: CourseHeroProps) {
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between py-2 border-b border-[#f0effa] last:border-b-0">
-      <span className="text-[#6e6b8f]">{label}</span>
-      <span className="text-[#120a5d] font-medium">{value}</span>
+    <div className="flex items-center justify-between py-2 border-b border-slate-200 last:border-b-0">
+      <span className="text-slate-500">{label}</span>
+      <span className="text-slate-800 font-medium">{value}</span>
     </div>
   );
 }

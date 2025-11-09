@@ -33,15 +33,15 @@ export default function LearningJourney() {
   ];
   return (
     <section className="relative">
-      {/* dark top background to match reference */}
-      <div className="absolute inset-x-0 top-0 h-64 sm:h-72 lg:h-100 bg-[#282664]" />
+      {/* top background in brand primary */}
+      <div className="absolute inset-x-0 top-0 h-64 sm:h-72 lg:h-100 bg-primary" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-white">
             {t('title')}
           </h2>
-          <p className="mt-4 text-indigo-100">{t('subtitle')}</p>
+          <p className="mt-4 text-white/90">{t('subtitle')}</p>
         </div>
 
         {/* cards slightly overlapping white area */}

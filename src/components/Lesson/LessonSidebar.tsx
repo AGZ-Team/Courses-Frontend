@@ -67,7 +67,7 @@ export function LessonSidebar({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t('search')}
-            className="w-full rounded-xl border border-slate-200 pl-10 pr-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 bg-white/90 focus:bg-white focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+            className="w-full rounded-xl border border-primary pl-10 pr-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 bg-white/90 outline-none focus:bg-white focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
           />
         </div>
       </div>
@@ -75,14 +75,14 @@ export function LessonSidebar({
       {/* Sections Accordion */}
       <div className="space-y-3">
         {displayedSections.map((section) => (
-          <div key={section.id} className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md hover:border-indigo-200 transition-all">
+          <div key={section.id} className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md hover:border-primary transition-all">
             <button
               onClick={() => toggleSection(section.id)}
               aria-expanded={activeSection === section.id}
               className={`w-full px-5 py-4 bg-white flex items-center justify-between group rounded-xl border transition-all duration-300 ${
                 activeSection === section.id
-                  ? 'border-indigo-300 shadow-[0_6px_24px_rgba(79,47,255,0.12)] bg-indigo-50/20'
-                  : 'border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/10'
+                  ? 'border-primary shadow-[0_6px_24px_rgba(10,186,181,0.12)] bg-primary/10'
+                  : 'border-slate-200 hover:border-primary hover:bg-primary/5'
               }`}
             >
               <div className="flex items-center gap-3 flex-1 text-left min-w-0">
@@ -90,10 +90,7 @@ export function LessonSidebar({
                   <ChevronDown className="w-5 h-5 text-slate-600 shrink-0" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="font-semibold text-slate-900 text-base group-hover:text-indigo-700 transition-colors truncate">{section.title}</div>
-                  <div className="text-sm text-slate-500 mt-1">
-                    {section.lectures} lectures • {section.duration}
-                  </div>
+                  <div className="font-semibold text-slate-900 text-base group-hover:text-primary transition-colors truncate">{section.title}</div>
                 </div>
               </div>
             </button>
@@ -112,7 +109,7 @@ export function LessonSidebar({
                     onClick={() => onLessonClick(lesson)}
                     className={`w-full px-4 py-3 rounded-lg text-left transition-all duration-300 group ${
                       currentLesson?.id === lesson.id
-                        ? 'bg-blue-50/70 border border-blue-200 shadow-sm'
+                        ? 'bg-primary/10 border border-primary shadow-sm'
                         : 'hover:bg-slate-50 border border-transparent hover:translate-x-0.5'
                     }`}
                   >
@@ -121,18 +118,18 @@ export function LessonSidebar({
                         <div className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center mt-0.5 transition-all ${
                           lesson.completed
                             ? 'bg-green-100'
-                            : 'bg-blue-100 group-hover:bg-blue-200'
+                            : 'bg-primary/10 group-hover:bg-primary/20'
                         }`}>
                           {lesson.completed ? (
                             <CheckCircle className="w-4 h-4 text-green-600" />
                           ) : (
-                            <Play className="w-3.5 h-3.5 text-blue-600 fill-blue-600" />
+                            <Play className="w-3.5 h-3.5 text-primary fill-primary" />
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className={`text-sm font-medium leading-5 overflow-hidden ${
                             currentLesson?.id === lesson.id
-                              ? 'text-blue-900'
+                              ? 'text-primary'
                               : 'text-slate-700'
                           }`} style={{display: '-webkit-box', WebkitLineClamp: 2 as any, WebkitBoxOrient: 'vertical'}}>
                             {lesson.title}
@@ -140,7 +137,7 @@ export function LessonSidebar({
                         </div>
                       </div>
                       <div className="flex items-center gap-3 text-xs shrink-0">
-                        <span className="px-2.5 py-1.5 rounded-md bg-blue-100 text-blue-700 cursor-pointer hover:bg-blue-200 transition-colors whitespace-nowrap">{t('preview')}</span>
+                        <span className="px-2.5 py-1.5 rounded-md bg-primary/10 text-primary cursor-pointer hover:bg-primary/20 transition-colors whitespace-nowrap">{t('preview')}</span>
                         <span className="text-slate-500 whitespace-nowrap">{lesson.duration}</span>
                       </div>
                     </div>

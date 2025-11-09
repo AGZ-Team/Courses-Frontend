@@ -66,11 +66,12 @@ export default function Testimonials() {
               height={72}
               className="opacity-90"
               priority={false}
+              style={{ width: 'auto', height: 'auto' }}
             />
           </div>
           <p
             className={
-              "mt-6 mx-auto max-w-5xl text-2xl sm:text-3xl lg:text-4xl font-semibold leading-relaxed text-indigo-950 transition-all duration-500 " +
+              "mt-6 mx-auto max-w-5xl text-2xl sm:text-3xl lg:text-4xl font-semibold leading-relaxed text-slate-900 transition-all duration-500 " +
               (animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")
             }
           >
@@ -102,15 +103,16 @@ export default function Testimonials() {
                     className={
                       "inline-flex items-center justify-center rounded-full overflow-hidden transition-all duration-300 ease-out " +
                       (isActive
-                        ? "h-16 w-16 ring-4 ring-indigo-600"
+                        ? "h-16 w-16 ring-4 ring-primary"
                         : "h-14 w-14 ring-2 ring-slate-200 opacity-80 hover:opacity-100")
                     }
                   >
                     <Image
                       src={item.avatar}
                       alt={item.name}
-                      width={isActive ? 64 : 56}
-                      height={isActive ? 64 : 56}
+                      width={64}
+                      height={64}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </span>
                 </button>

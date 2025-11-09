@@ -110,21 +110,21 @@ const HomeHero = () => {
               className="pointer-events-none absolute left-1/2 top-0 w-[360px] -translate-x-1/2 rounded-[46px] border border-white/10 bg-white/5 shadow-[0_44px_120px_rgba(18,12,68,0.55)] transition-transform duration-300 ease-out"
               style={parallaxStyle(10, 8)}
             >
-              <Image src={portraitSrc} priority alt={t('images.learner')} width={420} height={520} className="h-[500px] w-full rounded-[40px] object-cover" />
+              <Image src={portraitSrc} priority alt={t('images.learner')} width={420} height={520} className="h-[500px] w-full rounded-[40px] object-cover" style={{ width: 'auto', height: 'auto' }} />
             </div>
 
             <div
               className="pointer-events-none absolute right-6 top-24 w-[190px] rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_24px_70px_rgba(18,12,68,0.35)] transition-transform duration-300 ease-out"
               style={parallaxStyle(-18, 12)}
             >
-              <Image src={smileSrc} priority alt={t('images.happyStudent')} width={220} height={180} className="h-[150px] w-full rounded-[22px] object-cover" />
+              <Image src={smileSrc} priority alt={t('images.happyStudent')} width={220} height={180} className="h-[150px] w-full rounded-[22px] object-cover" style={{ width: 'auto', height: 'auto' }} />
             </div>
 
             <div
               className="pointer-events-none absolute left-6 bottom-16 w-[200px] rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_24px_70px_rgba(18,12,68,0.35)] transition-transform duration-300 ease-out"
               style={parallaxStyle(16, -12)}
             >
-              <Image src={teamSrc} priority alt={t('images.collaborativeLearning')} width={240} height={200} className="h-40 w-full rounded-[22px] object-cover" />
+              <Image src={teamSrc} priority alt={t('images.collaborativeLearning')} width={240} height={200} className="h-40 w-full rounded-[22px] object-cover" style={{ width: 'auto', height: 'auto' }} />
             </div>
 
             <div

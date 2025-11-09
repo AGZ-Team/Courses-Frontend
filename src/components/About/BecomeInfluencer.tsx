@@ -20,7 +20,7 @@ export default function BecomeInfluencer() {
             <div className="mt-8">
               <a
                 href={`/${locale}/signup`}
-                className="inline-flex h-16 items-center justify-center rounded-xl border-2 border-indigo-800 bg-transparent px-16 text-indigo-800 font-bold hover:bg-indigo-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-colors duration-200"
+                className="inline-flex h-16 items-center justify-center rounded-xl border-2 border-primary bg-transparent px-16 text-primary font-bold hover:bg-primary hover:text-white focus:outline-none focus:ring-2 ring-primary/50 transition-colors duration-200"
               >
                 {t('cta')}
               </a>

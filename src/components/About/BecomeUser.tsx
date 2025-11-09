@@ -29,7 +29,7 @@ export default function BecomeUser() {
             <div className="mt-8">
               <a
                 href={`/${locale}/signup`}
-                className="inline-flex h-16 items-center justify-center rounded-xl border-2 border-gray-800 bg-transparent px-16 text-gray-700 font-bold hover:bg-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-colors duration-200"
+                className="inline-flex h-16 items-center justify-center rounded-xl border-2 border-primary bg-transparent px-16 text-primary font-bold hover:bg-primary hover:text-white focus:outline-none focus:ring-2 ring-primary/50 transition-colors duration-200"
               >
                 {t('cta')}
               </a>

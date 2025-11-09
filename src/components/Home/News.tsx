@@ -63,6 +63,7 @@ const News = () => {
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
                     loading="lazy"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </div>
 
@@ -96,6 +97,7 @@ const News = () => {
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
                     loading="lazy"
                     sizes="110px"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </div>
 

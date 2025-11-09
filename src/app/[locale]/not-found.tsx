@@ -46,7 +46,7 @@ export default function NotFound() {
           <h1 className="text-8xl sm:text-9xl font-extrabold leading-none">
             <span className="text-[#0b0440]">{t('title').slice(0, 1)}</span>
             <span className="text-[#0b0440]">{t('title').slice(1, 2)}</span>
-            <span className="text-[#6440fb]">{t('title').slice(2)}</span>
+            <span className="text-primary">{t('title').slice(2)}</span>
           </h1>
 
           {/* Heading */}
@@ -63,7 +63,7 @@ export default function NotFound() {
           <div className="pt-4">
             <Link
               href={`/${locale}`}
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[#6440fb] rounded-lg hover:bg-[#5835d4] transition-colors duration-200 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors duration-200 shadow-lg hover:shadow-xl"
             >
               {t('backToHome')}
             </Link>

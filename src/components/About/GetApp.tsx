@@ -30,7 +30,7 @@ export default function GetApp() {
               <h2 className="text-[38px] font-semibold leading-tight text-[#120f2d] sm:text-[44px]">
                 {t('title')}
                 <br />
-                <span className="text-[#4b35f5]">{t('highlight')}</span>
+                <span className="text-primary">{t('highlight')}</span>
               </h2>
               <p className="mt-5 text-[15px] leading-7 text-[#4f4a63]">
                 {t('description')}
@@ -44,6 +44,7 @@ export default function GetApp() {
                     width={210}
                     height={64}
                     className="h-16 w-auto"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </Link>
                 <Link href={t('google.href')} aria-label={t('google.aria')} className="inline-block">
@@ -53,6 +54,7 @@ export default function GetApp() {
                     width={210}
                     height={64}
                     className="h-16 w-auto"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </Link>
               </div>

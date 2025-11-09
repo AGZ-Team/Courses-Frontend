@@ -42,7 +42,7 @@ export default function RootNotFound() {
               <h1 className="text-8xl sm:text-9xl font-extrabold leading-none">
                 <span className="text-[#0b0440]">4</span>
                 <span className="text-[#0b0440]">0</span>
-                <span className="text-[#6440fb]">4</span>
+                <span className="text-primary">4</span>
               </h1>
 
               {/* Heading */}
@@ -59,13 +59,13 @@ export default function RootNotFound() {
               <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link
                   href="/en"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[#6440fb] rounded-lg hover:bg-transparent transition-colors border-2 border-[#6440fb] duration-200 hover:text-[#6440fb]"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-primary rounded-lg hover:bg-transparent transition-colors border-2 border-primary duration-200 hover:text-primary"
                 >
                   Go Home (English)
                 </Link>
                 <Link
                   href="/ar"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-[#6440fb] bg-white border-2 border-[#6440fb] rounded-lg hover:bg-[#6440fb] hover:text-white transition-colors duration-200 font-serif"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-primary bg-white border-2 border-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200 font-serif"
                 >
                   الصفحة الرئيسية (عربي)
                 </Link>

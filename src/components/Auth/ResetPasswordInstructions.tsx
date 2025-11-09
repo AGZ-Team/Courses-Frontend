@@ -87,16 +87,16 @@ export default function ResetPasswordInstructions({
 
   return (
     <div className="space-y-5">
-      <div className="rounded-lg bg-blue-50 p-4">
-        <p className="text-sm text-blue-900">
+      <div className="rounded-2xl bg-primary/10 p-4">
+        <p className="text-sm font-medium text-primary">
           {isAr
             ? 'أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين كلمة المرور'
             : 'Enter your email to receive a password reset link'}
         </p>
       </div>
 
-      <div className="rounded-lg bg-green-50 p-4">
-        <p className="text-sm text-green-900">
+      <div className="rounded-2xl bg-primary/8 p-4">
+        <p className="text-sm text-slate-700">
           {isAr
             ? 'سيتم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني'
             : 'A reset link will be sent to your email'}
@@ -104,15 +104,15 @@ export default function ResetPasswordInstructions({
       </div>
 
       {success && (
-        <div className="flex items-start gap-3 rounded-lg bg-green-50 p-4">
-          <CheckCircle className="h-5 w-5 shrink-0 text-green-600 mt-0.5" />
+        <div className="flex items-start gap-3 rounded-2xl bg-primary/10 p-4">
+          <CheckCircle className="h-5 w-5 shrink-0 text-primary mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-green-900">
+            <p className="text-sm font-semibold text-primary">
               {isAr
                 ? 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني'
                 : 'Password reset link sent to your email'}
             </p>
-            <p className="text-xs text-green-700 mt-2">
+            <p className="text-xs text-primary/80 mt-2">
               {isAr
                 ? 'تحقق من بريدك الإلكتروني وانقر على الرابط'
                 : 'Check your email and click the link'}
@@ -122,8 +122,8 @@ export default function ResetPasswordInstructions({
       )}
 
       {error && (
-        <div className="flex items-start gap-3 rounded-lg bg-red-50 p-4">
-          <AlertCircle className="h-5 w-5 shrink-0 text-red-600 mt-0.5" />
+        <div className="flex items-start gap-3 rounded-2xl bg-red-50 p-4">
+          <AlertCircle className="h-5 w-5 shrink-0 text-red-500 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-red-900">{error}</p>
           </div>
@@ -144,7 +144,7 @@ export default function ResetPasswordInstructions({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={isAr ? 'البريد الإلكتروني' : 'Enter your email'}
-            className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
+            className="block w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-primary focus:ring-2 focus:ring-primary/40"
             dir={isAr ? 'rtl' : 'ltr'}
             disabled={loading}
           />
@@ -153,7 +153,7 @@ export default function ResetPasswordInstructions({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center rounded-xl bg-[#00FF91] px-4 py-3 text-center text-[15px] font-semibold text-black shadow-sm transition hover:brightness-95 focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-center text-[15px] font-semibold text-white shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>
@@ -169,7 +169,7 @@ export default function ResetPasswordInstructions({
       <div className="text-center">
         <Link
           href="/login"
-          className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+          className="text-sm font-medium text-primary hover:text-primary/80"
         >
           {isAr ? 'العودة إلى تسجيل الدخول' : 'Back to Login'}
         </Link>
