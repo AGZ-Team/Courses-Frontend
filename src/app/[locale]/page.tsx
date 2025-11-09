@@ -5,7 +5,7 @@ import type {Metadata} from 'next';
 import PopularCourses from '@/components/Home/PopularCourses';
 import PeopleSay from '@/components/Home/PeopleSay';
 import JoinUs from '@/components/Home/JoinUs';
-import CoursesReasons from '@/components/Home/CoursesReasons';
+import What from '@/components/Home/What';
 import InstructorCarousel from '@/components/Home/instructorCarousel';
 import News from '@/components/Home/News';
 import Ad from '@/components/Home/Ad';
@@ -32,10 +32,10 @@ export default async function HomePage({params}: PageProps) {
     <section>
       <HomeHero />
       <CarouselHome />
+      <What />
       <PopularCourses />
       <PeopleSay />
       <JoinUs />
-      <CoursesReasons />
       <InstructorCarousel />
       <News />
       <Ad />

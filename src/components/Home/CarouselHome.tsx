@@ -161,7 +161,8 @@ const CarouselHome = () => {
     <section className="relative z-10 w-full bg-white py-28 sm:py-32">
       <div className="mx-auto flex w-full max-w-[1380px] flex-col items-center gap-16 px-4 text-center sm:px-6">
         <div className="space-y-10">
-          <div className="space-y-6">
+          {/* Trusted By */}
+          {/* <div className="space-y-6">
             <p className="text-base font-semibold uppercase tracking-[0.32em] text-[#0ABAB5] mb-10">
               {t('trustedHeading')}
             </p>
@@ -183,7 +184,7 @@ const CarouselHome = () => {
                 );
               })}
             </div>
-          </div>
+          </div> */}
 
           <div className="space-y-4">
             <h2 className="text-[2.25rem] font-bold text-[#120a5d] sm:text-[2.55rem]">{t('title')}</h2>

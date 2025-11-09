@@ -8,72 +8,63 @@
   "error_message": "An error occurred. Please try again.",
   "metadata": {
     "home": {
-      "title": "Home - Educrat | Online Learning Platform",
-      "description": "Learn new skills online with top educators. Build skills with courses, certificates, and degrees from world-class universities and companies."
+      "title": "Home - C R A Y | Online Learning Platform",
+      "description": "C R A Y is a Saudi platform that connects creators and supporters through exclusive content, memberships, and experiences. Built for the Arab creative community, C R A Y empowers artists, influencers, and educators to earn, grow, and engage their audiences in a secure, culturally rooted environment. Made in Saudi Arabia — built for the world."
     },
     "login": {
-      "title": "Login - Educrat",
-      "description": "Log in to your Educrat account to access your courses and continue learning."
+      "title": "Login - C R A Y",
+      "description": "Log in to your C R A Y account to access your courses and continue learning."
     },
     "signup": {
-      "title": "Sign Up - Educrat",
-      "description": "Create your Educrat account to start learning or teaching. Join millions of students and educators worldwide."
+      "title": "Sign Up - C R A Y",
+      "description": "Create your C R A Y account to start learning or teaching. Join millions of students and educators worldwide."
     },
     "contact": {
-      "title": "Contact Us - Educrat",
+      "title": "Contact Us - C R A Y",
       "description": "Get in touch with us. We're here to help you with any questions about our courses and services."
     },
     "terms": {
-      "title": "Terms & Conditions | Educrat",
-      "description": "Understand the terms and conditions that govern your use of the Educrat learning platform."
+      "title": "Terms & Conditions | C R A Y",
+      "description": "Understand the terms and conditions that govern your use of the C R A Y learning platform."
     },
     "privacy": {
-      "title": "Privacy Policy | Educrat",
-      "description": "Discover how Educrat protects learner privacy, keeps your data safe, and gives you control over your information."
+      "title": "Privacy Policy | C R A Y",
+      "description": "Discover how C R A Y protects learner privacy, keeps your data safe, and gives you control over your information."
     },
     "courses": {
-      "title": "Courses - Educrat",
+      "title": "Courses - C R A Y",
       "description": "Explore courses designed to elevate your design and development skills. Join thousands of students today."
     },
     "about": {
-      "title": "About Us - Educrat",
-      "description": "Learn more about Educrat's mission to deliver engaging, curated courses at a reasonable price."
+      "title": "About Us - C R A Y",
+      "description": "Learn more about C R A Y's mission to deliver engaging, curated courses at a reasonable price."
     },
     "notFound": {
-      "title": "404 - Page Not Found | Educrat",
+      "title": "404 - Page Not Found | C R A Y",
       "description": "The page you are looking for does not exist. Return to the homepage to continue exploring our courses."
     },
     "resetPassword": {
-      "title": "Reset Password - Educrat",
-      "description": "Reset your Educrat account password securely."
+      "title": "Reset Password - C R A Y",
+      "description": "Reset your C R A Y account password securely."
     },
     "verifyEmail": {
-      "title": "Verify Email - Educrat",
-      "description": "Verify your email address to activate your Educrat account."
+      "title": "Verify Email - C R A Y",
+      "description": "Verify your email address to activate your C R A Y account."
     },
     "forgotPassword": {
-      "title": "Forgot Password - Educrat",
-      "description": "Reset your Educrat account password securely."
+      "title": "Forgot Password - C R A Y",
+      "description": "Reset your C R A Y account password securely."
     }
-  },
-  "home": {
-    "welcome": "Welcome",
-    "heroHeadline": "Build Amazing Things",
-    "heroSub": "Together",
-    "description": "Create and learn with our comprehensive courses platform.",
-    "heroCtaA": "Get Started",
-    "heroCtaB": "View Projects",
-    "heroCtaC": "Contact Us"
   },
   "homeHero": {
     "eyebrow": "Learn with the best",
     "headline": {
-      "lineA": "Learn New Skills Online",
-      "lineBRich": "with Top <highlight>Educators</highlight>"
+      "lineA": "Where Creativity",
+      "lineBRich": "Meets Belonging."
     },
-    "description": "Build skills with courses, certificates, and degrees online from world-class universities and companies. Unlock your potential with curated paths designed by experts.",
-    "primaryCta": "Join For Free",
-    "secondaryCta": "Find Courses",
+    "description": "A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.",
+    "primaryCta": "Start Creating",
+    "secondaryCta": "Support a Creator",
     "stats": [
       "Over 12 million students",
       "More than 60,000 courses",
@@ -170,7 +161,7 @@
     "login": "Log in",
     "signup": "Sign up",
     "logout": "Log out",
-    "brandName": "Educrat",
+    "brandName": "C R A Y",
     "courseCategories": {
       "all": "All Courses",
       "design": "Design",
@@ -217,7 +208,7 @@
     "subtitle": "We are here to help you and answer all your questions regarding our educational services.",
     "address": "Port Said - Port Fouad - Al-Mahdiyah",
     "phone": "(+1) 123 456 7890",
-    "email": "hi@educrat.com",
+    "email": "hi@C R A Y.com",
     "formTitle": "Send a Message",
     "formSubtitle": "We will get back to you as soon as possible.",
     "nameLabel": "Name",
@@ -275,7 +266,7 @@
     "instructorDescription": "Create an account to start teaching"
   },
   "footer": {
-    "brandName": "Educrat",
+    "brandName": "C R A Y",
     "socialPrompt": "Follow us on social media",
     "social": {
       "facebook": "Facebook",
@@ -327,7 +318,7 @@
       "placeholder": "Email...",
       "submit": "Submit"
     },
-    "copyright": "© {year} Educrat. All rights reserved.",
+    "copyright": "© {year} C R A Y. All rights reserved.",
     "legalLinks": {
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
@@ -412,19 +403,19 @@
     "testimonials": [
       {
         "heading": "Great Work",
-        "quote": "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "quote": "I think C R A Y is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
         "name": "Courtney Henry",
         "role": "Web Designer"
       },
       {
         "heading": "Great Work",
-        "quote": "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "quote": "I think C R A Y is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
         "name": "Ronald Richards",
         "role": "President of Sales"
       },
       {
         "heading": "Great Work",
-        "quote": "I think Educrat is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "quote": "I think C R A Y is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
         "name": "Annette Black",
         "role": "Nursing Assistant"
       }
@@ -629,21 +620,25 @@
     "cta": "Join Free",
     "imageAlt": "Student learning online"
   },
-  "coursesReasons": {
-    "title": "Why learn with our courses?",
-    "subtitle": "Discover the benefits of our courses.",
+  "what": {
+    "title": "What is C R A Y?",
+    "subtitle": "We bring creators and fans closer than ever. Whether you share your art, your ideas, or your story, C R A Y is your home to build, earn, and connect.",
     "reasons": [
       {
-        "title": "01. Learn",
-        "description": "Gain new knowledge and skills at your own pace."
+        "title": "1. Worldwide",
+        "description": "For creators everywhere, made in Saudi Arabia."
       },
       {
-        "title": "02. Graduate",
-        "description": "Receive a certificate upon completion to showcase your achievements."
+        "title": "2. Earnings",
+        "description": "Earn directly from your audience. No middlemen."
       },
       {
-        "title": "03. Work",
-        "description": "Prepare for the job market with new skills and in-depth knowledge."
+        "title": "3. Secure & Private",
+        "description": "100% secure and private."
+      },
+      {
+        "title": "4. Community",
+        "description": "A community built on trust and creativity."
       }
     ]
   },
@@ -729,26 +724,26 @@
   "terms": {
     "badge": "Terms & Conditions",
     "title": "Our commitment to clear guidelines",
-    "subtitle": "We're on a mission to deliver engaging, curated courses at a reasonable price. These terms help protect the balance between the experience you expect and the trust you place in Educrat.",
+    "subtitle": "We're on a mission to deliver engaging, curated courses at a reasonable price. These terms help protect the balance between the experience you expect and the trust you place in C R A Y.",
     "sections": {
       "usingServices": {
         "title": "Using our services",
         "paragraphs": [
-          "You agree to access Educrat only through the interfaces we provide and in accordance with the instructions we publish. You may use our Services only as permitted by law, including applicable export and re-export control laws and regulations.",
+          "You agree to access C R A Y only through the interfaces we provide and in accordance with the instructions we publish. You may use our Services only as permitted by law, including applicable export and re-export control laws and regulations.",
           "We may suspend or stop providing our Services to you if you do not comply with our terms or policies, if you misuse the Services, or if we are investigating suspected misconduct. Using our Services does not give you ownership of any intellectual property rights in the Services or the content you access. You may not remove, obscure, or alter any legal notices displayed in or along with the Services."
         ]
       },
       "yourContent": {
         "title": "Your content in our services",
         "paragraphs": [
-          "When you submit, store, or send content to or through the Services, you give Educrat (and those we work with) a worldwide license to use, host, store, reproduce, modify, create derivative works, communicate, publish, publicly perform, publicly display, and distribute such content for the purpose of operating, promoting, and improving the Services, and to develop new ones.",
+          "When you submit, store, or send content to or through the Services, you give C R A Y (and those we work with) a worldwide license to use, host, store, reproduce, modify, create derivative works, communicate, publish, publicly perform, publicly display, and distribute such content for the purpose of operating, promoting, and improving the Services, and to develop new ones.",
           "This license continues even if you stop using our Services. Make sure you have the necessary rights to grant us this license for any content that you submit to our Services."
         ]
       },
       "subscriptions": {
         "title": "Subscriptions & payments",
         "paragraphs": [
-          "Some parts of Educrat are billed on a subscription basis. You will be billed in advance on a recurring and periodic basis depending on the subscription plan you select. At the end of each period, your subscription will automatically renew under the exact same conditions unless you cancel it or Educrat cancels it.",
+          "Some parts of C R A Y are billed on a subscription basis. You will be billed in advance on a recurring and periodic basis depending on the subscription plan you select. At the end of each period, your subscription will automatically renew under the exact same conditions unless you cancel it or C R A Y cancels it.",
           "All fees are exclusive of taxes, levies, or duties imposed by taxing authorities, and you are responsible for payment of all such taxes, levies, or duties."
         ]
       },
@@ -769,20 +764,20 @@
       "contact": {
         "title": "Contact us",
         "paragraphs": [
-          "If you have any questions about these Terms, please reach out to our support team at support@educrat.com. We are committed to addressing your concerns and helping you get the most from Educrat."
+          "If you have any questions about these Terms, please reach out to our support team at support@C R A Y.com. We are committed to addressing your concerns and helping you get the most from C R A Y."
         ]
       }
     },
     "helpBox": {
       "title": "Need help understanding a clause?",
-      "description": "Our team is happy to walk you through how Educrat works. Reach out anytime and we'll respond within one business day: ",
-      "email": "support@educrat.com"
+      "description": "Our team is happy to walk you through how C R A Y works. Reach out anytime and we'll respond within one business day: ",
+      "email": "support@C R A Y.com"
     }
   },
   "privacy": {
     "badge": "Privacy Policy",
     "title": "Protecting your learning journey",
-    "subtitle": "We design every Educrat experience with privacy in mind—from the courses you browse to the certifications you earn. This policy explains how we collect, use, and safeguard your information, and the controls you have along the way.",
+    "subtitle": "We design every C R A Y experience with privacy in mind—from the courses you browse to the certifications you earn. This policy explains how we collect, use, and safeguard your information, and the controls you have along the way.",
     "highlights": [
       {
         "title": "Crystal-clear transparency",
@@ -801,14 +796,14 @@
       "infoCollect": {
         "title": "Information we collect",
         "paragraphs": [
-          "We collect the information you share with us when creating an account, enrolling in a course, or interacting with Educrat content. This may include your name, email address, payment details, demographic information, and any preferences you choose to store in your profile.",
+          "We collect the information you share with us when creating an account, enrolling in a course, or interacting with C R A Y content. This may include your name, email address, payment details, demographic information, and any preferences you choose to store in your profile.",
           "We also gather limited technical data such as browser type, device identifiers, and usage analytics to help us maintain platform reliability and improve the learning experience. We never collect more than we need, and we never sell your personal data."
         ]
       },
       "howWeUse": {
         "title": "How we use your information",
         "paragraphs": [
-          "Your information powers key Educrat features like course recommendations, progress tracking, certification, and customer support. We use aggregated insights to improve course quality, detect fraud, and keep the platform safe for learners and instructors alike.",
+          "Your information powers key C R A Y features like course recommendations, progress tracking, certification, and customer support. We use aggregated insights to improve course quality, detect fraud, and keep the platform safe for learners and instructors alike.",
           "When we communicate with you, it is to deliver service updates, account notifications, or personalized learning tips. You can adjust your communication preferences or unsubscribe from marketing email at any time."
         ]
       },
@@ -829,26 +824,26 @@
       "international": {
         "title": "International transfers",
         "paragraphs": [
-          "Educrat may process data on servers located in different countries. Whenever information crosses borders, we apply the same rigorous safeguards and rely on industry-standard legal mechanisms such as Standard Contractual Clauses to protect your privacy."
+          "C R A Y may process data on servers located in different countries. Whenever information crosses borders, we apply the same rigorous safeguards and rely on industry-standard legal mechanisms such as Standard Contractual Clauses to protect your privacy."
         ]
       },
       "yourRights": {
         "title": "Your rights & choices",
         "paragraphs": [
           "You can access, correct, download, or delete your personal information directly from your account dashboard. You also have the right to object to processing, withdraw consent, and file a complaint with your local data protection authority.",
-          "To exercise any of these rights or ask a question, contact us at privacy@educrat.com. We respond within one business day."
+          "To exercise any of these rights or ask a question, contact us at privacy@C R A Y.com. We respond within one business day."
         ]
       }
     },
     "ctaBox": {
       "title": "Need a data export or deletion?",
       "description": "Use the account dashboard to download your learning history and certificates. Prefer a guided request? Our privacy team will help you gather, update, or remove your data within 24 hours.",
-      "button": "Email privacy@educrat.com",
+      "button": "Email privacy@C R A Y.com",
       "quickAccess": {
         "title": "Quick access",
         "items": [
           "Download your account data from the dashboard settings.",
-          "Update email preferences directly from any Educrat email footer.",
+          "Update email preferences directly from any C R A Y email footer.",
           "Reach out to support for enterprise privacy agreements or data processing addendums."
         ]
       }
@@ -866,7 +861,7 @@
       }
     },
     "welcome": {
-      "title": "Welcome to Educrat",
+      "title": "Welcome to C R A Y",
       "highlight": "Enhance your skills with best Online courses",
       "description": "You can start and finish one of these popular courses in under a day – for free! Check out the list below. Take the course for free.",
       "subdescription": "Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt egetnvallis a cras semper auctonvallis a cras semper aucto. Neque convallis a cras semper auctor.",
@@ -910,7 +905,7 @@
     },
     "learningJourney": {
       "title": "Start your Learning Journey Today!",
-      "subtitle": "Discover the benefits of learning with Educrat",
+      "subtitle": "Discover the benefits of learning with C R A Y",
       "features": {
         "experts": {
           "title": "Learn with Experts",
@@ -958,8 +953,8 @@
     "getApp": {
       "title": "Learn From",
       "highlight": "Anywhere",
-      "description": "Take classes on the go with the educrat app. Stream or download to watch on the plane, the subway, or wherever you learn best.",
-      "imageAlt": "Mobile and tablet preview of the Educrat app",
+      "description": "Take classes on the go with the C R A Y app. Stream or download to watch on the plane, the subway, or wherever you learn best.",
+      "imageAlt": "Mobile and tablet preview of the C R A Y app",
       "apple": {
         "href": "/#",
         "aria": "Download on the Apple Store",
@@ -981,7 +976,7 @@
         "1": {
           "name": "Ali Tufan",
           "role": "Product Manager, Apple Inc",
-          "quote": "It is no exaggeration to say this Educrat experience was transformative—both professionally and personally. This workshop will long remain a high point of my life."
+          "quote": "It is no exaggeration to say this C R A Y experience was transformative—both professionally and personally. This workshop will long remain a high point of my life."
         },
         "2": {
           "name": "Courtney Henry",
