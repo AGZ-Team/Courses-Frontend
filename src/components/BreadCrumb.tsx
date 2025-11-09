@@ -130,7 +130,7 @@ export default function BreadCrumb({items, className}: BreadCrumbProps) {
               {item.label}
             </Link>
           ) : (
-            <span className={isLast ? 'text-[#120a5d] font-semibold' : undefined}>{item.label}</span>
+            <span className={isLast ? 'text-primary font-semibold' : undefined}>{item.label}</span>
           );
 
           return (

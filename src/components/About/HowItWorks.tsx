@@ -76,10 +76,10 @@ export default function HowItWorks() {
               className={isRTL ? 'scale-x-[-1]' : ''}
             />
           </div>
-          {/* arrow 2 between card 2 and 3 */}
+          {/* arrow 2 between card 2 and 3 (use same primary-colored asset) */}
           <div className={`hidden lg:block absolute top-16 ${isRTL ? 'right-2/3 translate-x-1/2' : 'left-2/3 -translate-x-1/2'}`}>
             <Image
-              src="/aboutImages/workArrows/2.svg"
+              src="/aboutImages/workArrows/1.svg"
               alt="arrow"
               width={120}
               height={40}
