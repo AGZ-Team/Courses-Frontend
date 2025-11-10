@@ -67,9 +67,9 @@ export default async function TermsPage({params}: Props) {
     <main className="w-full bg-white pb-24 pt-28 sm:pb-32 sm:pt-32">
       <div className="mx-auto max-w-[1080px] px-4 sm:px-6">
         <div className="text-center">
-          <span className="text-4xl font-semibold uppercase tracking-[0.28em] text-[#6c63ff]">{t('badge')}</span>
-          <h1 className="mt-6 text-[2.75rem] font-semibold text-[#120a5d] sm:text-[3rem]">{t('title')}</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-[17px] leading-relaxed text-[#5f5c7b] sm:text-[18px]">
+          <span className="text-2xl font-semibold uppercase tracking-[0.28em] text-primary">{t('badge')}</span>
+          <h1 className="mt-6 text-[2.75rem] font-semibold text-slate-900 sm:text-[3rem]">{t('title')}</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-[17px] leading-relaxed text-slate-700 sm:text-[18px]">
             {t('subtitle')}
           </p>
         </div>
@@ -77,8 +77,8 @@ export default async function TermsPage({params}: Props) {
         <div className="mt-16 space-y-16">
           {termsSections.map((section, idx) => (
             <section key={idx} className="space-y-5">
-              <h2 className="text-[1.75rem] font-semibold text-[#140a5b]">{section.title}</h2>
-              <div className="space-y-4 text-[16px] leading-7 text-[#4c4a63]">
+              <h2 className="text-[1.75rem] font-semibold text-primary">{section.title}</h2>
+              <div className="space-y-4 text-[16px] leading-7 text-slate-700">
                 {section.paragraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
@@ -87,10 +87,10 @@ export default async function TermsPage({params}: Props) {
           ))}
         </div>
 
-        <div className="mt-20 rounded-3xl border border-[#e5e7fb] bg-[#f8f7ff] p-8 sm:p-10">
-          <h2 className="text-[1.5rem] font-semibold text-[#120a5d]">{t('helpBox.title')}</h2>
-          <p className="mt-3 text-[15px] leading-7 text-[#5f5c7b]">
-            {t('helpBox.description')} <a className="font-semibold text-[#4b35f5] underline-offset-4 hover:underline" href="mailto:support@educrat.com">{t('helpBox.email')}</a>.
+        <div className="mt-20 rounded-3xl border border-primary/20 bg-white p-8 shadow-sm sm:p-10">
+          <h2 className="text-[1.5rem] font-semibold text-slate-900">{t('helpBox.title')}</h2>
+          <p className="mt-3 text-[15px] leading-7 text-slate-700">
+            {t('helpBox.description')} <a className="font-semibold text-primary underline-offset-4 hover:underline" href="mailto:support@educrat.com">{t('helpBox.email')}</a>.
           </p>
         </div>
       </div>

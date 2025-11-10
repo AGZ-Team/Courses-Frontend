@@ -133,7 +133,7 @@ export default function ContactContent() {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-white py-16 lg:py-24">
+      <section id="faq" className="bg-white py-16 lg:py-24">
         <div className="mx-auto max-w-[900px] px-4 lg:px-8">
           <div className="mb-12 text-center">
             <h2 className="mb-3 text-3xl font-bold text-[#1a0b40] lg:text-4xl">
@@ -150,14 +150,21 @@ export default function ContactContent() {
               >
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className={`flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-gray-50 ${
-                    isAr ? 'flex-row-reverse text-right' : ''
-                  }`}
+                  dir={isAr ? 'rtl' : 'ltr'}
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 transition-colors hover:bg-gray-50"
                 >
-                  <span className="text-[15px] font-semibold text-[#1a0b40]">
+                  <span
+                    className={`flex-1 text-[15px] font-semibold text-[#1a0b40] ${
+                      isAr ? 'order-2 text-right' : 'order-1 text-left'
+                    }`}
+                  >
                     {faq.question}
                   </span>
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform">
+                  <span
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform ${
+                      isAr ? 'order-1' : 'order-2'
+                    }`}
+                  >
                     {activeAccordion === index ? (
                       <FiMinus className="text-sm" />
                     ) : (

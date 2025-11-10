@@ -24,7 +24,7 @@ const MainNavbar = () => {
   const router = useRouter();
   const isAr = locale === 'ar';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState<{lessons: boolean; courses: boolean}>({lessons: false, courses: false});
+  const [mobileOpen, setMobileOpen] = useState<{lessons: boolean; explore: boolean}>({lessons: false, explore: false});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
 
@@ -90,8 +90,8 @@ const MainNavbar = () => {
 
   const navItems: NavItem[] = [
     {labelKey: 'home', href: '/', isActive: true},
-    {labelKey: 'courses', href: '/courses', hasDropdown: true},
-    {labelKey: 'blog', href: '/blog'},
+    {labelKey: 'explore', href: '/courses', hasDropdown: true},
+    {labelKey: 'creators', href: '/creators'},
     {labelKey: 'about', href: '/about' },
     {labelKey: 'contact', href: '/contact'}
   ];
@@ -177,7 +177,7 @@ const MainNavbar = () => {
         {/* Desktop Navigation */}
         <nav className={`hidden flex-1 items-center justify-center gap-8 ${isAr ? 'px-4 text-[15px]' : 'px-2 text-[15px]'} font-medium md:flex`} aria-label={t('ariaLabel')}>
           {navItems.map((item) => {
-            if (item.hasDropdown && item.labelKey === 'courses') {
+            if (item.hasDropdown && item.labelKey === 'explore') {
               return (
                 <NavDropdown
                   key={item.labelKey}
@@ -350,21 +350,21 @@ const MainNavbar = () => {
             {/* Navigation Links (with Courses accordion) */}
             <div className="space-y-1">
               {navItems.map((item) => {
-                if (item.hasDropdown && item.labelKey === 'courses') {
+                if (item.hasDropdown && item.labelKey === 'explore') {
                   return (
                     <div key={item.labelKey} className="rounded-lg">
                       <button
                         type="button"
                         className={`flex w-full items-center justify-between rounded-lg px-4 py-3 transition hover:bg-white/5 ${isActive(item.href) ? 'text-white' : 'text-white/70'}`}
-                        aria-expanded={mobileOpen.courses}
-                        onClick={() => setMobileOpen((s) => ({...s, courses: !s.courses}))}
+                        aria-expanded={mobileOpen.explore}
+                        onClick={() => setMobileOpen((s) => ({...s, explore: !s.explore}))}
                       >
                         <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium`}>{t(item.labelKey)}</span>
-                        <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${mobileOpen.courses ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+                        <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${mobileOpen.explore ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
                           <path d="m2.5 4.5 3.5 3 3.5-3" />
                         </svg>
                       </button>
-                      <div className={`pl-4 overflow-hidden transition-all duration-300 ease-out ${mobileOpen.courses ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div className={`pl-4 overflow-hidden transition-all duration-300 ease-out ${mobileOpen.explore ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
                         <div className="mt-1 space-y-1">
                           {courseCategoriesItems.map((cat) => (
                             <Link

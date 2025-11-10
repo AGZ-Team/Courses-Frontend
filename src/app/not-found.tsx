@@ -3,24 +3,31 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import { Cairo, Jost } from 'next/font/google'
 import './globals.css'
-import NotFoundNavbar from '@/components/Navbar/NotFoundNavbar'
-import NotFoundFooter from '@/components/Footer/NotFoundFooter'
+import MainNavbar from '@/components/Navbar/MainNavbar'
+import ConditionalFooter from '@/components/Footer/ConditionalFooter'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
 
 const cairo = Cairo({ subsets: ['arabic', 'latin'], variable: '--font-cairo', preload: false })
 const jost = Jost({ subsets: ['latin'], variable: '--font-jost', preload: false })
 
 export const metadata: Metadata = {
-  title: '404 - Page Not Found | Educrat',
-  description: 'The page you are looking for does not exist. Return to the homepage to continue exploring our courses.',
+  title: '404 - Page Not Found | C R A Y',
+  description: 'The page you are looking for does not exist. Return to the homepage to continue exploring.',
 }
 
-export default function RootNotFound() {
+export default async function RootNotFound() {
+  const messages = await getMessages()
+  
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`min-h-screen bg-white ${jost.className}`}>
-        <NotFoundNavbar />
-        {/* Main Content */}
-        <main className="min-h-[calc(134vh-400px)] flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 mt-24 bg-white">
+        <NextIntlClientProvider locale="en" messages={messages}>
+          <header>
+            <MainNavbar />
+          </header>
+          {/* Main Content */}
+          <main className="min-h-[calc(100vh-400px)] flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 mt-24 bg-white">
           <div className="max-w-8xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left side - Illustration */}
             <div className="flex justify-center lg:justify-end order-2 lg:order-1">
@@ -72,8 +79,9 @@ export default function RootNotFound() {
               </div>
             </div>
           </div>
-        </main>
-        <NotFoundFooter />
+          </main>
+          <ConditionalFooter />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

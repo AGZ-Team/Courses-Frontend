@@ -121,7 +121,7 @@ const HomeHero = () => {
             </div>
 
             <div
-              className="pointer-events-none absolute left-6 bottom-16 w-[200px] rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_24px_70px_rgba(18,12,68,0.35)] transition-transform duration-300 ease-out"
+              className="pointer-events-none absolute left-6 bottom-46 w-[200px] rounded-[28px] border border-white/10 bg-white/5 p-3 shadow-[0_24px_70px_rgba(18,12,68,0.35)] transition-transform duration-300 ease-out"
               style={parallaxStyle(16, -12)}
             >
               <Image src={teamSrc} priority alt={t('images.collaborativeLearning')} width={240} height={200} className="h-40 w-full rounded-[22px] object-cover" style={{ width: 'auto', height: 'auto' }} />
@@ -145,7 +145,7 @@ const HomeHero = () => {
             </div>
 
             <div
-              className="pointer-events-none absolute right-2 bottom-24 w-44 rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
+              className="pointer-events-none absolute right-2 bottom-50 w-44 rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
               style={parallaxStyle(-20, -14)}
             >
               <p className="text-[11px] text-white/70">{t('cards.admission.title')}</p>
@@ -153,7 +153,7 @@ const HomeHero = () => {
             </div>
 
             <div
-              className="pointer-events-none absolute left-1/2 bottom-6 w-44 -translate-x-1/2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
+              className="pointer-events-none absolute left-1/2 bottom-38 w-44 -translate-x-1/2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-xs text-white/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] backdrop-blur transition-transform duration-300 ease-out"
               style={parallaxStyle(14, -10)}
             >
               <span className="text-lg font-semibold text-white">{t('cards.freeCourses.count')}</span>

@@ -130,7 +130,7 @@ const PeopleSay = () => {
   );
 
   return (
-    <section className="w-full bg-[#0ABAB5] py-28">
+    <section id="testimonials" className="w-full bg-[#0ABAB5] py-28">
       <div className="mx-auto flex w-full flex-col px-4 sm:px-6 lg:px-0">
         <div className="text-center">
           <p className="text-4xl font-semibold uppercase tracking-[4px] text-white">{t('title')}</p>

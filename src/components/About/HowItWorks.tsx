@@ -31,7 +31,7 @@ export default function HowItWorks() {
     },
   ];
   return (
-    <section className="bg-slate-50">
+    <section id="how-it-works" className="bg-slate-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-slate-900">
@@ -73,6 +73,7 @@ export default function HowItWorks() {
               width={120}
               height={40}
               priority={false}
+              style={{ width: 'auto', height: 'auto' }}
               className={isRTL ? 'scale-x-[-1]' : ''}
             />
           </div>
@@ -84,6 +85,7 @@ export default function HowItWorks() {
               width={120}
               height={40}
               priority={false}
+              style={{ width: 'auto', height: 'auto' }}
               className={isRTL ? 'scale-x-[-1]' : ''}
             />
           </div>

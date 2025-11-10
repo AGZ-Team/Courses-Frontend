@@ -57,7 +57,7 @@ export default async function LocaleLayout({children, params}: Props) {
   const fontClass = locale === 'ar' ? cairo.className : jost.className;
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`min-h-screen ${fontClass}`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <header>

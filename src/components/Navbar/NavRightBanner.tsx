@@ -11,7 +11,7 @@ export default function NavRightBanner() {
                         <div className="rounded-xl bg-[#0ABAB5] p-4 sm:p-6 text-white shadow-[0_18px_40px_rgba(10,186,181,0.18)]">
                           <div className="space-y-3">
                             <p className="text-sm opacity-95">{t('title')}</p>
-                            <p className="text-2xl font-extrabold leading-tight">
+                            <p className="text-3xl font-extrabold leading-tight">
                               {t('subtitle')}
                             </p>
                             <Link

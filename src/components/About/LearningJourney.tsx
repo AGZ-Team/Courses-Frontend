@@ -32,7 +32,7 @@ export default function LearningJourney() {
     },
   ];
   return (
-    <section className="relative">
+    <section id="learning-journey" className="relative">
       {/* top background in brand primary */}
       <div className="absolute inset-x-0 top-0 h-64 sm:h-72 lg:h-100 bg-primary" />
 

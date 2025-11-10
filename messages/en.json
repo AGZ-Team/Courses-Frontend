@@ -25,11 +25,11 @@
     },
     "terms": {
       "title": "Terms & Conditions | C R A Y",
-      "description": "Understand the terms and conditions that govern your use of the C R A Y learning platform."
+      "description": "Read the Terms & Conditions that govern your use of the C R A Y platform and services."
     },
     "privacy": {
       "title": "Privacy Policy | C R A Y",
-      "description": "Discover how C R A Y protects learner privacy, keeps your data safe, and gives you control over your information."
+      "description": "How C R A Y collects, uses, shares, and protects your personal information when you use our Platform."
     },
     "courses": {
       "title": "Courses - C R A Y",
@@ -148,13 +148,12 @@
   "nav": {
     "ariaLabel": "Main Navigation",
     "home": "Home",
-    "courses": "Courses",
-    "blog": "Blog",
+    "explore": "Explore",
+    "creators": "Creators",
     "about": "About",
     "projects": "Projects",
     "services": "Services",
     "contact": "Contact",
-    "explore": "Explore",
     "myLessons": "My Lessons",
     "search": "Search",
     "cart": "Cart",
@@ -163,7 +162,7 @@
     "logout": "Log out",
     "brandName": "C R A Y",
     "courseCategories": {
-      "all": "All Courses",
+      "all": "All Content",
       "design": "Design",
       "development": "Development",
       "business": "Business",
@@ -181,8 +180,8 @@
   "breadcrumb": {
     "home": "Home",
     "ariaLabel": "Breadcrumb navigation",
-    "courses": "All Courses",
-    "blog": "Blog",
+    "explore": "Explore",
+    "creators": "Creators",
     "about": "About",
     "contact": "Contact",
     "login": "Log In",
@@ -216,27 +215,63 @@
     "messageLabel": "Message",
     "submit": "Send Message",
     "faqTitle": "Frequently Asked Questions",
-    "faqSubtitle": "Ut enim ad minim veniam, quis nostrud exercitation ullamco",
+    "faqSubtitle": "Still have questions? We're here to help",
     "faqs": [
       {
-        "question": "Do you offer discounts for students?",
-        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+        "question": "What is C R A Y?",
+        "answer": "C R A Y is a Saudi-based platform that connects creators — artists, influencers, educators, designers, and more — with their fans and supporters. Creators can share exclusive content, memberships, and experiences, while supporters can back their favorite creators directly and enjoy private perks."
       },
       {
-        "question": "Do you offer special pricing for big teams?",
-        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+        "question": "How is C R A Y different from Patreon?",
+        "answer": "C R A Y is built with local values, languages, and payment systems in mind. Unlike global platforms, we focus on Arab creators and audiences, support Saudi and GCC payment gateways, and ensure compliance with local regulations (PDPL, SDAIA). It's creativity, made local."
       },
       {
-        "question": "What is the past experience of your teachers?",
-        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+        "question": "Who can join C R A Y?",
+        "answer": "Anyone can join — whether you're a creator or a supporter. Creators can come from any field (art, design, education, tech, lifestyle) and users can subscribe to or support as many creators as they want."
       },
       {
-        "question": "What is the course refund policy?",
-        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+        "question": "How do creators earn money on C R A Y?",
+        "answer": "Creators earn through: Memberships or subscriptions (monthly or yearly), Exclusive paid content (videos, images, lessons, etc.), Tips or one-time support from fans, Brand collaborations and partnerships (coming soon). Earnings are securely transferred to the creator's chosen account through Saudi-approved payment partners."
       },
       {
-        "question": "Do you offer discounts for non-profits?",
-        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+        "question": "Is C R A Y available worldwide?",
+        "answer": "C R A Y is based in Saudi Arabia, but open to creators and users worldwide. Our platform supports both Arabic and English, and accepts international payments."
+      },
+      {
+        "question": "How do I become a creator?",
+        "answer": "Simply click \"Become a Creator\" on our homepage, create an account, and set up your profile. You'll be able to upload content, set membership levels, and start earning once verified."
+      },
+      {
+        "question": "How does C R A Y protect my data?",
+        "answer": "We follow the Saudi Personal Data Protection Law (PDPL) and international privacy standards. Your data is encrypted, never sold, and only used to operate your account safely. You can read our full Privacy Policy for details."
+      },
+      {
+        "question": "What kind of content is allowed?",
+        "answer": "C R A Y supports creative, educational and entertaining content that aligns with Saudi and international content laws. We do not allow content that violates local culture, religious sensitivities, or copyright."
+      },
+      {
+        "question": "Can I use C R A Y for business or brand partnerships?",
+        "answer": "Yes! Brands and companies can collaborate with creators through sponsorships and campaigns. If you're a brand interested in partnerships, contact us at partners@cray.com"
+      },
+      {
+        "question": "How can I contact C R A Y?",
+        "answer": "For general questions: support@cray.com, For privacy matters: privacy@cray.com, For business partnerships: partners@cray.com, For media inquiries: media@cray.com"
+      },
+      {
+        "question": "What languages does C R A Y support?",
+        "answer": "C R A Y is fully available in Arabic and English, with more regional languages planned soon."
+      },
+      {
+        "question": "Is there a mobile app?",
+        "answer": "Yes — the C R A Y mobile app (iOS and Android) is in development and will be released soon. Until then, you can access the full platform through any browser on mobile or desktop."
+      },
+      {
+        "question": "How does C R A Y handle refunds or payment issues?",
+        "answer": "Refunds are handled on a case-by-case basis through our support team. If you experience a payment issue, email billing@cray.com, and our team will resolve it within 3–5 business days."
+      },
+      {
+        "question": "Why is it called \"C R A Y\"?",
+        "answer": "The name \"Kray\" is inspired by the word \"Crazy,\" as the platform celebrates the vibrant energy and beautiful madness that connect artists with their fans. It creates an interactive space that reflects genuine passion and freedom of expression, encouraging authentic connection and spontaneous engagement away from formality."
       }
     ]
   },
@@ -267,6 +302,7 @@
   },
   "footer": {
     "brandName": "C R A Y",
+    "tagline": "The first Saudi platform that empowers creators to share exclusive content, connect with their fans, and build communities around passion and creativity.",
     "socialPrompt": "Follow us on social media",
     "social": {
       "facebook": "Facebook",
@@ -275,50 +311,61 @@
       "linkedin": "LinkedIn"
     },
     "linkGroups": {
-      "about": {
-        "title": "About",
-        "aboutUs": "About Us",
-        "learnerStories": "Learner Stories",
-        "careers": "Careers",
-        "press": "Press",
-        "leadership": "Leadership",
-        "contactUs": "Contact Us"
+      "home": {
+        "title": "Home",
+        "heroSection": "Hero Section",
+        "popularCourses": "Popular Courses",
+        "testimonials": "Testimonials",
+        "newsletter": "Newsletter",
+        "becomeCreator": "How to become a creator",
+        "becomeCreatorHref": "/signup"
       },
-      "categories": {
-        "title": "Categories",
-        "development": "Development",
-        "business": "Business",
-        "financeAccounting": "Finance & Accounting",
-        "itSoftware": "IT & Software",
-        "officeProductivity": "Office Productivity",
-        "design": "Design",
-        "marketing": "Marketing"
+      "creators": {
+        "title": "Creators",
+        "featuredCreators": "Featured Creators",
+        "topCreators": "Top Creators",
+        "newCreators": "New Creators",
+        "featuredCreatorsHref": "/creators"
       },
-      "others": {
-        "title": "Others",
+      "explore": {
+        "title": "Explore",
+        "art": "Art",
+        "education": "Education",
+        "gaming": "Gaming",
         "lifestyle": "Lifestyle",
-        "photographyVideo": "Photography & Video",
-        "healthFitness": "Health & Fitness",
-        "music": "Music",
-        "uxDesign": "UX Design",
-        "seo": "SEO"
+        "allCategories": "All Categories"
       },
-      "support": {
-        "title": "Support",
-        "documentation": "Documentation",
-        "faqs": "FAQs",
-        "dashboard": "Dashboard",
-        "contact": "Contact"
+      "aboutUs": {
+        "title": "About Us",
+        "mission": "How It Works",
+        "team": "Learning Journey",
+        "values": "Testimonials",
+        "careers": "Join Us"
+      },
+      "privacy": {
+        "title": "Privacy",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service",
+        "cookiePolicy": "Cookie Policy",
+        "dataProtection": "Data Protection"
       }
+    },
+    "support": {
+      "title": "Support",
+      "contactUs": "Contact Us",
+      "contactUsHref": "/contact",
+      "faq": "FAQ",
+      "faqHref": "/contact"
     },
     "newsletter": {
       "title": "Get in touch",
-      "subtitle": "We don’t send spam so don’t worry.",
+      "subtitle": "We don't send spam so don't worry.",
       "emailLabel": "Email address",
       "placeholder": "Email...",
       "submit": "Submit"
     },
     "copyright": "© {year} C R A Y. All rights reserved.",
+    "madeInSaudi": "Made in Saudi Arabia",
     "legalLinks": {
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
@@ -724,54 +771,54 @@
   "terms": {
     "badge": "Terms & Conditions",
     "title": "Our commitment to clear guidelines",
-    "subtitle": "We're on a mission to deliver engaging, curated courses at a reasonable price. These terms help protect the balance between the experience you expect and the trust you place in C R A Y.",
+    "subtitle": "We're on a mission to deliver engaging, curated courses at a reasonable price. These terms help protect the balance between the experience you expect and the trust you place in Educrat.",
     "sections": {
       "usingServices": {
-        "title": "Using our services",
+        "title": "Acceptance of Terms",
         "paragraphs": [
-          "You agree to access C R A Y only through the interfaces we provide and in accordance with the instructions we publish. You may use our Services only as permitted by law, including applicable export and re-export control laws and regulations.",
+          "You agree to access Educrat only through the interfaces we provide and in accordance with the instructions we publish. You may use our Services only as permitted by law, including applicable export and re-export control laws and regulations.",
           "We may suspend or stop providing our Services to you if you do not comply with our terms or policies, if you misuse the Services, or if we are investigating suspected misconduct. Using our Services does not give you ownership of any intellectual property rights in the Services or the content you access. You may not remove, obscure, or alter any legal notices displayed in or along with the Services."
         ]
       },
       "yourContent": {
-        "title": "Your content in our services",
+        "title": "User Responsibilities",
         "paragraphs": [
-          "When you submit, store, or send content to or through the Services, you give C R A Y (and those we work with) a worldwide license to use, host, store, reproduce, modify, create derivative works, communicate, publish, publicly perform, publicly display, and distribute such content for the purpose of operating, promoting, and improving the Services, and to develop new ones.",
+          "When you submit, store, or send content to or through the Services, you give Educrat (and those we work with) a worldwide license to use, host, store, reproduce, modify, create derivative works, communicate, publish, publicly perform, publicly display, and distribute such content for the purpose of operating, promoting, and improving the Services, and to develop new ones.",
           "This license continues even if you stop using our Services. Make sure you have the necessary rights to grant us this license for any content that you submit to our Services."
         ]
       },
       "subscriptions": {
-        "title": "Subscriptions & payments",
+        "title": "Intellectual Property Rights",
         "paragraphs": [
-          "Some parts of C R A Y are billed on a subscription basis. You will be billed in advance on a recurring and periodic basis depending on the subscription plan you select. At the end of each period, your subscription will automatically renew under the exact same conditions unless you cancel it or C R A Y cancels it.",
+          "Some parts of Educrat are billed on a subscription basis. You will be billed in advance on a recurring and periodic basis depending on the subscription plan you select. At the end of each period, your subscription will automatically renew under the exact same conditions unless you cancel it or Educrat cancels it.",
           "All fees are exclusive of taxes, levies, or duties imposed by taxing authorities, and you are responsible for payment of all such taxes, levies, or duties."
         ]
       },
       "termination": {
-        "title": "Termination",
+        "title": "Limitation of Liability",
         "paragraphs": [
-          "We may suspend or terminate access to the Services immediately, without prior notice or liability, for any reason whatsoever, including if you breach the Terms. All provisions of the Terms which by their nature should survive termination shall survive termination, including ownership provisions, warranty disclaimers, indemnity, and limitations of liability.",
-          "You may stop using the Services at any time. If you wish to terminate your account, you may simply discontinue using the Services or contact our support team for assistance."
+          "C R A Y is provided on an 'as-is' basis without warranties of any kind, either express or implied. C R A Y does not warrant that the platform will be uninterrupted, error-free, or free from viruses or other harmful components.",
+          "In no event shall C R A Y be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the platform, even if C R A Y has been advised of the possibility of such damages."
         ]
       },
       "changes": {
-        "title": "Changes to these terms",
+        "title": "Termination of Access",
         "paragraphs": [
-          "We reserve the right to modify or replace these Terms at any time. If a revision is material we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.",
-          "By continuing to access or use the Services after revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Services."
+          "C R A Y reserves the right to terminate or suspend your account and access to the platform at any time, for any reason, without notice or liability.",
+          "Upon termination, your right to use the platform will immediately cease. All provisions of these Terms that by their nature should survive termination shall survive."
         ]
       },
       "contact": {
-        "title": "Contact us",
+        "title": "Contact Information",
         "paragraphs": [
-          "If you have any questions about these Terms, please reach out to our support team at support@C R A Y.com. We are committed to addressing your concerns and helping you get the most from C R A Y."
+          "If you have any questions about these Terms, please reach out to our support team at support@educrat.com. We are committed to addressing your concerns and helping you get the most from Educrat."
         ]
       }
     },
     "helpBox": {
       "title": "Need help understanding a clause?",
-      "description": "Our team is happy to walk you through how C R A Y works. Reach out anytime and we'll respond within one business day: ",
-      "email": "support@C R A Y.com"
+      "description": "Our team is happy to walk you through how Educrat works. Reach out anytime and we'll respond within one business day: ",
+      "email": "support@educrat.com"
     }
   },
   "privacy": {
@@ -1076,5 +1123,114 @@
     "submitButton": "Send Reset Link",
     "successMessage": "Password reset link sent successfully!",
     "backToLogin": "Back to Login"
+  },
+  "privacyPolicy": {
+    "badge": "Privacy Policy",
+    "title": "Privacy Policy for C R A Y",
+    "subtitle": "How we collect, use, share, and protect your personal information when you use our Platform.",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "items": {
+          "0": "Welcome to C R A Y (\"we,\" \"our,\" \"us\"). Your privacy and trust are our top priorities.",
+          "1": "This Privacy Policy explains how we collect, use, share, and protect your personal information when you use our website and services (\"Platform\").",
+          "2": "By using C R A Y, you agree to the terms of this Privacy Policy."
+        }
+      },
+      "information": {
+        "title": "Information We Collect",
+        "items": {
+          "0": "Account details: name, email, username, password.",
+          "1": "Profile information: photo, biography, links, or other data you choose to share.",
+          "2": "Payment information: billing address and transaction data (processed securely through our payment partners).",
+          "3": "Communications: messages or feedback you send to us.",
+          "4": "Device and browser type, IP address, and usage data."
+        }
+      },
+      "usage": {
+        "title": "How We Use Your Information",
+        "items": {
+          "0": "Create and manage your account.",
+          "1": "Process payments securely.",
+          "2": "Provide customer support.",
+          "3": "Improve and personalize the user experience.",
+          "4": "Send service updates, notifications, or promotional content (only with your consent)."
+        }
+      },
+      "sharing": {
+        "title": "Data Sharing and Disclosure",
+        "items": {
+          "0": "We never sell your data.",
+          "1": "Service providers: payment processors, hosting providers, or analytics partners.",
+          "2": "Legal authorities: only if required by law or court order.",
+          "3": "All partners comply with Saudi Arabia's PDPL and international privacy standards."
+        }
+      },
+      "security": {
+        "title": "Data Storage and Security",
+        "items": {
+          "0": "We use industry-standard encryption (SSL/TLS) to protect all information.",
+          "1": "Your personal data is stored securely in servers within Saudi Arabia.",
+          "2": "We regularly review our security practices to prevent unauthorized access.",
+          "3": "Data is protected by continuous monitoring and dedicated security reviews."
+        }
+      },
+      "rights": {
+        "title": "Your Rights",
+        "items": {
+          "0": "Access and request a copy of your data.",
+          "1": "Correct inaccurate information.",
+          "2": "Request deletion of your data (\"Right to be Forgotten\").",
+          "3": "Withdraw consent for data processing.",
+          "4": "Lodge a complaint with the Saudi Data & Artificial Intelligence Authority (SDAIA)."
+        }
+      },
+      "cookies": {
+        "title": "Cookies Policy",
+        "items": {
+          "0": "C R A Y uses cookies to enhance performance and personalize user experience.",
+          "1": "You can control cookie settings through your browser at any time.",
+          "2": "Disabling cookies may affect some features of the platform.",
+          "3": "We use cookies for analytics and personalization purposes."
+        }
+      },
+      "international": {
+        "title": "International Data Transfers",
+        "items": {
+          "0": "If your information is transferred outside Saudi Arabia, we ensure it is protected.",
+          "1": "We apply equivalent data protection standards through contractual safeguards.",
+          "2": "We rely on industry-standard legal mechanisms to protect your privacy."
+        }
+      },
+      "retention": {
+        "title": "Retention of Data",
+        "items": {
+          "0": "We retain your data only as long as necessary to fulfill the purposes outlined.",
+          "1": "When data is no longer needed, it is securely deleted or anonymized.",
+          "2": "You may request deletion at any time by contacting us."
+        }
+      },
+      "changes": {
+        "title": "Changes to This Policy",
+        "items": {
+          "0": "We may update this Privacy Policy from time to time.",
+          "1": "Any changes will be reflected with a new \"Last Updated\" date.",
+          "2": "You will be notified of significant changes via email or platform notice."
+        }
+      },
+      "contact": {
+        "title": "Contact Us",
+        "items": {
+          "0": "If you have questions or concerns about this Privacy Policy, please contact us.",
+          "1": "Email: privacy@cray.com",
+          "2": "We respond within 2 business days."
+        }
+      }
+    },
+    "cta": {
+      "title": "Need help with your data?",
+      "description": "We respond within 2 business days. Contact our privacy team for any data-related requests.",
+      "button": "Contact Privacy Team"
+    }
   }
 }

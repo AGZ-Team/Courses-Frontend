@@ -2,6 +2,9 @@
 
 /* Ensure locale-specific fonts are applied consistently */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   html[lang="ar"] {
     font-family: var(--font-cairo), system-ui, sans-serif;
   }
