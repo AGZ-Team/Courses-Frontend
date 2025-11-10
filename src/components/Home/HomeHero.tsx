@@ -70,7 +70,7 @@ const HomeHero = () => {
       <div className="absolute inset-0">
         <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-[#099691] opacity-60 blur-3xl" />
         <div className="pointer-events-none absolute -right-32 bottom-16 h-64 w-64 rounded-full bg-[#088984] opacity-65 blur-3xl" />
-        <div className="pointer-events-none absolute left-1/4 top-1/3 h-16 w-16 rounded-full border border-white/10 bg-white/10" />
+        <div className={`pointer-events-none absolute ${isAr ? 'right-1/4' : 'left-1/4'} top-1/3 h-16 w-16 rounded-full border border-white/10 bg-white/10`} />
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-8 py-16 sm:px-12 lg:flex-row lg:items-start lg:justify-between lg:gap-24 lg:px-16">
