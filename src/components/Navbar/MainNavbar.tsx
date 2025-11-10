@@ -230,7 +230,7 @@ const MainNavbar = () => {
         </nav>
 
         {/* Right Side Actions */}
-        <div className="ml-auto flex items-center gap-3 text-sm font-medium md:gap-6 shrink-0">
+        <div className={`${isAr ? 'mr-auto flex-row-reverse' : 'ml-auto'} flex items-center gap-3 text-sm font-medium md:gap-6 shrink-0`} dir={isAr ? 'rtl' : 'ltr'}>
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -265,7 +265,7 @@ const MainNavbar = () => {
             aria-label={t('cart')}
           >
             <RiShoppingCart2Fill className={`h-6 w-6`} />
-            <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white">
+            <span className={`absolute ${isAr ? '-left-1' : '-right-1'} -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white`}>
               3
             </span>
           </button>
@@ -312,7 +312,7 @@ const MainNavbar = () => {
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="border-t border-white/10 bg-primary lg:hidden">
-          <nav className="mx-auto max-w-[1300px] px-6 py-6">
+          <nav className="mx-auto max-w-[1300px] px-6 py-6" dir={isAr ? 'rtl' : 'ltr'}>
             {/* My Courses - mobile accordion */}
             <div className="mb-4">
               <button

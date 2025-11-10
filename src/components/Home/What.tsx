@@ -40,7 +40,7 @@ const What = () => {
             return (
               <article
                 key={index}
-                className="group flex flex-col rounded-[18px] border border-gray-200 bg-gray-50 px-6 sm:px-8 md:px-9 py-10 sm:py-12 md:py-14 text-center text-gray-900 transition duration-300 hover:border-[#0ABAB5] hover:shadow-[0_24px_60px_rgba(10,186,181,0.15)] hover:text-white hover:bg-[#0ABAB5]"
+                className="group flex flex-col rounded-[18px] border border-gray-200 bg-gray-50 px-6 sm:px-8 md:px-9 py-10 sm:py-12 md:py-14 text-center text-gray-900 transition duration-300 sm:hover:border-[#0ABAB5] sm:hover:shadow-[0_24px_60px_rgba(10,186,181,0.15)] sm:hover:bg-[#0ABAB5]"
                 data-aos="fade-up"
                 data-aos-delay={index * 150}
               >
@@ -54,8 +54,8 @@ const What = () => {
                     aria-hidden 
                   />
                 </div>
-                <h3 className="mt-8 sm:mt-10 text-[18px] sm:text-[20px] font-semibold whitespace-nowrap">{reason.title}</h3>
-                <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-6 sm:leading-[26px]">{reason.description}</p>
+                <h3 className="mt-8 sm:mt-10 text-[18px] sm:text-[20px] font-semibold whitespace-nowrap transition-colors sm:group-hover:text-white">{reason.title}</h3>
+                <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-6 sm:leading-[26px] transition-colors sm:group-hover:text-white">{reason.description}</p>
               </article>
             );
           })}
