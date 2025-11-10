@@ -166,7 +166,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
           {t.subtitlePrefix}
           <Link
             href="/signup"
-            className="ms-2 font-semibold text-indigo-600 hover:text-indigo-500"
+            className="ms-2 font-semibold text-primary hover:text-primary"
           >
             {t.signupCta}
           </Link>
@@ -214,7 +214,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
             className={`block w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
               getFieldError('username')
                 ? 'border-red-500 focus:border-red-500'
-                : 'border-gray-200 focus:border-indigo-500'
+                : 'border-gray-200 focus:border-[#0ABAB5]'
             }`}
             placeholder={isAr ? 'الاسم أو البريد الإلكتروني' : 'Username or Email'}
             dir={isAr ? 'rtl' : 'ltr'}
@@ -245,7 +245,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
               className={`block w-full rounded-xl border bg-white px-4 py-3 pr-10 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                 getFieldError('password')
                   ? 'border-red-500 focus:border-red-500'
-                  : 'border-gray-200 focus:border-indigo-500'
+                  : 'border-gray-200 focus:border-[#0ABAB5]'
               }`}
               placeholder="••••••••"
               dir={isAr ? 'rtl' : 'ltr'}
@@ -290,7 +290,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
           </label>
           <Link
             href="/auth/reset-password"
-            className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+            className="text-sm font-medium text-primary hover:text-primary"
           >
             {t.forgotPassword}
           </Link>

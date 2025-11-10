@@ -10,6 +10,10 @@ type PageProps = {
   params: Promise<{ locale: string; uid: string; token: string }>;
 };
 
+export function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ namespace: 'metadata.verifyEmail', locale });

@@ -127,6 +127,8 @@ const CarouselHome = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const dotCount = Math.max(1, Math.ceil(CATEGORIES.length / ITEMS_PER_VIEW));
+  // Duplicate categories for infinite scroll
+  const infiniteCategories = [...CATEGORIES, ...CATEGORIES, ...CATEGORIES];
 
   const syncIndicator = () => {
     const node = carouselRef.current;
@@ -152,7 +154,21 @@ const CarouselHome = () => {
 
     const delta = direction === 'left' ? -SCROLL_AMOUNT : SCROLL_AMOUNT;
     const adjustedDelta = isAr ? -delta : delta;
-    node.scrollBy({left: adjustedDelta, behavior: 'smooth'});
+    
+    // Calculate new scroll position
+    const newScrollLeft = node.scrollLeft + adjustedDelta;
+    const maxScroll = node.scrollWidth - node.clientWidth;
+    const singleSetWidth = (node.scrollWidth / 3); // Since we tripled the items
+    
+    // Infinite loop: if we reach the end, jump to the beginning
+    if (newScrollLeft >= maxScroll - 10) {
+      node.scrollLeft = singleSetWidth;
+    } else if (newScrollLeft <= 10) {
+      node.scrollLeft = singleSetWidth * 2;
+    } else {
+      node.scrollBy({left: adjustedDelta, behavior: 'smooth'});
+    }
+    
     requestAnimationFrame(syncIndicator);
   };
 
@@ -198,7 +214,7 @@ const CarouselHome = () => {
             className="no-scrollbar w-full flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 py-6"
             aria-label={t('title')}
           >
-            {CATEGORIES.map(({translationKey, image, gradient}, index) => {
+            {infiniteCategories.map(({translationKey, image, gradient}, index) => {
               const name = t(`categories.${translationKey}.name`);
               const courses = t(`categories.${translationKey}.courses`);
               const [firstLine, secondLine] = (() => {
@@ -213,7 +229,7 @@ const CarouselHome = () => {
 
               return (
                 <article
-                  key={translationKey}
+                  key={`${translationKey}-${index}`}
                   className={`group relative flex min-w-[208px] max-w-[248px] flex-1 snap-center flex-col items-center gap-6  bg-white/10 px-8 py-10 text-center text-white border border-white/20  transition duration-300 ease-out  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white hover:bg-white hover:text-[#0ABAB5]`}
                   
                   tabIndex={0}

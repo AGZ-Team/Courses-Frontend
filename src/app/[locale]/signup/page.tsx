@@ -92,7 +92,7 @@ export default async function SignupPage({params}: PageProps) {
 
           {/* Right: form card */}
           <div
-            className="flex mr-20 items-center justify-center px-6 py-10 md:py-12 md:col-start-2 overflow-y-auto scrollbar-hide min-h-screen"
+            className="flex mt-10 items-center justify-center px-6 py-10 md:py-12 md:col-start-2 overflow-y-auto scrollbar-hide min-h-screen md:mt-1 md:mr-20"
             dir={isAr ? 'rtl' : 'ltr'}
           >
             <SignupForm isAr={isAr} translations={translations} />

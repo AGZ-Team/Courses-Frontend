@@ -210,7 +210,6 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
         className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
         loading="lazy"
         sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
-        style={{ width: 'auto', height: 'auto' }}
       />
 
       {course.badges && (

@@ -213,7 +213,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
   };
 
   return (
-    <div className="w-full max-w-7xl rounded-3xl mb-auto mt-[18vw]  lg:mt-[8vw] mx-auto  bg-white p-6 shadow-[0_10px_40px_rgba(13,13,18,0.08)] ring-1 ring-black/5 md:p-8">
+    <div className="w-full max-w-7xl rounded-3xl mb-auto mt-10 md:mt-[12vw] lg:mt-[8vw] mx-auto bg-white p-6 shadow-[0_10px_40px_rgba(13,13,18,0.08)] ring-1 ring-black/5 md:p-8">
       <div className={`${isAr ? 'text-right' : ''}`}>
         <h1 className="mb-2 text-[26px] font-bold leading-tight text-[#0b0b2b]">
           {t.title}
@@ -223,7 +223,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
           {/* depends on the language iam on ar or en */}
           <Link
             href="/login"
-            className="ms-2 font-semibold text-indigo-600 hover:text-indigo-500"
+            className="ms-2 font-semibold text-primary hover:text-primary"
           >
             {t.loginCta}
           </Link>
@@ -292,7 +292,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               className={`block w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                 getFieldError('username')
                   ? 'border-red-500 focus:border-red-500'
-                  : 'border-gray-200 focus:border-indigo-500'
+                  : 'border-gray-200 focus:border-[#0ABAB5]'
               }`}
               placeholder={isAr ? 'اسم المستخدم' : 'Username'}
               dir={isAr ? 'rtl' : 'ltr'}
@@ -322,7 +322,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               className={`block w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                 getFieldError('email')
                   ? 'border-red-500 focus:border-red-500'
-                  : 'border-gray-200 focus:border-indigo-500'
+                  : 'border-gray-200 focus:border-[#0ABAB5]'
               }`}
               placeholder={isAr ? 'البريد الإلكتروني' : 'Email'}
               dir={isAr ? 'rtl' : 'ltr'}
@@ -352,7 +352,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               required
               value={formData.firstName}
               onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
+              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-[#0ABAB5]"
               placeholder={isAr ? 'الاسم الأول' : 'First Name'}
               dir={isAr ? 'rtl' : 'ltr'}
               disabled={loading}
@@ -375,7 +375,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               required
               value={formData.lastName}
               onChange={handleChange}
-              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-indigo-500"
+              className="block w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition focus:border-[#0ABAB5]"
               placeholder={isAr ? 'اسم العائلة' : 'Last Name'}
               dir={isAr ? 'rtl' : 'ltr'}
               disabled={loading}
@@ -405,7 +405,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 className={`block w-full rounded-xl border bg-white px-4 py-2.5 pr-10 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                   getFieldError('password')
                     ? 'border-red-500 focus:border-red-500'
-                    : 'border-gray-200 focus:border-indigo-500'
+                    : 'border-gray-200 focus:border-[#0ABAB5]'
                 }`}
                 placeholder="••••••••"
                 dir={isAr ? 'rtl' : 'ltr'}
@@ -451,7 +451,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 className={`block w-full rounded-xl border bg-white px-4 py-2.5 pr-10 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                   getFieldError('confirmPassword')
                     ? 'border-red-500 focus:border-red-500'
-                    : 'border-gray-200 focus:border-indigo-500'
+                    : 'border-gray-200 focus:border-[#0ABAB5]'
                 }`}
                 placeholder="••••••••"
                 dir={isAr ? 'rtl' : 'ltr'}
@@ -487,15 +487,15 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
             >
               {t.phoneNumber} *
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               {/* Country Code Selector */}
               <select
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
-                className={`rounded-xl border bg-white px-3 py-2.5 text-sm text-gray-900 shadow-sm outline-none ring-0 transition ${
+                className={`w-full sm:w-auto rounded-xl border bg-white px-3 py-2.5 text-sm text-gray-900 shadow-sm outline-none ring-0 transition ${
                   getFieldError('phone')
                     ? 'border-red-500 focus:border-red-500'
-                    : 'border-gray-200 focus:border-indigo-500'
+                    : 'border-gray-200 focus:border-[#0ABAB5]'
                 }`}
                 disabled={loading}
               >
@@ -515,10 +515,10 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 required
                 value={formData.phone}
                 onChange={handleChange}
-                className={`block flex-1 rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                className={`block w-full flex-1 rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                   getFieldError('phone')
                     ? 'border-red-500 focus:border-red-500'
-                    : 'border-gray-200 focus:border-indigo-500'
+                    : 'border-gray-200 focus:border-[#0ABAB5]'
                 }`}
                 placeholder={isAr ? 'رقم الهاتف' : 'Phone Number'}
                 dir={isAr ? 'rtl' : 'ltr'}
@@ -544,15 +544,15 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 >
                   {t.phoneNumber} *
                 </label>
-                <div className="flex gap-1.5">
+                <div className="flex flex-col sm:flex-row gap-1.5">
                   {/* Country Code Selector */}
                   <select
                     value={countryCode}
                     onChange={(e) => setCountryCode(e.target.value)}
-                    className={`rounded-xl border bg-white px-2.5 py-2 text-xs text-gray-900 shadow-sm outline-none ring-0 transition ${
+                    className={`w-full sm:w-auto rounded-xl border bg-white px-2.5 py-2 text-xs text-gray-900 shadow-sm outline-none ring-0 transition ${
                       getFieldError('phone')
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-200 focus:border-indigo-500'
+                        : 'border-gray-200 focus:border-[#0ABAB5]'
                     }`}
                     disabled={loading}
                   >
@@ -572,10 +572,10 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                     required
                     value={formData.phone}
                     onChange={handleChange}
-                    className={`block flex-1 rounded-xl border bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
+                    className={`block w-full flex-1 rounded-xl border bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                       getFieldError('phone')
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-200 focus:border-indigo-500'
+                        : 'border-gray-200 focus:border-[#0ABAB5]'
                     }`}
                     placeholder={isAr ? 'رقم الهاتف' : 'Phone Number'}
                     dir={isAr ? 'rtl' : 'ltr'}
@@ -605,7 +605,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                   className={`block w-full rounded-xl border bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
                     getFieldError('expertise')
                       ? 'border-red-500 focus:border-red-500'
-                      : 'border-gray-200 focus:border-indigo-500'
+                      : 'border-gray-200 focus:border-[#0ABAB5]'
                   }`}
                   placeholder={isAr ? 'مجال التخصص' : 'e.g., Web Development'}
                   dir={isAr ? 'rtl' : 'ltr'}
@@ -629,7 +629,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                   className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-4 py-3 transition ${
                     getFieldError('id_front')
                       ? 'border-red-500 bg-red-50 hover:border-red-600 hover:bg-red-100'
-                      : 'border-gray-300 bg-gray-50 hover:border-indigo-500 hover:bg-indigo-50'
+                      : 'border-gray-300 bg-gray-50 hover:border-[#0ABAB5] hover:bg-indigo-50'
                   }`}
                 >
                   <MdCloudUpload className="mb-1 text-xl text-gray-400" />
@@ -661,7 +661,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                   className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-4 py-3 transition ${
                     getFieldError('id_back')
                       ? 'border-red-500 bg-red-50 hover:border-red-600 hover:bg-red-100'
-                      : 'border-gray-300 bg-gray-50 hover:border-indigo-500 hover:bg-indigo-50'
+                      : 'border-gray-300 bg-gray-50 hover:border-[#0ABAB5] hover:bg-indigo-50'
                   }`}
                 >
                   <MdCloudUpload className="mb-1 text-xl text-gray-400" />

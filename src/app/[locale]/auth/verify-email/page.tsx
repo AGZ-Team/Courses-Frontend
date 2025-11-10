@@ -65,7 +65,7 @@ export default async function VerifyEmailPage({ params }: PageProps) {
           <div className="hidden md:block md:col-start-1" />
 
           {/* Right: form card */}
-          <div className="flex mr-20 items-center justify-center px-6 py-10 md:py-12 md:col-start-2 overflow-y-auto scrollbar-hide min-h-screen">
+          <div className="flex  items-center justify-center px-6 py-10 md:py-12 md:col-start-2 overflow-y-auto scrollbar-hide min-h-screen md:mr-20">
             <div
               dir={isAr ? 'rtl' : 'ltr'}
               className="w-full max-w-xl rounded-3xl bg-white p-6 shadow-[0_10px_40px_rgba(13,13,18,0.08)] ring-1 ring-black/5 md:p-8"

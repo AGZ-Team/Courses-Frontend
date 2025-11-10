@@ -112,10 +112,10 @@ const Footer = () => {
             </div>
           </div>
 
-          <p className="text-[15px] max-w-[calc(100%-35rem)] leading-relaxed text-white/90">{t("tagline")}</p>
+          <p className="text-[15px] max-w-full sm:max-w-[calc(100%-24rem)] lg:max-w-[calc(100%-35rem)] leading-relaxed text-white/90">{t("tagline")}</p>
         </div>
 
-        <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-7" data-aos="fade-up" data-aos-duration="700">
+        <div className="mt-12 grid gap-10 grid-cols-2 max-[480px]:grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7" data-aos="fade-up" data-aos-duration="700">
           {FOOTER_LINK_GROUPS.map((group) => (
             <div key={group.key} className="space-y-5 min-w-[180px]">
               <h3 className="text-[14px] font-bold uppercase tracking-[0.15em] text-white">

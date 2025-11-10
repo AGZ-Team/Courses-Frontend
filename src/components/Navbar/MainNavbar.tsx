@@ -297,10 +297,10 @@ const MainNavbar = () => {
                 {t('login')}
               </Link>
 
-              {/* Signup - Always Visible */}
+              {/* Signup - Desktop Only */}
               <Link
                 href={`/signup`}
-                className={`whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-primary transition hover:bg-white/90`}
+                className={`hidden md:block whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-primary transition hover:bg-white/90`}
               >
                 {t('signup')}
               </Link>
