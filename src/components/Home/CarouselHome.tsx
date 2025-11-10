@@ -153,22 +153,26 @@ const CarouselHome = () => {
     if (!node) return;
 
     const delta = direction === 'left' ? -SCROLL_AMOUNT : SCROLL_AMOUNT;
-    const adjustedDelta = isAr ? -delta : delta;
-    
-    // Calculate new scroll position
-    const newScrollLeft = node.scrollLeft + adjustedDelta;
+    const nextPosition = node.scrollLeft + delta;
+    const singleSetWidth = node.scrollWidth / 3;
     const maxScroll = node.scrollWidth - node.clientWidth;
-    const singleSetWidth = (node.scrollWidth / 3); // Since we tripled the items
-    
-    // Infinite loop: if we reach the end, jump to the beginning
-    if (newScrollLeft >= maxScroll - 10) {
+
+    if (!node.dataset.initialized) {
       node.scrollLeft = singleSetWidth;
-    } else if (newScrollLeft <= 10) {
-      node.scrollLeft = singleSetWidth * 2;
-    } else {
-      node.scrollBy({left: adjustedDelta, behavior: 'smooth'});
+      node.dataset.initialized = 'true';
     }
-    
+
+    const upperThreshold = maxScroll - 10;
+    const lowerThreshold = 10;
+
+    if (nextPosition >= upperThreshold) {
+      node.scrollLeft = singleSetWidth + (nextPosition - upperThreshold);
+    } else if (nextPosition <= lowerThreshold) {
+      node.scrollLeft = singleSetWidth * 2 + (nextPosition - lowerThreshold);
+    } else {
+      node.scrollTo({left: nextPosition, behavior: 'smooth'});
+    }
+
     requestAnimationFrame(syncIndicator);
   };
 
@@ -212,6 +216,7 @@ const CarouselHome = () => {
           <div
             ref={carouselRef}
             className="no-scrollbar w-full flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 py-6"
+            dir="ltr"
             aria-label={t('title')}
           >
             {infiniteCategories.map(({translationKey, image, gradient}, index) => {
@@ -259,8 +264,8 @@ const CarouselHome = () => {
             <div className="flex items-center gap-4" dir='ltr'>
               <button
                 type="button"
-                onClick={() => handleScroll(isAr ? 'right' : 'left')}
-                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_32px_rgba(255,255,255,0.12)] transition hover:border-white hover:bg-white hover:text-[#0ABAB5]"
+                onClick={() => handleScroll('left')}
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_32px_rgba(255,255,255,0.12)] transition hover:border-white hover:bg-white hover:text-[#0ABAB5] hover:cursor-pointer"
               >
                 <svg
                   width="16"
@@ -276,8 +281,8 @@ const CarouselHome = () => {
               </button>
               <button
                 type="button"
-                onClick={() => handleScroll(isAr ? 'left' : 'right')}
-                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_32px_rgba(255,255,255,0.12)] transition hover:border-white hover:bg-white hover:text-[#0ABAB5]"
+                onClick={() => handleScroll('right')}
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_32px_rgba(255,255,255,0.12)] transition hover:border-white hover:bg-white hover:text-[#0ABAB5] hover:cursor-pointer"
               >
                 <svg
                   width="16"

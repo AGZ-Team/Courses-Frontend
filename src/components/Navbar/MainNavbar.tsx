@@ -312,7 +312,7 @@ const MainNavbar = () => {
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="border-t border-white/10 bg-primary lg:hidden">
-          <nav className="mx-auto max-w-[1300px] px-6 py-6" dir={isAr ? 'rtl' : 'ltr'}>
+          <nav className="mx-auto max-w-[1300px] px-6 py-6 max-h-[calc(100vh-7rem)] overflow-y-auto overscroll-contain" dir={isAr ? 'rtl' : 'ltr'}>
             {/* My Courses - mobile accordion */}
             <div className="mb-4">
               <button
