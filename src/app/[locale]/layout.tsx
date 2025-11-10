@@ -1,4 +1,5 @@
 import {NextIntlClientProvider} from 'next-intl';
+import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {getMessages, setRequestLocale} from 'next-intl/server';
 import {routing, isLocale} from '@/i18n/routing';
@@ -14,6 +15,28 @@ const jost = Jost({subsets: ['latin'], variable: '--font-jost', preload: false})
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
 }
+
+export const metadata: Metadata = {
+  // Set base URL for resolving relative URLs in metadata (production URL or fallback to localhost)
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  // Use the project logo for icons and social images
+  icons: {
+    icon: '/logo/graduate.svg',
+    shortcut: '/logo/graduate.svg',
+    apple: '/logo/graduate.svg',
+  },
+  openGraph: {
+    images: [
+      {
+        url: '/logo/graduate.svg',
+        alt: 'Site logo',
+      },
+    ],
+  },
+  twitter: {
+    images: ['/logo/graduate.svg'],
+  },
+};
 
 type Props = {
   children: React.ReactNode;
