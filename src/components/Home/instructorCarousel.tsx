@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {LuCirclePlay, LuStar, LuUsers} from 'react-icons/lu';
-import {FaFacebookF, FaInstagram, FaLinkedinIn, Fax} from 'react-icons/fa';
+import {FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter} from 'react-icons/fa';
 import {HiOutlineArrowUpRight} from 'react-icons/hi2';
 import {useLocale, useTranslations} from 'next-intl';
 
 const SOCIAL_LINKS = [
   {label: 'facebook', href: '#', Icon: FaFacebookF},
-  {label: 'x', href: '#', Icon: Fax},
+  {label: 'x', href: '#', Icon: FaTwitter},
   {label: 'instagram', href: '#', Icon: FaInstagram},
   {label: 'linkedin', href: '#', Icon: FaLinkedinIn}
 ] as const;

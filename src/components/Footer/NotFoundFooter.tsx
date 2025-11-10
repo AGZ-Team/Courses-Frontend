@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import {FaFacebookF, FaInstagram, FaLinkedinIn, Fax} from 'react-icons/fa';
+import {FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter} from 'react-icons/fa';
 
 const FOOTER_LINK_GROUPS = [
   {
@@ -51,7 +51,7 @@ const FOOTER_LINK_GROUPS = [
 
 const SOCIAL_LINKS = [
   {label: 'Facebook', href: '#', Icon: FaFacebookF},
-  {label: 'x', href: '#', Icon: Fax},
+  {label: 'x', href: '#', Icon: FaTwitter},
   {label: 'Instagram', href: '#', Icon: FaInstagram},
   {label: 'LinkedIn', href: '#', Icon: FaLinkedinIn}
 ] as const;

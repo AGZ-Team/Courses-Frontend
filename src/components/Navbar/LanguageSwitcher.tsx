@@ -52,7 +52,10 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
     }
 
     startTransition(() => {
-      router.replace(pathname, {locale: nextLocale});
+      const raw = pathname || '/';
+      // Defensively strip any leading locale to prevent paths like /ar/en/... or /en/ar/...
+      const normalized = raw.replace(/^\/(en|ar)(?=\/|$)/, '') || '/';
+      router.replace(normalized, {locale: nextLocale});
     });
   };
 

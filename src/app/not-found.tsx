@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { Cairo, Jost } from 'next/font/google'
@@ -6,7 +6,8 @@ import './globals.css'
 import MainNavbar from '@/components/Navbar/MainNavbar'
 import ConditionalFooter from '@/components/Footer/ConditionalFooter'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getMessages, getLocale } from 'next-intl/server'
+import Footer from '@/components/Footer/Footer'
 
 const cairo = Cairo({ subsets: ['arabic', 'latin'], variable: '--font-cairo', preload: false })
 const jost = Jost({ subsets: ['latin'], variable: '--font-jost', preload: false })
@@ -17,12 +18,12 @@ export const metadata: Metadata = {
 }
 
 export default async function RootNotFound() {
-  const messages = await getMessages()
+  const [messages, locale] = await Promise.all([getMessages(), getLocale()])
   
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang={locale} data-scroll-behavior="smooth">
       <body className={`min-h-screen bg-white ${jost.className}`}>
-        <NextIntlClientProvider locale="en" messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <header>
             <MainNavbar />
           </header>
@@ -65,13 +66,13 @@ export default async function RootNotFound() {
               {/* Language Selection and Home Buttons */}
               <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link
-                  href="/en"
+                  href="/"
                   className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-primary rounded-lg hover:bg-transparent transition-colors border-2 border-primary duration-200 hover:text-primary"
                 >
                   Go Home (English)
                 </Link>
                 <Link
-                  href="/ar"
+                  href="/"
                   className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-primary bg-white border-2 border-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200 font-serif"
                 >
                   الصفحة الرئيسية (عربي)
@@ -80,7 +81,7 @@ export default async function RootNotFound() {
             </div>
           </div>
           </main>
-          <ConditionalFooter />
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
