@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Users, Clock, Play, Facebook, Instagram, x, Linkedin } from 'lucide-react';
+import { Star, Users, Clock, Play, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { CourseCard } from '../CourseCard';
@@ -18,7 +18,7 @@ export function CourseHero({ course }: CourseHeroProps) {
   const socials: { name: string; Icon: React.ComponentType<{ className?: string }> }[] = [
     { name: 'facebook', Icon: Facebook },
     { name: 'instagram', Icon: Instagram },
-    { name: 'x', Icon: x },
+    { name: 'x', Icon: Twitter },
     { name: 'linkedin', Icon: Linkedin },
   ];
 

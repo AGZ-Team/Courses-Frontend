@@ -10,6 +10,10 @@ export default function ContactContent() {
   const locale = useLocale();
   const isAr = locale === 'ar';
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
+  const emailContactsRaw = t.raw('emailContacts.items');
+  const emailContacts = Array.isArray(emailContactsRaw)
+    ? (emailContactsRaw as {label: string; email: string}[])
+    : [];
 
   const toggleAccordion = (index: number) => {
     setActiveAccordion(activeAccordion === index ? null : index);
@@ -67,22 +71,37 @@ export default function ContactContent() {
                 </div>
               </div>
 
-              {/* Email */}
-              <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                  <MdEmail className="text-2xl text-primary" />
+          
+
+              {emailContacts.length > 0 && (
+                <div className="mt-8 rounded-2xl pl-4" dir={isAr ? 'rtl' : 'ltr'}>
+                  <h3 className="text-lg font-semibold text-[#1a0b40]">
+                  <MdEmail className="inline-block mr-4 text-2xl text-primary" />
+                    {t('emailContacts.title')} 
+                  </h3>
+                  <ul className="mt-4 space-y-3">
+                    {emailContacts.map(({label, email}) => (
+                      <li
+                        key={email}
+                        className="flex flex-col gap-2 rounded-xl bg-white px-4 py-3 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+                      >
+                        <span className="text-sm font-medium text-[#1a0b40]">{label}</span>
+                        <a
+                          href={`mailto:${email}`}
+                          className="text-sm font-semibold text-[#0ABAB5] transition hover:text-[#088984] hover:underline"
+                        >
+                          {email}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="flex-1">
-                  <p className="text-[18px] leading-relaxed text-gray-700">
-                    {t('email')}
-                  </p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
 
           {/* Right Side - Contact Form */}
-          <div>
+          <div className="rounded-2xl w-full">
             <h2 className="mb-4 text-3xl font-bold text-[#1a0b40] lg:text-4xl">
               {t('formTitle')}
             </h2>

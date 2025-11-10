@@ -137,7 +137,7 @@ const MainNavbar = () => {
         {/* Desktop My Lessons Dropdown */}
         <NavDropdown
           trigger={
-            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 md:flex`}>
+            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 lg:flex`}>
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -175,7 +175,7 @@ const MainNavbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className={`hidden flex-1 items-center justify-center gap-8 ${isAr ? 'px-4 text-[15px]' : 'px-2 text-[15px]'} font-medium md:flex`} aria-label={t('ariaLabel')}>
+        <nav className={`hidden flex-1 items-center justify-center gap-6 ${isAr ? 'px-3 text-[15px]' : 'px-2 text-[15px]'} font-medium lg:flex`} aria-label={t('ariaLabel')}>
           {navItems.map((item) => {
             if (item.hasDropdown && item.labelKey === 'explore') {
               return (
@@ -234,7 +234,7 @@ const MainNavbar = () => {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 md:hidden"
+            className="rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 lg:hidden"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
           >
@@ -252,7 +252,7 @@ const MainNavbar = () => {
           {/* Search - Desktop Only */}
           <button
             type="button"
-            className="hidden rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 md:block"
+            className="hidden rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 lg:block"
             aria-label={t('search')}
           >
             <LuSearch className={`h-6 w-6`} />
@@ -271,7 +271,7 @@ const MainNavbar = () => {
           </button>
 
           {/* Language Switcher - Desktop Only */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <LanguageSwitcher />
           </div>
 
@@ -311,7 +311,7 @@ const MainNavbar = () => {
       
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="border-t border-white/10 bg-primary md:hidden">
+        <div className="border-t border-white/10 bg-primary lg:hidden">
           <nav className="mx-auto max-w-[1300px] px-6 py-6">
             {/* My Lessons - mobile accordion */}
             <div className="mb-4">

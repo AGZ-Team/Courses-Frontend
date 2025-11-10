@@ -214,6 +214,15 @@
     "emailLabel": "Email Address",
     "messageLabel": "Message",
     "submit": "Send Message",
+    "emailContacts": {
+      "title": "Direct contact emails",
+      "items": [
+        { "label": "For general questions", "email": "support@cray.com" },
+        { "label": "For privacy matters", "email": "privacy@cray.com" },
+        { "label": "For business partnerships", "email": "partners@cray.com" },
+        { "label": "For media inquiries", "email": "media@cray.com" }
+      ]
+    },
     "faqTitle": "Frequently Asked Questions",
     "faqSubtitle": "Still have questions? We're here to help",
     "faqs": [

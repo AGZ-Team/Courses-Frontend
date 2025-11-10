@@ -63,7 +63,7 @@ const HomeHero = () => {
   return (
     <section
       ref={heroRef}
-  className="relative flex min-h-[90vh] w-full items-center overflow-hidden bg-linear-to-b from-[#0ABAB5] via-[#0ABAB5] to-[#08a39e] text-white pt-24 md:pt-28"
+  className="home-hero relative flex min-h-[90vh] w-full items-center overflow-hidden bg-linear-to-b from-[#0ABAB5] via-[#0ABAB5] to-[#08a39e] text-white pt-24 md:pt-28"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >

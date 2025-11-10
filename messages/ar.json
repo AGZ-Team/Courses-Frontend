@@ -230,6 +230,15 @@
         "emailLabel": "البريد الإلكتروني",
         "messageLabel": "الرسالة",
         "submit": "إرسال الرسالة",
+        "emailContacts": {
+            "title": "بريد إلكتروني للتواصل المباشر",
+            "items": [
+                { "label": "للاستفسارات العامة", "email": "support@cray.com" },
+                { "label": "للمسائل المتعلقة بالخصوصية", "email": "privacy@cray.com" },
+                { "label": "لشراكات الأعمال", "email": "partners@cray.com" },
+                { "label": "للاستفسارات الإعلامية", "email": "media@cray.com" }
+            ]
+        },
         "faqTitle": "الأسئلة الشائعة حول كراي",
         "faqSubtitle": "هل لديك أسئلة؟ نحن هنا للمساعدة",
         "faqs": [

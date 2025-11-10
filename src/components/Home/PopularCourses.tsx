@@ -253,19 +253,19 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
         </Link>
       </h3>
 
-      <dl className="mt-5 flex flex-wrap gap-x-2 text-[13px] text-[#6f7289]">
+      <dl className="mt-5 flex flex-wrap gap-x-1 text-[12px] text-[#6f7289]">
         <div className="flex items-center gap-2">
-          <LuCirclePlay className="h-4 w-4 text-primary" />
+          <LuCirclePlay className="h-4 w-3 text-primary" />
           <dt className="sr-only">Lessons</dt>
           <dd>{course.lessonCount} {t('courseCard.lessons')}</dd>
         </div>
         <div className="flex items-center gap-2">
-          <LuClock3 className="h-4 w-4 text-primary" />
+          <LuClock3 className="h-4 w-3 text-primary" />
           <dt className="sr-only">Duration</dt>
           <dd>{formatDuration(course.durationMinutes)}</dd>
         </div>
         <div className="flex items-center gap-2">
-          <LuTrendingUp className="h-4 w-4 text-primary" />
+          <LuTrendingUp className="h-4 w-5 text-primary" />
           <dt className="sr-only">Level</dt>
           <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as any)}</dd>
         </div>

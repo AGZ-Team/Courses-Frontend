@@ -5,6 +5,28 @@
   html {
     scroll-behavior: smooth;
   }
+
+/* Tablet range: lower the wave height to prevent covering CTA buttons */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .waves {
+    --wave-height: 200px;
+  }
+}
+
+/* Narrow tablets/large phones: 700–500px */
+@media (max-width: 700px) and (min-width: 500px) {
+  .waves {
+    --wave-height: 140px;
+  }
+  /* Reduce top empty space in hero for this band */
+  .home-hero {
+    padding-top: 5rem; /* ~80px */
+    min-height: 82vh;
+  }
+}
+  html, body {
+    overflow-x: hidden;
+  }
   html[lang="ar"] {
     font-family: var(--font-cairo), system-ui, sans-serif;
   }
