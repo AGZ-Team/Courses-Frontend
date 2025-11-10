@@ -1,25 +1,40 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import {useTranslations, useLocale} from 'next-intl';
+import {useMemo, useState} from 'react';
 
 export default function GetApp() {
   const t = useTranslations('about.getApp');
   const locale = useLocale();
 
+  // Choose device mockup by locale with a safe fallback
+  const preferredSrc = useMemo(() => {
+    const isArabic = locale?.toLowerCase().startsWith('ar');
+    return isArabic
+      ? '/aboutImages/GetApp/Devices-ar.png'
+      : '/aboutImages/GetApp/Devices-en.png';
+  }, [locale]);
+
+  // Start with preferred; if missing, fall back to the legacy path
+  const [imgSrc, setImgSrc] = useState<string>(preferredSrc);
+
   return (
     <section className="w-full bg-[#f4f7fb] py-20 sm:py-24">
       <div className="mx-auto w-full max-w-[1380px] px-4 sm:px-6">
         <div className="grid items-center gap-12 lg:grid-cols-12">
-          {/* Left: devices image */}
+          {/* Left: devices image (locale-aware) */}
           <div className="lg:col-span-7" data-aos="fade-up" data-aos-duration="400">
             <div className="relative mx-auto w-full max-w-3xl">
               <Image
-                src="/aboutImages/GetApp/Devices.png"
+                src={imgSrc}
                 alt={t('imageAlt')}
                 width={1200}
                 height={700}
                 className="h-auto w-full"
                 priority
+                onError={() => setImgSrc('/aboutImages/GetApp/Devices.png')}
               />
             </div>
           </div>
