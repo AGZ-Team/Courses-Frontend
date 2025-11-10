@@ -24,7 +24,7 @@ const MainNavbar = () => {
   const router = useRouter();
   const isAr = locale === 'ar';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState<{lessons: boolean; explore: boolean}>({lessons: false, explore: false});
+  const [mobileOpen, setMobileOpen] = useState<{courses: boolean; explore: boolean}>({courses: false, explore: false});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
 
@@ -80,12 +80,12 @@ const MainNavbar = () => {
     { labelKey: 'art', label: t('courseCategories.art'), href: '/courses?category=art' },
   ], [t]);
 
-  // My Lessons dropdown items
-  const myLessonsItems: DropdownItem[] = useMemo(() => [
-    { labelKey: 'lesson1', label: t('myLessonsDropdown.lesson1'), href: '/lesson' },
-    { labelKey: 'lesson2', label: t('myLessonsDropdown.lesson2'), href: '/lesson' },
-    { labelKey: 'lesson3', label: t('myLessonsDropdown.lesson3'), href: '/lesson' },
-    { labelKey: 'allLessons', label: t('myLessonsDropdown.allLessons'), href: '/lesson' },
+  // My Courses dropdown items
+  const myCoursesItems: DropdownItem[] = useMemo(() => [
+    { labelKey: 'course1', label: t('myCoursesDropdown.course1'), href: '/course' },
+    { labelKey: 'course2', label: t('myCoursesDropdown.course2'), href: '/course' },
+    { labelKey: 'course3', label: t('myCoursesDropdown.course3'), href: '/course' },
+    { labelKey: 'allcourses', label: t('myCoursesDropdown.allcourses'), href: '/course' },
   ], [t]);
 
   const navItems: NavItem[] = [
@@ -134,7 +134,7 @@ const MainNavbar = () => {
           <span className={`${isAr ? 'text-[22px]' : 'text-[18px]'} whitespace-nowrap font-semibold`}>{t('brandName')}</span>
         </Link>
 
-        {/* Desktop My Lessons Dropdown */}
+        {/* Desktop My Courses Dropdown */}
         <NavDropdown
           trigger={
             <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 lg:flex`}>
@@ -152,7 +152,7 @@ const MainNavbar = () => {
                 <path d="M4 12h16" />
                 <path d="M4 18h10" />
               </svg>
-              <span className="whitespace-nowrap">{t('myLessons')}</span>
+              <span className="whitespace-nowrap">{t('myCourses')}</span>
               <svg
                 aria-hidden="true"
                 viewBox="0 0 12 12"
@@ -167,7 +167,7 @@ const MainNavbar = () => {
               </svg>
             </button>
           }
-          items={myLessonsItems}
+          items={myCoursesItems}
           align="left"
           rightPanel = {<NavRightBanner />}
         />
@@ -313,13 +313,13 @@ const MainNavbar = () => {
       {isMobileMenuOpen && (
         <div className="border-t border-white/10 bg-primary lg:hidden">
           <nav className="mx-auto max-w-[1300px] px-6 py-6">
-            {/* My Lessons - mobile accordion */}
+            {/* My Courses - mobile accordion */}
             <div className="mb-4">
               <button
                 type="button"
                 className={`flex w-full items-center justify-between rounded-lg ${isAr ? 'px-5 py-3 text-[16px]' : 'px-4 py-2.5 text-[14px]'} font-medium text-white bg-white/5`}
-                aria-expanded={mobileOpen.lessons}
-                onClick={() => setMobileOpen((s) => ({...s, lessons: !s.lessons}))}
+                aria-expanded={mobileOpen.courses}
+                onClick={() => setMobileOpen((s) => ({...s, courses: !s.courses}))}
               >
                 <span className="flex items-center gap-2">
                   <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -327,21 +327,21 @@ const MainNavbar = () => {
                     <path d="M4 12h16" />
                     <path d="M4 18h10" />
                   </svg>
-                  {t('myLessons')}
+                  {t('myCourses')}
                 </span>
-                <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${mobileOpen.lessons ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+                <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${mobileOpen.courses ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
                   <path d="m2.5 4.5 3.5 3 3.5-3" />
                 </svg>
               </button>
-              <div className={`mt-2 space-y-1 pl-4 overflow-hidden transition-all duration-300 ease-out ${mobileOpen.lessons ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                {myLessonsItems.map((lesson) => (
+              <div className={`mt-2 space-y-1 pl-4 overflow-hidden transition-all duration-300 ease-out ${mobileOpen.courses ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                {myCoursesItems.map((course) => (
                   <Link
-                    key={lesson.labelKey}
-                    href={lesson.href}
+                    key={course.labelKey}
+                    href={course.href}
                     className={`block rounded-lg px-4 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {lesson.label}
+                    {course.label}
                   </Link>
                 ))}
               </div>

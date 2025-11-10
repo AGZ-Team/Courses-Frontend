@@ -154,7 +154,7 @@
     "projects": "Projects",
     "services": "Services",
     "contact": "Contact",
-    "myLessons": "My Lessons",
+    "mySubscriptions": "My Subscriptions",
     "search": "Search",
     "cart": "Cart",
     "login": "Log in",
@@ -170,11 +170,12 @@
       "photography": "Photography",
       "art": "Art & Creativity"
     },
-    "myLessonsDropdown": {
-      "lesson1": "UI/UX Design Fundamentals",
-      "lesson2": "Advanced Web Development",
-      "lesson3": "Digital Marketing Mastery",
-      "allLessons": "View All Lessons"
+    "myCourses": "Subscriptions",
+    "myCoursesDropdown": {
+      "course1": "UI/UX Design Fundamentals",
+      "course2": "Advanced Web Development",
+      "course3": "Digital Marketing Mastery",
+      "allcourses": "View All Subscriptions"
     }
   },
   "breadcrumb": {
@@ -240,7 +241,7 @@
       },
       {
         "question": "How do creators earn money on C R A Y?",
-        "answer": "Creators earn through: Memberships or subscriptions (monthly or yearly), Exclusive paid content (videos, images, lessons, etc.), Tips or one-time support from fans, Brand collaborations and partnerships (coming soon). Earnings are securely transferred to the creator's chosen account through Saudi-approved payment partners."
+        "answer": "Creators earn through: Memberships or subscriptions (monthly or yearly), Exclusive paid content (videos, images, courses, etc.), Tips or one-time support from fans, Brand collaborations and partnerships (coming soon). Earnings are securely transferred to the creator's chosen account through Saudi-approved payment partners."
       },
       {
         "question": "Is C R A Y available worldwide?",
@@ -395,7 +396,8 @@
       "writing": "Writing"
     },
     "courseCard": {
-      "lessons": "lesson",
+      "course": "course",
+      "courses": "Courses",
       "level": {
         "beginner": "Beginner",
         "intermediate": "Intermediate",
@@ -507,7 +509,7 @@
     "buyNow": "Buy Now",
     "alreadyAdded": "Already Added",
     "moneyBackGuarantee": "30-Day Money-Back Guarantee",
-    "lessons": "Lessons",
+    "courses": "Courses",
     "quizzes": "Quizzes",
     "duration": "Duration",
     "hours": "Hours",
@@ -1047,8 +1049,8 @@
     },
     "sidebar": {
       "courseContent": "Course Content",
-      "search": "Search lessons",
-      "lessons": "Lessons",
+      "search": "Search Courses",
+      "courses": "Courses",
       "duration": "Duration",
       "preview": "Preview",
       "courseDetails": "Course Details",

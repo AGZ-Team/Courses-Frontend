@@ -256,8 +256,8 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
       <dl className="mt-5 flex flex-wrap gap-x-1 text-[12px] text-[#6f7289]">
         <div className="flex items-center gap-2">
           <LuCirclePlay className="h-4 w-3 text-primary" />
-          <dt className="sr-only">Lessons</dt>
-          <dd>{course.lessonCount} {t('courseCard.lessons')}</dd>
+          <dt className="sr-only">Courses</dt>
+          <dd>{course.lessonCount} {t('courseCard.courses')}</dd>
         </div>
         <div className="flex items-center gap-2">
           <LuClock3 className="h-4 w-3 text-primary" />
