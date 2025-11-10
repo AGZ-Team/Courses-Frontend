@@ -8,19 +8,34 @@ const Ad = () => {
   const locale = useLocale();
 
   return (
-    <section className="w-full bg-gray-200 py-12 sm:py-16 md:py-20">
-      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-6 px-4 text-center sm:px-6 md:flex-row md:items-center md:justify-between md:text-left">
-        <h2 className="text-[24px] font-semibold text-[#0ABAB5] sm:text-[28px] md:text-[32px] leading-snug">
-          {t('title')} <span className="text-black">{t('count')}</span>
-          <br className="hidden sm:block" /> {t('subtitle')}
-        </h2>
+    <section className="w-full bg-linear-to-r from-[#F5F7FA] via-[#E8F4F8] to-[#F5F7FA] py-8 sm:py-10 md:py-12">
+      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-4 px-4 sm:px-6 md:gap-6 md:flex-row md:items-center md:justify-between">
+        {/* Left Content */}
+        <div className="flex flex-col gap-3">
+          <h2 className="text-[22px] sm:text-[28px] md:text-[32px] font-bold leading-tight tracking-tight">
+            <span className="text-[#0ABAB5]">{t('title')}</span>
+            <br />
+            <span className="text-gray-900">{t('subtitle')}</span>
+          </h2>
+          
+        </div>
 
-        <Link
-          href={`/${locale}/courses`}
-          className="inline-flex items-center justify-center rounded-full bg-white px-6 sm:px-8 py-2.5 sm:py-3 text-[14px] sm:text-[15px] font-semibold text-[#0ABAB5] shadow-[0_18px_40px_rgba(15,9,69,0.25)] transition hover:translate-y-[-2px] hover:bg-white/90 whitespace-nowrap"
-        >
-          {t('cta')}
-        </Link>
+        {/* Right CTA */}
+        <div className="flex flex-col sm:flex-row gap-3 md:flex-col md:gap-2 md:whitespace-nowrap">
+          <Link
+            href={`/${locale}/courses`}
+            className="inline-flex items-center justify-center rounded-lg bg-[#0ABAB5] px-6 sm:px-8 py-2.5 text-[14px] sm:text-[15px] font-semibold text-white shadow-[0_12px_32px_rgba(10,186,181,0.3)] transition duration-300 hover:bg-[#099490] hover:shadow-[0_16px_40px_rgba(10,186,181,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+          >
+            {t('cta')}
+          </Link>
+
+          <Link
+            href={`/${locale}/courses`}
+            className="inline-flex items-center justify-center rounded-lg border-2 border-gray-300 px-6 sm:px-8 py-2 text-[14px] sm:text-[15px] font-semibold text-gray-900 transition duration-300 hover:border-[#0ABAB5] hover:bg-[#F0FFFE] hover:-translate-y-0.5"
+          >
+            {t('cta2')}
+          </Link>
+        </div>
       </div>
     </section>
   );

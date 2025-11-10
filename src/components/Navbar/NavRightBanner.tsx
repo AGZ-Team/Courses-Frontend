@@ -12,8 +12,6 @@ export default function NavRightBanner() {
                           <div className="space-y-3">
                             <p className="text-sm opacity-95">{t('title')}</p>
                             <p className="text-2xl font-extrabold leading-tight">
-                              <span className="text-white">{t('count')}</span>
-                              <br/>
                               {t('subtitle')}
                             </p>
                             <Link

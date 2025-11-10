@@ -716,10 +716,10 @@
     ]
   },
   "ad": {
-    "title": "Join more than",
-    "count": "8 million",
-    "subtitle": "learners worldwide",
-    "cta": "Start Learning For Free"
+    "title": "Creativity deserves a home.",
+    "subtitle": "Welcome to C R A Y.",
+    "cta": "Join Now!",
+    "cta2": "Launch Your Page"
   },
   "terms": {
     "badge": "Terms & Conditions",
@@ -851,7 +851,7 @@
   },
   "about": {
     "hero": {
-      "badge": "About Us",
+      "badge": "Our Vision",
       "title": "We're on a mission to deliver engaging, curated courses",
       "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting with a group of friends.",
       "images": {
@@ -861,10 +861,9 @@
       }
     },
     "welcome": {
-      "title": "Welcome to C R A Y",
-      "highlight": "Enhance your skills with best Online courses",
-      "description": "You can start and finish one of these popular courses in under a day – for free! Check out the list below. Take the course for free.",
-      "subdescription": "Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt egetnvallis a cras semper auctonvallis a cras semper aucto. Neque convallis a cras semper auctor.",
+      "title": "Made in Saudi Arabia.",
+      "highlight": "Built for the world.",
+      "description": "C R A Y empowers a new generation of Arab creators to share their voice globally while staying true to local values. We believe in creative freedom, cultural respect, and economic opportunity for every dreamer.",
       "cta": "Start Learning For Free",
       "stats": {
         "courses": {
@@ -935,15 +934,15 @@
         "Life Time Access"
       ],
       "influencer": {
-        "title": "Become an Influencer",
-        "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.",
-        "cta": "Apply Now",
+        "title": "Turn your passion into income.",
+        "description": "Creators on  C R A Y earn through memberships, tips, and exclusive content. You decide what to share — and who gets access. Build your own private space for your biggest supporters.",
+        "cta": "Become a Creator",
         "imageAlt": "Influencer teaching"
       },
       "user": {
-        "title": "Become a User",
-        "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting.",
-        "cta": "Apply Now",
+        "title": "Get closer to the people you love.",
+        "description": "Support your favorite creators, access exclusive content, and be part of their journey. On C R A Y, you don’t just follow — you belong.",
+        "cta": "Discover Creators",
         "imageAlt": "User learning"
       }
     },
@@ -974,29 +973,14 @@
       },
       "items": {
         "1": {
-          "name": "Ali Tufan",
-          "role": "Product Manager, Apple Inc",
-          "quote": "It is no exaggeration to say this C R A Y experience was transformative—both professionally and personally. This workshop will long remain a high point of my life."
+          "name": "Mansour T.",
+          "role": "Content Creator, Jeddah",
+          "quote": "Finally, a platform that understands both creators and fans in our region."
         },
         "2": {
-          "name": "Courtney Henry",
-          "role": "Product Designer",
-          "quote": "The lessons are concise, practical, and immediately applicable to real projects."
-        },
-        "3": {
-          "name": "Albert Flores",
-          "role": "Frontend Engineer",
-          "quote": "Clear structure and great instructors. I advanced my skills in weeks, not months."
-        },
-        "4": {
-          "name": "Wade Warren",
-          "role": "Data Analyst",
-          "quote": "Flexible learning paths let me study around work and still make steady progress."
-        },
-        "5": {
-          "name": "Charlotte",
-          "role": "Instructor",
-          "quote": "A supportive community and quality content—this is how online learning should be."
+          "name": "Sara A.",
+          "role": "Digital Artist, Riyadh",
+          "quote": "C R A Y gave me the confidence to share my art — and turn it into a living."
         }
       }
     }

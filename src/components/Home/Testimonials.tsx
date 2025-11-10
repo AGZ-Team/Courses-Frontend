@@ -13,7 +13,7 @@ type Testimonial = {
 // Content from i18n messages
 function useI18nTestimonials(): Testimonial[] {
   const t = useTranslations('about.testimonials.items');
-  return [1,2,3,4,5].map((i) => ({
+  return [1, 2].map((i) => ({
     name: t(`${i}.name`),
     role: t(`${i}.role`),
     avatar: `/aboutImages/Testimonials/${i}.png`,
@@ -45,7 +45,7 @@ export default function Testimonials() {
   }, [active]);
 
   return (
-    <section>
+    <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <div className="text-center max-w-3xl mx-auto">
           <h1 className="mt-2 text-5xl sm:text-6xl font-bold text-slate-900">
@@ -103,7 +103,7 @@ export default function Testimonials() {
                     className={
                       "inline-flex items-center justify-center rounded-full overflow-hidden transition-all duration-300 ease-out " +
                       (isActive
-                        ? "h-16 w-16 ring-4 ring-primary"
+                        ? "h-16 w-16 ring-4 ring-[#0ABAB5]"
                         : "h-14 w-14 ring-2 ring-slate-200 opacity-80 hover:opacity-100")
                     }
                   >

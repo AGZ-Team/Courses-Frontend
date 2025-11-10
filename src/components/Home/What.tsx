@@ -22,13 +22,13 @@ const What = () => {
   const reasons = Array.isArray(reasonsRaw) ? (reasonsRaw as Array<{title: string; description: string}>) : [];
 
   return (
-    <section className="w-full bg-[#0ABAB5] py-16 sm:py-20 md:py-24 lg:py-28">
+    <section className="w-full bg-white py-16 sm:py-20 md:py-24 lg:py-28">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 sm:gap-14 md:gap-16 px-4 text-center sm:px-6">
         <div className="space-y-3 sm:space-y-4" data-aos="fade-up" data-aos-duration="800">
-          <h2 className="text-[28px] sm:text-[32px] md:text-[36px] font-semibold text-white">
+          <h2 className="text-[28px] sm:text-[32px] md:text-[36px] font-semibold text-[#0ABAB5]">
             {t('title')}
           </h2>
-          <p className="text-[14px] sm:text-[15px] text-white/70">
+          <p className="text-[14px] sm:text-[15px] text-[#555555] max-w-2xl mx-auto">
             {t('subtitle')}
           </p>
         </div>
@@ -40,11 +40,11 @@ const What = () => {
             return (
               <article
                 key={index}
-                className="group flex flex-col rounded-[18px] border border-white/20 bg-white/10 px-6 sm:px-8 md:px-9 py-10 sm:py-12 md:py-14 text-center text-white transition duration-300 hover:border-white hover:shadow-[0_24px_60px_rgba(255,255,255,0.15)] hover:text-[#0ABAB5] hover:bg-white"
+                className="group flex flex-col rounded-[18px] border border-gray-200 bg-gray-50 px-6 sm:px-8 md:px-9 py-10 sm:py-12 md:py-14 text-center text-gray-900 transition duration-300 hover:border-[#0ABAB5] hover:shadow-[0_24px_60px_rgba(10,186,181,0.15)] hover:text-white hover:bg-[#0ABAB5]"
                 data-aos="fade-up"
                 data-aos-delay={index * 150}
               >
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center mx-auto rounded-2xl text-white transition duration-300 group-hover:text-[#0ABAB5]">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center mx-auto rounded-2xl text-gray-600 transition duration-300 group-hover:text-white">
                   <Image 
                     src={iconPath} 
                     alt="" 

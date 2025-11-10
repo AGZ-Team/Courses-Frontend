@@ -3,10 +3,11 @@ import HomeHero from '@/components/Home/HomeHero';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import type {Metadata} from 'next';
 import PopularCourses from '@/components/Home/PopularCourses';
-import PeopleSay from '@/components/Home/PeopleSay';
-import JoinUs from '@/components/Home/JoinUs';
+import Testimonials from '@/components/Home/Testimonials';
 import What from '@/components/Home/What';
 import InstructorCarousel from '@/components/Home/instructorCarousel';
+import BecomeInfluencer from '@/components/Home/BecomeInfluencer';
+import BecomeUser from '@/components/Home/BecomeUser';
 import News from '@/components/Home/News';
 import Ad from '@/components/Home/Ad';
 
@@ -31,13 +32,14 @@ export default async function HomePage({params}: PageProps) {
   return (
     <section>
       <HomeHero />
-      <CarouselHome />
       <What />
+      <CarouselHome />
       <PopularCourses />
-      <PeopleSay />
-      <JoinUs />
-      <InstructorCarousel />
-      <News />
+      {/* <InstructorCarousel /> */}
+      <BecomeInfluencer />
+      <BecomeUser />
+      <Testimonials />
+      {/* <News /> */}
       <Ad />
     </section>
   );

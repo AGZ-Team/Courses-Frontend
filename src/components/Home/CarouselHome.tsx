@@ -158,7 +158,7 @@ const CarouselHome = () => {
 
  
   return (
-    <section className="relative z-10 w-full bg-white py-28 sm:py-32">
+    <section className="relative z-10 w-full bg-[#0ABAB5] py-28 sm:py-32">
       <div className="mx-auto flex w-full max-w-[1380px] flex-col items-center gap-16 px-4 text-center sm:px-6">
         <div className="space-y-10">
           {/* Trusted By */}
@@ -187,8 +187,8 @@ const CarouselHome = () => {
           </div> */}
 
           <div className="space-y-4">
-            <h2 className="text-[2.25rem] font-bold text-[#120a5d] sm:text-[2.55rem]">{t('title')}</h2>
-            <p className="text-[15px] text-[#6d6a7f]">{t('description')}</p>
+            <h2 className="text-[2.25rem] font-bold text-white sm:text-[2.55rem]">{t('title')}</h2>
+            <p className="text-[15px] text-white/70">{t('description')}</p>
           </div>
         </div>
 
@@ -214,7 +214,7 @@ const CarouselHome = () => {
               return (
                 <article
                   key={translationKey}
-                  className={`group relative flex min-w-[208px] max-w-[248px] flex-1 snap-center flex-col items-center gap-6  bg-slate-100 px-8 py-10 text-center text-[#140a5b]  transition duration-300 ease-out  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white`}
+                  className={`group relative flex min-w-[208px] max-w-[248px] flex-1 snap-center flex-col items-center gap-6  bg-white/10 px-8 py-10 text-center text-white border border-white/20  transition duration-300 ease-out  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white hover:bg-white hover:text-[#0ABAB5]`}
                   
                   tabIndex={0}
                 >
@@ -228,11 +228,11 @@ const CarouselHome = () => {
                   </span>
 
                   <div className="space-y-2 transition duration-300 group-hover:translate-y-[1px]">
-                    <h3 className="text-lg font-semibold leading-snug group-hover:text-white">
+                    <h3 className="text-lg font-semibold leading-snug group-hover:text-[#0ABAB5]">
                       <span className="block">{firstLine}</span>
                       <span className="block">{secondLine}</span>
                     </h3>
-                    <p className={`text-[13px] font-medium 'text-[#716f86] group-hover:text-white/90'}`}>{courses}</p>
+                    <p className={`text-[13px] font-medium text-white/80 group-hover:text-[#0ABAB5]/90`}>{courses}</p>
                   </div>
                 </article>
               );
@@ -244,7 +244,7 @@ const CarouselHome = () => {
               <button
                 type="button"
                 onClick={() => handleScroll(isAr ? 'right' : 'left')}
-                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#0ABAB5] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#0ABAB5] hover:text-[#0ABAB5]"
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_32px_rgba(255,255,255,0.12)] transition hover:border-white hover:bg-white hover:text-[#0ABAB5]"
               >
                 <svg
                   width="16"
@@ -261,7 +261,7 @@ const CarouselHome = () => {
               <button
                 type="button"
                 onClick={() => handleScroll(isAr ? 'left' : 'right')}
-                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e2f4] bg-white text-[#0ABAB5] shadow-[0_12px_32px_rgba(21,11,85,0.12)] transition hover:border-[#0ABAB5] hover:text-[#0ABAB5]"
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-[0_12px_32px_rgba(255,255,255,0.12)] transition hover:border-white hover:bg-white hover:text-[#0ABAB5]"
               >
                 <svg
                   width="16"
@@ -282,7 +282,7 @@ const CarouselHome = () => {
                 <span
                   key={index}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    index === activeDot ? 'w-7 bg-[#0ABAB5]' : 'w-3 bg-[#d8d7e9]'
+                    index === activeDot ? 'w-7 bg-white' : 'w-3 bg-white/40'
                   }`}
                 />
               ))}

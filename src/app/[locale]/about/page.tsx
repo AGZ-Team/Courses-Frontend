@@ -4,9 +4,8 @@ import type { Metadata } from 'next';
 import AboutHero from '@/components/About/AboutHero';
 import HowItWorks from '@/components/About/HowItWorks';
 import LearningJourney from '@/components/About/LearningJourney';
-import Testimonials from '@/components/About/Testimonials';
-import BecomeInstructor from '@/components/About/BecomeInfluencer';
-import BecomeStudent from '@/components/About/BecomeUser';
+import JoinUs from '@/components/About/JoinUs';
+import PeopleSay from '@/components/About/PeopleSay';
 import GetApp from '@/components/About/GetApp';
 import Ad from '@/components/Home/Ad';
 
@@ -33,9 +32,8 @@ export default async function AboutPage({ params }: PageProps) {
       <AboutHero />
       <HowItWorks />
       <LearningJourney />
-      <Testimonials />
-      <BecomeInstructor />
-      <BecomeStudent />
+      <JoinUs />
+      <PeopleSay />
       <GetApp />
       <Ad />
     </main>
