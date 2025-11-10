@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {LuCirclePlay, LuStar, LuUsers} from 'react-icons/lu';
-import {FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter} from 'react-icons/fa';
+import {FaFacebookF, FaInstagram, FaLinkedinIn, Fax} from 'react-icons/fa';
 import {HiOutlineArrowUpRight} from 'react-icons/hi2';
 import {useLocale, useTranslations} from 'next-intl';
 
 const SOCIAL_LINKS = [
   {label: 'facebook', href: '#', Icon: FaFacebookF},
-  {label: 'twitter', href: '#', Icon: FaTwitter},
+  {label: 'x', href: '#', Icon: Fax},
   {label: 'instagram', href: '#', Icon: FaInstagram},
   {label: 'linkedin', href: '#', Icon: FaLinkedinIn}
 ] as const;
@@ -78,7 +78,7 @@ const InstructorCarousel = () => {
                         <Link
                           key={label}
                           href={href}
-                          aria-label={tSocial(label as 'facebook' | 'twitter' | 'instagram' | 'linkedin')}
+                          aria-label={tSocial(label as 'facebook' | 'x' | 'instagram' | 'linkedin')}
                           className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white hover:text-[#0ABAB5]"
                         >
                           <Icon className="h-4 w-4" aria-hidden />

@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
+  x: {
     images: ['/logo/graduate.svg'],
   },
 };

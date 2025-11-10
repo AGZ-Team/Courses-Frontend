@@ -141,7 +141,7 @@ const HomeHero = () => {
               />
               <p className="font-semibold text-white">{t('cards.instructor.name')}</p>
               <p className="text-[11px] text-white">{t('cards.instructor.role')}</p>
-              <p className="mt-2 text-[11px] text-white">★★★★★</p>
+              <p className="mt-2 text-[11px] text-yellow-300">★★★★★</p>
             </div>
 
             <div

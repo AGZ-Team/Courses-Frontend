@@ -306,7 +306,7 @@
     "socialPrompt": "Follow us on social media",
     "social": {
       "facebook": "Facebook",
-      "twitter": "Twitter",
+      "x": "x",
       "instagram": "Instagram",
       "linkedin": "LinkedIn"
     },
@@ -723,7 +723,7 @@
     ],
     "social": {
       "facebook": "Facebook",
-      "twitter": "Twitter",
+      "x": "x",
       "instagram": "Instagram",
       "linkedin": "LinkedIn"
     }

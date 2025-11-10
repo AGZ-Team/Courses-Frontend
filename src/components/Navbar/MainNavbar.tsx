@@ -90,9 +90,9 @@ const MainNavbar = () => {
 
   const navItems: NavItem[] = [
     {labelKey: 'home', href: '/', isActive: true},
-    {labelKey: 'explore', href: '/courses', hasDropdown: true},
-    {labelKey: 'creators', href: '/creators'},
     {labelKey: 'about', href: '/about' },
+    {labelKey: 'creators', href: '/creators'},
+    {labelKey: 'explore', href: '/courses', hasDropdown: true},
     {labelKey: 'contact', href: '/contact'}
   ];
 

@@ -322,7 +322,7 @@
         "socialPrompt": "تابعنا على منصات التواصل الاجتماعي",
         "social": {
             "facebook": "فيسبوك",
-            "twitter": "تويتر",
+            "x": "أكس",
             "instagram": "إنستغرام",
             "linkedin": "لينكدإن"
         },
@@ -675,7 +675,7 @@
         ],
         "social": {
             "facebook": "فيسبوك",
-            "twitter": "تويتر",
+            "x": "أكس",
             "instagram": "إنستغرام",
             "linkedin": "لينكدإن"
         }
