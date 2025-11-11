@@ -53,7 +53,7 @@ export default async function PrivacyPage({ params }: Props) {
         <span className="inline-block text-sm font-semibold uppercase tracking-widest text-primary">
           {t('badge')}
         </span>
-        <h1 className="mt-4 text-4xl font-bold text-slate-900 sm:text-5xl">
+        <h1 className="mt-4 text-2xl sm:text-4xl md:text-5xl font-bold text-slate-900 leading-tight tracking-normal wrap-break-word break-keep hyphens-none text-balance">
           {t('title')}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-900">
@@ -62,24 +62,26 @@ export default async function PrivacyPage({ params }: Props) {
       </div>
 
       {/* Content with far-left TOC */}
-      <div className="mx-auto flex w-full max-w-6xl gap-6 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-6xl gap-6 px-4 sm:px-6 lg:px-8 lg:items-start">
         {/* TOC - Far Left */}
-        <aside className="sticky top-28 hidden w-52 shrink-0 self-start lg:block lg:pr-6">
-          <nav aria-label="On this page" className="text-[14px]">
-            <h3 className="mb-4 text-[15px] font-semibold text-slate-900">{t('badge')}</h3>
-            <ul className="space-y-2 text-slate-700">
-              {SECTIONS.map((s) => (
-                <li key={s.id}>
-                  <a
-                    href={`#${s.id}`}
-                    className="block rounded-md px-3 py-2 font-medium hover:bg-primary/10 hover:text-primary transition-colors"
-                  >
-                    {t(`sections.${s.key}.title`)}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        <aside className="hidden lg:sticky lg:top-28 lg:block w-52 shrink-0 pr-6 self-start">
+          <div className="h-fit">
+            <nav aria-label="On this page" className="text-[14px]">
+              <h3 className="mb-4 text-[15px] font-semibold text-slate-900">{t('badge')}</h3>
+              <ul className="space-y-2 text-slate-700">
+                {SECTIONS.map((s) => (
+                  <li key={s.id}>
+                    <a
+                      href={`#${s.id}`}
+                      className="block rounded-md px-3 py-2 font-medium hover:bg-primary/10 hover:text-primary transition-colors"
+                    >
+                      {t(`sections.${s.key}.title`)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </aside>
 
         {/* Main content - Centered */}
@@ -102,14 +104,14 @@ export default async function PrivacyPage({ params }: Props) {
                   />
                   {t(`sections.${section.key}.title`)}
                 </h2>
-                <div className="space-y-3 text-slate-700">
+                <div className="space-y-3 text-slate-700 break-normal">
                   {Array.from({ length: section.items }).map((_, i) => {
                     const key = `sections.${section.key}.items.${i}`;
                     const text = t(key);
                     return text && text !== key ? (
                       <p
                         key={i}
-                        className="flex gap-3 leading-relaxed text-[16px] hover:text-primary/80 transition-colors duration-200"
+                        className="flex gap-3 leading-relaxed text-[16px] whitespace-normal break-normal hover:text-primary/80 transition-colors duration-200"
                       >
                         <span className="mt-0.5 shrink-0 text-primary font-semibold">•</span>
                         <span>{text}</span>

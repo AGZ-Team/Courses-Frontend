@@ -51,7 +51,7 @@ const FOOTER_LINK_GROUPS = [
   {
     key: "privacy",
     links: [
-      { key: "privacyPolicy", href: "/privacy#policy" },
+      { key: "privacyPolicy", href: "/privacy" },
       { key: "termsOfService", href: "/terms#terms" },
       { key: "cookiePolicy", href: "/privacy#cookies" },
       { key: "dataProtection", href: "/privacy#data-protection" },

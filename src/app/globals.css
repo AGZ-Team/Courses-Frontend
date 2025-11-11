@@ -24,7 +24,7 @@
     min-height: 82vh;
   }
 }
-  html, body {
+  body {
     overflow-x: hidden;
   }
   html[lang="ar"] {
