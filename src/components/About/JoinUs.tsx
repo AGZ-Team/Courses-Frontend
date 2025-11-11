@@ -10,7 +10,7 @@ const JoinUs = () => {
   const highlights = Array.isArray(highlightsRaw) ? (highlightsRaw as string[]) : [];
   return (
     <section id="join-us" className="w-full bg-[#fbf8ff] py-24 sm:py-28">
-      <div className="mx-auto flex w-full max-w-[1380px] flex-col gap-16 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mx-auto flex w-full max-w-[980px] flex-col gap-16 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between min-[1400px]:max-w-7xl">
         <div className="max-w-xl text-left" data-aos="fade-up">
           <h2 className="text-[38px] font-semibold leading-[1.18] text-[#120f2d] sm:text-[44px]">
             <span className="text-[#0ABAB5]">{t('titlePart1')}</span> {t('titlePart2')}

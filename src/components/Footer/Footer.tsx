@@ -72,7 +72,7 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-[#0ABAB5] text-white">
-      <div className="mx-auto w-full max-w-[1180px] px-4 pb-16 pt-10 sm:px-6">
+      <div className="mx-auto w-full max-w-[1180px] px-6 pb-16 pt-10 sm:px-8 md:px-10 lg:px-12 min-[1000px]:max-[1399px]:px-1 min-[1400px]:px-16 min-[1400px]:max-w-[1400px]">
         <div className="flex flex-col gap-6 border-b border-white/10 pb-12" data-aos="fade-up" data-aos-duration="600">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -115,7 +115,7 @@ const Footer = () => {
           <p className="text-[15px] max-w-full sm:max-w-[calc(100%-24rem)] lg:max-w-[calc(100%-35rem)] leading-relaxed text-white/90">{t("tagline")}</p>
         </div>
 
-        <div className="mt-12 grid gap-10 grid-cols-2 max-[480px]:grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7" data-aos="fade-up" data-aos-duration="700">
+        <div className="footer-grid mt-12 grid gap-10 grid-cols-2 max-[480px]:grid-cols-1 sm:grid-cols-3 md:grid-cols-7 min-[1000px]:max-1399px:grid-cols-4" data-aos="fade-up" data-aos-duration="700">
           {FOOTER_LINK_GROUPS.map((group) => (
             <div key={group.key} className="space-y-5 min-w-[180px]">
               <h3 className="text-[14px] font-bold uppercase tracking-[0.15em] text-white">

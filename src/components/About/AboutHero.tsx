@@ -10,7 +10,7 @@ export default function AboutHero() {
   const isRTL = locale === 'ar';
   return (
     <section className="relative bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <div className="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8 py-16 lg:py-24 min-[1400px]:max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Image collage (left on desktop) */}
           <div className="order-first lg:order-first">

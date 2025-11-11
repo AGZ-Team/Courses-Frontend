@@ -110,7 +110,7 @@ const MainNavbar = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-100 border-b border-white/10 bg-primary text-white shadow-[0_8px_24px_rgba(10,186,181,0.25)]">
-      <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1600px] items-center px-6`}>
+      <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1180px] items-center px-6 sm:px-8 md:px-10 lg:px-12 min-[1000px]:max-[1399px]:px-4 min-[1400px]:px-16 min-[1400px]:max-w-[1400px]`}>
         {/* Left group: Logo + Explore */}
         <div className="flex items-center gap-4 shrink-0">
           {/* Logo */}
@@ -315,7 +315,7 @@ const MainNavbar = () => {
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="border-t border-white/10 bg-primary lg:hidden">
-          <nav className="mx-auto max-w-[1300px] px-6 py-6 max-h-[calc(100vh-7rem)] overflow-y-auto overscroll-contain" dir={isAr ? 'rtl' : 'ltr'}>
+          <nav className="mx-auto max-w-[1180px] px-6 sm:px-8 md:px-10 min-[1000px]:max-[1399px]:px-4 min-[1400px]:px-16 min-[1400px]:max-w-[1400px] py-6 max-h=[calc(100vh-7rem)] overflow-y-auto overscroll-contain" dir={isAr ? 'rtl' : 'ltr'}>
             {/* My Courses - mobile accordion */}
             <div className="mb-4">
               <button
@@ -459,7 +459,7 @@ const MainNavbar = () => {
         </div>
       )}
       
-      <div className="mx-auto h-px w-full max-w-[1200px] bg-white/10" />
+      <div className="mx-auto h-px w-full max-w-[1180px] min-[1400px]:max-w-[1400px] bg-white/10" />
     </header>
   );
 };

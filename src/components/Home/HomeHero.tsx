@@ -73,8 +73,8 @@ const HomeHero = () => {
         <div className={`pointer-events-none absolute ${isAr ? 'right-1/4' : 'left-1/4'} top-1/3 h-16 w-16 rounded-full border border-white/10 bg-white/10`} />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-8 py-16 sm:px-12 lg:flex-row lg:items-start lg:justify-between lg:gap-24 lg:px-16">
-        <div className="max-w-3xl space-y-10">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16 sm:px-8 md:px-10 lg:flex-row lg:items-start lg:justify-between lg:gap-20 lg:px-12 xl:max-w-[1400px] xl:px-16 2xl:max-w-[1600px] 2xl:px-20">
+        <div className="max-w-3xl space-y-10 min-[1000px]:max-[1399px]:mb-12 min-[700px]:max-[800px]:mb-34">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-white">
             {t('eyebrow')}
           </span>

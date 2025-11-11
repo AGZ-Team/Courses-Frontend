@@ -6,10 +6,32 @@
     scroll-behavior: smooth;
   }
 
+/* Small laptop band: 1440px → 1281px */
+@media (max-width: 1440px) and (min-width: 1281px) {
+  .waves {
+    --wave-height: 170px;
+  }
+  .waves::before,
+  .waves::after {
+    top: -60vw; /* lift arc slightly so it doesn't cover CTAs */
+  }
+}
+
+/* Compact laptop band: 1280px → 1025px */
+@media (max-width: 1280px) and (min-width: 1025px) {
+  .waves {
+    --wave-height: 160px;
+  }
+  .waves::before,
+  .waves::after {
+    top: -58vw; /* lift a bit more for tighter screens */
+  }
+}
+
 /* Tablet range: lower the wave height to prevent covering CTA buttons */
 @media (max-width: 1024px) and (min-width: 768px) {
   .waves {
-    --wave-height: 200px;
+    --wave-height: 150px;
   }
 }
 
@@ -143,6 +165,40 @@ html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
   background: #f3f2ff; /* show on hover */
 /*}
 */
+
+.footer-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 600px) {
+  .footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1399px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1400px) {
+  .footer-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
 
 .waves {
   position: absolute;
