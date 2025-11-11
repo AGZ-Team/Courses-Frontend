@@ -23,7 +23,7 @@ const Ad = () => {
         {/* Right CTA */}
         <div className="flex flex-col sm:flex-row gap-3 md:flex-col md:gap-2 md:whitespace-nowrap">
           <Link
-            href={`/${locale}/courses`}
+            href={`/${locale}/signup`}
             className="inline-flex items-center justify-center rounded-lg bg-[#0ABAB5] px-6 sm:px-8 py-2.5 text-[14px] sm:text-[15px] font-semibold text-white shadow-[0_12px_32px_rgba(10,186,181,0.3)] transition duration-300 hover:bg-[#099490] hover:shadow-[0_16px_40px_rgba(10,186,181,0.4)] hover:-translate-y-0.5 active:translate-y-0"
           >
             {t('cta')}
