@@ -73,29 +73,52 @@ export async function signup(data: SignupData): Promise<SignupResponse> {
   if (!response.ok) {
     try {
       const error = await response.json();
-      console.error('Signup error details:', {
-        status: response.status,
-        error,
-        formDataEntries: Array.from(formData.entries()),
-      });
 
-      // Extract error message from various formats
-      let errorMessage = 'Signup failed';
 
-      if (error.detail) {
-        errorMessage = error.detail;
-      } else if (error.message) {
-        errorMessage = error.message;
-      } else if (error.email && Array.isArray(error.email)) {
-        errorMessage = error.email[0];
-      } else if (error.username && Array.isArray(error.username)) {
-        errorMessage = error.username[0];
-      } else if (error.password && Array.isArray(error.password)) {
-        errorMessage = error.password[0];
+      // If error is an object with field-specific errors, stringify it for parsing
+      if (typeof error === 'object' && error !== null) {
+        // Collect all field errors
+        const fieldErrors: Record<string, string> = {};
+        
+        // Map backend field names to error messages
+        const fieldMap = {
+          username: 'username',
+          email: 'email',
+          password: 'password',
+          first_name: 'first_name',
+          last_name: 'last_name',
+          phone: 'phone',
+          expertise: 'expertise',
+          id_front: 'id_front',
+          id_back: 'id_back',
+          non_field_errors: 'non_field_errors',
+        };
+        
+        for (const [field, key] of Object.entries(fieldMap)) {
+          if (error[field]) {
+            fieldErrors[key] = Array.isArray(error[field]) ? error[field][0] : String(error[field]);
+          }
+        }
+        
+        // If we found field errors, throw them as JSON string for SignupForm to parse
+        if (Object.keys(fieldErrors).length > 0) {
+          throw new Error(JSON.stringify(fieldErrors));
+        }
+        
+        // Check for detail message
+        if (error.detail) {
+          throw new Error(error.detail);
+        }
       }
-
-      throw new Error(errorMessage);
+      
+      // Fallback: throw generic message with status
+      throw new Error(`Signup failed with status ${response.status}`);
     } catch (parseError) {
+      // If it's already an Error we threw, re-throw it
+      if (parseError instanceof Error) {
+        throw parseError;
+      }
+      
       console.error('Signup parse error:', parseError);
       throw new Error(`Signup failed with status ${response.status}`);
     }

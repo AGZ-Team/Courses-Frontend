@@ -7,6 +7,7 @@ import {Link} from '@/i18n/routing';
 import {signup} from '@/lib/auth';
 import {useRouter} from 'next/navigation';
 import {parseSignupErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
+import {validateSignupForm} from '@/lib/validation';
 
 type Translations = {
   title: string;
@@ -105,48 +106,27 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
     setFieldErrors({});
     setSuccess(false);
 
-    // Validate passwords match
-    if (formData.password !== formData.confirmPassword) {
-      setFieldErrors({
-        confirmPassword: isAr
-          ? 'كلمات المرور غير متطابقة'
-          : 'Passwords do not match',
-      });
-      return;
-    }
+    // Validate all fields with regex patterns
+    const validationErrors = validateSignupForm(
+      {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        expertise: formData.expertise,
+      },
+      idFrontFile,
+      idBackFile,
+      activeTab === 'instructor',
+      isAr ? 'ar' : 'en'
+    );
 
-    // Validate phone is provided for all users
-    if (!formData.phone) {
-      setFieldErrors({
-        phone: isAr ? 'يرجى إدخال رقم الهاتف' : 'Please enter your phone number',
-      });
+    if (Object.keys(validationErrors).length > 0) {
+      setFieldErrors(validationErrors);
       return;
-    }
-
-    // Validate instructor fields
-    if (activeTab === 'instructor') {
-      const instructorErrors: FieldErrors = {};
-      
-      if (!formData.expertise) {
-        instructorErrors.expertise = isAr
-          ? 'حقل التخصص مطلوب'
-          : 'Expertise field is required';
-      }
-      if (!idFrontFile) {
-        instructorErrors.id_front = isAr
-          ? 'صورة الهوية الأمامية مطلوبة'
-          : 'Front ID photo is required';
-      }
-      if (!idBackFile) {
-        instructorErrors.id_back = isAr
-          ? 'صورة الهوية الخلفية مطلوبة'
-          : 'Back ID photo is required';
-      }
-      
-      if (Object.keys(instructorErrors).length > 0) {
-        setFieldErrors(instructorErrors);
-        return;
-      }
     }
 
     setLoading(true);
@@ -287,6 +267,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
               type="text"
               autoComplete="username"
               required
+              maxLength={150}
               value={formData.username}
               onChange={handleChange}
               className={`block w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
@@ -400,6 +381,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="new-password"
                 required
+                maxLength={128}
                 value={formData.password}
                 onChange={handleChange}
                 className={`block w-full rounded-xl border bg-white px-4 py-2.5 pr-10 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
@@ -446,6 +428,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                 type={showConfirmPassword ? 'text' : 'password'}
                 autoComplete="new-password"
                 required
+                maxLength={128}
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className={`block w-full rounded-xl border bg-white px-4 py-2.5 pr-10 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
@@ -600,6 +583,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
                   name="expertise"
                   type="text"
                   required
+                  maxLength={255}
                   value={formData.expertise}
                   onChange={handleChange}
                   className={`block w-full rounded-xl border bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${

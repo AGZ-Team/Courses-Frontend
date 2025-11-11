@@ -6,6 +6,7 @@ import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 import {login} from '@/lib/auth';
 import {useRouter} from 'next/navigation';
 import {parseLoginErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
+import {validateLoginForm} from '@/lib/validation';
 
 type Translations = {
   title: string;
@@ -52,23 +53,15 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
     setGeneralError(null);
     setFieldErrors({});
 
-    // Frontend validation
-    const errors: FieldErrors = {};
-    
-    if (!formData.username) {
-      errors.username = isAr
-        ? 'اسم المستخدم أو البريد الإلكتروني مطلوب'
-        : 'Username or email is required';
-    }
+    // Frontend validation with regex patterns
+    const validationErrors = validateLoginForm(
+      formData.username,
+      formData.password,
+      isAr ? 'ar' : 'en'
+    );
 
-    if (!formData.password) {
-      errors.password = isAr
-        ? 'كلمة المرور مطلوبة'
-        : 'Password is required';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors);
+    if (Object.keys(validationErrors).length > 0) {
+      setFieldErrors(validationErrors);
       return;
     }
 
@@ -209,6 +202,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
             type="text"
             autoComplete="username"
             required
+            maxLength={150}
             value={formData.username}
             onChange={handleChange}
             className={`block w-full rounded-xl border bg-white px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
@@ -240,6 +234,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
               type={showPassword ? 'text' : 'password'}
               autoComplete="current-password"
               required
+              maxLength={128}
               value={formData.password}
               onChange={handleChange}
               className={`block w-full rounded-xl border bg-white px-4 py-3 pr-10 text-gray-900 placeholder-gray-400 shadow-sm outline-none ring-0 transition ${
