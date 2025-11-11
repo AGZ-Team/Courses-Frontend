@@ -82,10 +82,10 @@ const MainNavbar = () => {
 
   // My Courses dropdown items
   const myCoursesItems: DropdownItem[] = useMemo(() => [
-    { labelKey: 'course1', label: t('myCoursesDropdown.course1'), href: '/course' },
-    { labelKey: 'course2', label: t('myCoursesDropdown.course2'), href: '/course' },
-    { labelKey: 'course3', label: t('myCoursesDropdown.course3'), href: '/course' },
-    { labelKey: 'allcourses', label: t('myCoursesDropdown.allcourses'), href: '/course' },
+    { labelKey: 'course1', label: t('myCoursesDropdown.course1'), href: '/lesson' },
+    { labelKey: 'course2', label: t('myCoursesDropdown.course2'), href: '/lesson' },
+    { labelKey: 'course3', label: t('myCoursesDropdown.course3'), href: '/lesson' },
+    { labelKey: 'allcourses', label: t('myCoursesDropdown.allcourses'), href: '/lesson' },
   ], [t]);
 
   const navItems: NavItem[] = [
@@ -137,7 +137,10 @@ const MainNavbar = () => {
         {/* Desktop My Courses Dropdown */}
         <NavDropdown
           trigger={
-            <button className={`hidden items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 lg:flex`}>
+            <Link
+              href="/lesson"
+              className={`hidden lg:flex items-center gap-2 rounded-full ${isAr ? 'px-5 py-2.5 text-[16px]' : 'px-4 py-2 text-[14px]'} font-medium text-white transition hover:text-white/80 whitespace-nowrap`}
+            >
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -165,7 +168,7 @@ const MainNavbar = () => {
               >
                 <path d="m2.5 4.5 3.5 3 3.5-3" />
               </svg>
-            </button>
+            </Link>
           }
           items={myCoursesItems}
           align="left"
