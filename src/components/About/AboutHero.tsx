@@ -40,7 +40,7 @@ export default function AboutHero() {
               {/* Top-right small */}
               <div
                 className={
-                  `absolute top-[-3%] h-[38%] w-[38%] rounded-2xl ${
+                  `absolute top-[-3%] h-[38%] w-[38%] rounded-2xl mr-9 ${
                     isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
                   } overflow-hidden shadow-md ` +
                   (isRTL
