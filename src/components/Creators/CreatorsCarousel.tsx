@@ -9,9 +9,10 @@ const SCROLL_STEP = CARD_WIDTH + 20;
 
 interface CreatorsCarouselProps {
   activeCategory: string;
+  reverseOrder?: boolean;
 }
 
-function CreatorsCarouselComponent({ activeCategory }: CreatorsCarouselProps) {
+function CreatorsCarouselComponent({ activeCategory, reverseOrder = false }: CreatorsCarouselProps) {
   const t = useTranslations("instructorCarousel");
   const locale = useLocale();
   const isAr = locale === "ar";
@@ -44,7 +45,7 @@ function CreatorsCarouselComponent({ activeCategory }: CreatorsCarouselProps) {
         id: i + 1,
         name: src.name,
         role: src.role,
-        image: `/instructors/${i + 1}.png`,
+        image: `/instructors/carousel/${i + 1}.jpg`,
         category: categoryKey,
       };
     });
@@ -54,6 +55,11 @@ function CreatorsCarouselComponent({ activeCategory }: CreatorsCarouselProps) {
     if (activeCategory === "all") return items;
     return items.filter((it) => it.category === activeCategory);
   }, [items, activeCategory]);
+
+  const orderedItems = useMemo(() => {
+    if (!reverseOrder) return filteredItems;
+    return [...filteredItems].reverse();
+  }, [filteredItems, reverseOrder]);
 
   const syncScrollState = useCallback(() => {
     const node = trackRef.current;
@@ -91,7 +97,7 @@ function CreatorsCarouselComponent({ activeCategory }: CreatorsCarouselProps) {
             dir="ltr"
             aria-label={t("title")}
           >
-            {filteredItems.map((item, index) => (
+            {orderedItems.map((item, index) => (
               <article
                 key={item.id}
                 className="group relative snap-always snap-center shrink-0"

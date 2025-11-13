@@ -7,71 +7,73 @@ import SidebarToggleButton from '@/components/Lesson/SidebarToggleButton';
 const COURSE_SECTIONS_TEMPLATE = [
     {
       id: 1,
-      titleKey: 'sections.courseContent',
-      lectures: 6,
-      duration: '87 min',
+      titleKey: 'sections.proPlaythroughs',
+      lectures: 5,
+      duration: '65 min',
       lessons: [
-        { id: 1, title: 'Introduction to the User', duration: '03:56', completed: true },
-        { id: 2, title: 'Getting started with your', duration: '03:56', completed: true },
-        { id: 3, title: 'What is UI vs UX - User Interface vs User Experience', duration: '03:56', completed: false },
-        { id: 4, title: 'Wireframing (low fidelity) in', duration: '03:56', completed: false },
-        { id: 5, title: 'Viewing your prototype on', duration: '03:56', completed: false },
-        { id: 6, title: 'Sharing your design', duration: '03:56', completed: false }
+        { id: 1, title: 'Creator warm-up & aim labs', duration: '07:42', completed: true },
+        { id: 2, title: 'Shot-calling fundamentals', duration: '08:19', completed: true },
+        { id: 3, title: 'Meta breakdown: current ranked season', duration: '12:33', completed: false },
+        { id: 4, title: 'Tempo control & mid-match pivots', duration: '18:05', completed: false },
+        { id: 5, title: 'Clutch montage storytelling', duration: '19:21', completed: false }
       ]
     },
     {
       id: 2,
-      titleKey: 'sections.theBrief',
-      lectures: 6,
-      duration: '87 min',
+      titleKey: 'sections.strategyLabs',
+      lectures: 5,
+      duration: '58 min',
       lessons: [
-        { id: 7, title: 'Introduction to the User', duration: '03:56', completed: false },
-        { id: 8, title: 'Getting started with your', duration: '03:56', completed: false },
-        { id: 9, title: 'What is UI vs UX', duration: '03:56', completed: false },
-        { id: 10, title: 'Wireframing basics', duration: '03:56', completed: false }
+        { id: 6, title: 'VOD review: converting viewers to subs', duration: '09:47', completed: false },
+        { id: 7, title: 'Building hype segments with your mods', duration: '06:58', completed: false },
+        { id: 8, title: 'Sponsorship overlays that click', duration: '11:36', completed: false },
+        { id: 9, title: 'Discord events & raid choreography', duration: '13:22', completed: false },
+        { id: 10, title: 'Analytics lab: measuring retention spikes', duration: '16:01', completed: false }
       ]
     },
     {
       id: 3,
-      titleKey: 'sections.typeColorIcon',
-      lectures: 6,
-      duration: '87 min',
+      titleKey: 'sections.creatorOps',
+      lectures: 5,
+      duration: '72 min',
       lessons: [
-        { id: 11, title: 'Typography fundamentals', duration: '03:56', completed: false },
-        { id: 12, title: 'Color theory basics', duration: '03:56', completed: false },
-        { id: 13, title: 'Icon design principles', duration: '03:56', completed: false }
+        { id: 11, title: 'Gear audit: controllers, cams & capture', duration: '14:12', completed: false },
+        { id: 12, title: 'Sound design for immersive sessions', duration: '13:40', completed: false },
+        { id: 13, title: 'Publishing premium drops on schedule', duration: '12:55', completed: false },
+        { id: 14, title: 'Community tiers & monetization paths', duration: '17:03', completed: false },
+        { id: 15, title: 'Archive workflow for content libraries', duration: '14:51', completed: false }
       ]
     }
 ];
 
 const COURSE_DATA = {
-  title: 'The Ultimate Drawing Course',
-  subtitle: 'Beginner to Advanced',
-  videoId: 'LlCwHnp3kL4',
-  thumbnailUrl: '/coursesImages/4.png',
-  totalLessons: 27,
-  totalDuration: '13h',
-  enrolledCount: 853,
-  description: "This course is aimed at people interested in UI/UX Design. We'll start from the very beginning and work all the way through, step by step. If you already have some UI/UX Design experience but want to get up to speed using Adobe XD, then this course is perfect for you too!",
-  additionalDescription: "First, we will go over the differences between UX and UI Design. We will look at what our brief for this real-world project is then we will learn about low-fidelity wireframes and how to make use of existing UI design kits.",
+  title: 'Creator Royale: Premium Gaming Vault',
+  subtitle: 'Elite drops for streaming legends',
+  videoId: 'uL6O_0G-U48',
+  thumbnailUrl: '/coursesImages/2.jpg',
+  totalLessons: 15,
+  totalDuration: '9h',
+  enrolledCount: 18450,
+  description: "Level up your entire streaming ecosystem with exclusive playthroughs, strategy deep-dives, and production workflows crafted for gaming creators.",
+  additionalDescription: "Every session is recorded live with our coaching squad, then remastered with chapter markers, downloadables, and action checklists so you can deploy faster on stream.",
   whatYouLearn: [
-    'Become a UX designer.',
-    'You will be able to add UX design to your CV',
-    'Become a UI designer.',
-    'Build & test a full website design.',
-    'Create your first UI kit & icon persona.',
-    'How to use personas UX.',
-    'Create quick wireframes.',
-    'Downloadable exercise files',
-    'Build a UX project from beginning to end.',
-    'Learn to design websites & mobile phone apps.',
-    'All the techniques used by UX professionals',
-    'You will be able to talk correctly with other UX design.'
+    'Design warm-up routes that keep mechanics sharp before you go live.',
+    'Decode meta shifts faster with pro scouting frameworks.',
+    'Script cliffhanger moments that spike chat engagement.',
+    'Automate highlight clips for shorts, reels, and VOD recaps.',
+    'Build sponsorship overlays that integrate naturally.',
+    'Plan weeklong event arcs with your mod squad.',
+    'Optimize audio, lighting, and camera rigs for marathon sessions.',
+    'Launch tiered membership perks without overwhelming your workflow.',
+    'Run live analytics reviews with your community.',
+    'Master raid etiquette that grows allied creator circles.',
+    'Document post-match debriefs the audience can binge.',
+    'Package premium drops into evergreen content libraries.'
   ],
   requirements: [
-    'You will need a copy of Adobe XD 2019 or above. A free trial can be downloaded from Adobe.',
-    'No previous design experience is needed.',
-    'No previous Adobe XD skills are needed.'
+    'Stable internet connection capable of HD streaming.',
+    'PC or console with capture setup and dual monitors recommended.',
+    'Gaming headset with noise-cancelling microphone.'
   ]
 };
 

@@ -20,21 +20,21 @@ const CATEGORY_OPTIONS = [
 
 type CourseCategory = (typeof CATEGORY_OPTIONS)[number];
 
-type Course = {
+type CourseConfig = {
   id: number;
-  title: string;
+  translationIndex: number;
   category: Exclude<CourseCategory, 'All Categories'>;
   image: string;
-  imageAlt: string;
+  imageAltFallback: string;
+  fallbackTitle: string;
   rating: number;
   ratingCount: number;
   lessonCount: number;
   durationMinutes: number;
   level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-  author: {
-    name: string;
-    avatar: string;
-  };
+  authorKey: string;
+  authorFallback: string;
+  authorAvatar: string;
   price: {
     original: number;
     discounted: number;
@@ -47,39 +47,39 @@ type Course = {
   }[];
 };
 
-const POPULAR_COURSES: Course[] = [
+const POPULAR_COURSES: CourseConfig[] = [
   {
     id: 1,
-    title: 'Learn Figma – UI/UX Design Essential Training',
+    translationIndex: 0,
     category: 'Design',
-    image: '/coursesImages/1.png',
-    imageAlt: 'Students collaborating on a UI design project',
+    image: '/coursesImages/1.jpg',
+    imageAltFallback: 'Close-up of a creator applying shimmering skincare to glowing skin',
+    fallbackTitle: 'Radiant Skin Rituals for Creators',
     rating: 4.3,
     ratingCount: 1891,
     lessonCount: 6,
     durationMinutes: 132,
     level: 'Beginner',
-    author: {
-      name: 'Jane Cooper',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'janeCooper',
+    authorFallback: 'Jane Cooper',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 199, discounted: 79}
   },
   {
     id: 2,
-    title: 'Complete Python Bootcamp From Zero to Hero in Python',
+    translationIndex: 1,
     category: 'Programming',
-    image: '/coursesImages/2.png',
-    imageAlt: 'Instructor teaching a Python course online',
+    image: '/coursesImages/2.jpg',
+    imageAltFallback: 'Gamer livestreaming a session with a controller and laptop setup',
+    fallbackTitle: 'Game Streaming Studio Secrets',
     rating: 4.7,
     ratingCount: 2891,
     lessonCount: 6,
     durationMinutes: 410,
     level: 'Expert',
-    author: {
-      name: 'Jenny Wilson',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'jennyWilson',
+    authorFallback: 'Jenny Wilson',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 189, discounted: 89},
     badges: [
       {label: 'Popular', variant: 'accent'},
@@ -88,123 +88,146 @@ const POPULAR_COURSES: Course[] = [
   },
   {
     id: 3,
-    title: 'Angular – The Complete Guide (2022 Edition)',
+    translationIndex: 2,
     category: 'Programming',
-    image: '/coursesImages/3.png',
-    imageAlt: 'Angular developer working on a laptop',
+    image: '/coursesImages/3.jpg',
+    imageAltFallback: 'Creator sketching design concepts on a digital tablet',
+    fallbackTitle: 'Designing Immersive Creator Spaces',
     rating: 4.6,
     ratingCount: 1983,
     lessonCount: 6,
     durationMinutes: 220,
     level: 'Intermediate',
-    author: {
-      name: 'Albert Flores',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'albertFlores',
+    authorFallback: 'Albert Flores',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 249, discounted: 129}
   },
   {
     id: 4,
-    title: 'The Ultimate Drawing Course Beginner to Advanced',
+    translationIndex: 3,
     category: 'Art',
-    image: '/coursesImages/4.png',
-    imageAlt: 'Artist practicing drawing techniques',
+    image: '/coursesImages/4.jpg',
+    imageAltFallback: 'Creator applying professional makeup with a soft brush near the eye',
+    fallbackTitle: 'Camera-Ready Makeup Masterclass',
     rating: 4.2,
     ratingCount: 1981,
     lessonCount: 6,
     durationMinutes: 430,
     level: 'Expert',
-    author: {
-      name: 'Jacob Jones',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'jacobJones',
+    authorFallback: 'Jacob Jones',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 179, discounted: 99}
   },
   {
     id: 5,
-    title: 'Photography Masterclass: Complete Guide to Photography',
+    translationIndex: 4,
     category: 'Photography',
-    image: '/coursesImages/5.png',
-    imageAlt: 'Photographer capturing a portrait in a studio',
+    image: '/coursesImages/5.jpg',
+    imageAltFallback: 'Creator organizing social media apps on a transparent interface',
+    fallbackTitle: 'Building Social Media Communities',
     rating: 4.5,
     ratingCount: 1570,
     lessonCount: 8,
     durationMinutes: 515,
     level: 'Intermediate',
-    author: {
-      name: 'Theresa Webb',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'theresaWebb',
+    authorFallback: 'Theresa Webb',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 219, discounted: 129}
   },
   {
     id: 6,
-    title: 'Animation Fundamentals: Bring Characters to Life',
+    translationIndex: 5,
     category: 'Animation',
-    image: '/coursesImages/6.png',
-    imageAlt: 'Animator working on character designs',
+    image: '/coursesImages/6.jpg',
+    imageAltFallback: 'Creator relaxing on a sofa with a warm drink for a mindful break',
+    fallbackTitle: 'Mindful Breaks for Creator Wellbeing',
     rating: 4.4,
     ratingCount: 1250,
     lessonCount: 5,
     durationMinutes: 360,
     level: 'Intermediate',
-    author: {
-      name: 'Courtney Henry',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'courtneyHenry',
+    authorFallback: 'Courtney Henry',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 199, discounted: 119}
   },
   {
     id: 7,
-    title: 'Modern Web Development: Build Responsive Experiences',
+    translationIndex: 6,
     category: 'Development',
-    image: '/coursesImages/7.png',
-    imageAlt: 'Developer coding a modern web application',
+    image: '/coursesImages/7.jpg',
+    imageAltFallback: 'Hair stylist perfecting a creator’s hairstyle in a studio',
+    fallbackTitle: 'Signature Hairstyles for the Camera',
     rating: 4.8,
     ratingCount: 2235,
     lessonCount: 9,
     durationMinutes: 580,
     level: 'Advanced',
-    author: {
-      name: 'Guy Hawkins',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'guyHawkins',
+    authorFallback: 'Guy Hawkins',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 229, discounted: 139}
   },
   {
     id: 8,
-    title: 'Creative Writing Mastery: Craft Compelling Stories',
+    translationIndex: 7,
     category: 'Writing',
-    image: '/coursesImages/8.png',
-    imageAlt: 'Writer drafting a story on a laptop',
+    image: '/coursesImages/8.jpg',
+    imageAltFallback: 'Streamer celebrating a gaming victory while wearing a headset',
+    fallbackTitle: 'Interactive Gaming Sessions with Followers',
     rating: 4.1,
     ratingCount: 980,
     lessonCount: 7,
     durationMinutes: 300,
     level: 'Beginner',
-    author: {
-      name: 'Savannah Nguyen',
-      avatar: '/coursesImages/avatar-1.png'
-    },
+    authorKey: 'savannahNguyen',
+    authorFallback: 'Savannah Nguyen',
+    authorAvatar: '/coursesImages/avatar-1.png',
     price: {original: 149, discounted: 79}
   }
 ];
 
-const formatDuration = (minutes: number) => {
+const formatDuration = (minutes: number, locale: string) => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  return `${hours}h ${mins.toString().padStart(2, '0')}m`;
+  const hourFormatter = new Intl.NumberFormat(locale, {minimumIntegerDigits: 1});
+  const minuteFormatter = new Intl.NumberFormat(locale, {minimumIntegerDigits: 2});
+  const hoursLabel = locale.startsWith('ar') ? 'س' : 'h';
+  const minutesLabel = locale.startsWith('ar') ? 'د' : 'm';
+
+  return `${hourFormatter.format(hours)}${hoursLabel} ${minuteFormatter.format(mins)}${minutesLabel}`;
 };
 
 // Memoized Course Card Component
-const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
+type CourseTranslation = {
+  title?: string;
+  imageAlt?: string;
+};
+
+const CourseCard = memo(
+  ({
+    course,
+    t,
+    translation,
+    authorName,
+    locale
+  }: {
+    course: CourseConfig;
+    t: any;
+    translation: CourseTranslation;
+    authorName: string;
+    locale: string;
+  }) => (
   <article
     className="flex h-full flex-col overflow-hidden rounded-xl border border-[#e6e7f2] bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_25px_55px_rgba(32,36,69,0.12)]"
   >
     <div className="relative h-[220px] w-full overflow-hidden">
       <Image
         src={course.image}
-        alt={course.imageAlt}
+        alt={translation.imageAlt ?? course.imageAltFallback}
         fill
         className="object-cover transition-transform duration-300 hover:scale-105"
         loading="lazy"
@@ -232,11 +255,11 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
     <div className="flex flex-1 flex-col px-6 pb-7 pt-6">
       <div className="flex items-center gap-2 text-sm font-medium text-[#f7b347]">
         <span className="flex items-center gap-1 text-[15px] text-primary">
-          {course.rating.toFixed(1)}
+          {new Intl.NumberFormat(locale, {minimumFractionDigits: 1, maximumFractionDigits: 1}).format(course.rating)}
           <FaStar className="h-4 w-4" />
         </span>
         <span className="text-xs font-normal text-[#8b8fad]">
-          ({course.ratingCount.toLocaleString()})
+          ({course.ratingCount.toLocaleString(locale)})
         </span>
       </div>
 
@@ -245,9 +268,9 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
           href={course.href ?? '#'}
           className="block max-w-full overflow-hidden text-ellipsis transition-colors hover:text-primary"
           style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
-          title={course.title}
+          title={translation.title ?? course.fallbackTitle}
         >
-          {course.title}
+          {translation.title ?? course.fallbackTitle}
         </Link>
       </h3>
 
@@ -255,16 +278,18 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
         <div className="flex items-center gap-2">
           <LuCirclePlay className="h-4 w-3 text-primary" />
           <dt className="sr-only">Courses</dt>
-          <dd>{course.lessonCount} {t('courseCard.courses')}</dd>
+          <dd>
+            {new Intl.NumberFormat(locale).format(course.lessonCount)} {t('courseCard.lessons')}
+          </dd>
         </div>
         <div className="flex items-center gap-2">
           <LuClock3 className="h-4 w-3 text-primary" />
-          <dt className="sr-only">Duration</dt>
-          <dd>{formatDuration(course.durationMinutes)}</dd>
+          <dt className="sr-only">{t('courseCard.duration')}</dt>
+          <dd>{formatDuration(course.durationMinutes, locale)}</dd>
         </div>
         <div className="flex items-center gap-2">
           <LuTrendingUp className="h-4 w-5 text-primary" />
-          <dt className="sr-only">Level</dt>
+          <dt className="sr-only">{t('courseCard.levelLabel')}</dt>
           <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as any)}</dd>
         </div>
       </dl>
@@ -272,27 +297,27 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
       <div className="flex items-center justify-between pt-6">
         <div className="flex items-center gap-3">
           <Image
-            src={course.author.avatar}
-            alt={course.author.name}
+            src={course.authorAvatar}
+            alt={authorName}
             width={44}
             height={44}
             className="rounded-full object-cover"
             loading="lazy"
             style={{ width: 'auto', height: 'auto' }}
           />
-          <span className="text-sm font-semibold text-[#221f3d]">{course.author.name}</span>
+          <span className="text-sm font-semibold text-[#221f3d]">{authorName}</span>
         </div>
 
         <div className="text-right">
           {course.price.isFree ? (
-            <span className="text-lg font-semibold text-primary">{t('courseCard.free')}</span>
+            <span className="text-lg font-semibold text-primary">{t('courseCard.price.free')}</span>
           ) : (
             <>
               <span className="block text-[13px] text-[#8b8fad] line-through">
-                ${course.price.original}
+                ${new Intl.NumberFormat(locale).format(course.price.original)}
               </span>
               <span className="text-lg font-semibold text-[#221f3d]">
-                ${course.price.discounted}
+                ${new Intl.NumberFormat(locale).format(course.price.discounted)}
               </span>
             </>
           )}
@@ -300,7 +325,8 @@ const CourseCard = memo(({ course, t }: { course: Course; t: any }) => (
       </div>
     </div>
   </article>
-));
+  )
+);
 
 CourseCard.displayName = 'CourseCard';
 
@@ -308,6 +334,22 @@ const PopularCourses = () => {
   const t = useTranslations('popularCourses');
   const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<CourseCategory>('All Categories');
+
+  const courseTranslations = useMemo(() => {
+    const raw = t.raw('courses');
+    if (Array.isArray(raw)) {
+      return raw as CourseTranslation[];
+    }
+    return [] as CourseTranslation[];
+  }, [t]);
+
+  const authorTranslations = useMemo(() => {
+    const raw = t.raw('authors');
+    if (raw && typeof raw === 'object') {
+      return raw as Record<string, string>;
+    }
+    return {} as Record<string, string>;
+  }, [t]);
 
   const filteredCourses = useMemo(() => {
     if (activeCategory === 'All Categories') {
@@ -362,9 +404,21 @@ const PopularCourses = () => {
         </div>
 
         <div className="mt-16 grid gap-7 sm:grid-cols-2 xl:grid-cols-4">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} t={t} />
-          ))}
+          {filteredCourses.map((course) => {
+            const translation = courseTranslations[course.translationIndex] ?? {};
+            const authorName = authorTranslations[course.authorKey] ?? course.authorFallback;
+
+            return (
+              <CourseCard
+                key={course.id}
+                course={course}
+                t={t}
+                translation={translation}
+                authorName={authorName}
+                locale={locale}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

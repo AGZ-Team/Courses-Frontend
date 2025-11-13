@@ -24,11 +24,13 @@ const CreatorsHero = () => {
   const creators = Array.isArray(creatorsRaw) 
     ? (creatorsRaw as Array<{name: string; role: string; students: string; courses: string}>) 
     : [];
-  
-  const CREATORS = creators.map((creator, idx) => ({
+
+  const limitedCreators = creators.slice(0, 4);
+
+  const CREATORS = limitedCreators.map((creator, idx) => ({
     id: idx + 1,
     ...creator,
-    image: `/instructors/${idx + 1}.png`,
+    image: `/instructors/${idx + 1}.jpg`,
     followers: creator.students,
     earnings: creator.courses,
     rating: ['4.9', '4.7', '5.0', '4.8'][idx] || '4.9'

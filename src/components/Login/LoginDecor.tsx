@@ -65,7 +65,7 @@ export default function LoginDecor({side = 'right'}: Props) {
       />
 
       {/* big center avatar (exact middle) */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full">
         <Image
           src="/assets/1.png"
           alt=""

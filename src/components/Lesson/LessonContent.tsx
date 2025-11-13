@@ -42,7 +42,7 @@ export function LessonContent({
         </div>
       </div>
 
-      {/* Requirements */}
+      {/* Requirements
       <div className="p-6 bg-white rounded-xl border border-slate-200">
         <h3 className="text-lg font-bold text-slate-900 mb-4">{t('requirements.title')}</h3>
         <ul className="space-y-3">
@@ -53,7 +53,7 @@ export function LessonContent({
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
 
       {/* Reviews */}
       <div className="p-6 bg-white rounded-xl border border-slate-200">

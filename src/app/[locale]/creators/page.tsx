@@ -13,13 +13,14 @@ const CATEGORY_OPTIONS = [
 ] as const;
 
 type CreatorsPageProps = {
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 };
 
-export default function CreatorsPage({params}: CreatorsPageProps) {
-  setRequestLocale(params.locale);
+export default async function CreatorsPage({params}: CreatorsPageProps) {
+  const {locale} = await params;
+  setRequestLocale(locale);
 
   return <CreatorsPageClient categoryOptions={[...CATEGORY_OPTIONS]} />;
 }

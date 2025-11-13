@@ -13,15 +13,15 @@
     },
     "login": {
       "title": "Login - C R A I",
-      "description": "Log in to your C R A I account to access your courses and continue learning."
+      "description": "Log in to your C R A I account to access your Content and continue Exploring."
     },
     "signup": {
       "title": "Sign Up - C R A I",
-      "description": "Create your C R A I account to start learning or teaching. Join millions of students and educators worldwide."
+      "description": "Create your C R A I account to start Exploring or Sharing. Join millions of students and educators worldwide."
     },
     "contact": {
       "title": "Contact Us - C R A I",
-      "description": "Get in touch with us. We're here to help you with any questions about our courses and services."
+      "description": "Get in touch with us. We're here to help you with any questions about our  services."
     },
     "terms": {
       "title": "Terms & Conditions | C R A I",
@@ -32,16 +32,16 @@
       "description": "How C R A I collects, uses, shares, and protects your personal information when you use our Platform."
     },
     "courses": {
-      "title": "Courses - C R A I",
-      "description": "Explore courses designed to elevate your design and development skills. Join thousands of students today."
+      "title": "Content - C R A I",
+      "description": "Explore Content designed to elevate your design and development skills. Join thousands of students today."
     },
     "about": {
       "title": "About Us - C R A I",
-      "description": "Learn more about C R A I's mission to deliver engaging, curated courses at a reasonable price."
+      "description": "Learn more about C R A I's mission to deliver engaging, curated Content at a reasonable price."
     },
     "notFound": {
       "title": "404 - Page Not Found | C R A I",
-      "description": "The page you are looking for does not exist. Return to the homepage to continue exploring our courses."
+      "description": "The page you are looking for does not exist. Return to the homepage to continue exploring our Content."
     },
     "resetPassword": {
       "title": "Reset Password - C R A I",
@@ -67,7 +67,7 @@
     "secondaryCta": "Support a Creator",
     "stats": [
       "Over 12 million students",
-      "More than 60,000 courses",
+      "More than 60,000 Videos",
       "Learn anything online"
     ],
     "images": {
@@ -86,14 +86,14 @@
       },
       "freeCourses": {
         "count": "3,000+",
-        "label": "Free Courses"
+        "label": "Free Content"
       }
     }
   },
   "carouselHome": {
     "trustedHeading": "Trusted by the world's best",
     "title": "Top Categories",
-    "description": "Explore a variety of categories to find the perfect course for you.",
+    "description": "Explore a variety of categories to find the perfect creator content for you.",
     "brands": {
       "amazon": "Amazon",
       "amd": "AMD",
@@ -104,40 +104,40 @@
     },
     "categories": {
       "engineering": {
-        "name": "Engineering Architecture",
-        "courses": "35+ Courses"
+        "name": " Architecture",
+        "courses": "35+ Videos"
       },
       "personal": {
         "name": "Personal Development",
-        "courses": "908+ Courses"
+        "courses": "908+ Videos"
       },
       "finance": {
         "name": "Finance Accounting",
-        "courses": "129+ Courses"
+        "courses": "129+ Videos"
       },
       "design": {
         "name": "Design Creative",
-        "courses": "573+ Courses"
+        "courses": "573+ Videos"
       },
       "marketing": {
         "name": "Sales Marketing",
-        "courses": "565+ Courses"
+        "courses": "565+ Videos"
       },
       "development": {
         "name": "Development IT",
-        "courses": "126+ Courses"
+        "courses": "126+ Videos"
       },
       "social": {
         "name": "Social Media",
-        "courses": "80 Courses"
+        "courses": "80 Videos"
       },
       "ai": {
         "name": "Artificial Intelligence",
-        "courses": "62 Courses"
+        "courses": "62 Videos"
       },
       "languages": {
         "name": "Language Learning",
-        "courses": "210 Courses"
+        "courses": "210 Videos"
       }
     },
     "aria": {
@@ -172,9 +172,9 @@
     },
     "myCourses": "Subscriptions",
     "myCoursesDropdown": {
-      "course1": "UI/UX Design Fundamentals",
-      "course2": "Advanced Web Development",
-      "course3": "Digital Marketing Mastery",
+      "course1": "Radiant Skin Rituals for Creators",
+      "course2": "Game Streaming Studio Secrets",
+      "course3": "Designing Immersive Creator Spaces",
       "allcourses": "View All Subscriptions"
     }
   },
@@ -383,8 +383,8 @@
     }
   },
   "popularCourses": {
-    "title": "Our Most Popular Courses",
-    "subtitle": "10,000+ unique online course list designs",
+    "title": "Our Most Popular Content",
+    "subtitle": "10,000+ unique online content list designs",
     "categories": {
       "all": "All Categories",
       "animation": "Animation",
@@ -396,52 +396,63 @@
       "writing": "Writing"
     },
     "courseCard": {
-      "course": "course",
-      "courses": "Courses",
+      "course": "Content",
+      "courses": "Content",
+      "lessons": "Lessons",
+      "duration": "Duration",
+      "levelLabel": "Level",
       "level": {
         "beginner": "Beginner",
         "intermediate": "Intermediate",
         "advanced": "Advanced",
         "expert": "Expert"
       },
+      "stats": {
+        "rating": "Rating",
+        "followers": "Followers"
+      },
       "badges": {
         "popular": "Popular",
         "bestSellers": "Best Sellers"
       },
-      "free": "Free"
+      "price": {
+        "original": "Original price",
+        "discounted": "Discounted price",
+        "free": "Free"
+      }
     },
     "courses": [
       {
-        "title": "Learn Figma – UI/UX Design Essential Training",
-        "imageAlt": "Students collaborating on a UI design project"
+        "title": "Radiant Skin Rituals for Creators",
+        "imageAlt": "Close-up of a creator applying shimmering skincare to glowing skin"
       },
       {
-        "title": "Complete Python Bootcamp From Zero to Hero in Python",
-        "imageAlt": "Instructor teaching a Python course online"
+        "title": "Game Streaming Studio Secrets",
+        "imageAlt": "Gamer livestreaming a session with a controller and laptop setup"
       },
       {
-        "title": "Angular – The Complete Guide (2022 Edition)",
-        "imageAlt": "Angular developer working on a laptop"
+        "title": "Designing Immersive Creator Spaces",
+        "imageAlt": "Creator sketching design concepts on a digital tablet"
       },
       {
-        "title": "The Ultimate Drawing Course Beginner to Advanced",
-        "imageAlt": "Artist practicing drawing techniques"
+        "title": "Camera-Ready Makeup Masterclass",
+        "imageAlt": "Creator applying professional makeup with a soft brush near the eye"
       },
       {
-        "title": "Photography Masterclass: Complete Guide to Photography",
-        "imageAlt": "Photographer capturing a portrait in a studio"
+        "title": "Building Social Media Communities",
+        "imageAlt": "Creator organizing social media apps on a transparent interface"
       },
       {
-        "title": "Animation Fundamentals: Bring Characters to Life",
-        "imageAlt": "Animator working on character designs"
+        "title": "Mindful Breaks for Creator Wellbeing",
+        "imageAlt": "Creator relaxing on a sofa with a warm drink for a mindful break"
       },
       {
-        "title": "Modern Web Development: Build Responsive Experiences",
-        "imageAlt": "Developer coding a modern web application"
+        "title": "Signature Hairstyles for the Camera",
+        "imageAlt": "Hair stylist perfecting a creator’s hairstyle in a studio"
       },
       {
-        "title": "Creative Writing Mastery: Craft Compelling Stories",
-        "imageAlt": "Writer drafting a story on a laptop"
+        "title": "Interactive Gaming Sessions with Followers",
+        "imageAlt": "Streamer celebrating a gaming victory while wearing a headset"
       }
     ],
     "authors": {
@@ -485,11 +496,11 @@
       },
       "courseViews": {
         "value": "496,000+",
-        "label": "Total course views"
+        "label": "Total content views"
       },
       "fiveStarReviews": {
         "value": "19,000+",
-        "label": "Five-star course reviews"
+        "label": "Five-star content reviews"
       },
       "community": {
         "value": "987,000+",
@@ -503,7 +514,7 @@
     }
   },
   "courseDetails": {
-    "enrolledCount": "enrolled on this course",
+    "enrolledCount": "enrolled on this content",
     "lastUpdated": "Last updated",
     "addToCart": "Add To Cart",
     "buyNow": "Buy Now",
@@ -521,7 +532,7 @@
     "english": "English",
     "tabs": {
       "overview": "Overview",
-      "content": "Course Content",
+      "content": "content Content",
       "instructor": "Instructor",
       "reviews": "Reviews"
     },
@@ -530,7 +541,7 @@
       "whatYouLearn": "What you'll learn",
       "requirements": "Requirements",
       "p1": "Phasellus enim magna, varius et commodo ut, ultricies vitae velit. Ut nulla tellus, eleifend euismod pellentesque vel, sagittis vel justo. In libero urna, venenatis sit amet ornare non, suscipit nec risus. Sed consequat justo non mauris pretium at tempor justo sodales.",
-      "p2": "This course is aimed at people interested in UI/UX Design. We'll start from the very beginning and work all the way through, step by step. If you already have some UI/UX Design experience but want to get up to speed then this course is perfect for you too!",
+      "p2": "This video series is aimed at followers interested in UI/UX Design. We'll start from the very beginning and work all the way through, step by step. If you already have some UI/UX Design experience but want to get up to speed then these videos are perfect for you too!",
       "p3": "First, we will go over the differences between UX and UI Design. We will look at what our brief for this real-world project is, then we will learn about low-fidelity wireframes and how to make use of existing UI design kits.",
       "req1": "You will need a copy of Adobe XD 2019 or above. A free trial can be downloaded from Adobe.",
       "req2": "No previous design experience is needed.",
@@ -548,12 +559,12 @@
       "title": "Instructor",
       "rating": "Instructor Rating",
       "reviews": "Reviews",
-      "students": "Students",
+      "students": "Followers",
       "courses": "Courses"
     },
     "reviews": {
-      "studentFeedback": "Student feedback",
-      "courseRating": "Course Rating",
+      "studentFeedback": "Follower feedback",
+      "courseRating": "Content Rating",
       "reviewsTitle": "Reviews",
       "wasHelpful": "Was this review helpful?",
       "yes": "Yes",
@@ -564,12 +575,12 @@
       "reviewContent": "Review Content",
       "submit": "Submit Review"
     },
-    "relatedCourses": "Related Courses"
+    "relatedCourses": "Related Content"
   },
   "coursesPage": {
     "header": {
       "eyebrow": "Explore",
-      "title": "User Interface Courses",
+      "title": "User Interface Videos",
       "description": "Write an introductory description of the category. Discover curated experiences designed to elevate your design workflow."
     },
     "summary": {
@@ -670,9 +681,9 @@
     "titlePart2": "new skills when and where you like.",
     "description": "Use the list below to bring attention to your product's key differentiator.",
     "highlights": [
-      "Hand-picked authors",
-      "Easy to follow curriculum",
-      "Free courses",
+      "Hand-picked creators",
+      "Easy to follow videos",
+      "Free content",
       "Money-back guarantee"
     ],
     "cta": "Join Free",
@@ -708,28 +719,52 @@
     "becomeInstructorLink": "Become an instructor",
     "instructors": [
       {
-        "name": "Courtney Henry",
-        "role": "Product Design Director",
-        "students": "12k students",
+        "name": "Aisha Al-Mutairi",
+        "role": "Digital Illustrator",
+        "students": "18k students",
+        "courses": "14 courses"
+      },
+      {
+        "name": "Fahad Al-Harbi",
+        "role": "Lifestyle Content Creator",
+        "students": "22k students",
+        "courses": "11 courses"
+      },
+      {
+        "name": "Nada Omran",
+        "role": "Tech Educator",
+        "students": "27k students",
+        "courses": "16 courses"
+      },
+      {
+        "name": "Lina Al-Shehri",
+        "role": "Culinary Storyteller",
+        "students": "19k students",
         "courses": "9 courses"
       },
       {
-        "name": "Jerome Bell",
-        "role": "Marketing Strategist",
-        "students": "8k students",
+        "name": "Salman Al-Otaibi",
+        "role": "Fitness Coach",
+        "students": "15k students",
         "courses": "12 courses"
       },
       {
-        "name": "Jane Cooper",
-        "role": "Lead Frontend Developer",
-        "students": "14k students",
-        "courses": "7 courses"
+        "name": "Maha Al-Jasser",
+        "role": "Fashion Designer",
+        "students": "24k students",
+        "courses": "18 courses"
       },
       {
-        "name": "Devon Lane",
-        "role": "UX Researcher",
-        "students": "11k students",
-        "courses": "5 courses"
+        "name": "Amira Helal",
+        "role": "Travel Filmmaker",
+        "students": "21k students",
+        "courses": "10 courses"
+      },
+      {
+        "name": "Sara Al-Mutlaq",
+        "role": "Entrepreneurship Mentor",
+        "students": "17k students",
+        "courses": "8 courses"
       }
     ],
     "aria": {
@@ -878,14 +913,14 @@
       "infoCollect": {
         "title": "Information we collect",
         "paragraphs": [
-          "We collect the information you share with us when creating an account, enrolling in a course, or interacting with C R A I content. This may include your name, email address, payment details, demographic information, and any preferences you choose to store in your profile.",
+          "We collect the information you share with us when creating an account, following creators, or interacting with C R A I content. This may include your name, email address, payment details, demographic information, and any preferences you choose to store in your profile.",
           "We also gather limited technical data such as browser type, device identifiers, and usage analytics to help us maintain platform reliability and improve the learning experience. We never collect more than we need, and we never sell your personal data."
         ]
       },
       "howWeUse": {
         "title": "How we use your information",
         "paragraphs": [
-          "Your information powers key C R A I features like course recommendations, progress tracking, certification, and customer support. We use aggregated insights to improve course quality, detect fraud, and keep the platform safe for learners and instructors alike.",
+          "Your information powers key C R A I features like creator recommendations, viewing history, community engagement, and customer support. We use aggregated insights to improve content quality, detect fraud, and keep the platform safe for creators and followers alike.",
           "When we communicate with you, it is to deliver service updates, account notifications, or personalized learning tips. You can adjust your communication preferences or unsubscribe from marketing email at any time."
         ]
       },
@@ -934,7 +969,7 @@
   "about": {
     "hero": {
       "badge": "Our Vision",
-      "title": "We're on a mission to deliver engaging, curated courses",
+      "title": "We're on a mission to empower creators and connect them with engaged followers",
       "description": "Join millions of people from around the world learning together. Online learning is as easy and natural as chatting with a group of friends.",
       "images": {
         "collaboration": "Team collaboration",
@@ -950,7 +985,7 @@
       "stats": {
         "courses": {
           "value": "10,000+",
-          "label": "Online courses"
+          "label": "Creator videos"
         },
         "students": {
           "value": "8M+",
@@ -971,8 +1006,8 @@
       "subtitle": "10,000+ unique online course list designs",
       "steps": {
         "browse": {
-          "title": "Browse courses from our expert contributors",
-          "description": "Explore thousands of courses across multiple categories and find the perfect match for your learning goals."
+          "title": "Discover videos from our top creators",
+          "description": "Explore thousands of videos across multiple categories and find creators that match your interests."
         },
         "purchase": {
           "title": "Purchase quickly and securely",
@@ -1001,8 +1036,8 @@
           "description": "Study at your own pace with lifetime access to course materials."
         },
         "standard": {
-          "title": "Industrial Standard",
-          "description": "Courses designed to meet industry standards and requirements."
+          "title": "Professional Content",
+          "description": "Videos created by industry experts meeting professional standards."
         }
       }
     },
@@ -1069,18 +1104,18 @@
   },
   "lessonPage": {
     "header": {
-      "backToCourse": "Back to Course"
+      "backToCourse": "Back to Gaming Vault"
     },
     "sidebar": {
-      "courseContent": "Course Content",
-      "search": "Search Courses",
-      "courses": "Courses",
-      "duration": "Duration",
+      "courseContent": "Creator Vault",
+      "search": "Search tactics",
+      "courses": "Sessions",
+      "duration": "Run time",
       "preview": "Preview",
-      "courseDetails": "Course Details",
-      "certificate": "Certificate of Completion",
-      "enrolled": "enrolled",
-      "language": "English Language"
+      "courseDetails": "Drop details",
+      "certificate": "Creator pass",
+      "enrolled": "members",
+      "language": "Primary language"
     },
     "video": {
       "share": "Share",
@@ -1097,27 +1132,27 @@
       "title": "Requirements"
     },
     "reviews": {
-      "title": "Reviews",
+      "title": "Squad Feedback",
       "reviewerName": "Ali Tufan",
       "daysAgo": "Days ago",
-      "reviewTitle": "The best LMS Design",
-      "reviewText": "This course is very applicable. Professor Ng explains precisely each algorithm and even tries to give an intuition for mathematical and statistic concepts behind each algorithm. Thank you very much.",
-      "wasHelpful": "Was this review helpful?",
+      "reviewTitle": "Streamer gold",
+      "reviewText": "Every drop in this vault boosted our channel KPIs. The raid choreography session alone paid for the entire subscription.",
+      "wasHelpful": "Was this feedback helpful?",
       "yes": "Yes",
       "no": "No"
     },
     "writeReview": {
-      "title": "Write a Review",
-      "reviewTitle": "Review Title",
-      "reviewTitlePlaceholder": "Great Courses",
-      "reviewContent": "Review Content",
-      "reviewContentPlaceholder": "Message",
-      "submit": "Submit Review"
+      "title": "Share Your Feedback",
+      "reviewTitle": "Feedback Title",
+      "reviewTitlePlaceholder": "Great Content",
+      "reviewContent": "Your Feedback",
+      "reviewContentPlaceholder": "Share your thoughts...",
+      "submit": "Submit Feedback"
     },
     "sections": {
-      "courseContent": "Course Content",
-      "theBrief": "The Brief",
-      "typeColorIcon": "Type, Color & Icon Introduction"
+      "proPlaythroughs": "Pro Playthrough Vault",
+      "strategyLabs": "Strategy Labs",
+      "creatorOps": "Creator Ops & Monetization"
     }
   },
   "notFound": {

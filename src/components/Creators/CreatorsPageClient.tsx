@@ -43,7 +43,7 @@ const CreatorsPageClient = ({categoryOptions}: CreatorsPageClientProps) => {
       </section>
 
       <CreatorsCarousel activeCategory={activeCategory} />
-      <CreatorsCarousel activeCategory={activeCategory} />
+      <CreatorsCarousel activeCategory={activeCategory} reverseOrder />
     </main>
   );
 };

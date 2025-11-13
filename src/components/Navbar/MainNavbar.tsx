@@ -253,9 +253,9 @@ const MainNavbar = () => {
             aria-label={t('cart')}
           >
             <RiShoppingCart2Fill className={`h-6 w-6`} />
-            <span className={`absolute ${isAr ? '-left-1' : '-right-1'} -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white`}>
+            {/* <span className={`absolute ${isAr ? '-left-1' : '-right-1'} -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white`}>
               3
-            </span>
+            </span> */}
           </button>
 
           {/* Language Switcher - Desktop Only */}

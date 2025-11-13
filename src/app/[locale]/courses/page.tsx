@@ -10,8 +10,8 @@ export const dynamic = 'force-dynamic';
 const COURSES: CourseCard[] = [
   {
     id: 1,
-    title: 'Learn Figma  UI/UX Design Essential Training',
-    image: '/coursesImages/1.png',
+    title: 'Radiant Skin Rituals for Creators',
+    image: '/coursesImages/1.jpg',
     rating: 4.3,
     ratingCount: 1991,
     lessons: 6,
@@ -22,18 +22,18 @@ const COURSES: CourseCard[] = [
     price: { previous: 199, current: 79 },
     badges: [{ label: 'Popular', variant: 'accent' }],
     summary:
-      'Master the fundamentals of UI/UX design in Figma with hands-on projects, critiques, and responsive workflows.',
+      'Glow up on camera with skincare creators who share daily rituals, ingredient deep dives, and content-ready routines.',
     highlights: [
-      'Design accessible component systems',
-      'Craft polished prototypes quickly',
-      'Receive expert feedback sessions'
+      'Build morning and evening glow routines',
+      'Choose products that pop under studio lights',
+      'Shoot soothing ASMR-style skincare reels'
     ],
     ctaLabel: 'Add to Cart'
   },
   {
     id: 2,
-    title: 'Complete Python Bootcamp From Zero to Hero in Python',
-    image: '/coursesImages/2.png',
+    title: 'Game Streaming Studio Secrets',
+    image: '/coursesImages/2.jpg',
     rating: 4.7,
     ratingCount: 2891,
     lessons: 8,
@@ -47,18 +47,18 @@ const COURSES: CourseCard[] = [
       { label: 'Best Sellers', variant: 'success' }
     ],
     summary:
-      'Build production-ready Python applications using modern tooling, testing, and deployment practices.',
+      'Transform your gaming space into a pro studio, from gear selection to stream engagement strategies.',
     highlights: [
-      'Write clean, maintainable Python code',
-      'Practice with 20+ guided projects',
-      'Ace technical interviews with confidence'
+      'Optimize lighting and camera angles for streams',
+      'Design overlays followers instantly recognize',
+      'Monetize live sessions with interactive goals'
     ],
     ctaLabel: 'Add to Cart'
   },
   {
     id: 3,
-    title: 'Angular  The Complete Guide (2022 Edition)',
-    image: '/coursesImages/3.png',
+    title: 'Designing Immersive Creator Spaces',
+    image: '/coursesImages/3.jpg',
     rating: 4.5,
     ratingCount: 1983,
     lessons: 6,
@@ -68,18 +68,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 249, current: 129 },
     summary:
-      'Ship enterprise Angular apps with robust architecture, state management, testing, and CI/CD integrations.',
+      'Craft set designs, mood boards, and lighting plans that make every frame scroll-stopping.',
     highlights: [
-      'Master RxJS & NgRx patterns',
-      'Optimize performance with lazy loading',
-      'Automate deployments with pipelines'
+      'Style creator desks for multiple camera angles',
+      'Blend physical props with digital overlays',
+      'Plan color palettes that reinforce your brand'
     ],
     ctaLabel: 'Add to Cart'
   },
   {
     id: 4,
-    title: 'The Ultimate Drawing Course Beginner to Advanced',
-    image: '/coursesImages/4.png',
+    title: 'Camera-Ready Makeup Masterclass',
+    image: '/coursesImages/4.jpg',
     rating: 4.2,
     ratingCount: 1981,
     lessons: 7,
@@ -90,18 +90,18 @@ const COURSES: CourseCard[] = [
     price: { previous: 179, current: 99 },
     badges: [{ label: 'Best Sellers', variant: 'success' }],
     summary:
-      'Develop professional drawing skills with structured exercises, feedback, and portfolio-ready projects.',
+      'Blend tutorials and live demos to teach camera-proof makeup that keeps audiences watching.',
     highlights: [
-      'Understand light, form, and perspective',
-      'Create captivating compositions',
-      'Refine your personal illustration style'
+      'Prep skin for long filming sessions',
+      'Switch looks fast between segments',
+      'Use lighting tricks to enhance pigments'
     ],
     ctaLabel: 'Enroll Now'
   },
   {
     id: 5,
-    title: 'Creative Interface Systems: From Components to Craft',
-    image: '/coursesImages/5.png',
+    title: 'Building Social Media Communities',
+    image: '/coursesImages/5.jpg',
     rating: 4.6,
     ratingCount: 1730,
     lessons: 5,
@@ -111,18 +111,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 219, current: 109 },
     summary:
-      'Design and document scalable component libraries that bridge design and engineering teams.',
+      'Grow loyal followers across platforms with authentic storytelling, analytics, and collaborations.',
     highlights: [
-      'Craft accessible component APIs',
-      'Automate design tokens & theming',
-      'Collaborate seamlessly with developers'
+      'Map content pillars for consistent posting',
+      'Automate reporting to track real engagement',
+      'Co-create with ambassadors and superfans'
     ],
     ctaLabel: 'Add to Cart'
   },
   {
     id: 6,
-    title: 'Modern Web Development: Build Responsive Experiences',
-    image: '/coursesImages/7.png',
+    title: 'Mindful Breaks for Creator Wellbeing',
+    image: '/coursesImages/6.jpg',
     rating: 4.8,
     ratingCount: 2310,
     lessons: 9,
@@ -132,18 +132,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 229, current: 139 },
     summary:
-      'Ship modern full-stack web apps with resilient architecture, CI/CD, and best-in-class performance.',
+      'Protect your creative energy with guided breathwork, stretch sessions, and restorative rituals.',
     highlights: [
-      'Architect scalable frontends',
-      'Integrate robust CI/CD pipelines',
-      'Deliver 90+ Lighthouse scores'
+      'Schedule micro-breaks that prevent burnout',
+      'Host calming live check-ins with followers',
+      'Build a mindfulness library for members'
     ],
     ctaLabel: 'Add to Cart'
   },
   {
     id: 7,
-    title: 'Photography Masterclass: Complete Guide to Photography',
-    image: '/coursesImages/8.png',
+    title: 'Signature Hairstyles for the Camera',
+    image: '/coursesImages/7.jpg',
     rating: 4.4,
     ratingCount: 1570,
     lessons: 8,
@@ -153,18 +153,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 219, current: 129 },
     summary:
-      'Capture studio-quality photos anywhere with pro lighting, composition, and editing techniques.',
+      'Style hair that holds up under studio lights, weather changes, and rapid-fire shoots.',
     highlights: [
-      'Master manual camera settings',
-      'Design cinematic lighting setups',
-      'Edit confidently in Lightroom'
+      'Match hairstyles to brand archetypes',
+      'Demonstrate quick refresh hacks on live video',
+      'Prepare kit bags for travel shoots'
     ],
     ctaLabel: 'Add to Cart'
   },
   {
     id: 8,
-    title: 'Animation Fundamentals: Bring Characters to Life',
-    image: '/coursesImages/6.png',
+    title: 'Interactive Gaming Sessions with Followers',
+    image: '/coursesImages/8.jpg',
     rating: 4.4,
     ratingCount: 1250,
     lessons: 5,
@@ -174,18 +174,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 199, current: 119 },
     summary:
-      'Animate expressive characters with professional principles, workflows, and cinematic storytelling.',
+      'Host collaborative game nights that turn casual viewers into a thriving supporter community.',
     highlights: [
-      'Animate believable motion arcs',
-      'Develop timing & spacing intuition',
-      'Polish renders with pro workflows'
+      'Run polls and challenges between matches',
+      'Feature follower spotlights on stream',
+      'Package VOD highlights for socials'
     ],
     ctaLabel: 'Enroll Now'
   },
   {
     id: 9,
-    title: 'Creative Writing Mastery: Craft Compelling Stories',
-    image: '/coursesImages/9.png',
+    title: 'Creator Strength Lab: Training & Gym Systems',
+    image: '/coursesImages/9.jpg',
     rating: 4.1,
     ratingCount: 980,
     lessons: 6,
@@ -195,18 +195,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 199, current: 109 },
     summary:
-      'Strengthen your narrative voice with practical storytelling frameworks and constructive critique.',
+      'Blend strength training templates with content ideas that keep your fitness community energized.',
     highlights: [
-      'Outline page-turning plots',
-      'Create memorable characters',
-      'Workshop chapters with peers'
+      'Program effective weekly gym routines',
+      'Film form checks and accountability clips',
+      'Launch challenge calendars for members'
     ],
     ctaLabel: 'Add to Cart'
   },
   {
     id: 10,
-    title: 'Data Visualization with D3 & Observable',
-    image: '/coursesImages/10.png',
+    title: 'Storytelling Blueprints for Creators',
+    image: '/coursesImages/10.jpg',
     rating: 4.6,
     ratingCount: 1675,
     lessons: 7,
@@ -216,18 +216,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 239, current: 139 },
     summary:
-      'Tell powerful stories with interactive visualizations powered by D3, Observable, and modern tooling.',
+      'Plan hooks, arcs, and cliffhangers that turn casual viewers into binge-watchers across formats.',
     highlights: [
-      'Design data-first narratives',
-      'Build reusable chart components',
-      'Deploy interactive dashboards'
+      'Map hero journeys for short and long form',
+      'Script interactive endings with polls',
+      'Batch record narration with crystal clarity'
     ],
     ctaLabel: 'Join the Cohort'
   },
   {
     id: 11,
-    title: 'Product Strategy: From Discovery to Delivery',
-    image: '/coursesImages/11.png',
+    title: 'Creator Career Compass: Guidance & Growth',
+    image: '/coursesImages/11.jpg',
     rating: 4.9,
     ratingCount: 2450,
     lessons: 6,
@@ -237,18 +237,18 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 259, current: 149 },
     summary:
-      'Align product teams around outcomes with actionable discovery frameworks and facilitation skills.',
+      'Set multi-year creator career plans with revenue streams, networking cadences, and portfolio boosters.',
     highlights: [
-      'Run impactful discovery sessions',
-      'Build outcome-driven roadmaps',
-      'Measure success with clarity'
+      'Diversify income with scalable offers',
+      'Pitch brands with data-backed media kits',
+      'Plan rest cycles to preserve creativity'
     ],
     ctaLabel: 'Enroll Now'
   },
   {
     id: 12,
-    title: 'Full-Stack TypeScript with Next.js & GraphQL',
-    image: '/coursesImages/12.png',
+    title: 'Arabian Fashion Diaries: Styling Tips',
+    image: '/coursesImages/12.jpg',
     rating: 4.7,
     ratingCount: 2120,
     lessons: 9,
@@ -258,11 +258,11 @@ const COURSES: CourseCard[] = [
     authorAvatar: '/coursesImages/avatar-1.png',
     price: { previous: 279, current: 159 },
     summary:
-      'Build production-grade SaaS apps with typed APIs, server actions, and performance-focused tooling.',
+      'Fuse traditional motifs with modern silhouettes and teach followers to style every occasion with confidence.',
     highlights: [
-      'Design resilient GraphQL schemas',
-      'Automate E2E testing with Playwright',
-      'Deploy globally with Vercel Edge'
+      'Curate capsule wardrobes around abayas and kaftans',
+      'Accessorize looks for on-camera impact',
+      'Source ethical regional designers to spotlight'
     ],
     ctaLabel: 'Add to Cart'
   }

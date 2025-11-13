@@ -17,7 +17,7 @@ export function LessonVideo({
   title,
   description,
   videoId,
-  thumbnailUrl = '/coursesImages/4.png',
+  thumbnailUrl = '/coursesImages/8.jpg',
   duration
 }: LessonVideoProps) {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
