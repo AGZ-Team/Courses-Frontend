@@ -52,13 +52,7 @@ const CreatorsHero = () => {
               {tHero('becomeCreator')}
               <HiOutlineArrowUpRight className="h-5 w-5" aria-hidden />
             </Link>
-            <Link
-              href={`/${locale}/signup?role=influencer`}
-              className="inline-flex items-center gap-3 rounded-full border border-[#d5d6e6] bg-white px-6 py-3 text-[15px] font-medium text-[#0ABAB5] shadow-[0_12px_24px_rgba(45,27,153,0.08)] transition hover:border-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white"
-            >
-              {tHero('signUpInfluencer')}
-              <HiOutlineArrowUpRight className="h-5 w-5" aria-hidden />
-            </Link>
+        
           </div>
         </div>
 

@@ -1,58 +1,25 @@
-'use client';
+import {setRequestLocale} from 'next-intl/server';
+import CreatorsPageClient from '@/components/Creators/CreatorsPageClient';
 
-import React, { useState, useMemo } from 'react';
-import CreatorsCarousel from '@/components/Creators/CreatorsCarousel';
-import CreatorsHero from '@/components/Creators/CreatorsHero';
-import { useTranslations } from 'next-intl';
-
-const CATEGORY_KEYS = [
-  "design",
-  "marketing",
-  "development",
-  "photography",
-  "art",
-  "animation",
-  "writing",
+const CATEGORY_OPTIONS = [
+  'all',
+  'design',
+  'marketing',
+  'development',
+  'photography',
+  'art',
+  'animation',
+  'writing'
 ] as const;
 
-export default function creatorsPage() {
-  const tCats = useTranslations("creatorsCarousel.categories");
-  const [activeCategory, setActiveCategory] = useState<string>("all");
+type CreatorsPageProps = {
+  params: {
+    locale: string;
+  };
+};
 
-  const categoryOptions = useMemo(
-    () => ["all", ...CATEGORY_KEYS],
-    []
-  );
+export default function CreatorsPage({params}: CreatorsPageProps) {
+  setRequestLocale(params.locale);
 
-  return (
-    <main>
-      <CreatorsHero />
-
-      <section className="w-full bg-white py-6">
-        <div className="mx-auto w-full max-w-[1380px] px-4 sm:px-6">
-          <div className="mb-6 flex w-full items-center justify-center gap-2 overflow-x-auto py-2">
-            {categoryOptions.map((key) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setActiveCategory(key)}
-                className={
-                  `whitespace-nowrap rounded-full border px-4 py-2 text-sm transition ` +
-                  (activeCategory === key
-                    ? `border-[#0ABAB5] bg-[#0ABAB5] text-white`
-                    : `border-[#d5d6e6] bg-white text-[#0ABAB5] hover:border-[#0ABAB5] hover:bg-[#0ABAB5] hover:text-white`)
-                }
-                aria-pressed={activeCategory === key}
-              >
-                {tCats(key as any, { defaultValue: key })}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CreatorsCarousel activeCategory={activeCategory} />
-      <CreatorsCarousel activeCategory={activeCategory} />
-    </main>
-  );
+  return <CreatorsPageClient categoryOptions={[...CATEGORY_OPTIONS]} />;
 }
