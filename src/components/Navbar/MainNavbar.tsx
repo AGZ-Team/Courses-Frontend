@@ -9,6 +9,7 @@ import { RiShoppingCart2Fill } from 'react-icons/ri';
 import { NavDropdown, DropdownItem } from './NavDropdown';
 import NavRightBanner from './NavRightBanner';
 import { clearTokens } from '@/lib/auth';
+import Image from 'next/image';
 
 type NavItem = {
   labelKey: string;
@@ -114,24 +115,12 @@ const MainNavbar = () => {
         {/* Left group: Logo + Explore */}
         <div className="flex items-center gap-4 shrink-0">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-7 w-7 text-white"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M3 8.5 12 5l9 3.5-9 3.5-9-3.5Z" />
-              <path d="M7 11v5l5 3 5-3v-5" />
-              <path d="M12 12.5v6" />
-            </svg>
+          <Link href="/" className="flex items-center">
+          <span className={`${isAr ? 'text-[22px]' : 'text-[34px]'} whitespace-nowrap font-normal`}>{t('brandName')}  </span>
+          <span className="flex ml-1 h-12 w-12 pr-1 items-center justify-center border-4 border-white rounded-full  ">
+            <Image src="/logo/Ai.png" alt="Logo" width={58} height={58} />
           </span>
-          <span className={`${isAr ? 'text-[22px]' : 'text-[18px]'} whitespace-nowrap font-semibold`}>{t('brandName')}</span>
+
         </Link>
 
         {/* Desktop My Courses Dropdown */}

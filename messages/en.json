@@ -8,52 +8,52 @@
   "error_message": "An error occurred. Please try again.",
   "metadata": {
     "home": {
-      "title": "Home - C R A Y | Online Learning Platform",
-      "description": "C R A Y is a Saudi platform that connects creators and supporters through exclusive content, memberships, and experiences. Built for the Arab creative community, C R A Y empowers artists, influencers, and educators to earn, grow, and engage their audiences in a secure, culturally rooted environment. Made in Saudi Arabia — built for the world."
+      "title": "Home - C R A I | Online Learning Platform",
+      "description": "C R A I is a Saudi platform that connects creators and supporters through exclusive content, memberships, and experiences. Built for the Arab creative community, C R A I empowers artists, influencers, and educators to earn, grow, and engage their audiences in a secure, culturally rooted environment. Made in Saudi Arabia — built for the world."
     },
     "login": {
-      "title": "Login - C R A Y",
-      "description": "Log in to your C R A Y account to access your courses and continue learning."
+      "title": "Login - C R A I",
+      "description": "Log in to your C R A I account to access your courses and continue learning."
     },
     "signup": {
-      "title": "Sign Up - C R A Y",
-      "description": "Create your C R A Y account to start learning or teaching. Join millions of students and educators worldwide."
+      "title": "Sign Up - C R A I",
+      "description": "Create your C R A I account to start learning or teaching. Join millions of students and educators worldwide."
     },
     "contact": {
-      "title": "Contact Us - C R A Y",
+      "title": "Contact Us - C R A I",
       "description": "Get in touch with us. We're here to help you with any questions about our courses and services."
     },
     "terms": {
-      "title": "Terms & Conditions | C R A Y",
-      "description": "Read the Terms & Conditions that govern your use of the C R A Y platform and services."
+      "title": "Terms & Conditions | C R A I",
+      "description": "Read the Terms & Conditions that govern your use of the C R A I platform and services."
     },
     "privacy": {
-      "title": "Privacy Policy | C R A Y",
-      "description": "How C R A Y collects, uses, shares, and protects your personal information when you use our Platform."
+      "title": "Privacy Policy | C R A I",
+      "description": "How C R A I collects, uses, shares, and protects your personal information when you use our Platform."
     },
     "courses": {
-      "title": "Courses - C R A Y",
+      "title": "Courses - C R A I",
       "description": "Explore courses designed to elevate your design and development skills. Join thousands of students today."
     },
     "about": {
-      "title": "About Us - C R A Y",
-      "description": "Learn more about C R A Y's mission to deliver engaging, curated courses at a reasonable price."
+      "title": "About Us - C R A I",
+      "description": "Learn more about C R A I's mission to deliver engaging, curated courses at a reasonable price."
     },
     "notFound": {
-      "title": "404 - Page Not Found | C R A Y",
+      "title": "404 - Page Not Found | C R A I",
       "description": "The page you are looking for does not exist. Return to the homepage to continue exploring our courses."
     },
     "resetPassword": {
-      "title": "Reset Password - C R A Y",
-      "description": "Reset your C R A Y account password securely."
+      "title": "Reset Password - C R A I",
+      "description": "Reset your C R A I account password securely."
     },
     "verifyEmail": {
-      "title": "Verify Email - C R A Y",
-      "description": "Verify your email address to activate your C R A Y account."
+      "title": "Verify Email - C R A I",
+      "description": "Verify your email address to activate your C R A I account."
     },
     "forgotPassword": {
-      "title": "Forgot Password - C R A Y",
-      "description": "Reset your C R A Y account password securely."
+      "title": "Forgot Password - C R A I",
+      "description": "Reset your C R A I account password securely."
     }
   },
   "homeHero": {
@@ -160,7 +160,7 @@
     "login": "Log in",
     "signup": "Sign up",
     "logout": "Log out",
-    "brandName": "C R A Y",
+    "brandName": "CR",
     "courseCategories": {
       "all": "All Content",
       "design": "Design",
@@ -208,7 +208,7 @@
     "subtitle": "We are here to help you and answer all your questions regarding our educational services.",
     "address": "Port Said - Port Fouad - Al-Mahdiyah",
     "phone": "(+1) 123 456 7890",
-    "email": "hi@C R A Y.com",
+    "email": "hi@C R A I.com",
     "formTitle": "Send a Message",
     "formSubtitle": "We will get back to you as soon as possible.",
     "nameLabel": "Name",
@@ -228,59 +228,59 @@
     "faqSubtitle": "Still have questions? We're here to help",
     "faqs": [
       {
-        "question": "What is C R A Y?",
-        "answer": "C R A Y is a Saudi-based platform that connects creators — artists, influencers, educators, designers, and more — with their fans and supporters. Creators can share exclusive content, memberships, and experiences, while supporters can back their favorite creators directly and enjoy private perks."
+        "question": "What is C R A I?",
+        "answer": "C R A I is a Saudi-based platform that connects creators — artists, influencers, educators, designers, and more — with their fans and supporters. Creators can share exclusive content, memberships, and experiences, while supporters can back their favorite creators directly and enjoy private perks."
       },
       {
-        "question": "How is C R A Y different from Patreon?",
-        "answer": "C R A Y is built with local values, languages, and payment systems in mind. Unlike global platforms, we focus on Arab creators and audiences, support Saudi and GCC payment gateways, and ensure compliance with local regulations (PDPL, SDAIA). It's creativity, made local."
+        "question": "How is C R A I different from Patreon?",
+        "answer": "C R A I is built with local values, languages, and payment systems in mind. Unlike global platforms, we focus on Arab creators and audiences, support Saudi and GCC payment gateways, and ensure compliance with local regulations (PDPL, SDAIA). It's creativity, made local."
       },
       {
-        "question": "Who can join C R A Y?",
+        "question": "Who can join C R A I?",
         "answer": "Anyone can join — whether you're a creator or a supporter. Creators can come from any field (art, design, education, tech, lifestyle) and users can subscribe to or support as many creators as they want."
       },
       {
-        "question": "How do creators earn money on C R A Y?",
+        "question": "How do creators earn money on C R A I?",
         "answer": "Creators earn through: Memberships or subscriptions (monthly or yearly), Exclusive paid content (videos, images, courses, etc.), Tips or one-time support from fans, Brand collaborations and partnerships (coming soon). Earnings are securely transferred to the creator's chosen account through Saudi-approved payment partners."
       },
       {
-        "question": "Is C R A Y available worldwide?",
-        "answer": "C R A Y is based in Saudi Arabia, but open to creators and users worldwide. Our platform supports both Arabic and English, and accepts international payments."
+        "question": "Is C R A I available worldwide?",
+        "answer": "C R A I is based in Saudi Arabia, but open to creators and users worldwide. Our platform supports both Arabic and English, and accepts international payments."
       },
       {
         "question": "How do I become a creator?",
         "answer": "Simply click \"Become a Creator\" on our homepage, create an account, and set up your profile. You'll be able to upload content, set membership levels, and start earning once verified."
       },
       {
-        "question": "How does C R A Y protect my data?",
+        "question": "How does C R A I protect my data?",
         "answer": "We follow the Saudi Personal Data Protection Law (PDPL) and international privacy standards. Your data is encrypted, never sold, and only used to operate your account safely. You can read our full Privacy Policy for details."
       },
       {
         "question": "What kind of content is allowed?",
-        "answer": "C R A Y supports creative, educational and entertaining content that aligns with Saudi and international content laws. We do not allow content that violates local culture, religious sensitivities, or copyright."
+        "answer": "C R A I supports creative, educational and entertaining content that aligns with Saudi and international content laws. We do not allow content that violates local culture, religious sensitivities, or copyright."
       },
       {
-        "question": "Can I use C R A Y for business or brand partnerships?",
+        "question": "Can I use C R A I for business or brand partnerships?",
         "answer": "Yes! Brands and companies can collaborate with creators through sponsorships and campaigns. If you're a brand interested in partnerships, contact us at partners@cray.com"
       },
       {
-        "question": "How can I contact C R A Y?",
+        "question": "How can I contact C R A I?",
         "answer": "For general questions: support@cray.com, For privacy matters: privacy@cray.com, For business partnerships: partners@cray.com, For media inquiries: media@cray.com"
       },
       {
-        "question": "What languages does C R A Y support?",
-        "answer": "C R A Y is fully available in Arabic and English, with more regional languages planned soon."
+        "question": "What languages does C R A I support?",
+        "answer": "C R A I is fully available in Arabic and English, with more regional languages planned soon."
       },
       {
         "question": "Is there a mobile app?",
-        "answer": "Yes — the C R A Y mobile app (iOS and Android) is in development and will be released soon. Until then, you can access the full platform through any browser on mobile or desktop."
+        "answer": "Yes — the C R A I mobile app (iOS and Android) is in development and will be released soon. Until then, you can access the full platform through any browser on mobile or desktop."
       },
       {
-        "question": "How does C R A Y handle refunds or payment issues?",
+        "question": "How does C R A I handle refunds or payment issues?",
         "answer": "Refunds are handled on a case-by-case basis through our support team. If you experience a payment issue, email billing@cray.com, and our team will resolve it within 3–5 business days."
       },
       {
-        "question": "Why is it called \"C R A Y\"?",
+        "question": "Why is it called \"C R A I\"?",
         "answer": "The name \"Kray\" is inspired by the word \"Crazy,\" as the platform celebrates the vibrant energy and beautiful madness that connect artists with their fans. It creates an interactive space that reflects genuine passion and freedom of expression, encouraging authentic connection and spontaneous engagement away from formality."
       }
     ]
@@ -311,7 +311,7 @@
     "instructorDescription": "Create an account to start teaching"
   },
   "footer": {
-    "brandName": "C R A Y",
+    "brandName": "C R A I",
     "tagline": "The first Saudi platform that empowers creators to share exclusive content, connect with their fans, and build communities around passion and creativity.",
     "socialPrompt": "Follow us on social media",
     "social": {
@@ -374,7 +374,7 @@
       "placeholder": "Email...",
       "submit": "Submit"
     },
-    "copyright": "© {year} C R A Y. All rights reserved.",
+    "copyright": "© {year} C R A I. All rights reserved.",
     "madeInSaudi": "Made in Saudi Arabia",
     "legalLinks": {
       "terms": "Terms of Service",
@@ -461,19 +461,19 @@
     "testimonials": [
       {
         "heading": "Great Work",
-        "quote": "I think C R A Y is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "quote": "I think C R A I is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
         "name": "Courtney Henry",
         "role": "Web Designer"
       },
       {
         "heading": "Great Work",
-        "quote": "I think C R A Y is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "quote": "I think C R A I is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
         "name": "Ronald Richards",
         "role": "President of Sales"
       },
       {
         "heading": "Great Work",
-        "quote": "I think C R A Y is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
+        "quote": "I think C R A I is the best theme I ever seen this year. Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance.",
         "name": "Annette Black",
         "role": "Nursing Assistant"
       }
@@ -679,8 +679,8 @@
     "imageAlt": "Student learning online"
   },
   "what": {
-    "title": "What is C R A Y?",
-    "subtitle": "We bring creators and fans closer than ever. Whether you share your art, your ideas, or your story, C R A Y is your home to build, earn, and connect.",
+    "title": "What is C R A I?",
+    "subtitle": "We bring creators and fans closer than ever. Whether you share your art, your ideas, or your story, C R A I is your home to build, earn, and connect.",
     "reasons": [
       {
         "title": "1. Worldwide",
@@ -701,42 +701,66 @@
     ]
   },
   "instructorCarousel": {
-    "title": "Learn from the best instructors",
-    "subtitle": "Discover the benefits of our courses.",
-    "viewAll": "View All Instructors",
-    "becomeInstructor": "Want to help people learn, grow and achieve more in life?",
+    "title": "Top instructors from around the world",
+    "subtitle": "Learn from industry leaders with years of experience.",
+    "viewAll": "View all instructors",
+    "becomeInstructor": "Want to share your expertise?",
     "becomeInstructorLink": "Become an instructor",
     "instructors": [
       {
-        "name": "Floyd Miles",
-        "role": "President of Sales",
-        "students": "692 Students",
-        "courses": "15 Course"
+        "name": "Courtney Henry",
+        "role": "Product Design Director",
+        "students": "12k students",
+        "courses": "9 courses"
       },
       {
-        "name": "Cameron Williamson",
-        "role": "Web Designer",
-        "students": "692 Students",
-        "courses": "15 Course"
+        "name": "Jerome Bell",
+        "role": "Marketing Strategist",
+        "students": "8k students",
+        "courses": "12 courses"
       },
       {
-        "name": "Brooklyn Simmons",
-        "role": "Dog Trainer",
-        "students": "692 Students",
-        "courses": "15 Course"
+        "name": "Jane Cooper",
+        "role": "Lead Frontend Developer",
+        "students": "14k students",
+        "courses": "7 courses"
       },
       {
-        "name": "Wade Warren",
-        "role": "Marketing Coordinator",
-        "students": "692 Students",
-        "courses": "15 Course"
+        "name": "Devon Lane",
+        "role": "UX Researcher",
+        "students": "11k students",
+        "courses": "5 courses"
       }
     ],
+    "aria": {
+      "prev": "Previous creators",
+      "next": "Next creators"
+    },
     "social": {
       "facebook": "Facebook",
-      "x": "x",
+      "x": "X (Twitter)",
       "instagram": "Instagram",
       "linkedin": "LinkedIn"
+    }
+  },
+  "creatorsHero": {
+    "title": "Check Our Most Popular Creators",
+    "subtitle": "Discover top creators making an impact with their content and community",
+    "becomeCreator": "Become a Creator",
+    "signUpInfluencer": "Sign Up as Influencer",
+    "footerText": "Ready to become an influencer?",
+    "footerLink": "Learn how to become an influencer"
+  },
+  "creatorsCarousel": {
+    "categories": {
+      "all": "All",
+      "design": "Design",
+      "marketing": "Marketing",
+      "development": "Development",
+      "photography": "Photography",
+      "art": "Art",
+      "animation": "Animation",
+      "writing": "Writing"
     }
   },
   "news": {
@@ -775,7 +799,7 @@
   },
   "ad": {
     "title": "Creativity deserves a home.",
-    "subtitle": "Welcome to C R A Y.",
+    "subtitle": "Welcome to C R A I.",
     "cta": "Join Now!",
     "cta2": "Launch Your Page"
   },
@@ -808,14 +832,14 @@
       "termination": {
         "title": "Limitation of Liability",
         "paragraphs": [
-          "C R A Y is provided on an 'as-is' basis without warranties of any kind, either express or implied. C R A Y does not warrant that the platform will be uninterrupted, error-free, or free from viruses or other harmful components.",
-          "In no event shall C R A Y be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the platform, even if C R A Y has been advised of the possibility of such damages."
+          "C R A I is provided on an 'as-is' basis without warranties of any kind, either express or implied. C R A I does not warrant that the platform will be uninterrupted, error-free, or free from viruses or other harmful components.",
+          "In no event shall C R A I be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the platform, even if C R A I has been advised of the possibility of such damages."
         ]
       },
       "changes": {
         "title": "Termination of Access",
         "paragraphs": [
-          "C R A Y reserves the right to terminate or suspend your account and access to the platform at any time, for any reason, without notice or liability.",
+          "C R A I reserves the right to terminate or suspend your account and access to the platform at any time, for any reason, without notice or liability.",
           "Upon termination, your right to use the platform will immediately cease. All provisions of these Terms that by their nature should survive termination shall survive."
         ]
       },
@@ -835,7 +859,7 @@
   "privacy": {
     "badge": "Privacy Policy",
     "title": "Protecting your learning journey",
-    "subtitle": "We design every C R A Y experience with privacy in mind—from the courses you browse to the certifications you earn. This policy explains how we collect, use, and safeguard your information, and the controls you have along the way.",
+    "subtitle": "We design every C R A I experience with privacy in mind—from the courses you browse to the certifications you earn. This policy explains how we collect, use, and safeguard your information, and the controls you have along the way.",
     "highlights": [
       {
         "title": "Crystal-clear transparency",
@@ -854,14 +878,14 @@
       "infoCollect": {
         "title": "Information we collect",
         "paragraphs": [
-          "We collect the information you share with us when creating an account, enrolling in a course, or interacting with C R A Y content. This may include your name, email address, payment details, demographic information, and any preferences you choose to store in your profile.",
+          "We collect the information you share with us when creating an account, enrolling in a course, or interacting with C R A I content. This may include your name, email address, payment details, demographic information, and any preferences you choose to store in your profile.",
           "We also gather limited technical data such as browser type, device identifiers, and usage analytics to help us maintain platform reliability and improve the learning experience. We never collect more than we need, and we never sell your personal data."
         ]
       },
       "howWeUse": {
         "title": "How we use your information",
         "paragraphs": [
-          "Your information powers key C R A Y features like course recommendations, progress tracking, certification, and customer support. We use aggregated insights to improve course quality, detect fraud, and keep the platform safe for learners and instructors alike.",
+          "Your information powers key C R A I features like course recommendations, progress tracking, certification, and customer support. We use aggregated insights to improve course quality, detect fraud, and keep the platform safe for learners and instructors alike.",
           "When we communicate with you, it is to deliver service updates, account notifications, or personalized learning tips. You can adjust your communication preferences or unsubscribe from marketing email at any time."
         ]
       },
@@ -882,26 +906,26 @@
       "international": {
         "title": "International transfers",
         "paragraphs": [
-          "C R A Y may process data on servers located in different countries. Whenever information crosses borders, we apply the same rigorous safeguards and rely on industry-standard legal mechanisms such as Standard Contractual Clauses to protect your privacy."
+          "C R A I may process data on servers located in different countries. Whenever information crosses borders, we apply the same rigorous safeguards and rely on industry-standard legal mechanisms such as Standard Contractual Clauses to protect your privacy."
         ]
       },
       "yourRights": {
         "title": "Your rights & choices",
         "paragraphs": [
           "You can access, correct, download, or delete your personal information directly from your account dashboard. You also have the right to object to processing, withdraw consent, and file a complaint with your local data protection authority.",
-          "To exercise any of these rights or ask a question, contact us at privacy@C R A Y.com. We respond within one business day."
+          "To exercise any of these rights or ask a question, contact us at privacy@C R A I.com. We respond within one business day."
         ]
       }
     },
     "ctaBox": {
       "title": "Need a data export or deletion?",
       "description": "Use the account dashboard to download your learning history and certificates. Prefer a guided request? Our privacy team will help you gather, update, or remove your data within 24 hours.",
-      "button": "Email privacy@C R A Y.com",
+      "button": "Email privacy@C R A I.com",
       "quickAccess": {
         "title": "Quick access",
         "items": [
           "Download your account data from the dashboard settings.",
-          "Update email preferences directly from any C R A Y email footer.",
+          "Update email preferences directly from any C R A I email footer.",
           "Reach out to support for enterprise privacy agreements or data processing addendums."
         ]
       }
@@ -921,7 +945,7 @@
     "welcome": {
       "title": "Made in Saudi Arabia.",
       "highlight": "Built for the world.",
-      "description": "C R A Y empowers a new generation of Arab creators to share their voice globally while staying true to local values. We believe in creative freedom, cultural respect, and economic opportunity for every dreamer.",
+      "description": "C R A I empowers a new generation of Arab creators to share their voice globally while staying true to local values. We believe in creative freedom, cultural respect, and economic opportunity for every dreamer.",
       "cta": "Start Learning For Free",
       "stats": {
         "courses": {
@@ -962,7 +986,7 @@
     },
     "learningJourney": {
       "title": "Start your Learning Journey Today!",
-      "subtitle": "Discover the benefits of learning with C R A Y",
+      "subtitle": "Discover the benefits of learning with C R A I",
       "features": {
         "experts": {
           "title": "Learn with Experts",
@@ -993,13 +1017,13 @@
       ],
       "influencer": {
         "title": "Turn your passion into income.",
-        "description": "Creators on  C R A Y earn through memberships, tips, and exclusive content. You decide what to share — and who gets access. Build your own private space for your biggest supporters.",
+        "description": "Creators on  C R A I earn through memberships, tips, and exclusive content. You decide what to share — and who gets access. Build your own private space for your biggest supporters.",
         "cta": "Become a Creator",
         "imageAlt": "Influencer teaching"
       },
       "user": {
         "title": "Get closer to the people you love.",
-        "description": "Support your favorite creators, access exclusive content, and be part of their journey. On C R A Y, you don’t just follow — you belong.",
+        "description": "Support your favorite creators, access exclusive content, and be part of their journey. On C R A I, you don’t just follow — you belong.",
         "cta": "Discover Creators",
         "imageAlt": "User learning"
       }
@@ -1010,8 +1034,8 @@
     "getApp": {
       "title": "Learn From",
       "highlight": "Anywhere",
-      "description": "Take classes on the go with the C R A Y app. Stream or download to watch on the plane, the subway, or wherever you learn best.",
-      "imageAlt": "Mobile and tablet preview of the C R A Y app",
+      "description": "Take classes on the go with the C R A I app. Stream or download to watch on the plane, the subway, or wherever you learn best.",
+      "imageAlt": "Mobile and tablet preview of the C R A I app",
       "apple": {
         "href": "/#",
         "aria": "Download on the Apple Store",
@@ -1038,7 +1062,7 @@
         "2": {
           "name": "Sara A.",
           "role": "Digital Artist, Riyadh",
-          "quote": "C R A Y gave me the confidence to share my art — and turn it into a living."
+          "quote": "C R A I gave me the confidence to share my art — and turn it into a living."
         }
       }
     }
@@ -1137,15 +1161,15 @@
   },
   "privacyPolicy": {
     "badge": "Privacy Policy",
-    "title": "Privacy Policy for C R A Y",
+    "title": "Privacy Policy for C R A I",
     "subtitle": "How we collect, use, share, and protect your personal information when you use our Platform.",
     "sections": {
       "introduction": {
         "title": "Introduction",
         "items": {
-          "0": "Welcome to C R A Y (\"we,\" \"our,\" \"us\"). Your privacy and trust are our top priorities.",
+          "0": "Welcome to C R A I (\"we,\" \"our,\" \"us\"). Your privacy and trust are our top priorities.",
           "1": "This Privacy Policy explains how we collect, use, share, and protect your personal information when you use our website and services (\"Platform\").",
-          "2": "By using C R A Y, you agree to the terms of this Privacy Policy."
+          "2": "By using C R A I, you agree to the terms of this Privacy Policy."
         }
       },
       "information": {
@@ -1199,7 +1223,7 @@
       "cookies": {
         "title": "Cookies Policy",
         "items": {
-          "0": "C R A Y uses cookies to enhance performance and personalize user experience.",
+          "0": "C R A I uses cookies to enhance performance and personalize user experience.",
           "1": "You can control cookie settings through your browser at any time.",
           "2": "Disabling cookies may affect some features of the platform.",
           "3": "We use cookies for analytics and personalization purposes."

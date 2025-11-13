@@ -90,11 +90,11 @@ const HomeHero = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <Link href={`/${locale}/signup`} className="rounded-sm border border-transparent bg-white px-12 py-4 text-lg font-semibold text-[#0ABAB5] shadow-[0_18px_38px_rgba(10,186,181,0.45)] transition-colors duration-300 hover:border-white hover:bg-transparent hover:text-white">
+            <Link href={`/${locale}/signup`} className="rounded-sm border-2 border-transparent bg-white px-12 py-4 text-lg font-semibold text-[#0ABAB5] shadow-[0_18px_38px_rgba(10,186,181,0.45)] transition-colors duration-300 hover:border-white hover:bg-transparent hover:text-white">
               {t('primaryCta')}
             </Link>
             <Link href={`/${locale}/courses`}>
-            <button className=" rounded-sm border-2 border-white px-12 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5] cursor-pointer">
+            <button className=" rounded-sm border-2 border-white px-7.5 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5] cursor-pointer min-[1000px]:max-[1390px]:px-7.5 min-[1400px]:px-12">
               {t('secondaryCta')}
             </button>
             </Link>
