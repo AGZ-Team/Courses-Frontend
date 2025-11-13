@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {useLocale, useTranslations} from 'next-intl';
 
-const portraitSrc = '/heroImages/homehero-2.jpg';
-const smileSrc = '/heroImages/homehero-3.jpg';
-const teamSrc = '/heroImages/homehero-1.jpg';
+const portraitSrc = '/homeImages/heroImages/homehero-2.jpg';
+const smileSrc = '/homeImages/heroImages/homehero-1.jpg';
+const teamSrc = '/homeImages/heroImages/homehero-3.jpg';
 
 const HomeHero = () => {
   const t = useTranslations('homeHero');
@@ -132,7 +132,7 @@ const HomeHero = () => {
               style={parallaxStyle(22, 18)}
             >
               <Image
-                src="/heroImages/instructor-avatar.webp"
+                src="/homeImages/heroImages/instructor-avatar.webp"
                 alt={t('cards.instructor.name')}
                 width={40}
                 height={40}

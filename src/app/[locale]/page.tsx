@@ -5,7 +5,6 @@ import type {Metadata} from 'next';
 import PopularCourses from '@/components/Home/PopularCourses';
 import Testimonials from '@/components/Home/Testimonials';
 import What from '@/components/Home/What';
-import InstructorCarousel from '@/components/Home/instructorCarousel';
 import BecomeInfluencer from '@/components/Home/BecomeInfluencer';
 import BecomeUser from '@/components/Home/BecomeUser';
 import News from '@/components/Home/News';

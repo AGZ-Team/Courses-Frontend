@@ -116,12 +116,8 @@ const MainNavbar = () => {
         <div className="flex items-center gap-4 shrink-0">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-          <span className={`${isAr ? 'text-[22px]' : 'text-[34px]'} whitespace-nowrap font-normal`}>{t('brandName')}  </span>
-          <span className="flex ml-1 h-12 w-12 pr-1 items-center justify-center border-4 border-white rounded-full  ">
-            <Image src="/logo/Ai.png" alt="Logo" width={58} height={58} />
-          </span>
-
-        </Link>
+            <Image src="/logo/Logo.png" alt="Logo" width={200} height={60} className="h-12 md:h-14 w-auto" priority />
+          </Link>
 
         {/* Desktop My Courses Dropdown */}
         <NavDropdown

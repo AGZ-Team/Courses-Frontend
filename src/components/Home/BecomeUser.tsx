@@ -12,7 +12,7 @@ export default function BecomeUser() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="order-last lg:order-first">
             <Image
-              src="/aboutImages/BecomeStudent/2.png"
+              src="/homeImages/discover/discover.jpg"
               alt={t('imageAlt')}
               width={960}
               height={700}

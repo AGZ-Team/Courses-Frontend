@@ -28,7 +28,7 @@ export default function AboutHero() {
                 }
               >
                 <Image
-                  src="/aboutImages/AboutHero/1.png"
+                  src="/aboutImages/AboutHero/main.png"
                   alt={tHero('images.collaboration')}
                   fill
                   sizes="(max-width: 1024px) 60vw, 520px"
@@ -49,7 +49,7 @@ export default function AboutHero() {
                 }
               >
                 <Image
-                  src="/aboutImages/AboutHero/2.png"
+                  src="/aboutImages/AboutHero/second.jpg"
                   alt={tHero('images.learning')}
                   fill
                   sizes="(max-width: 1024px) 40vw, 260px"
@@ -67,7 +67,7 @@ export default function AboutHero() {
                 }
               >
                 <Image
-                  src="/aboutImages/AboutHero/3.png"
+                  src="/aboutImages/AboutHero/thirdWithFlag.jpg"
                   alt={tHero('images.community')}
                   fill
                   sizes="(max-width: 1024px) 50vw, 300px"

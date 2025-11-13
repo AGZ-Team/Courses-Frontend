@@ -51,7 +51,7 @@ const JoinUs = () => {
               }}
             >
               <Image
-                src="/heroImages/joinUs.png"
+                src="/aboutImages/LearningJourney/1.jpg"
                 alt={t('imageAlt')}
                 width={520}
                 height={520}

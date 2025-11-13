@@ -76,23 +76,7 @@ const Footer = () => {
         <div className="flex flex-col gap-6 border-b border-white/10 pb-12" data-aos="fade-up" data-aos-duration="600">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-3">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="h-7 w-7 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.6}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 8.5 12 5l9 3.5-9 3.5-9-3.5Z" />
-                  <path d="M7 11v5l5 3 5-3v-5" />
-                  <path d="M12 12.5v6" />
-                </svg>
-              </span>
-              <span className="text-[28px] font-semibold">{t("brandName")}</span>
+              <Image src="/logo/Logo.png" alt="Logo" width={200} height={60} className="h-12 md:h-14 w-auto" />
             </div>
 
             <div className="space-y-2">

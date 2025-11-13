@@ -21,20 +21,20 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   // Use the project logo for icons and social images
   icons: {
-    icon: '/logo/graduate.svg',
-    shortcut: '/logo/graduate.svg',
-    apple: '/logo/graduate.svg',
+    icon: '/logo/Logo.png',
+    shortcut: '/logo/Logo.png',
+    apple: '/logo/Logo.png',
   },
   openGraph: {
     images: [
       {
-        url: '/logo/graduate.svg',
+        url: '/logo/Logo.png',
         alt: 'Site logo',
       },
     ],
   },
   twitter: {
-    images: ['/logo/graduate.svg'],
+    images: ['/logo/Logo.png'],
   },
 };
 

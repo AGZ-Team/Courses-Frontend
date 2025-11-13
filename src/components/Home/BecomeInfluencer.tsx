@@ -28,7 +28,7 @@ export default function BecomeInfluencer() {
           </div>
           <div>
             <Image
-              src="/aboutImages/BecomeInstructor/1.png"
+              src="/homeImages/become/become.jpg"
               alt={t('imageAlt')}
               width={960}
               height={700}
