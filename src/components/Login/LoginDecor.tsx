@@ -6,13 +6,15 @@ import React, {useEffect, useRef} from 'react';
 type Props = {
   /** Which side of the screen to pin the icons on */
   side?: 'left' | 'right';
+  /** Locale to use for swapping artwork */
+  locale?: string;
 };
 
 /**
  * Decorative floating icons with pointer parallax.
  * No interactivity; pointer-events disabled.
  */
-export default function LoginDecor({side = 'right'}: Props) {
+export default function LoginDecor({side = 'right', locale = 'en'}: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,6 +50,7 @@ export default function LoginDecor({side = 'right'}: Props) {
   // Anchor helpers to mirror layout when side switches
   const outerEdge = side === 'right' ? 'right-[8%]' : 'left-[8%]'; // near panel outer edge
   const innerEdge = side === 'right' ? 'left-[12%]' : 'right-[12%]'; // near panel inner edge
+  const centerImageSrc = locale === 'ar' ? '/assets/1-ar.png' : '/assets/1.png';
 
   return (
     <div
@@ -61,17 +64,17 @@ export default function LoginDecor({side = 'right'}: Props) {
         alt=""
         width={500}
         height={500}
-        className={`absolute ${outerEdge} top-[18%] w-24 md:w-28 translate-x-[calc(var(--parallax-x,0)*6px)] translate-y-[calc(var(--parallax-y,0)*6px)] animate-float-slower`}
+        className={`absolute ${outerEdge} top-[18%] w-24 md:w-32 translate-x-[calc(var(--parallax-x,0)*6px)] translate-y-[calc(var(--parallax-y,0)*6px)] animate-float-slower`}
       />
 
       {/* big center avatar (exact middle) */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-full h-full flex items-center justify-center">
         <Image
-          src="/assets/1.png"
+          src={centerImageSrc}
           alt=""
-          width={500}
-          height={500}
-          className="w-[360px] md:w-[420px] lg:w-[460px] translate-x-[calc(var(--parallax-x,0)*4px)] translate-y-[calc(var(--parallax-y,0)*4px)] animate-float-slower"
+          width={1200}
+          height={700}
+          className="w-[75%]  h-auto translate-x-[calc(var(--parallax-x,0)*4px)] translate-y-[calc(var(--parallax-y,0)*4px)] animate-float-slower"
         />
       </div>
 
@@ -81,7 +84,7 @@ export default function LoginDecor({side = 'right'}: Props) {
         alt=""
         width={500}
         height={500}
-        className={`absolute ${innerEdge} bottom-[12%] w-24 md:w-28 translate-x-[calc(var(--parallax-x,0)*8px)] translate-y-[calc(var(--parallax-y,0)*8px)] animate-float-slower`}
+        className={`absolute bg-[#09c5bf] rounded-full ${innerEdge} bottom-[12%] w-24 md:w-32 translate-x-[calc(var(--parallax-x,0)*8px)] translate-y-[calc(var(--parallax-y,0)*8px)] animate-float-slower`}
       />
     </div>
   );

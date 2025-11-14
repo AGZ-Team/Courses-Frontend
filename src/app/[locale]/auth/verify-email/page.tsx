@@ -28,7 +28,7 @@ export default async function VerifyEmailPage({ params }: PageProps) {
   const t = await getTranslations({ namespace: 'verifyEmail', locale });
 
   return (
-    <section className="relative isolate min-h-screen overflow-hidden bg-white">
+    <section className="relative isolate min-h-screen overflow-visible bg-white">
       {/* Full-bleed brand panel on the left */}
       <div className="absolute inset-y-0 left-0 hidden w-[45vw] bg-primary md:block">
         <div className="relative h-full overflow-hidden">
@@ -47,7 +47,7 @@ export default async function VerifyEmailPage({ params }: PageProps) {
             <div className="absolute bottom-10 left-10 h-24 w-24 rounded-full bg-white/10" />
             <div className="absolute bottom-24 right-20 h-14 w-14 rounded-full bg-white/10" />
           </div>
-          <LoginDecor side="left" />
+          <LoginDecor side="left" locale={locale} />
         </div>
       </div>
 

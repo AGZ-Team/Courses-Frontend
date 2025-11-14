@@ -20,9 +20,18 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
   const locale = useLocale() as Locale;
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Detect if we're on mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleClickOutside = (event: MouseEvent) => {
       if (!containerRef.current?.contains(event.target as Node)) {
         setIsOpen(false);
@@ -39,6 +48,7 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
     document.addEventListener('keydown', handleEscape);
 
     return () => {
+      window.removeEventListener('resize', checkMobile);
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscape);
     };
@@ -58,6 +68,10 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
       router.replace(normalized, {locale: nextLocale});
     });
   };
+
+  const dropdownPositionClass = `${isMobile ? 'left-1/2 -translate-x-1/2' : 'right-0'} ${
+    isMobile || placement === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'
+  }`;
 
   return (
     <div ref={containerRef} className="relative">
@@ -80,7 +94,7 @@ const LanguageSwitcher = ({placement = 'down'}: LanguageSwitcherProps) => {
         <div
           role="listbox"
           aria-label="Select language"
-          className={`absolute right-0 ${placement === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'} w-36 rounded-md border border-white/10 bg-[#0ABAB5] py-1 text-sm shadow-lg`}
+          className={`absolute ${dropdownPositionClass} w-36 rounded-md border border-white/10 bg-[#0ABAB5] py-1 text-sm shadow-lg`}
         >
           {routing.locales.map((availableLocale) => {
             const isActive = availableLocale === locale;
