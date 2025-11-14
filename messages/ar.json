@@ -149,7 +149,7 @@
         "ariaLabel": "التنقل الرئيسي",
         "home": "الرئيسية",
         "explore": "استكشف",
-        "creators": "الميدعين",
+        "creators": "المبدعين",
         "about": "من نحن",
         "projects": "المشاريع",
         "services": "الخدمات",
@@ -182,7 +182,7 @@
         "home": "الرئيسية",
         "ariaLabel": "مسار التنقل",
         "explore": "استكشف",
-        "creators": "الميدعين",
+        "creators": "المبدعين",
         "about": "من نحن",
         "contact": "اتصل بنا",
         "login": "تسجيل الدخول",
@@ -398,7 +398,7 @@
         "courseCard": {
             "course": "محتوى",
             "courses": "محتوى",
-            "lessons": "جلسات",
+            "lessons": "مقاطع",
             "duration": "المدة",
             "levelLabel": "المستوى",
             "level": {
