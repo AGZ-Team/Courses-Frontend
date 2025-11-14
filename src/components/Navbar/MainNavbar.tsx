@@ -416,23 +416,26 @@ const MainNavbar = () => {
               </>
             ) : (
               <>
-                {/* Login Button */}
-                <Link 
-                  href="/login" 
-                  className={`mt-4 block rounded-full border-2 border-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-primary`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t('login')}
-                </Link>
+                {/* Login and Signup Buttons - Side by Side */}
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  {/* Login Button */}
+                  <Link 
+                    href="/login" 
+                    className={`rounded-full border-2 border-white px-4 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-primary`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t('login')}
+                  </Link>
 
-                {/* Signup Button - Mobile */}
-                <Link
-                  href="/signup"
-                  className={`mt-2 block rounded-full bg-white px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-primary transition hover:bg-white/90`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t('signup')}
-                </Link>
+                  {/* Signup Button */}
+                  <Link
+                    href="/signup"
+                    className={`rounded-full bg-white px-4 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-primary transition hover:bg-white/90`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t('signup')}
+                  </Link>
+                </div>
               </>
             )}
 

@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    images: ['/logo/Logo.png'],
+    images: ['/logo/metaLogo.png'],
   },
 };
 

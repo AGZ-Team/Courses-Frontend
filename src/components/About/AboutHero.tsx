@@ -19,7 +19,7 @@ export default function AboutHero() {
               <div
                 className={
                   // Mirror the offset in RTL and reduce negative offset on small screens
-                  `absolute top-0 h-[78%] w-[64%] rounded-3xl ${
+                  `absolute top-0 h-full w-[65%] rounded-3xl ${
                     isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
                   } overflow-hidden shadow-xl ` +
                   (isRTL
@@ -40,7 +40,7 @@ export default function AboutHero() {
               {/* Top-right small */}
               <div
                 className={
-                  `absolute top-[-3%] h-[38%] w-[38%] rounded-2xl mr-9 ${
+                  `absolute top-5 h-[38%] w-[38%] rounded-2xl mr-9 ${
                     isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
                   } overflow-hidden shadow-md ` +
                   (isRTL
@@ -60,7 +60,7 @@ export default function AboutHero() {
               {/* Bottom-right medium */}
               <div
                 className={
-                  `absolute bottom-20 h-[46%] w-[48%] rounded-2xl ${
+                  `absolute bottom-10 h-[46%] w-[48%] rounded-2xl ${
                     isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
                   } overflow-hidden shadow-lg ` +
                   (isRTL ? 'left-4' : 'right-4')

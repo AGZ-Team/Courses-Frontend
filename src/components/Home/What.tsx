@@ -33,7 +33,7 @@ const What = () => {
           </p>
         </div>
 
-        <div className="grid gap-5 sm:gap-6 md:grid-cols-4 lg:grid-cols-4" data-aos="fade-up" data-aos-duration="800">
+        <div className="grid grid-cols-2 gap-5 sm:gap-6 md:grid-cols-4 lg:grid-cols-4" data-aos="fade-up" data-aos-duration="800">
           {reasons.map((reason, index) => {
             const iconPath = ICON_MAP[reason.title] || '/svgs/globe.svg';
             
