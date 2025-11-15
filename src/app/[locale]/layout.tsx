@@ -3,7 +3,7 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {getMessages, setRequestLocale} from 'next-intl/server';
 import {routing, isLocale} from '@/i18n/routing';
-import MainNavbar from '@/components/Navbar/MainNavbar';
+import ConditionalNavbar from '@/components/Navbar/ConditionalNavbar';
 import {Cairo, Jost} from 'next/font/google';
 import ConditionalFooter from '@/components/Footer/ConditionalFooter';
 import ArrowBtn from '@/components/Home/arrowBtn';
@@ -69,7 +69,7 @@ export default async function LocaleLayout({children, params}: Props) {
       <body className={`min-h-screen ${fontClass}`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <header>
-            <MainNavbar />
+            <ConditionalNavbar />
             <BreadCrumb />
           </header>
           <main>{children}</main>
