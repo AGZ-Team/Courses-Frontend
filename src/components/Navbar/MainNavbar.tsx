@@ -315,6 +315,7 @@ const MainNavbar = () => {
               align="right"
               className={`hidden md:block ${isAr ? 'lg:order-1' : 'lg:order-4'}`}
               items={profileDropdownItems}
+              profileMode
               trigger={
                 <div
                   className={`flex items-center gap-2 rounded-full bg-white/10 px-4 py-2.5 transition hover:bg-white/20 ${isAr ? 'flex-row-reverse' : ''}`}

@@ -37,7 +37,7 @@ export function SiteHeader() {
         </div>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-            <Link href={`/${locale}`} target="_blank" rel="noreferrer noopener" className="dark:text-foreground">
+            <Link href={`/${locale}`} rel="noreferrer noopener" className="dark:text-foreground">
               C R A I
             </Link>
           </Button>
