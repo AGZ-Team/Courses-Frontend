@@ -48,7 +48,7 @@ export default async function LoginPage({params}: PageProps) {
         <div className="relative h-full overflow-visible">
           {/* moving background image */}
           <Image
-            src="/assets/bg.png"
+            src="/login/bg.png"
             alt=""
             fill
             style={{objectFit: 'cover'}}

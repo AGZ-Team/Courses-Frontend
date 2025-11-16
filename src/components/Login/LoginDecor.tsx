@@ -50,7 +50,7 @@ export default function LoginDecor({side = 'right', locale = 'en'}: Props) {
   // Anchor helpers to mirror layout when side switches
   const outerEdge = side === 'right' ? 'right-[8%]' : 'left-[8%]'; // near panel outer edge
   const innerEdge = side === 'right' ? 'left-[12%]' : 'right-[12%]'; // near panel inner edge
-  const centerImageSrc = locale === 'ar' ? '/assets/1-ar.png' : '/assets/1.png';
+  const centerImageSrc = locale === 'ar' ? '/login/LoginAR.png' : '/login/LoginEN.png';
 
   return (
     <div
@@ -60,11 +60,11 @@ export default function LoginDecor({side = 'right', locale = 'en'}: Props) {
     >
       {/* top small avatar (outer edge) */}
       <Image
-        src="/assets/2.png"
+        src="/login/4.png"
         alt=""
         width={500}
         height={500}
-        className={`absolute ${outerEdge} top-[18%] w-24 md:w-32 translate-x-[calc(var(--parallax-x,0)*6px)] translate-y-[calc(var(--parallax-y,0)*6px)] animate-float-slower`}
+        className={`absolute ${outerEdge} top-[18%] w-24 md:w-58 translate-x-[calc(var(--parallax-x,0)*6px)] translate-y-[calc(var(--parallax-y,0)*6px)] animate-float-slower`}
       />
 
       {/* big center avatar (exact middle) */}
@@ -74,13 +74,13 @@ export default function LoginDecor({side = 'right', locale = 'en'}: Props) {
           alt=""
           width={1200}
           height={700}
-          className="w-[75%]  h-auto translate-x-[calc(var(--parallax-x,0)*4px)] translate-y-[calc(var(--parallax-y,0)*4px)] animate-float-slower"
+          className="w-[85%] h-auto translate-x-[calc(var(--parallax-x,0)*4px)] translate-y-[calc(var(--parallax-y,0)*4px)] animate-float-slower"
         />
       </div>
 
       {/* bottom small avatar (inner edge) */}
       <Image
-        src="/assets/3.png"
+        src="/login/2.png"
         alt=""
         width={500}
         height={500}

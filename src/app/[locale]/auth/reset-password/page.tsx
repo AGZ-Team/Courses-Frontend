@@ -34,7 +34,7 @@ export default async function ResetPasswordPage({ params }: PageProps) {
         <div className="relative h-full overflow-hidden">
           {/* moving background image */}
           <Image
-            src="/assets/bg.png"
+            src="/login/bg.png"
             alt=""
             fill
             style={{ objectFit: 'cover' }}
