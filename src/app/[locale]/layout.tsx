@@ -19,6 +19,8 @@ export function generateStaticParams() {
 export const metadata: Metadata = {
   // Set base URL for resolving relative URLs in metadata (production URL or fallback to localhost)
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  title: 'C R A I - Online Learning Platform',
+  description: 'A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.',
   // Use the project logo for icons and social images
   icons: {
     icon: {url: '/logo/c.jpg', sizes: '512x512'},
@@ -26,21 +28,29 @@ export const metadata: Metadata = {
     apple: {url: '/logo/c.jpg', sizes: '512x512'},
   },
   openGraph: {
+    type: 'website',
+    siteName: 'C R A I',
+    title: 'C R A I - Online Learning Platform',
+    description: 'A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.',
     images: [
       {
-        url: '/logo/c.jpg',
+        url: '/logo/metaLogo.png',
         width: 1200,
         height: 630,
-        alt: 'Site logo',
+        alt: 'C R A I Logo',
       },
     ],
   },
   twitter: {
+    card: 'summary_large_image',
+    title: 'C R A I - Online Learning Platform',
+    description: 'A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.',
     images: [
       {
-        url: '/logo/c.jpg',
+        url: '/logo/metaLogo.png',
         width: 1200,
         height: 630,
+        alt: 'C R A I Logo',
       },
     ],
   },
