@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-import { useTranslations } from "next-intl"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -144,7 +143,6 @@ const chartConfig = {
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
-  const t = useTranslations('dashboard.chart')
 
   React.useEffect(() => {
     if (isMobile) {
@@ -169,12 +167,12 @@ export function ChartAreaInteractive() {
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>{t('totalVisitors')}</CardTitle>
+        <CardTitle>Total Visitors</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            {t('totalLast3Months')}
+            Showing total visitors for the last 3 months
           </span>
-          <span className="@[540px]/card:hidden">{t('last3Months')}</span>
+          <span className="@[540px]/card:hidden">Last 3 months</span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
@@ -184,9 +182,9 @@ export function ChartAreaInteractive() {
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
           >
-            <ToggleGroupItem value="90d">{t('last3Months')}</ToggleGroupItem>
-            <ToggleGroupItem value="30d">{t('last30Days')}</ToggleGroupItem>
-            <ToggleGroupItem value="7d">{t('last7Days')}</ToggleGroupItem>
+            <ToggleGroupItem value="90d">Last 3 months</ToggleGroupItem>
+            <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
+            <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
           </ToggleGroup>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
@@ -194,17 +192,17 @@ export function ChartAreaInteractive() {
               size="sm"
               aria-label="Select a value"
             >
-              <SelectValue placeholder={t('last3Months')} />
+              <SelectValue placeholder="Last 3 months" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
               <SelectItem value="90d" className="rounded-lg">
-                {t('last3Months')}
+                Last 3 months
               </SelectItem>
               <SelectItem value="30d" className="rounded-lg">
-                {t('last30Days')}
+                Last 30 days
               </SelectItem>
               <SelectItem value="7d" className="rounded-lg">
-                {t('last7Days')}
+                Last 7 days
               </SelectItem>
             </SelectContent>
           </Select>
