@@ -43,6 +43,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  other: {
+    'fb:app_id': '0',
+  },
   twitter: {
     card: 'summary_large_image',
     title: 'C R A I - Online Learning Platform',
