@@ -12,7 +12,7 @@ interface Lesson {
   duration: string;
   completed?: boolean;
 }
-
+ 
 interface CourseSection {
   id: number;
   title: string;
