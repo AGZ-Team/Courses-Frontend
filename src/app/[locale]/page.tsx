@@ -21,6 +21,29 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   return {
     title: t('title'),
     description: t('description'),
+    openGraph: {
+      type: 'website',
+      locale: locale,
+      url: `https://crai-ksa.netlify.app/${locale}`,
+      siteName: 'C R A I',
+      title: t('title'),
+      description: t('description'),
+      images: [
+        {
+          url: 'https://crai-ksa.netlify.app/logo/metaLogo.png',
+          width: 1200,
+          height: 630,
+          alt: 'C R A I Logo',
+          type: 'image/png',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: ['https://crai-ksa.netlify.app/logo/metaLogo.png'],
+    },
   };
 }
 

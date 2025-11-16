@@ -18,7 +18,7 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   // Set base URL for resolving relative URLs in metadata (production URL or fallback to localhost)
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL('https://crai-ksa.netlify.app'),
   title: 'C R A I - Online Learning Platform',
   description: 'A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.',
   // Use the project logo for icons and social images
@@ -29,15 +29,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
+    url: 'https://crai-ksa.netlify.app',
     siteName: 'C R A I',
     title: 'C R A I - Online Learning Platform',
     description: 'A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.',
     images: [
       {
-        url: '/logo/metaLogo.png',
+        url: 'https://crai-ksa.netlify.app/logo/metaLogo.png',
         width: 1200,
         height: 630,
         alt: 'C R A I Logo',
+        type: 'image/png',
       },
     ],
   },
@@ -45,14 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'C R A I - Online Learning Platform',
     description: 'A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.',
-    images: [
-      {
-        url: '/logo/metaLogo.png',
-        width: 1200,
-        height: 630,
-        alt: 'C R A I Logo',
-      },
-    ],
+    images: ['https://crai-ksa.netlify.app/logo/metaLogo.png'],
   },
 };
 
