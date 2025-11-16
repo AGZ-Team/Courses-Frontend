@@ -7,7 +7,8 @@ import { LuSearch } from 'react-icons/lu';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { RiShoppingCart2Fill, RiUser3Line, RiArrowDownSLine, RiSettings3Line, RiDashboardLine, RiLogoutCircleLine } from 'react-icons/ri';
 import { NavDropdown, DropdownItem } from './NavDropdown';
-import NavRightBanner from './NavRightBanner';
+import NavRightBannerExplore from './NavRightBannerExplore';
+import NavRightBannerSubscriptions from './NavRightBannerSubscriptions';
 import { clearTokens } from '@/lib/auth';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
@@ -196,7 +197,7 @@ const MainNavbar = () => {
           }
           items={myCoursesItems}
           align="left"
-          rightPanel = {<NavRightBanner />}
+          rightPanel = {<NavRightBannerSubscriptions />}
         />
 
         </div>
@@ -233,7 +234,7 @@ const MainNavbar = () => {
                   }
                   items={courseCategoriesItems}
                   align="center"
-                  rightPanel={<NavRightBanner />}
+                  rightPanel={<NavRightBannerExplore />}
                 />
               );
             }

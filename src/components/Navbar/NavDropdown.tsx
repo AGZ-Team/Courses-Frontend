@@ -132,7 +132,7 @@ export function NavDropdown({
               {items.map((item) => {
                 const isLogout = item.labelKey === 'logout';
                 const rtlProfileClasses = profileMode && isAr ? 'flex-row-reverse text-right' : 'text-left';
-                const commonClassName = `flex items-center ${rtlProfileClasses} gap-3 px-5 py-3 text-sm font-medium rounded-lg transition-colors ${
+                const commonClassName = `flex items-center ${rtlProfileClasses} gap-3 px-5 py-3 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
                   isLogout
                     ? 'text-red-400 hover:bg-red-400/10 hover:text-red-400'
                     : 'text-[#0ABAB5] hover:bg-[#0ABAB5]/10 hover:text-[#0ABAB5]'
