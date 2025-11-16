@@ -48,6 +48,14 @@
     min-height: 82vh;
   }
 }
+
+/* Small phones: 500–300px */
+@media (max-width: 500px) and (min-width: 300px) {
+  .home-hero {
+    padding-top: 3rem; /* pull content closer to top on very small screens */
+    min-height: 80vh;
+  }
+}
   body {
     overflow-x: hidden;
   }

@@ -63,7 +63,7 @@ const HomeHero = () => {
   return (
     <section
       ref={heroRef}
-  className="home-hero relative flex min-h-[90vh] w-full items-center overflow-hidden bg-linear-to-b from-[#0ABAB5] via-[#0ABAB5] to-[#08a39e] text-white pt-24 md:pt-28"
+      className="home-hero relative flex min-h-[90vh] w-full items-center overflow-hidden bg-linear-to-b from-[#0ABAB5] via-[#0ABAB5] to-[#08a39e] text-white pt-24 md:pt-28 min-[300px]:max-[500px]:pt-16 min-[300px]:max-[500px]:min-h-[82vh]"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
@@ -73,7 +73,7 @@ const HomeHero = () => {
         <div className={`pointer-events-none absolute ${isAr ? 'right-1/4' : 'left-1/4'} top-1/3 h-16 w-16 rounded-full border border-white/10 bg-white/10`} />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16 sm:px-8 md:px-10 lg:flex-row lg:items-start lg:justify-between lg:gap-20 lg:px-12 xl:max-w-[1400px] xl:px-16 2xl:max-w-[1600px] 2xl:px-20">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col gap-16 px-6 py-16 min-[300px]:max-[500px]:py-10 sm:px-8 md:px-10 lg:flex-row lg:items-start lg:justify-between lg:gap-20 lg:px-12 xl:max-w-[1400px] xl:px-16 2xl:max-w-[1600px] 2xl:px-20">
         <div className="max-w-3xl space-y-10 min-[1000px]:max-[1399px]:mb-12 min-[700px]:max-[800px]:mb-34">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-white">
             {t('eyebrow')}
@@ -89,14 +89,17 @@ const HomeHero = () => {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4">
-            <Link href={`/${locale}/signup`} className="rounded-sm border-2 border-transparent bg-white px-12 py-4 text-lg font-semibold text-[#0ABAB5] shadow-[0_18px_38px_rgba(10,186,181,0.45)] transition-colors duration-300 hover:border-white hover:bg-transparent hover:text-white">
+          <div className="flex items-stretch gap-3 min-[300px]:max-[500px]:flex-nowrap">
+            <Link
+              href={`/${locale}/signup`}
+              className="flex items-center justify-center rounded-sm border-2 border-transparent bg-white px-12 py-4 text-lg font-semibold text-[#0ABAB5] shadow-[0_18px_38px_rgba(10,186,181,0.45)] transition-colors duration-300 hover:border-white hover:bg-transparent hover:text-white min-[300px]:max-[500px]:flex-1 min-[300px]:max-[500px]:px-3 min-[300px]:max-[500px]:py-3 min-[300px]:max-[500px]:text-sm min-[300px]:max-[500px]:whitespace-nowrap"
+            >
               {t('primaryCta')}
             </Link>
-            <Link href={`/${locale}/courses`}>
-            <button className=" rounded-sm border-2 border-white px-7.5 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5] cursor-pointer min-[1000px]:max-[1390px]:px-7.5 min-[1400px]:px-12">
-              {t('secondaryCta')}
-            </button>
+            <Link href={`/${locale}/courses`} className="min-[300px]:max-[500px]:flex-1">
+              <button className="flex w-full items-center justify-center rounded-sm border-2 border-white px-7.5 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-[#0ABAB5] cursor-pointer min-[1000px]:max-[1390px]:px-7.5 min-[1400px]:px-12 min-[300px]:max-[500px]:px-3 min-[300px]:max-[500px]:py-3 min-[300px]:max-[500px]:text-sm min-[300px]:max-[500px]:whitespace-nowrap">
+                {t('secondaryCta')}
+              </button>
             </Link>
           </div>
         </div>

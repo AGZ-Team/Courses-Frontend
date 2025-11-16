@@ -126,7 +126,7 @@ export function NavDropdown({
         <div
           className={`absolute top-full ${alignmentClasses[align]} mt-2 z-50 max-h-[80vh] overflow-y-auto overflow-x-hidden rounded-xl border border-white/15 bg-white backdrop-blur-lg shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-max max-w-[calc(100vw-2rem)] md:max-w-none`}
         >
-          <div className={`grid grid-cols-1 gap-2 px-3 py-2 ${rightPanel ? 'md:grid-cols-[minmax(200px,auto)_minmax(300px,360px)] md:gap-3' : ''}`}> 
+          <div className={`grid grid-cols-1 gap-2 px-3 py-2 ${rightPanel ? 'md:grid-cols-[minmax(200px,auto)_minmax(340px,420px)] md:gap-3' : ''}`}>
             {/* Items column */}
             <div className="py-1">
               {items.map((item) => {
