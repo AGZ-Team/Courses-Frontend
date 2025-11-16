@@ -7,8 +7,9 @@ import { useLocale } from 'next-intl';
 export interface DropdownItem {
   labelKey: string;
   label: string;
-  href: string;
+  href?: string;
   icon?: React.ReactNode;
+  onSelect?: () => void;
 }
 
 interface NavDropdownProps {
@@ -63,7 +64,8 @@ export function NavDropdown({
     };
   }, [isOpen]);
 
-  const handleItemClick = () => {
+  const handleSelect = (callback?: () => void) => {
+    callback?.();
     setIsOpen(false);
     onItemClick?.();
   };
@@ -120,22 +122,50 @@ export function NavDropdown({
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className={`absolute top-full ${alignmentClasses[align]} mt-2 z-50 max-h-[80vh] overflow-y-auto rounded-xl border border-white/15 bg-white backdrop-blur-lg shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-[calc(100vw-2rem)] md:w-auto`}
+          className={`absolute top-full ${alignmentClasses[align]} mt-2 z-50 max-h-[80vh] overflow-y-auto overflow-x-hidden rounded-xl border border-white/15 bg-white backdrop-blur-lg shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-[calc(100vw-2rem)] md:w-auto`}
         >
           <div className={`grid grid-cols-1 gap-3 p-2 ${rightPanel ? 'md:grid-cols-[minmax(240px,1fr)_minmax(260px,320px)] md:gap-4' : ''}`}> 
             {/* Items column */}
             <div className="py-1 min-w-[240px]">
-              {items.map((item) => (
-                <Link
-                  key={item.labelKey}
-                  href={item.href}
-                  onClick={handleItemClick}
-                  className={`flex items-center gap-3 px-5 py-3 text-sm font-medium text-[#0ABAB5] transition-colors hover:bg-[#0ABAB5]/10 hover:text-[#0ABAB5] rounded-lg`}
-                >
-                  {item.icon && <span className="shrink-0">{item.icon}</span>}
-                  <span className={isAr ? 'text-[15px]' : 'text-[14px]'}>{item.label}</span>
-                </Link>
-              ))}
+              {items.map((item) => {
+                const isLogout = item.labelKey === 'logout';
+                const commonClassName = `flex items-center gap-3 px-5 py-3 text-sm font-medium rounded-lg transition-colors ${
+                  isLogout
+                    ? 'text-red-400 hover:bg-red-400/10 hover:text-red-400'
+                    : 'text-[#0ABAB5] hover:bg-[#0ABAB5]/10 hover:text-[#0ABAB5]'
+                }`;
+
+                const content = (
+                  <>
+                    {item.icon && <span className="shrink-0">{item.icon}</span>}
+                    <span className={isAr ? 'text-[15px]' : 'text-[14px]'}>{item.label}</span>
+                  </>
+                );
+
+                if (item.href) {
+                  return (
+                    <Link
+                      key={item.labelKey}
+                      href={item.href}
+                      onClick={() => handleSelect(item.onSelect)}
+                      className={commonClassName}
+                    >
+                      {content}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <button
+                    key={item.labelKey}
+                    type="button"
+                    onClick={() => handleSelect(item.onSelect)}
+                    className={`${commonClassName} w-full text-left`}
+                  >
+                    {content}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Optional right panel */}

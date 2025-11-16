@@ -1,8 +1,13 @@
+import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
+
 import { AppSidebar } from "@/components/Dashboard/app-sidebar"
 import { ChartAreaInteractive } from "@/components/Dashboard/chart-area-interactive"
 import { DataTable } from "@/components/Dashboard/data-table"
 import { SectionCards } from "@/components/Dashboard/section-cards"
 import { SiteHeader } from "@/components/Dashboard/site-header"
+import ProfileSettingsPanel from "@/components/Dashboard/ProfileSettingsPanel"
+import PaymentHistoryPanel from "@/components/Dashboard/PaymentHistoryPanel"
 import {
   SidebarInset,
   SidebarProvider,
@@ -10,7 +15,31 @@ import {
 
 import data from "./data.json"
 
-export default function Page() {
+type DashboardMetadataProps = {
+  params: Promise<{ locale: string }>
+}
+
+interface DashboardPageProps {
+  searchParams?: Promise<{
+    view?: string
+  }>
+}
+
+export async function generateMetadata({ params }: DashboardMetadataProps): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ namespace: "dashboard", locale })
+
+  return {
+    title: t("title"),
+  }
+}
+
+export default async function Page({ searchParams }: DashboardPageProps) {
+  const resolvedSearchParams = await searchParams
+  const view = resolvedSearchParams?.view ?? "overview"
+  const showProfile = view === "profile"
+  const showPayments = view === "payments"
+
   return (
     <SidebarProvider
       style={
@@ -26,11 +55,19 @@ export default function Page() {
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards />
-              <div className="px-4 lg:px-6">
-                <ChartAreaInteractive />
-              </div>
-              <DataTable data={data} />
+              {showProfile ? (
+                <ProfileSettingsPanel />
+              ) : showPayments ? (
+                <PaymentHistoryPanel />
+              ) : (
+                <>
+                  <SectionCards />
+                  <div className="px-4 lg:px-6">
+                    <ChartAreaInteractive />
+                  </div>
+                  <DataTable data={data} />
+                </>
+              )}
             </div>
           </div>
         </div>

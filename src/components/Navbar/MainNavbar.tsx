@@ -4,12 +4,13 @@ import {Link, usePathname, useRouter} from '@/i18n/routing';
 import LanguageSwitcher from '@/components/Navbar/LanguageSwitcher';
 import {useTranslations, useLocale} from 'next-intl';
 import { LuSearch } from 'react-icons/lu';
-import { useState, useMemo, useEffect } from 'react';
-import { RiShoppingCart2Fill } from 'react-icons/ri';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { RiShoppingCart2Fill, RiUser3Line, RiArrowDownSLine, RiSettings3Line, RiDashboardLine, RiLogoutCircleLine } from 'react-icons/ri';
 import { NavDropdown, DropdownItem } from './NavDropdown';
 import NavRightBanner from './NavRightBanner';
 import { clearTokens } from '@/lib/auth';
 import Image from 'next/image';
+import { Input } from '@/components/ui/input';
 
 type NavItem = {
   labelKey: string;
@@ -25,31 +26,47 @@ const MainNavbar = () => {
   const router = useRouter();
   const isAr = locale === 'ar';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState<{courses: boolean; explore: boolean}>({courses: false, explore: false});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [displayName, setDisplayName] = useState('');
+
+  const resolveFirstName = useCallback((value: string) => {
+    const trimmed = value.trim();
+    if (!trimmed) return 'User';
+    const [first] = trimmed.split(/\s+/);
+    return first || 'User';
+  }, []);
 
   useEffect(() => {
-    // Check if user is logged in
-    const token = localStorage.getItem('access');
-    const storedUsername = localStorage.getItem('username');
-    if (token) {
-      setIsLoggedIn(true);
-      setUsername(storedUsername || 'User');
-    }
+    const applyAuthState = () => {
+      const token = localStorage.getItem('access');
+      const storedUsername = localStorage.getItem('username') || '';
+
+      if (token) {
+        const effectiveName = storedUsername || 'User';
+        setIsLoggedIn(true);
+        setUsername(storedUsername);
+        setDisplayName(resolveFirstName(effectiveName));
+      } else {
+        setIsLoggedIn(false);
+        setUsername('');
+        setDisplayName('');
+      }
+    };
+
+    applyAuthState();
 
     // Listen for auth change events within the same tab
     const onAuthChanged = () => {
-      const nextToken = localStorage.getItem('access');
-      const nextUsername = localStorage.getItem('username') || '';
-      setIsLoggedIn(!!nextToken);
-      setUsername(nextUsername || (nextToken ? 'User' : ''));
+      applyAuthState();
     };
 
     // Listen for cross-tab changes
     const onStorage = (e: StorageEvent) => {
       if (e.key === 'access' || e.key === 'username' || e.key === 'access_token' || e.key === null) {
-        onAuthChanged();
+        applyAuthState();
       }
     };
 
@@ -60,18 +77,19 @@ const MainNavbar = () => {
       window.removeEventListener('auth-changed', onAuthChanged);
       window.removeEventListener('storage', onStorage);
     };
-  }, []);
+  }, [resolveFirstName]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     // Clear tokens centrally and notify listeners
     clearTokens();
     setIsLoggedIn(false);
     setUsername('');
+    setDisplayName('');
     router.push('/login');
-  };
+  }, [router]);
 
   // Course categories dropdown items
-  const courseCategoriesItems: DropdownItem[] = useMemo(() => [
+  const courseCategoriesItems: Array<DropdownItem & {href: string}> = useMemo(() => [
     { labelKey: 'all', label: t('courseCategories.all'), href: '/courses' },
     { labelKey: 'design', label: t('courseCategories.design'), href: '/courses?category=design' },
     { labelKey: 'development', label: t('courseCategories.development'), href: '/courses?category=development' },
@@ -82,7 +100,7 @@ const MainNavbar = () => {
   ], [t]);
 
   // My Courses dropdown items
-  const myCoursesItems: DropdownItem[] = useMemo(() => [
+  const myCoursesItems: Array<DropdownItem & {href: string}> = useMemo(() => [
     { labelKey: 'course1', label: t('myCoursesDropdown.course1'), href: '/lesson' },
     { labelKey: 'course2', label: t('myCoursesDropdown.course2'), href: '/lesson' },
     { labelKey: 'course3', label: t('myCoursesDropdown.course3'), href: '/lesson' },
@@ -96,6 +114,27 @@ const MainNavbar = () => {
     {labelKey: 'explore', href: '/courses', hasDropdown: true},
     {labelKey: 'contact', href: '/contact'}
   ];
+
+  const profileDropdownItems: DropdownItem[] = useMemo(() => [
+    {
+      labelKey: 'dashboard',
+      label: t('profile.dashboard'),
+      href: '/dashboard',
+      icon: <RiDashboardLine className="h-4 w-4" aria-hidden="true" />
+    },
+    {
+      labelKey: 'profile',
+      label: t('profile.profile'),
+      href: '/dashboard?view=profile',
+      icon: <RiUser3Line className="h-4 w-4" aria-hidden="true" />
+    },
+    {
+      labelKey: 'logout',
+      label: t('profile.logout'),
+      onSelect: handleLogout,
+      icon: <RiLogoutCircleLine className="h-4 w-4" aria-hidden="true" />
+    }
+  ], [t, handleLogout]);
 
   const isActive = (href: string) => {
     // Remove locale prefix from pathname for comparison
@@ -240,10 +279,14 @@ const MainNavbar = () => {
           {/* Search - Desktop Only */}
           <button
             type="button"
-            className="hidden rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 lg:block"
+            onClick={() => setIsSearchOpen((v) => !v)}
+            className={`hidden rounded-full p-2.5 transition lg:block ${
+              isSearchOpen ? 'bg-white text-primary' : 'bg-white/10 hover:bg-white/20'
+            }`}
             aria-label={t('search')}
+            aria-expanded={isSearchOpen}
           >
-            <LuSearch className={`h-6 w-6`} />
+            <LuSearch className="h-6 w-6" />
           </button>
 
           {/* Cart - Always Visible */}
@@ -264,20 +307,20 @@ const MainNavbar = () => {
           </div>
 
           {isLoggedIn ? (
-            <>
-              {/* Username - Desktop Only */}
-              <span className={`hidden ${isAr ? 'text-[16px]' : 'text-[14px]'} whitespace-nowrap text-white/80 md:block`}>
-                {username}
-              </span>
-
-              {/* Logout Button */}
-              <button
-                onClick={handleLogout}
-                className={`whitespace-nowrap rounded-full bg-red-500 ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-white transition hover:cursor-pointer hover:bg-red-600`}
-              >
-                {t('logout') || 'Logout'}
-              </button>
-            </>
+            <NavDropdown
+              align="right"
+              className="hidden md:block"
+              items={profileDropdownItems}
+              trigger={
+                <div
+                  className={`flex items-center gap-2 rounded-full bg-white/10 px-4 py-2.5 transition hover:bg-white/20 ${isAr ? 'flex-row-reverse' : ''}`}
+                >
+                  <RiUser3Line className="h-5 w-5" aria-hidden="true" />
+                  <span className={`${isAr ? 'text-[16px]' : 'text-[14px]'} font-semibold text-white`}>{displayName || 'User'}</span>
+                  <RiArrowDownSLine className="h-4 w-4 opacity-75" aria-hidden="true" />
+                </div>
+              }
+            />
           ) : (
             <>
               {/* Login - Desktop Only */}
@@ -296,7 +339,28 @@ const MainNavbar = () => {
           )}
         </div>
       </div>
-      
+
+      {/* Desktop Search Bar */}
+      <div className="hidden lg:block">
+        <div
+          className={`mx-auto w-full max-w-[1180px] px-6 sm:px-8 md:px-10 lg:px-12 min-[1000px]:max-[1399px]:px-4 min-[1400px]:px-16 min-[1400px]:max-w-[1400px] origin-top transition-all duration-200 ease-out ${
+            isSearchOpen
+              ? 'pointer-events-auto max-h-16 translate-y-0 opacity-100 pb-3'
+              : 'pointer-events-none max-h-0 -translate-y-2 opacity-0'
+          }`}
+          dir={isAr ? 'rtl' : 'ltr'}
+        >
+          <div className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+            <LuSearch className="h-5 w-5 text-gray-400" />
+            <Input
+              type="text"
+              placeholder={t('search')}
+              className="border-none bg-transparent text-sm text-gray-800 shadow-none focus-visible:ring-0 focus-visible:border-0"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="border-t border-white/10 bg-primary lg:hidden">
@@ -399,20 +463,42 @@ const MainNavbar = () => {
                 {/* Username - Mobile */}
                 <div className="mt-4 rounded-lg bg-white/5 px-4 py-3">
                   <p className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium text-white/80`}>
-                    {isAr ? 'مرحبا' : 'Hello'}, {username}
+                    {isAr ? 'مرحبا' : 'Hello'}, {displayName || 'User'}
                   </p>
                 </div>
 
-                {/* Logout Button - Mobile */}
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`mt-4 block w-full rounded-full bg-red-500 px-6 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-red-600`}
-                >
-                  {t('logout') || 'Logout'}
-                </button>
+                <div className="mt-3 space-y-2">
+                  {profileDropdownItems.map((item) => {
+                    if (item.href) {
+                      return (
+                        <Link
+                          key={item.labelKey}
+                          href={item.href}
+                          className={`flex items-center gap-2 rounded-lg px-4 py-3 text-white/80 transition hover:bg-white/5 ${item.labelKey === 'logout' ? 'hover:text-red-400' : 'hover:text-white'}`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {item.icon && <span className="shrink-0 text-white">{item.icon}</span>}
+                          <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium`}>{item.label}</span>
+                        </Link>
+                      );
+                    }
+
+                    return (
+                      <button
+                        key={item.labelKey}
+                        type="button"
+                        onClick={() => {
+                          item.onSelect?.();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`flex w-full items-center gap-2 rounded-lg px-4 py-3 text-left text-white/80 transition hover:bg-white/5 ${item.labelKey === 'logout' ? 'hover:text-red-400' : 'hover:text-white'} ${isAr ? 'flex-row-reverse' : ''}`}
+                      >
+                        {item.icon && <span className="shrink-0 text-white">{item.icon}</span>}
+                        <span className={`${isAr ? 'text-[16px]' : 'text-[15px]'} font-medium`}>{item.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </>
             ) : (
               <>

@@ -4,7 +4,6 @@
   "signup_button": "Sign Up",
   "logout_button": "Log Out",
   "profile_page": "Profile Page",
-  "settings_page": "Settings Page",
   "error_message": "An error occurred. Please try again.",
   "metadata": {
     "home": {
@@ -176,6 +175,12 @@
       "course2": "Game Streaming Studio Secrets",
       "course3": "Designing Immersive Creator Spaces",
       "allcourses": "View All Subscriptions"
+    },
+    "profile": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "settings": "Settings",
+      "logout": "Log out"
     }
   },
   "breadcrumb": {
@@ -1197,6 +1202,8 @@
   "dashboard": {
     "title": "Dashboard",
     "analytics": "Analytics",
+    "profileSettings": "Profile settings",
+    "profile": "Profile",
     "users": "Users",
     "categories": "Categories",
     "content": "Content",
@@ -1250,6 +1257,85 @@
       "of": "of",
       "rowsSelected": "row(s) selected."
     }
+  },
+  "dashboardProfile": {
+    "title": "Settings",
+    "subtitle": "Manage your profile details and account preferences.",
+    "tabs": {
+      "profile": "Edit profile",
+      "password": "Password",
+      "social": "Social profiles",
+      "notifications": "Notifications",
+      "closeAccount": "Close account"
+    },
+    "profile": {
+      "avatarTitle": "Your avatar",
+      "avatarHelp": "PNG or JPG no bigger than 800px wide and tall.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "username": "Username",
+      "email": "Email address",
+      "phone": "Phone number",
+      "expertise": "Expertise",
+      "bio": "Short bio",
+      "save": "Save changes"
+    },
+    "password": {
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "description": "Choose a strong password that you don’t use anywhere else.",
+      "save": "Update password"
+    },
+    "social": {
+      "title": "Social profiles",
+      "description": "Connect the platforms you use with your audience.",
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "save": "Save social links"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Choose how you want to hear from us.",
+      "emailNews": "Product updates & news",
+      "emailActivity": "Account activity & security",
+      "emailMarketing": "Promotions & campaigns",
+      "save": "Save notification settings"
+    },
+    "closeAccount": {
+      "title": "Close account",
+      "description": "This is a permanent action and cannot be undone.",
+      "button": "Request account deletion"
+    }
+  },
+  "dashboardPaymentHistory": {
+    "title": "Payment history",
+    "subtitle": "Review all your transactions in one place.",
+    "tableTitle": "Transactions",
+    "tableSubtitle": "Recent payments for your courses and subscriptions.",
+    "columns": {
+      "date": "Date",
+      "id": "Invoice ID",
+      "course": "Course / Item",
+      "amount": "Amount",
+      "method": "Payment method",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "filters": {
+      "all": "All",
+      "paid": "Paid",
+      "pending": "Pending",
+      "refunded": "Refunded"
+    },
+    "status": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "refunded": "Refunded"
+    },
+    "viewInvoice": "View invoice"
   },
   "privacyPolicy": {
     "badge": "Privacy Policy",

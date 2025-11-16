@@ -60,6 +60,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "#",
         icon: IconChartBar,
       },
+      {
+        title: t('profile'),
+        url: "/dashboard?view=profile",
+        icon: IconUsers,
+      },
     ],
     navSecondary: [
       {
@@ -91,7 +96,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         name: t('paymentHistory'),
-        url: "#",
+        url: "/dashboard?view=payments",
         icon: IconCreditCard,
       },
     ],
