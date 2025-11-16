@@ -117,20 +117,45 @@ function ProfileTab({ isAr }: { isAr: boolean }) {
       <form className="space-y-5 md:space-y-6 max-w-4xl mx-auto">
         {/* Row 1: Username & Email (match signup layout) */}
         <div className="grid gap-5 md:grid-cols-2">
-          <Field label={t("username")} id="username" />
-          <Field label={t("email")} id="email" type="email" />
+          <Field
+            label={t("username")}
+            id="username"
+            placeholder={t("placeholders.username")}
+          />
+          <Field
+            label={t("email")}
+            id="email"
+            type="email"
+            placeholder={t("placeholders.email")}
+          />
         </div>
 
         {/* Row 2: First & Last name */}
         <div className="grid gap-5 md:grid-cols-2">
-          <Field label={t("firstName")} id="firstName" />
-          <Field label={t("lastName")} id="lastName" />
+          <Field
+            label={t("firstName")}
+            id="firstName"
+            placeholder={t("placeholders.firstName")}
+          />
+          <Field
+            label={t("lastName")}
+            id="lastName"
+            placeholder={t("placeholders.lastName")}
+          />
         </div>
 
         {/* Row 3: Phone & Expertise */}
         <div className="grid gap-5 md:grid-cols-2">
-          <Field label={t("phone")} id="phone" />
-          <Field label={t("expertise")} id="expertise" />
+          <Field
+            label={t("phone")}
+            id="phone"
+            placeholder={t("placeholders.phone")}
+          />
+          <Field
+            label={t("expertise")}
+            id="expertise"
+            placeholder={t("placeholders.expertise")}
+          />
         </div>
         <div className="mt-2 flex justify-end border-t border-gray-100 pt-4">
           <Button
@@ -156,17 +181,32 @@ function PasswordTab({ isAr }: { isAr: boolean }) {
 
       {/* Row 1: Current password */}
       <div>
-        <Field label={t("current")} id="currentPassword" type="password" />
+        <Field
+          label={t("current")}
+          id="currentPassword"
+          type="password"
+          placeholder={t("placeholders.current")}
+        />
       </div>
 
       {/* Row 2: New password */}
       <div>
-        <Field label={t("new")} id="newPassword" type="password" />
+        <Field
+          label={t("new")}
+          id="newPassword"
+          type="password"
+          placeholder={t("placeholders.new")}
+        />
       </div>
 
       {/* Row 3: Confirm new password */}
       <div>
-        <Field label={t("confirm")} id="confirmPassword" type="password" />
+        <Field
+          label={t("confirm")}
+          id="confirmPassword"
+          type="password"
+          placeholder={t("placeholders.confirm")}
+        />
       </div>
 
       <div className="mt-2 flex justify-end border-t border-gray-100 pt-4">
@@ -190,10 +230,26 @@ function SocialTab({ isAr }: { isAr: boolean }) {
         <p className="text-sm text-gray-500">{t("description")}</p>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
-        <Field label={t("twitter")} id="twitter" placeholder="@username" />
-        <Field label={t("facebook")} id="facebook" />
-        <Field label={t("instagram")} id="instagram" />
-        <Field label={t("linkedin")} id="linkedin" />
+        <Field
+          label={t("twitter")}
+          id="twitter"
+          placeholder={t("placeholders.twitter")}
+        />
+        <Field
+          label={t("facebook")}
+          id="facebook"
+          placeholder={t("placeholders.facebook")}
+        />
+        <Field
+          label={t("instagram")}
+          id="instagram"
+          placeholder={t("placeholders.instagram")}
+        />
+        <Field
+          label={t("linkedin")}
+          id="linkedin"
+          placeholder={t("placeholders.linkedin")}
+        />
       </div>
       <div className="flex justify-end">
         <Button

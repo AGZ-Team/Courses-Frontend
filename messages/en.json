@@ -1278,6 +1278,14 @@
       "phone": "Phone number",
       "expertise": "Expertise",
       "bio": "Short bio",
+      "placeholders": {
+        "username": "Enter your username",
+        "email": "Enter your email address",
+        "firstName": "Enter your first name",
+        "lastName": "Enter your last name",
+        "phone": "Enter your phone number",
+        "expertise": "e.g. UI Design, Programming"
+      },
       "save": "Save changes"
     },
     "password": {
@@ -1285,6 +1293,11 @@
       "new": "New password",
       "confirm": "Confirm new password",
       "description": "Choose a strong password that you don’t use anywhere else.",
+      "placeholders": {
+        "current": "Enter your current password",
+        "new": "Create a new password",
+        "confirm": "Re-enter your new password"
+      },
       "save": "Update password"
     },
     "social": {
@@ -1294,6 +1307,12 @@
       "facebook": "Facebook",
       "instagram": "Instagram",
       "linkedin": "LinkedIn",
+      "placeholders": {
+        "twitter": "@username",
+        "facebook": "Facebook profile URL",
+        "instagram": "Instagram profile URL",
+        "linkedin": "LinkedIn profile URL"
+      },
       "save": "Save social links"
     },
     "notifications": {
