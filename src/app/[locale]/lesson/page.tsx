@@ -77,6 +77,22 @@ const COURSE_DATA = {
   ]
 };
 
+type LessonMetadataProps = {
+  params: Promise<{
+    locale: string;
+  }>;
+};
+
+export async function generateMetadata({ params }: LessonMetadataProps) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata.lesson' });
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
+
 interface LessonPageProps {
   params: Promise<{
     locale: string;

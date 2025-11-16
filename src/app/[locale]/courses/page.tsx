@@ -7,6 +7,20 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
+type CoursesMetadataProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: CoursesMetadataProps) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata.courses' });
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
+
 const COURSES: CourseCard[] = [
   {
     id: 1,

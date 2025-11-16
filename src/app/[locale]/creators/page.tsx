@@ -1,4 +1,4 @@
-import {setRequestLocale} from 'next-intl/server';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
 import CreatorsPageClient from '@/components/Creators/CreatorsPageClient';
 
 const CATEGORY_OPTIONS = [
@@ -17,6 +17,22 @@ type CreatorsPageProps = {
     locale: string;
   }>;
 };
+
+type CreatorsMetadataProps = {
+  params: Promise<{
+    locale: string;
+  }>;
+};
+
+export async function generateMetadata({params}: CreatorsMetadataProps) {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'metadata.creators'});
+
+  return {
+    title: t('title'),
+    description: t('description')
+  };
+}
 
 export default async function CreatorsPage({params}: CreatorsPageProps) {
   const {locale} = await params;
