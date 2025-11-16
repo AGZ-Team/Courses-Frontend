@@ -101,10 +101,10 @@ const MainNavbar = () => {
 
   // My Courses dropdown items
   const myCoursesItems: Array<DropdownItem & {href: string}> = useMemo(() => [
-    { labelKey: 'course1', label: t('myCoursesDropdown.course1'), href: '/lesson' },
-    { labelKey: 'course2', label: t('myCoursesDropdown.course2'), href: '/lesson' },
-    { labelKey: 'course3', label: t('myCoursesDropdown.course3'), href: '/lesson' },
-    { labelKey: 'allcourses', label: t('myCoursesDropdown.allcourses'), href: '/lesson' },
+    { labelKey: 'course1', label: t('myCoursesDropdown.course1'), href: '/subscriptions' },
+    { labelKey: 'course2', label: t('myCoursesDropdown.course2'), href: '/subscriptions' },
+    { labelKey: 'course3', label: t('myCoursesDropdown.course3'), href: '/subscriptions' },
+    { labelKey: 'allcourses', label: t('myCoursesDropdown.allcourses'), href: '/subscriptions' },
   ], [t]);
 
   const navItems: NavItem[] = [

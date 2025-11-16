@@ -87,8 +87,8 @@ export function LessonVideo({
       </div>
 
       {/* Video Info */}
-      <div className="mt-6 space-y-4">
-        <div>
+      <div className="mt-6 space-y-4" >
+        <div dir='ltr'>
           <h2 className="text-2xl font-bold text-slate-900 mb-2">{title}</h2>
           <p className="text-slate-600">{description}</p>
         </div>

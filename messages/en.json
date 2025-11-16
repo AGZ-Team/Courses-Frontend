@@ -194,7 +194,8 @@
     "signup": "Sign Up",
     "privacy": "Privacy Policy",
     "terms": "Terms & Conditions",
-    "lesson": "Subscriptions"
+    "lesson": "Subscriptions",
+    "subscriptions": "Subscriptions"
   },
   "login": {
     "title": "Login",

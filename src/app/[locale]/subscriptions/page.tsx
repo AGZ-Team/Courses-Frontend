@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { LessonPageClient } from '@/components/Lesson/LessonPageClient';
-import SidebarToggleButton from '@/components/Lesson/SidebarToggleButton';
+import { LessonPageClient } from '@/components/Subscriptions/LessonPageClient';
+import SidebarToggleButton from '@/components/Subscriptions/SidebarToggleButton';
 
 // Mock data - replace with actual API calls
 // Section titles will be populated from translations in the page component
