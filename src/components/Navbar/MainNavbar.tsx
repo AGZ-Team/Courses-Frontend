@@ -150,7 +150,7 @@ const MainNavbar = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-100 border-b border-white/10 bg-primary text-white shadow-[0_8px_24px_rgba(10,186,181,0.25)]">
-      <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1180px] items-center px-6 sm:px-8 md:px-10 lg:px-12 min-[1000px]:max-[1399px]:px-4 min-[1400px]:px-16 min-[1400px]:max-w-[1400px]`}>
+      <div className={`mx-auto flex ${isAr ? 'h-26' : 'h-24'} w-full max-w-[1180px] items-center px-6 sm:px-8 md:px-10 lg:px-12 min-[1000px]:max-[1399px]:px-8 min-[1400px]:px-16 min-[1400px]:max-w-[1400px]`}>
         {/* Left group: Logo + Explore */}
         <div className="flex items-center gap-4 shrink-0">
           {/* Logo */}
@@ -201,8 +201,8 @@ const MainNavbar = () => {
 
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className={`hidden flex-1 items-center justify-center gap-6 ${isAr ? 'px-3 text-[15px]' : 'px-2 text-[15px]'} font-medium lg:flex`} aria-label={t('ariaLabel')}>
+        {/* Desktop Navigation (only on extra-large screens to avoid crowding at 1000–1200px) */}
+        <nav className={`hidden flex-1 items-center justify-center gap-6 ${isAr ? 'px-3 text-[15px]' : 'px-2 text-[15px]'} font-medium xl:flex`} aria-label={t('ariaLabel')}>
           {navItems.map((item) => {
             if (item.hasDropdown && item.labelKey === 'explore') {
               return (
@@ -257,11 +257,15 @@ const MainNavbar = () => {
         </nav>
 
         {/* Right Side Actions */}
-        <div className={`${isAr ? 'mr-auto flex-row-reverse' : 'ml-auto'} flex items-center gap-3 text-sm font-medium md:gap-6 shrink-0`} dir={isAr ? 'rtl' : 'ltr'}>
+        <div
+          className={`${isAr ? 'mr-auto' : 'ml-auto'} flex items-center gap-3 text-sm font-medium md:gap-6 shrink-0`}
+          // Force LTR inside this small group so we can control visual order with flex `order` classes
+          dir="ltr"
+        >
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 lg:hidden"
+            className="rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 xl:hidden"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
           >
@@ -282,7 +286,7 @@ const MainNavbar = () => {
             onClick={() => setIsSearchOpen((v) => !v)}
             className={`hidden rounded-full p-2.5 transition lg:block ${
               isSearchOpen ? 'bg-white text-primary' : 'bg-white/10 hover:bg-white/20'
-            }`}
+            } ${isAr ? 'lg:order-4' : 'lg:order-1'}`}
             aria-label={t('search')}
             aria-expanded={isSearchOpen}
           >
@@ -292,7 +296,7 @@ const MainNavbar = () => {
           {/* Cart - Always Visible */}
           <button
             type="button"
-            className="relative rounded-full bg-white/10 p-2.5 transition hover:bg-white/20"
+            className={`relative rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 ${isAr ? 'lg:order-3' : 'lg:order-2'}`}
             aria-label={t('cart')}
           >
             <RiShoppingCart2Fill className={`h-6 w-6`} />
@@ -302,14 +306,14 @@ const MainNavbar = () => {
           </button>
 
           {/* Language Switcher - Desktop Only */}
-          <div className="hidden lg:block">
+          <div className={`hidden lg:block ${isAr ? 'lg:order-2' : 'lg:order-3'}`}>
             <LanguageSwitcher />
           </div>
 
           {isLoggedIn ? (
             <NavDropdown
               align="right"
-              className="hidden md:block"
+              className={`hidden md:block ${isAr ? 'lg:order-1' : 'lg:order-4'}`}
               items={profileDropdownItems}
               trigger={
                 <div
@@ -343,7 +347,7 @@ const MainNavbar = () => {
       {/* Desktop Search Bar */}
       <div className="hidden lg:block">
         <div
-          className={`mx-auto w-full max-w-[1180px] px-6 sm:px-8 md:px-10 lg:px-12 min-[1000px]:max-[1399px]:px-4 min-[1400px]:px-16 min-[1400px]:max-w-[1400px] origin-top transition-all duration-200 ease-out ${
+          className={`mx-auto w-full max-w-[1180px] px-6 sm:px-8 md:px-10 lg:px-12 min-[1000px]:max-[1399px]:px-8 min-[1400px]:px-16 min-[1400px]:max-w-[1400px] origin-top transition-all duration-200 ease-out ${
             isSearchOpen
               ? 'pointer-events-auto max-h-16 translate-y-0 opacity-100 pb-3'
               : 'pointer-events-none max-h-0 -translate-y-2 opacity-0'
@@ -364,7 +368,7 @@ const MainNavbar = () => {
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="border-t border-white/10 bg-primary lg:hidden">
-          <nav className="mx-auto max-w-[1180px] px-6 sm:px-8 md:px-10 min-[1000px]:max-[1399px]:px-4 min-[1400px]:px-16 min-[1400px]:max-w-[1400px] py-6 max-h=[calc(100vh-7rem)] overflow-y-auto overscroll-contain" dir={isAr ? 'rtl' : 'ltr'}>
+          <nav className="mx-auto max-w-[1180px] px-6 sm:px-8 md:px-10 min-[1000px]:max-[1399px]:px-8 min-[1400px]:px-16 min-[1400px]:max-w-[1400px] py-6 max-h=[calc(100vh-7rem)] overflow-y-auto overscroll-contain" dir={isAr ? 'rtl' : 'ltr'}>
             {/* My Courses - mobile accordion */}
             <div className="mb-4">
               <button

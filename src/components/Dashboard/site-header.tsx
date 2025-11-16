@@ -1,12 +1,26 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import Link from "next/link"
 import { useLocale, useTranslations } from "next-intl"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 export function SiteHeader() {
-  const locale = useLocale();
-  const t = useTranslations('dashboard');
+  const locale = useLocale()
+  const t = useTranslations("dashboard")
+  const searchParams = useSearchParams()
+  const view = searchParams?.get("view") ?? "overview"
+
+  let currentSectionLabel: string | null = null
+
+  if (view === "profile") {
+    currentSectionLabel = t("profile")
+  } else if (view === "payments") {
+    currentSectionLabel = t("paymentHistory")
+  }
+
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -15,7 +29,12 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">{t('title')}</h1>
+        <div className="flex items-baseline gap-2">
+          <h1 className="text-base font-medium">{t("title")}</h1>
+          {currentSectionLabel && (
+            <span className="text-xs text-muted-foreground">/ {currentSectionLabel}</span>
+          )}
+        </div>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
             <Link href={`/${locale}`} target="_blank" rel="noreferrer noopener" className="dark:text-foreground">

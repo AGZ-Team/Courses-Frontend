@@ -170,6 +170,11 @@ export async function login(data: LoginData): Promise<JWTResponse> {
     localStorage.setItem('refresh_token', tokens.refresh);
     localStorage.setItem('access', tokens.access); // Also store as 'access' for compatibility
     localStorage.setItem('username', data.username); // Store username for navbar
+
+    // If the user logged in using an email, store it explicitly for UI components
+    if (isEmail) {
+      localStorage.setItem('email', username);
+    }
     
     // Store uid and token for email verification if provided by backend
     if (tokens.uid && tokens.token) {
