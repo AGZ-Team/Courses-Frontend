@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { AlertCircle, CheckCircle, Loader } from 'lucide-react';
+import { API_BASE_URL } from '@/lib/config';
 
 interface ResetPasswordInstructionsProps {
   locale: string;
@@ -38,7 +39,7 @@ export default function ResetPasswordInstructions({
 
     try {
       const response = await fetch(
-        'https://alaaelgharably248.pythonanywhere.com/auth/users/reset_password/',
+        `${API_BASE_URL}/auth/users/reset_password/`,
         {
           method: 'POST',
           headers: {

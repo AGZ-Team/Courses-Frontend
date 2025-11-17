@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/lib/config';
 
 /**
  * API route to handle login requests
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     // Call the backend API
     const response = await fetch(
-      'https://alaaelgharably248.pythonanywhere.com/auth/jwt/create/',
+      `${API_BASE_URL}/auth/jwt/create/`,
       {
         method: 'POST',
         headers: {

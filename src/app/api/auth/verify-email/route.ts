@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/lib/config';
 
 /**
  * POST /api/auth/verify-email
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
 
     // Call Djoser backend to activate/verify email
     const response = await fetch(
-      'https://alaaelgharably248.pythonanywhere.com/auth/users/activation/',
+      `${API_BASE_URL}/auth/users/activation/`,
       {
         method: 'POST',
         headers: {

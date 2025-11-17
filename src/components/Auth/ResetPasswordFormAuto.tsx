@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
 import { AlertCircle, CheckCircle, Eye, EyeOff, Loader } from 'lucide-react';
+import { API_BASE_URL } from '@/lib/config';
 
 interface ResetPasswordFormAutoProps {
   locale: string;
@@ -69,7 +70,7 @@ export default function ResetPasswordFormAuto({
     try {
       // Call backend directly with uid, token, and new password
       const response = await fetch(
-        'https://alaaelgharably248.pythonanywhere.com/auth/users/reset_password_confirm/',
+        `${API_BASE_URL}/auth/users/reset_password_confirm/`,
         {
           method: 'POST',
           headers: {

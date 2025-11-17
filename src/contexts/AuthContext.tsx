@@ -6,7 +6,7 @@ import {
   clearTokens,
   verifyToken,
   isAuthenticated as checkAuth,
-} from '@/lib/auth';
+} from '@/services/authService';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -32,8 +32,8 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     checkAuthentication();
   }, []);
 
-  const logout = () => {
-    clearTokens();
+  const logout = async () => {
+    await clearTokens();
     setIsAuthenticated(false);
   };
 

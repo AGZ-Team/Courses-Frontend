@@ -9,7 +9,7 @@ import { RiShoppingCart2Fill, RiUser3Line, RiArrowDownSLine, RiSettings3Line, Ri
 import { NavDropdown, DropdownItem } from './NavDropdown';
 import NavRightBannerExplore from './NavRightBannerExplore';
 import NavRightBannerSubscriptions from './NavRightBannerSubscriptions';
-import { clearTokens } from '@/lib/auth';
+import { clearTokens } from '@/services/authService';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 
@@ -80,9 +80,9 @@ const MainNavbar = () => {
     };
   }, [resolveFirstName]);
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback(async () => {
     // Clear tokens centrally and notify listeners
-    clearTokens();
+    await clearTokens();
     setIsLoggedIn(false);
     setUsername('');
     setDisplayName('');

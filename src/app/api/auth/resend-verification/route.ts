@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/lib/config';
 
 /**
  * API route to resend verification email
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     // Call the backend API to resend verification email
     const response = await fetch(
-      'https://alaaelgharably248.pythonanywhere.com/users/resend_activation/',
+      `${API_BASE_URL}/users/resend_activation/`,
       {
         method: 'POST',
         headers: {

@@ -1,6 +1,6 @@
 // Authentication API utilities
-
-const API_BASE_URL = 'https://alaaelgharably248.pythonanywhere.com';
+import {API_BASE_URL} from './config';
+import {loginWithCookie, logoutWithCookie, checkAuthStatus} from './authCookie';
 
 export interface SignupData {
   username: string;
@@ -128,7 +128,8 @@ export async function signup(data: SignupData): Promise<SignupResponse> {
 }
 
 /**
- * Login and get JWT tokens
+ * Login and get JWT tokens via cookie-based API route.
+ * Tokens are stored in HttpOnly cookies on the server.
  */
 export async function login(data: LoginData): Promise<JWTResponse> {
   // Normalize username/email: trim and lowercase if it looks like an email
@@ -136,63 +137,25 @@ export async function login(data: LoginData): Promise<JWTResponse> {
   const isEmail = normalizedUsername.includes('@');
   const username = isEmail ? normalizedUsername.toLowerCase() : normalizedUsername;
   
-  const response = await fetch(`${API_BASE_URL}/auth/jwt/create/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      username,
-      password: data.password,
-    }),
-  });
+  // Call cookie-based login endpoint
+  const result = await loginWithCookie(username, data.password);
 
-  if (!response.ok) {
-    const error = await response.json();
-    
-    // Throw the entire error object as JSON string so LoginForm can parse it
-    // This preserves all error details from the backend
-    if (error.detail) {
-      throw new Error(error.detail);
-    } else if (error.error) {
-      throw new Error(error.error);
-    } else {
-      // If error is an object with field-specific errors, stringify it
-      throw new Error(JSON.stringify(error));
-    }
+  if (!result.success) {
+    throw new Error(result.error || 'Login failed');
   }
 
-  const tokens = await response.json();
-  
-  // Store tokens in localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('access_token', tokens.access);
-    localStorage.setItem('refresh_token', tokens.refresh);
-    localStorage.setItem('access', tokens.access); // Also store as 'access' for compatibility
-    localStorage.setItem('username', data.username); // Store username for navbar
-
-    // If the user logged in using an email, store it explicitly for UI components
-    if (isEmail) {
-      localStorage.setItem('email', username);
-    }
-    
-    // Store uid and token for email verification if provided by backend
-    if (tokens.uid && tokens.token) {
-      localStorage.setItem('verification_uid', tokens.uid);
-      localStorage.setItem('verification_token', tokens.token);
-    }
-
-    // Notify UI that auth state changed (same-tab listeners)
-    try {
-      window.dispatchEvent(new Event('auth-changed'));
-    } catch {}
-  }
-  
-  return tokens;
+  // Return response with uid/token for email verification flow
+  return {
+    access: '', // Not exposed to client anymore
+    refresh: '', // Not exposed to client anymore
+    uid: result.uid,
+    token: result.token,
+  };
 }
 
 /**
- * Verify JWT token
+ * Verify JWT token (legacy - kept for compatibility)
+ * Now delegates to server-side check
  */
 export async function verifyToken(token: string): Promise<boolean> {
   try {
@@ -211,45 +174,47 @@ export async function verifyToken(token: string): Promise<boolean> {
 }
 
 /**
- * Get stored access token
+ * Get stored access token (legacy - kept for compatibility)
+ * Tokens are now in HttpOnly cookies, not accessible from client
  */
 export function getAccessToken(): string | null {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem('access_token');
+  // Tokens are stored in HttpOnly cookies on the server
+  // Client code should not try to access them
+  return null;
 }
 
 /**
- * Get stored refresh token
+ * Get stored refresh token (legacy - kept for compatibility)
+ * Tokens are now in HttpOnly cookies, not accessible from client
  */
 export function getRefreshToken(): string | null {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem('refresh_token');
+  // Tokens are stored in HttpOnly cookies on the server
+  // Client code should not try to access them
+  return null;
 }
 
 /**
- * Remove stored tokens (logout)
+ * Remove stored tokens (logout) via cookie-based API route
  */
-export function clearTokens(): void {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
-  localStorage.removeItem('access');
-  localStorage.removeItem('username');
-  localStorage.removeItem('verification_uid');
-  localStorage.removeItem('verification_token');
-
-  // Notify UI that auth state changed (same-tab listeners)
+export async function clearTokens(): Promise<void> {
   try {
-    window.dispatchEvent(new Event('auth-changed'));
-  } catch {}
+    await logoutWithCookie();
+    
+    // Notify UI that auth state changed (same-tab listeners)
+    if (typeof window !== 'undefined') {
+      try {
+        window.dispatchEvent(new Event('auth-changed'));
+      } catch {}
+    }
+  } catch (error) {
+    console.error('Error clearing tokens:', error);
+  }
 }
 
 /**
- * Check if user is authenticated
+ * Check if user is authenticated via server-side check
  */
 export async function isAuthenticated(): Promise<boolean> {
-  const token = getAccessToken();
-  if (!token) return false;
-  
-  return verifyToken(token);
+  const result = await checkAuthStatus();
+  return result.isAuthenticated;
 }

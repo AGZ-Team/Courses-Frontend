@@ -1,13 +1,15 @@
-import {getAccessToken} from './auth';
-
-const API_BASE_URL = 'https://alaaelgharably248.pythonanywhere.com';
+import {API_BASE_URL} from './config';
 
 interface RequestOptions extends RequestInit {
   requireAuth?: boolean;
 }
 
 /**
- * Make an authenticated API request
+ * Client-side API request helper.
+ * 
+ * Note: For authenticated requests, the JWT is in HttpOnly cookies.
+ * The browser will automatically include cookies in requests.
+ * For server-side authenticated requests, use apiRequestWithCookies from lib/apiWithCookies.ts
  */
 export async function apiRequest<T>(
   endpoint: string,
@@ -19,17 +21,10 @@ export async function apiRequest<T>(
     ...(headers as Record<string, string>),
   };
 
-  // Add authorization header if authentication is required
-  if (requireAuth) {
-    const token = getAccessToken();
-    if (token) {
-      requestHeaders['Authorization'] = `Bearer ${token}`;
-    }
-  }
-
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...restOptions,
     headers: requestHeaders,
+    credentials: 'include', // Include cookies (HttpOnly tokens) in request
   });
 
   if (!response.ok) {

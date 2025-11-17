@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/lib/config';
 
 /**
  * POST /api/auth/reset-password
@@ -69,7 +70,7 @@ export async function POST(request: NextRequest) {
 
     // Call Djoser backend to confirm password reset
     const response = await fetch(
-      'https://alaaelgharably248.pythonanywhere.com/auth/users/reset_password_confirm/',
+      `${API_BASE_URL}/auth/users/reset_password_confirm/`,
       {
         method: 'POST',
         headers: {

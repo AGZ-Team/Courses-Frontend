@@ -3,7 +3,7 @@
 import React, {useState} from 'react';
 import {Link} from '@/i18n/routing';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
-import {login} from '@/lib/auth';
+import {login} from '@/services/authService';
 import {useRouter} from 'next/navigation';
 import {parseLoginErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
 import {validateLoginForm} from '@/lib/validation';

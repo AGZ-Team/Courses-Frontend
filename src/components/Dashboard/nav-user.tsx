@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { useRouter } from "@/i18n/routing"
-import { clearTokens } from "@/lib/auth"
+import { clearTokens } from "@/services/authService"
 
 export function NavUser({
   user,
@@ -65,9 +65,9 @@ export function NavUser({
     }
   }, [])
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // Clear tokens centrally and notify listeners
-    clearTokens()
+    await clearTokens()
     router.push("/login")
   }
 

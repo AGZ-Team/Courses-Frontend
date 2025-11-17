@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {MdCloudUpload} from 'react-icons/md';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 import {Link} from '@/i18n/routing';
-import {signup} from '@/lib/auth';
+import {signup} from '@/services/authService';
 import {useRouter} from 'next/navigation';
 import {parseSignupErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
 import {validateSignupForm} from '@/lib/validation';
