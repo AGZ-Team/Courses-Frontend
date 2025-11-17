@@ -1,6 +1,11 @@
 // Authentication API utilities
 import {API_BASE_URL} from './config';
-import {loginWithCookie, logoutWithCookie, checkAuthStatus} from './authCookie';
+import {
+  loginWithCookie,
+  logoutWithCookie,
+  checkAuthStatus,
+  type CheckAuthResponse,
+} from './authCookie';
 
 export interface SignupData {
   username: string;
@@ -144,6 +149,13 @@ export async function login(data: LoginData): Promise<JWTResponse> {
     throw new Error(result.error || 'Login failed');
   }
 
+  // Notify UI that auth state changed (same-tab listeners)
+  if (typeof window !== 'undefined') {
+    try {
+      window.dispatchEvent(new Event('auth-changed'));
+    } catch {}
+  }
+
   // Return response with uid/token for email verification flow
   return {
     access: '', // Not exposed to client anymore
@@ -217,4 +229,11 @@ export async function clearTokens(): Promise<void> {
 export async function isAuthenticated(): Promise<boolean> {
   const result = await checkAuthStatus();
   return result.isAuthenticated;
+}
+
+/**
+ * Get full auth status (including username) via server-side cookie-based check.
+ */
+export async function getAuthStatus(): Promise<CheckAuthResponse> {
+  return checkAuthStatus();
 }

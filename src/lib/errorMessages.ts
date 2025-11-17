@@ -75,8 +75,8 @@ export const loginErrors: ErrorMessages = {
     ar: 'اسم المستخدم أو البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى التحقق والمحاولة مرة أخرى',
   },
   no_active_account: {
-    en: 'Invalid username/email or password. Please check your credentials and try again',
-    ar: 'اسم المستخدم أو البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى التحقق والمحاولة مرة أخرى',
+    en: 'This account is not active. It may not be verified yet or has been disabled. Please verify your email or contact support.',
+    ar: 'هذا الحساب غير نشط. قد لا يكون البريد الإلكتروني مُفعّلاً بعد أو تم تعطيل الحساب. يرجى تفعيل بريدك الإلكتروني أو التواصل مع الدعم.',
   },
   account_disabled: {
     en: 'This account has been disabled. Please contact support',

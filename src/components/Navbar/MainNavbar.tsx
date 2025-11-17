@@ -9,7 +9,7 @@ import { RiShoppingCart2Fill, RiUser3Line, RiArrowDownSLine, RiSettings3Line, Ri
 import { NavDropdown, DropdownItem } from './NavDropdown';
 import NavRightBannerExplore from './NavRightBannerExplore';
 import NavRightBannerSubscriptions from './NavRightBannerSubscriptions';
-import { clearTokens } from '@/services/authService';
+import { clearTokens, getAuthStatus } from '@/services/authService';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 
@@ -41,34 +41,37 @@ const MainNavbar = () => {
   }, []);
 
   useEffect(() => {
-    const applyAuthState = () => {
-      const token = localStorage.getItem('access');
-      const storedUsername = localStorage.getItem('username') || '';
+    const applyAuthState = async () => {
+      try {
+        const status = await getAuthStatus();
 
-      if (token) {
-        const effectiveName = storedUsername || 'User';
-        setIsLoggedIn(true);
-        setUsername(storedUsername);
-        setDisplayName(resolveFirstName(effectiveName));
-      } else {
+        if (status.isAuthenticated) {
+          const effectiveName = status.username || 'User';
+          setIsLoggedIn(true);
+          setUsername(status.username || '');
+          setDisplayName(resolveFirstName(effectiveName));
+        } else {
+          setIsLoggedIn(false);
+          setUsername('');
+          setDisplayName('');
+        }
+      } catch {
         setIsLoggedIn(false);
         setUsername('');
         setDisplayName('');
       }
     };
 
-    applyAuthState();
+    void applyAuthState();
 
     // Listen for auth change events within the same tab
     const onAuthChanged = () => {
-      applyAuthState();
+      void applyAuthState();
     };
 
-    // Listen for cross-tab changes
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === 'access' || e.key === 'username' || e.key === 'access_token' || e.key === null) {
-        applyAuthState();
-      }
+    // Listen for cross-tab changes (e.g. if you still use localStorage flags elsewhere)
+    const onStorage = () => {
+      void applyAuthState();
     };
 
     window.addEventListener('auth-changed', onAuthChanged);

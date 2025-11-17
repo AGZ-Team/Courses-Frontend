@@ -1,2 +1,2 @@
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://alaaelgharably248.pythonanywhere.com';
+  'https://alaaelgharably248.pythonanywhere.com';

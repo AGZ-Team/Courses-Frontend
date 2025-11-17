@@ -98,7 +98,8 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
       const isEmailNotVerifiedError =
         (rawError.includes('email') && (rawError.includes('not verified') || rawError.includes('not activated'))) ||
         rawError.includes('e-mail is not verified') ||
-        rawError.includes('account is not activated');
+        rawError.includes('account is not activated') ||
+        rawError.includes('no active account');
 
       if (isEmailNotVerifiedError) {
         setIsEmailNotVerified(true);

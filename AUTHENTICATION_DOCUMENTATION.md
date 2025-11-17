@@ -70,7 +70,6 @@ src/
 │       └── auth/
 │           ├── verify-email/route.ts    # Email verification endpoint
 │           ├── reset-password/route.ts  # Password reset endpoint
-│           ├── login/route.ts           # Login endpoint (if used)
 │           └── resend-verification/route.ts # Resend verification email
 ```
 

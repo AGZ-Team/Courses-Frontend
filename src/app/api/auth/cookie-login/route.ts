@@ -34,8 +34,19 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
+      // Djoser often returns errors in `detail` or `non_field_errors`
+      const nonFieldError = Array.isArray(data?.non_field_errors)
+        ? data.non_field_errors[0]
+        : data?.non_field_errors;
+
+      const errorMessage =
+        (typeof data?.detail === 'string' && data.detail) ||
+        (typeof nonFieldError === 'string' && nonFieldError) ||
+        (typeof data?.error === 'string' && data.error) ||
+        'Login failed';
+
       return NextResponse.json(
-        { success: false, error: data.detail || 'Login failed' },
+        { success: false, error: errorMessage },
         { status: response.status }
       );
     }

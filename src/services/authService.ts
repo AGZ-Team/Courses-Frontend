@@ -6,6 +6,7 @@ import {
   getAccessToken,
   getRefreshToken,
   clearTokens,
+  getAuthStatus,
 } from '@/lib/auth';
 
 export {
@@ -16,6 +17,7 @@ export {
   getAccessToken,
   getRefreshToken,
   clearTokens,
+  getAuthStatus,
 };
 
 export type {
