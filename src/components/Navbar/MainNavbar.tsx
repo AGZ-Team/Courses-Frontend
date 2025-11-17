@@ -333,14 +333,21 @@ const MainNavbar = () => {
           ) : (
             <>
               {/* Login - Desktop Only */}
-              <Link href="/login" className={`hidden ${isAr ? 'text-[16px]' : 'text-[14px]'} whitespace-nowrap text-white/80 transition hover:text-white md:block`}>
+              <Link
+                href="/login"
+                className={`hidden md:block whitespace-nowrap text-white/80 transition hover:text-white ${
+                  isAr ? 'text-[16px]' : 'text-[14px] lg:order-4'
+                }`}
+              >
                 {t('login')}
               </Link>
 
               {/* Signup - Desktop Only */}
               <Link
                 href={`/signup`}
-                className={`hidden md:block whitespace-nowrap rounded-full bg-white ${isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px]'} font-semibold text-primary transition hover:bg-white/90`}
+                className={`hidden md:block whitespace-nowrap rounded-full bg-white ${
+                  isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px] lg:order-5'
+                } font-semibold text-primary transition hover:bg-white/90`}
               >
                 {t('signup')}
               </Link>
