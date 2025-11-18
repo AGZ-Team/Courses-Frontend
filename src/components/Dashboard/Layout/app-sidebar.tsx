@@ -2,14 +2,8 @@
 
 import * as React from "react"
 import {
-  IconCamera,
   IconChartBar,
   IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
   IconHelp,
   IconInnerShadowTop,
   IconSearch,
@@ -17,17 +11,16 @@ import {
   IconCategory,
   IconFileText,
   IconCreditCard,
-  IconInnerShadowBottom,
 } from "@tabler/icons-react"
 import { useLocale, useTranslations } from "next-intl"
 import Link from "next/link"
 
-import { LanguageSwitcher } from "@/components/Dashboard/language-switcher"
-import { NavDocuments } from "@/components/Dashboard/nav-documents"
-import { NavMain } from "@/components/Dashboard/nav-main"
-import { NavPages } from "@/components/Dashboard/nav-pages"
-import { NavSecondary } from "@/components/Dashboard/nav-secondary"
-import { NavUser } from "@/components/Dashboard/nav-user"
+import { LanguageSwitcher } from "@/components/Dashboard/Navigation/language-switcher"
+import { NavDocuments } from "@/components/Dashboard/Navigation/nav-documents"
+import { NavMain } from "@/components/Dashboard/Navigation/nav-main"
+import { NavPages } from "@/components/Dashboard/Navigation/nav-pages"
+import { NavSecondary } from "@/components/Dashboard/Navigation/nav-secondary"
+import { NavUser } from "@/components/Dashboard/Navigation/nav-user"
 import {
   Sidebar,
   SidebarContent,

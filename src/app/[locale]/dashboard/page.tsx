@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 
-import { AppSidebar } from "@/components/Dashboard/app-sidebar"
-import { ChartAreaInteractive } from "@/components/Dashboard/chart-area-interactive"
-import { DataTable } from "@/components/Dashboard/data-table"
-import { SectionCards } from "@/components/Dashboard/section-cards"
-import { SiteHeader } from "@/components/Dashboard/site-header"
-import ProfileSettingsPanel from "@/components/Dashboard/ProfileSettingsPanel"
-import PaymentHistoryPanel from "@/components/Dashboard/PaymentHistoryPanel"
-import UsersPanel from "@/components/Dashboard/UsersPanel"
+import { AppSidebar } from "@/components/Dashboard/Layout/app-sidebar"
+import { ChartAreaInteractive } from "@/components/Dashboard/Charts/chart-area-interactive"
+import { DataTable } from "@/components/Dashboard/Tables/data-table"
+import { SectionCards } from "@/components/Dashboard/Layout/section-cards"
+import { SiteHeader } from "@/components/Dashboard/Layout/site-header"
+import ProfileSettingsPanel from "@/components/Dashboard/Panels/ProfileSettingsPanel"
+import PaymentHistoryPanel from "@/components/Dashboard/Panels/PaymentHistoryPanel"
+import UsersPanel from "@/components/Dashboard/Panels/UsersPanel"
 import {
   SidebarInset,
   SidebarProvider,
