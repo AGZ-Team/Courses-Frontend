@@ -206,7 +206,7 @@ const MainNavbar = () => {
         </div>
 
         {/* Desktop Navigation (only on extra-large screens to avoid crowding at 1000–1200px) */}
-        <nav className={`hidden flex-1 items-center justify-center gap-6 ${isAr ? 'px-3 text-[15px]' : 'px-2 text-[15px]'} font-medium xl:flex`} aria-label={t('ariaLabel')}>
+        <nav className={`hidden flex-1 items-center justify-center gap-6 ${isAr ? 'px-3 text-[17px]' : 'px-2 text-[16px]'} font-medium xl:flex`} aria-label={t('ariaLabel')}>
           {navItems.map((item) => {
             if (item.hasDropdown && item.labelKey === 'explore') {
               return (
@@ -262,7 +262,7 @@ const MainNavbar = () => {
 
         {/* Right Side Actions */}
         <div
-          className={`${isAr ? 'mr-auto' : 'ml-auto'} flex items-center gap-3 text-sm font-medium md:gap-6 shrink-0`}
+          className={`${isAr ? 'mr-auto' : 'ml-auto'} flex items-center gap-3 text-sm font-medium md:gap-4 shrink-0`}
           // Force LTR inside this small group so we can control visual order with flex `order` classes
           dir="ltr"
         >
@@ -335,9 +335,9 @@ const MainNavbar = () => {
               {/* Login - Desktop Only */}
               <Link
                 href="/login"
-                className={`hidden md:block whitespace-nowrap text-white/80 transition hover:text-white ${
-                  isAr ? 'text-[16px]' : 'text-[14px] lg:order-4'
-                }`}
+                className={`relative hidden md:inline-flex items-center justify-center whitespace-nowrap rounded-full border border-white/50 bg-white/5 ${
+                  isAr ? 'px-6 py-3 text-[16px]' : 'px-5 py-2.5 text-[14px] lg:order-4'
+                } font-semibold text-white/90 shadow-[0_0_18px_rgba(255,255,255,0.12)] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/25 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:translate-y-0`}
               >
                 {t('login')}
               </Link>
@@ -345,9 +345,9 @@ const MainNavbar = () => {
               {/* Signup - Desktop Only */}
               <Link
                 href={`/signup`}
-                className={`hidden md:block whitespace-nowrap rounded-full bg-white ${
+                className={`relative hidden md:inline-flex items-center justify-center whitespace-nowrap rounded-full bg-linear-to-r from-white via-white to-[#d2fff9] text-primary shadow-[0_10px_30px_rgba(0,0,0,0.15)] ${
                   isAr ? 'px-7 py-3 text-[16px]' : 'px-6 py-2.5 text-[14px] lg:order-5'
-                } font-semibold text-primary transition hover:bg-white/90`}
+                } font-semibold transition-all duration-300 hover:-translate-y-1 hover:from-white hover:via-[#f4fffd] hover:to-[#b2fff0] hover:shadow-[0_18px_38px_rgba(0,0,0,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:translate-y-0`}
               >
                 {t('signup')}
               </Link>
@@ -523,7 +523,7 @@ const MainNavbar = () => {
                   {/* Login Button */}
                   <Link 
                     href="/login" 
-                    className={`rounded-full border-2 border-white px-4 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white transition hover:bg-white hover:text-primary`}
+                    className={`rounded-full border border-white/50 bg-white/5 px-4 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-white/90 shadow-[0_0_14px_rgba(255,255,255,0.12)] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:translate-y-0`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {t('login')}
@@ -532,7 +532,7 @@ const MainNavbar = () => {
                   {/* Signup Button */}
                   <Link
                     href="/signup"
-                    className={`rounded-full bg-white px-4 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-primary transition hover:bg-white/90`}
+                    className={`rounded-full bg-linear-to-r from-white via-white to-[#d2fff9] px-4 py-3 text-center ${isAr ? 'text-[16px]' : 'text-[15px]'} font-semibold text-primary shadow-[0_10px_28px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:from-white hover:via-[#f4fffd] hover:to-[#b2fff0] hover:shadow-[0_18px_36px_rgba(0,0,0,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-primary active:translate-y-0`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {t('signup')}
