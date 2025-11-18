@@ -7,11 +7,10 @@ import {
 } from "@/lib/apiWithCookies";
 import type { AdminUser } from "@/types/adminUser";
 
-interface RouteParams {
-  params: { id: string };
-}
-
-export async function GET(_req: NextRequest, { params }: RouteParams) {
+export async function GET(
+  _req: NextRequest,
+  { params }: any,
+) {
   try {
     const user = await apiGetWithCookies<AdminUser>(`/auth/adminuserlist/${params.id}`, true);
     return NextResponse.json(user);
@@ -22,7 +21,10 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function PATCH(req: NextRequest, { params }: RouteParams) {
+export async function PATCH(
+  req: NextRequest,
+  { params }: any,
+) {
   try {
     const data = await req.json();
     const updated = await apiPatchWithCookies<AdminUser>(
@@ -38,7 +40,10 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(_req: NextRequest, { params }: RouteParams) {
+export async function DELETE(
+  _req: NextRequest,
+  { params }: any,
+) {
   try {
     await apiDeleteWithCookies<void>(`/auth/adminuserlist/${params.id}/delete`, true);
     return NextResponse.json({ success: true });

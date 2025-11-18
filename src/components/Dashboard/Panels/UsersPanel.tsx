@@ -341,7 +341,14 @@ export default function UsersPanel() {
                                 onClick={() => void handleToggleVerified(user, true)}
                                 className="h-7 rounded-full bg-emerald-500 px-3 text-[11px] font-medium text-white shadow-sm hover:bg-emerald-600"
                               >
-                                Verify
+                                {inlineSavingId === user.id ? (
+                                  <span className="flex items-center justify-center gap-1">
+                                    <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-white/80 border-t-transparent" />
+                                    <span>Verifying</span>
+                                  </span>
+                                ) : (
+                                  "Verify"
+                                )}
                               </Button>
                             )}
                           </TableCell>
@@ -444,7 +451,14 @@ export default function UsersPanel() {
                             onClick={() => void handleToggleVerified(user, true)}
                             className="h-7 rounded-full bg-emerald-500 px-3 text-[11px] font-medium text-white shadow-sm hover:bg-emerald-600"
                           >
-                            Verify
+                            {inlineSavingId === user.id ? (
+                              <span className="flex items-center justify-center gap-1">
+                                <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-white/80 border-t-transparent" />
+                                <span>Verifying</span>
+                              </span>
+                            ) : (
+                              "Verify"
+                            )}
                           </Button>
                         )}
                       </div>
