@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { useRouter } from "@/i18n/routing"
-import { clearTokens } from "@/services/authService"
+import { clearTokens, getAuthStatus } from "@/services/authService"
 
 export function NavUser({
   user,
@@ -53,15 +53,39 @@ export function NavUser({
   React.useEffect(() => {
     if (typeof window === "undefined") return
 
-    const storedUsername = window.localStorage.getItem("username")
-    const storedEmail =
-      window.localStorage.getItem("signup_email") || window.localStorage.getItem("email")
+    let cancelled = false
 
-    if (storedUsername && storedUsername.trim().length > 0) {
-      setDisplayName(storedUsername)
+    const loadUser = async () => {
+      const storedUsername = window.localStorage.getItem("username")
+      const storedEmail =
+        window.localStorage.getItem("signup_email") || window.localStorage.getItem("email")
+
+      if (!cancelled && storedUsername && storedUsername.trim().length > 0) {
+        setDisplayName(storedUsername)
+      }
+      if (!cancelled && storedEmail && storedEmail.trim().length > 0) {
+        setDisplayEmail(storedEmail)
+      }
+
+      try {
+        const status = await getAuthStatus()
+        if (!cancelled && status?.isAuthenticated && status.username) {
+          setDisplayName(status.username)
+        }
+      } catch {}
     }
-    if (storedEmail && storedEmail.trim().length > 0) {
-      setDisplayEmail(storedEmail)
+
+    void loadUser()
+
+    const handleAuthChanged = () => {
+      void loadUser()
+    }
+
+    window.addEventListener("auth-changed", handleAuthChanged)
+
+    return () => {
+      cancelled = true
+      window.removeEventListener("auth-changed", handleAuthChanged)
     }
   }, [])
 

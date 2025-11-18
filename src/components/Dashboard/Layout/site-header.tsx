@@ -19,6 +19,8 @@ export function SiteHeader() {
     currentSectionLabel = t("profile")
   } else if (view === "payments") {
     currentSectionLabel = t("paymentHistory")
+  } else if (view === "users") {
+    currentSectionLabel = t("users")
   }
 
   return (
