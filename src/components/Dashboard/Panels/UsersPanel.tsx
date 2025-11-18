@@ -35,6 +35,7 @@ function BooleanBadge({ value }: { value: boolean }) {
 }
 
 export default function UsersPanel() {
+  const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [rows, setRows] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
@@ -85,6 +86,17 @@ export default function UsersPanel() {
   useEffect(() => {
     setVisibleCount(20);
   }, [search, roleFilter]);
+
+  // Debounce search input to avoid excessive filtering / future server calls
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      setSearch(searchInput.trim());
+    }, 300);
+
+    return () => {
+      clearTimeout(handle);
+    };
+  }, [searchInput]);
 
   const handleOpenSheet = (mode: "view" | "edit", user: AdminUser) => {
     setSheetMode(mode);
@@ -207,7 +219,7 @@ export default function UsersPanel() {
               Connected to your admin users API with search, filters, and quick actions.
             </CardDescription>
           </div>
-          <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+          <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             <div className="inline-flex w-fit items-center justify-center gap-2 self-center rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-teal-800 shadow-sm ring-1 ring-teal-100/80">
               <span className="mr-1 text-[10px] uppercase tracking-wide text-teal-500">Users</span>
               <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] font-semibold text-teal-700">
@@ -247,11 +259,11 @@ export default function UsersPanel() {
                 Normal
               </ToggleGroupItem>
             </ToggleGroup>
-            <div className="w-full max-w-xs sm:max-w-[220px]">
+            <div className="w-full sm:w-auto sm:min-w-[220px]">
               <input
                 type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search by name, email, username, phone"
                 className="h-9 w-full rounded-full border border-teal-100 bg-white/90 px-3 text-xs text-gray-800 shadow-sm outline-none transition focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
               />
