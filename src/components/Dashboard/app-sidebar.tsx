@@ -81,7 +81,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     documents: [
       {
         name: t('users'),
-        url: "#",
+        url: "/dashboard?view=users",
         icon: IconUsers,
       },
       {

@@ -60,10 +60,14 @@ export function NavDocuments({
 
           if (hasLink) {
             const isPaymentsLink = item.url?.includes("view=payments")
+            const isUsersLink = item.url?.includes("view=users")
 
             if (isPaymentsLink) {
               // Highlight Payment History only when we're on the dashboard payments view
               isActive = normalizedPath === basePath && view === "payments"
+            } else if (isUsersLink) {
+              // Highlight Users only when we're on the dashboard users view
+              isActive = normalizedPath === basePath && view === "users"
             } else {
               isActive =
                 normalizedPath === basePath ||
@@ -76,7 +80,7 @@ export function NavDocuments({
           return (
             <SidebarMenuItem key={item.name}>
               {href ? (
-                <SidebarMenuButton asChild isActive={!!isActive}>
+                <SidebarMenuButton asChild isActive={!!isActive} className="cursor-pointer">
                   <a href={href}>
                     <item.icon />
                     <span>{item.name}</span>

@@ -8,6 +8,7 @@ import { SectionCards } from "@/components/Dashboard/section-cards"
 import { SiteHeader } from "@/components/Dashboard/site-header"
 import ProfileSettingsPanel from "@/components/Dashboard/ProfileSettingsPanel"
 import PaymentHistoryPanel from "@/components/Dashboard/PaymentHistoryPanel"
+import UsersPanel from "@/components/Dashboard/UsersPanel"
 import {
   SidebarInset,
   SidebarProvider,
@@ -39,6 +40,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const view = resolvedSearchParams?.view ?? "overview"
   const showProfile = view === "profile"
   const showPayments = view === "payments"
+  const showUsers = view === "users"
 
   return (
     <SidebarProvider
@@ -59,6 +61,8 @@ export default async function Page({ searchParams }: DashboardPageProps) {
                 <ProfileSettingsPanel />
               ) : showPayments ? (
                 <PaymentHistoryPanel />
+              ) : showUsers ? (
+                <UsersPanel />
               ) : (
                 <>
                   <SectionCards />

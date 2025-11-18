@@ -83,8 +83,8 @@ export const loginErrors: ErrorMessages = {
     ar: 'تم تعطيل هذا الحساب. يرجى الاتصال بالدعم',
   },
   email_not_verified: {
-    en: 'Email not verified. Please check your email and verify your account',
-    ar: 'البريد الإلكتروني غير مُتحقق منه. يرجى التحقق من بريدك الإلكتروني',
+    en: 'Account not found or email not verified. Please check your email or verify your account.',
+    ar: 'الحساب غير موجود أو البريد الإلكتروني غير مُتحقق منه. يرجى التحقق من البريد الإلكتروني أو تفعيل حسابك.',
   },
   non_field_errors: {
     en: 'Login failed. Please check your credentials and try again',
@@ -190,7 +190,7 @@ export function parseLoginErrors(
     ) {
       errors['credentials'] = loginErrors['invalid_credentials'][language];
     } else if (lowerError.includes('no active account')) {
-      // "No active account" means wrong credentials, not unverified email
+      // "No active account" messages map to inactive account / wrong credentials
       errors['credentials'] = loginErrors['no_active_account'][language];
     } else if (lowerError.includes('disabled')) {
       errors['credentials'] = loginErrors['account_disabled'][language];
@@ -209,7 +209,7 @@ export function parseLoginErrors(
       ) {
         errors['credentials'] = loginErrors['invalid_credentials'][language];
       } else if (lowerDetail.includes('no active account')) {
-        // "No active account" means wrong credentials, not unverified email
+        // "No active account" messages map to inactive account / wrong credentials
         errors['credentials'] = loginErrors['no_active_account'][language];
       } else if (lowerDetail.includes('disabled')) {
         errors['credentials'] = loginErrors['account_disabled'][language];
@@ -274,11 +274,11 @@ export function getUserFriendlyErrorMessage(
     const lowerMessage = message.toLowerCase();
     
     if (context === 'login') {
-      // Check for "No active account" - this is Djoser's way of saying wrong credentials
+      // For now, treat "No active account" as email-not-verified so the verification CTA appears
       if (lowerMessage.includes('no active account')) {
-        return loginErrors['no_active_account'][language];
+        return loginErrors['email_not_verified'][language];
       }
-      
+
       // Check for invalid credentials
       if (lowerMessage.includes('credential') || lowerMessage.includes('invalid')) {
         return loginErrors['invalid_credentials'][language];

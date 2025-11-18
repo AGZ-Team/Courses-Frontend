@@ -157,6 +157,19 @@ function ProfileTab({ isAr }: { isAr: boolean }) {
             placeholder={t("placeholders.expertise")}
           />
         </div>
+
+        {/* Row 4: Bio */}
+        <div>
+          <Label htmlFor="bio" className="mb-1 block text-sm font-medium text-gray-700">
+            {isAr ? "نبذة عنك" : "Bio"}
+          </Label>
+          <textarea
+            id="bio"
+            rows={3}
+            placeholder={isAr ? "اكتب نبذة قصيرة عنك" : "Write a short bio about yourself"}
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition hover:border-primary/40 focus-visible:border-primary focus-visible:ring-[3px] focus-visible:ring-primary/20 resize-none"
+          />
+        </div>
         <div className="mt-2 flex justify-end border-t border-gray-100 pt-4">
           <Button
             type="button"

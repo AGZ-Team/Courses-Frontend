@@ -5,7 +5,7 @@ import {Link} from '@/i18n/routing';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 import {login} from '@/services/authService';
 import {useRouter} from 'next/navigation';
-import {parseLoginErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
+import {parseLoginErrors, getUserFriendlyErrorMessage, loginErrors} from '@/lib/errorMessages';
 import {validateLoginForm} from '@/lib/validation';
 
 type Translations = {
@@ -87,35 +87,23 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
         router.push(`/${locale}`);
       }
     } catch (err) {
-      // Get raw error message from backend
-      let rawError = '';
-      if (err instanceof Error) {
-        rawError = err.message.toLowerCase();
-      }
-
-      // Check SPECIFICALLY for email not verified error
-      // Be more precise to avoid false positives with wrong credentials
-      const isEmailNotVerifiedError =
-        (rawError.includes('email') && (rawError.includes('not verified') || rawError.includes('not activated'))) ||
-        rawError.includes('e-mail is not verified') ||
-        rawError.includes('account is not activated') ||
-        rawError.includes('no active account');
-
-      if (isEmailNotVerifiedError) {
-        setIsEmailNotVerified(true);
-        const verificationMessage = isAr
-          ? 'البريد الإلكتروني غير مُتحقق منه. يرجى التحقق من بريدك الإلكتروني أولاً'
-          : 'Email not verified. Please verify your email first';
-        setGeneralError(verificationMessage);
-        return;
-      }
-
       // Parse error and show field-specific or general message
       let errorMessage: string = getUserFriendlyErrorMessage(
         err,
         'login',
         isAr ? 'ar' : 'en'
       );
+
+      // If the mapped error is specifically "email not verified", show the verification CTA
+      const emailNotVerifiedMessage = isAr
+        ? loginErrors.email_not_verified.ar
+        : loginErrors.email_not_verified.en;
+
+      if (errorMessage === emailNotVerifiedMessage) {
+        setIsEmailNotVerified(true);
+        setGeneralError(errorMessage);
+        return;
+      }
       
       // Try to extract field-specific errors
       if (err instanceof Error) {
@@ -181,7 +169,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
                 href="/auth/verify-email"
                 className="inline-block bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition font-medium"
               >
-                {isAr ? 'انتقل إلى صفحة التحقق' : 'Go to Verification Page'}
+                {isAr ? 'قم بتفعيل حسابك من هنا' : 'Get verified from here'}
               </Link>
             </div>
           )}
