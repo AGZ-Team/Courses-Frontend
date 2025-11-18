@@ -157,17 +157,24 @@ export default function UsersPanel() {
 
     try {
       setDeleteSaving(true);
+      setError(null);
       await deleteAdminUser(deleteUser.id);
+      
+      // Update the rows list to remove the deleted user
       setRows((prev) => prev.filter((u) => u.id !== deleteUser.id));
+      
+      // Close the sheet if the deleted user was being viewed/edited
       if (activeUser && activeUser.id === deleteUser.id) {
         setActiveUser(null);
         setSheetOpen(false);
       }
+      
+      // Close the delete modal and reset state
       setDeleteOpen(false);
       setDeleteUser(null);
+      setDeleteSaving(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete user");
-    } finally {
       setDeleteSaving(false);
     }
   };
@@ -534,32 +541,55 @@ export default function UsersPanel() {
           )}
         </CardContent>
       </Card>
-      {deleteOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-md rounded-2xl bg-white shadow-xl">
+      {deleteOpen && deleteUser && (
+        <div 
+          className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 px-4"
+          onClick={(e) => {
+            // Close modal if clicking on backdrop
+            if (e.target === e.currentTarget && !deleteSaving) {
+              setDeleteOpen(false);
+              setDeleteUser(null);
+            }
+          }}
+        >
+          <div className="w-full max-w-md rounded-2xl bg-white shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="border-b border-gray-100 px-5 py-4">
               <h2 className="text-sm font-semibold text-gray-900">Delete user</h2>
               <p className="mt-1 text-xs text-gray-500">
-                {deleteUser
-                  ? `Are you sure you want to delete @${deleteUser.username}? This action cannot be undone.`
-                  : "Are you sure you want to delete this user?"}
+                Are you sure you want to delete @{deleteUser.username}? This action cannot be undone.
               </p>
             </div>
+            {error && (
+              <div className="mx-5 mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">
+                {error}
+              </div>
+            )}
             <div className="flex items-center justify-end gap-2 px-5 py-3">
               <Button
                 type="button"
                 onClick={handleConfirmDelete}
                 disabled={deleteSaving}
-                className="rounded-full bg-red-600 text-white hover:bg-red-700"
+                className="rounded-full bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
               >
-                {deleteSaving ? "Deleting..." : "Delete"}
+                {deleteSaving ? (
+                  <span className="flex items-center gap-2">
+                    <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-white/80 border-t-transparent" />
+                    Deleting...
+                  </span>
+                ) : (
+                  "Delete"
+                )}
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 className="rounded-full"
                 disabled={deleteSaving}
-                onClick={() => setDeleteOpen(false)}
+                onClick={() => {
+                  setDeleteOpen(false);
+                  setDeleteUser(null);
+                  setError(null);
+                }}
               >
                 Cancel
               </Button>

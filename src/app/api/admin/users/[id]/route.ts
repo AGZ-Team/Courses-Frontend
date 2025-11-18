@@ -11,8 +11,9 @@ export async function GET(
   _req: NextRequest,
   { params }: any,
 ) {
+  const { id } = await params;
   try {
-    const user = await apiGetWithCookies<AdminUser>(`/auth/adminuserlist/${params.id}`, true);
+    const user = await apiGetWithCookies<AdminUser>(`/auth/adminuserlist/${id}`, true);
     return NextResponse.json(user);
   } catch (error) {
     console.error("Error fetching admin user:", error);
@@ -25,10 +26,11 @@ export async function PATCH(
   req: NextRequest,
   { params }: any,
 ) {
+  const { id } = await params;
   try {
     const data = await req.json();
     const updated = await apiPatchWithCookies<AdminUser>(
-      `/auth/adminuserlist/${params.id}/update`,
+      `/auth/adminuserlist/${id}/update`,
       data,
       true,
     );
@@ -44,8 +46,9 @@ export async function DELETE(
   _req: NextRequest,
   { params }: any,
 ) {
+  const { id } = await params;
   try {
-    await apiDeleteWithCookies<void>(`/auth/adminuserlist/${params.id}/delete`, true);
+    await apiDeleteWithCookies<void>(`/auth/adminuserlist/${id}/delete`, true);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting admin user:", error);

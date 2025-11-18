@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     // Call the backend API to resend verification email
     const response = await fetch(
-      `${API_BASE_URL}/users/resend_activation/`,
+      `${API_BASE_URL}/auth/users/resend_activation/`,
       {
         method: 'POST',
         headers: {

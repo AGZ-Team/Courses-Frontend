@@ -76,56 +76,80 @@ export async function signup(data: SignupData): Promise<SignupResponse> {
   });
 
   if (!response.ok) {
-    try {
-      const error = await response.json();
+    // Check if response is JSON before parsing
+    const contentType = response.headers.get('content-type');
+    
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
 
-
-      // If error is an object with field-specific errors, stringify it for parsing
-      if (typeof error === 'object' && error !== null) {
-        // Collect all field errors
-        const fieldErrors: Record<string, string> = {};
-        
-        // Map backend field names to error messages
-        const fieldMap = {
-          username: 'username',
-          email: 'email',
-          password: 'password',
-          first_name: 'first_name',
-          last_name: 'last_name',
-          phone: 'phone',
-          expertise: 'expertise',
-          id_front: 'id_front',
-          id_back: 'id_back',
-          non_field_errors: 'non_field_errors',
-        };
-        
-        for (const [field, key] of Object.entries(fieldMap)) {
-          if (error[field]) {
-            fieldErrors[key] = Array.isArray(error[field]) ? error[field][0] : String(error[field]);
+        // If error is an object with field-specific errors, stringify it for parsing
+        if (typeof error === 'object' && error !== null) {
+          // Collect all field errors
+          const fieldErrors: Record<string, string> = {};
+          
+          // Map backend field names to error messages
+          const fieldMap = {
+            username: 'username',
+            email: 'email',
+            password: 'password',
+            first_name: 'first_name',
+            last_name: 'last_name',
+            phone: 'phone',
+            expertise: 'expertise',
+            id_front: 'id_front',
+            id_back: 'id_back',
+            non_field_errors: 'non_field_errors',
+          };
+          
+          for (const [field, key] of Object.entries(fieldMap)) {
+            if (error[field]) {
+              fieldErrors[key] = Array.isArray(error[field]) ? error[field][0] : String(error[field]);
+            }
+          }
+          
+          // If we found field errors, throw them as JSON string for SignupForm to parse
+          if (Object.keys(fieldErrors).length > 0) {
+            throw new Error(JSON.stringify(fieldErrors));
+          }
+          
+          // Check for detail message
+          if (error.detail) {
+            throw new Error(error.detail);
           }
         }
         
-        // If we found field errors, throw them as JSON string for SignupForm to parse
-        if (Object.keys(fieldErrors).length > 0) {
-          throw new Error(JSON.stringify(fieldErrors));
+        // Fallback: throw generic message with status
+        throw new Error(`Signup failed with status ${response.status}`);
+      } catch (parseError) {
+        // If it's already an Error we threw, re-throw it
+        if (parseError instanceof Error) {
+          throw parseError;
         }
         
-        // Check for detail message
-        if (error.detail) {
-          throw new Error(error.detail);
+        console.error('Signup parse error:', parseError);
+        throw new Error(`Signup failed with status ${response.status}`);
+      }
+    } else {
+      // Non-JSON response (likely HTML error page)
+      let errorText = 'Server error occurred';
+      try {
+        const text = await response.text();
+        // Try to extract error from HTML if possible
+        if (text.includes('OSError')) {
+          errorText = 'Server is unable to send verification email. Please try again later or contact support.';
+        } else if (text.includes('500')) {
+          errorText = 'Internal server error. Please try again later.';
+        } else if (response.status === 404) {
+          errorText = 'Signup endpoint not found. Please contact support.';
+        } else if (response.status === 403) {
+          errorText = 'Access forbidden. Please check your credentials.';
         }
+      } catch {
+        // If text parsing fails, use generic message
       }
       
-      // Fallback: throw generic message with status
-      throw new Error(`Signup failed with status ${response.status}`);
-    } catch (parseError) {
-      // If it's already an Error we threw, re-throw it
-      if (parseError instanceof Error) {
-        throw parseError;
-      }
-      
-      console.error('Signup parse error:', parseError);
-      throw new Error(`Signup failed with status ${response.status}`);
+      throw new Error(errorText);
     }
   }
 

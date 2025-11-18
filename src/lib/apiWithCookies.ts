@@ -51,7 +51,13 @@ export async function apiRequestWithCookies<T>(
     throw new Error(error.detail || error.message || 'Request failed');
   }
 
-  return response.json();
+  // Check if response has content before parsing JSON
+  const text = await response.text();
+  if (!text) {
+    return {} as T;
+  }
+  
+  return JSON.parse(text);
 }
 
 /**

@@ -3,6 +3,7 @@
 import React, {useState} from 'react';
 import {Link} from '@/i18n/routing';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
+import {Loader} from 'lucide-react';
 import {login} from '@/services/authService';
 import {useRouter} from 'next/navigation';
 import {parseLoginErrors, getUserFriendlyErrorMessage, loginErrors} from '@/lib/errorMessages';
@@ -285,7 +286,14 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
           disabled={loading}
           className="inline-flex w-full items-center justify-center rounded-xl bg-[#00FF91] px-4 py-3 text-center text-[15px] font-semibold text-black shadow-sm transition hover:brightness-95 focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? (isAr ? 'جارٍ تسجيل الدخول...' : 'Logging in...') : t.submit}
+          {loading ? (
+            <>
+              <Loader className="h-4 w-4 animate-spin mr-2" />
+              {isAr ? 'جارٍ تسجيل الدخول...' : 'Logging in...'}
+            </>
+          ) : (
+            t.submit
+          )}
         </button>
       </form>
     </div>
