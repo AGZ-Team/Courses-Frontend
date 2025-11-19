@@ -9,7 +9,7 @@ const intlMiddleware = createMiddleware({
   defaultLocale: routing.defaultLocale,
 });
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Handle verify-email and reset-password query params
