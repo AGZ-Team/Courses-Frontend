@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
   }
 };
 
+// Specify the path to the request config file
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 export default withNextIntl(nextConfig);
