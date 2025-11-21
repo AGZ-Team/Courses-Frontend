@@ -538,8 +538,11 @@ function SidebarMenuButton({
       <TooltipContent
         side="right"
         align="center"
-        hidden={state !== "collapsed" || isMobile}
-        {...tooltip}
+        className={cn(
+          state !== "collapsed" || isMobile ? "hidden" : "",
+          tooltip && typeof tooltip === "object" ? tooltip.className : ""
+        )}
+        {...(typeof tooltip === "object" ? { ...tooltip, className: undefined } : tooltip)}
       />
     </Tooltip>
   )
