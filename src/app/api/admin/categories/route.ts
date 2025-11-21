@@ -5,7 +5,8 @@ import type { Category } from "@/types/category";
 
 export async function GET(_req: NextRequest) {
   try {
-    const categories = await apiGetWithCookies<Category[]>("/category/", true);
+    // Public GET: no authentication required
+    const categories = await apiGetWithCookies<Category[]>("/category/");
     return NextResponse.json(categories);
   } catch (error) {
     console.error("Error fetching categories:", error);
