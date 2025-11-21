@@ -21,7 +21,15 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import type { AdminUser } from "@/types/adminUser";
 import { fetchAdminUsers, updateAdminUser, deleteAdminUser } from "@/services/adminUsersService";
 
-function BooleanBadge({ value }: { value: boolean }) {
+function BooleanBadge({
+  value,
+  yesLabel = "Yes",
+  noLabel = "No",
+}: {
+  value: boolean;
+  yesLabel?: string;
+  noLabel?: string;
+}) {
   return (
     <span
       className={
@@ -31,7 +39,7 @@ function BooleanBadge({ value }: { value: boolean }) {
           : "bg-gray-50 text-gray-600 ring-1 ring-gray-100")
       }
     >
-      {value ? "Yes" : "No"}
+      {value ? yesLabel : noLabel}
     </span>
   );
 }
@@ -202,6 +210,30 @@ export default function UsersPanel() {
   const visibleUsers = displayedUsers.length;
   const hasMore = filteredUsers.length > visibleUsers;
 
+  const sheetTitleText = isArabic
+    ? sheetMode === "view"
+      ? "تفاصيل المستخدم"
+      : "تعديل المستخدم"
+    : sheetMode === "view"
+    ? "User details"
+    : "Edit user";
+
+  const sheetDescriptionText = isArabic
+    ? sheetMode === "view"
+      ? "راجع جميع معلومات الملف الشخصي لهذا المستخدم."
+      : "قم بتحديث معلومات المستخدم ثم احفظ التغييرات."
+    : sheetMode === "view"
+    ? "Review the full profile information for this user."
+    : "Update the user information and save the changes.";
+
+  const sheetPrimaryButtonText = sheetSaving
+    ? isArabic
+      ? "جارٍ الحفظ..."
+      : "Saving..."
+    : isArabic
+    ? "حفظ التغييرات"
+    : "Save changes";
+
   return (
     <div className="px-4 lg:px-6" dir="ltr">
       <div className="mb-6 space-y-1 max-w-6xl mx-auto" dir={isArabic ? "rtl" : "ltr"}>
@@ -345,11 +377,19 @@ export default function UsersPanel() {
                             {user.id}
                           </TableCell>
                           <TableCell className="px-3 py-3 align-middle text-xs">
-                            <BooleanBadge value={user.is_influencer} />
+                            <BooleanBadge
+                              value={user.is_influencer}
+                              yesLabel={isArabic ? "نعم" : "Yes"}
+                              noLabel={isArabic ? "لا" : "No"}
+                            />
                           </TableCell>
                           <TableCell className="px-3 py-3 align-middle text-xs">
                             {user.is_verified ? (
-                              <BooleanBadge value={true} />
+                              <BooleanBadge
+                                value={true}
+                                yesLabel={isArabic ? "نعم" : "Yes"}
+                                noLabel={isArabic ? "لا" : "No"}
+                              />
                             ) : (
                               <Button
                                 type="button"
@@ -445,7 +485,11 @@ export default function UsersPanel() {
                       <span className="font-mono text-[11px] text-gray-600">ID {user.id}</span>
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] text-gray-500">Influencer</span>
-                        <BooleanBadge value={user.is_influencer} />
+                        <BooleanBadge
+                          value={user.is_influencer}
+                          yesLabel={isArabic ? "نعم" : "Yes"}
+                          noLabel={isArabic ? "لا" : "No"}
+                        />
                       </div>
                     </div>
                     <div className="mt-2 flex items-center justify-between gap-3">
@@ -459,7 +503,11 @@ export default function UsersPanel() {
                       </div>
                       <div className="shrink-0">
                         {user.is_verified ? (
-                          <BooleanBadge value={true} />
+                          <BooleanBadge
+                            value={true}
+                            yesLabel={isArabic ? "نعم" : "Yes"}
+                            noLabel={isArabic ? "لا" : "No"}
+                          />
                         ) : (
                           <Button
                             type="button"
@@ -608,14 +656,15 @@ export default function UsersPanel() {
         </div>
       )}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="right" className="w-full sm:max-w-md">
-          <SheetHeader>
-            <SheetTitle>{sheetMode === "view" ? "User details" : "Edit user"}</SheetTitle>
-            <SheetDescription>
-              {sheetMode === "view"
-                ? "Review the full profile information for this user."
-                : "Update the user information and save the changes."}
-            </SheetDescription>
+        <SheetContent
+          side="right"
+          closePosition={isArabic ? "left" : "right"}
+          dir={isArabic ? "rtl" : "ltr"}
+          className="w-full sm:max-w-md"
+        >
+          <SheetHeader className={isArabic ? "text-right" : "text-left"}>
+            <SheetTitle>{sheetTitleText}</SheetTitle>
+            <SheetDescription>{sheetDescriptionText}</SheetDescription>
           </SheetHeader>
 
           {sheetError && (
@@ -628,13 +677,17 @@ export default function UsersPanel() {
             <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-4">
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <Label className="text-[11px] text-gray-500">ID</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "المعرف" : "ID"}
+                  </Label>
                   <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                     {activeUser.id}
                   </div>
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">Username</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "اسم المستخدم" : "Username"}
+                  </Label>
                   {sheetMode === "view" ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeUser.username}
@@ -651,7 +704,9 @@ export default function UsersPanel() {
 
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <Label className="text-[11px] text-gray-500">First name</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "الاسم الأول" : "First name"}
+                  </Label>
                   {sheetMode === "view" ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeUser.first_name}
@@ -665,7 +720,9 @@ export default function UsersPanel() {
                   )}
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">Last name</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "اسم العائلة" : "Last name"}
+                  </Label>
                   {sheetMode === "view" ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeUser.last_name}
@@ -682,7 +739,9 @@ export default function UsersPanel() {
 
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <Label className="text-[11px] text-gray-500">Email</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "البريد الإلكتروني" : "Email"}
+                  </Label>
                   {sheetMode === "view" ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeUser.email}
@@ -697,7 +756,9 @@ export default function UsersPanel() {
                   )}
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">Phone</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "رقم الجوال" : "Phone"}
+                  </Label>
                   {sheetMode === "view" ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeUser.phone}
@@ -714,7 +775,9 @@ export default function UsersPanel() {
 
               <div className="grid grid-cols-1 gap-3 text-xs">
                 <div>
-                  <Label className="text-[11px] text-gray-500">Bio</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "نبذة" : "Bio"}
+                  </Label>
                   {sheetMode === "view" ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeUser.bio || "-"}
@@ -729,7 +792,9 @@ export default function UsersPanel() {
                   )}
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">Area of expertise</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "مجال الخبرة" : "Area of expertise"}
+                  </Label>
                   {sheetMode === "view" ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeUser.area_of_expertise || "-"}
@@ -747,9 +812,15 @@ export default function UsersPanel() {
 
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <Label className="text-[11px] text-gray-500">Influencer</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "مؤثر" : "Influencer"}
+                  </Label>
                   <div className="mt-1">
-                    <BooleanBadge value={sheetMode === "view" ? activeUser.is_influencer : Boolean(editValues?.is_influencer)} />
+                    <BooleanBadge
+                      value={sheetMode === "view" ? activeUser.is_influencer : Boolean(editValues?.is_influencer)}
+                      yesLabel={isArabic ? "نعم" : "Yes"}
+                      noLabel={isArabic ? "لا" : "No"}
+                    />
                   </div>
                   {sheetMode === "edit" && (
                     <div className="mt-2 flex gap-2 text-[11px] text-gray-600">
@@ -758,22 +829,28 @@ export default function UsersPanel() {
                         onClick={() => handleEditFieldChange("is_influencer", true)}
                         className={`rounded-full px-2 py-1 border text-[11px] ${editValues?.is_influencer ? "border-teal-500 bg-teal-50 text-teal-700" : "border-gray-200 bg-white"}`}
                       >
-                        Yes
+                        {isArabic ? "نعم" : "Yes"}
                       </button>
                       <button
                         type="button"
                         onClick={() => handleEditFieldChange("is_influencer", false)}
                         className={`rounded-full px-2 py-1 border text-[11px] ${editValues?.is_influencer === false ? "border-teal-500 bg-teal-50 text-teal-700" : "border-gray-200 bg-white"}`}
                       >
-                        No
+                        {isArabic ? "لا" : "No"}
                       </button>
                     </div>
                   )}
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">Verified</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "موثق" : "Verified"}
+                  </Label>
                   <div className="mt-1">
-                    <BooleanBadge value={sheetMode === "view" ? activeUser.is_verified : Boolean(editValues?.is_verified)} />
+                    <BooleanBadge
+                      value={sheetMode === "view" ? activeUser.is_verified : Boolean(editValues?.is_verified)}
+                      yesLabel={isArabic ? "نعم" : "Yes"}
+                      noLabel={isArabic ? "لا" : "No"}
+                    />
                   </div>
                   {sheetMode === "edit" && (
                     <div className="mt-2 flex gap-2 text-[11px] text-gray-600">
@@ -782,14 +859,14 @@ export default function UsersPanel() {
                         onClick={() => handleEditFieldChange("is_verified", true)}
                         className={`rounded-full px-2 py-1 border text-[11px] ${editValues?.is_verified ? "border-teal-500 bg-teal-50 text-teal-700" : "border-gray-200 bg-white"}`}
                       >
-                        Yes
+                        {isArabic ? "نعم" : "Yes"}
                       </button>
                       <button
                         type="button"
                         onClick={() => handleEditFieldChange("is_verified", false)}
                         className={`rounded-full px-2 py-1 border text-[11px] ${editValues?.is_verified === false ? "border-teal-500 bg-teal-50 text-teal-700" : "border-gray-200 bg-white"}`}
                       >
-                        No
+                        {isArabic ? "لا" : "No"}
                       </button>
                     </div>
                   )}
@@ -798,13 +875,17 @@ export default function UsersPanel() {
 
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <Label className="text-[11px] text-gray-500">ID card (front)</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "الهوية (الوجه الأمامي)" : "ID card (front)"}
+                  </Label>
                   <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                     {activeUser.id_card_face || "-"}
                   </div>
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">ID card (back)</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "الهوية (الوجه الخلفي)" : "ID card (back)"}
+                  </Label>
                   <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                     {activeUser.id_card_back || "-"}
                   </div>
@@ -821,7 +902,7 @@ export default function UsersPanel() {
                 disabled={sheetSaving}
                 className="w-full rounded-full bg-primary text-white hover:bg-primary/90"
               >
-                {sheetSaving ? "Saving..." : "Save changes"}
+                {sheetPrimaryButtonText}
               </Button>
             ) : (
               <Button
@@ -830,7 +911,7 @@ export default function UsersPanel() {
                 variant="outline"
                 className="w-full rounded-full"
               >
-                Close
+                {isArabic ? "إغلاق" : "Close"}
               </Button>
             )}
           </SheetFooter>

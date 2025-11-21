@@ -199,6 +199,42 @@ export default function CategoriesPanel() {
     }
   };
 
+  const sheetTitleText = isArabic
+    ? sheetMode === "view"
+      ? "تفاصيل الفئة"
+      : sheetMode === "edit"
+      ? "تعديل الفئة"
+      : "إنشاء فئة"
+    : sheetMode === "view"
+    ? "Category details"
+    : sheetMode === "edit"
+    ? "Edit category"
+    : "Create category";
+
+  const sheetDescriptionText = isArabic
+    ? sheetMode === "view"
+      ? "راجع جميع معلومات الفئة."
+      : sheetMode === "edit"
+      ? "قم بتحديث معلومات الفئة ثم احفظ التغييرات."
+      : "أنشئ فئة جديدة لتنظيم الدورات."
+    : sheetMode === "view"
+    ? "Review the full category information."
+    : sheetMode === "edit"
+    ? "Update the category information and save the changes."
+    : "Create a new category for organizing courses.";
+
+  const sheetPrimaryButtonText = sheetSaving
+    ? isArabic
+      ? "جارٍ الحفظ..."
+      : "Saving..."
+    : sheetMode === "edit"
+    ? isArabic
+      ? "حفظ التغييرات"
+      : "Save changes"
+    : isArabic
+    ? "حفظ الفئة"
+    : "Save";
+
   return (
     <div className="px-4 lg:px-6" dir="ltr">
       <div className="mb-6 space-y-1 max-w-6xl mx-auto" dir={isArabic ? "rtl" : "ltr"}>
@@ -503,22 +539,15 @@ export default function CategoriesPanel() {
       )}
 
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent side="right" className="w-full sm:max-w-md">
-          <SheetHeader>
-            <SheetTitle>
-              {sheetMode === "view"
-                ? "Category details"
-                : sheetMode === "edit"
-                ? "Edit category"
-                : "Create category"}
-            </SheetTitle>
-            <SheetDescription>
-              {sheetMode === "view"
-                ? "Review the full category information."
-                : sheetMode === "edit"
-                ? "Update the category information and save the changes."
-                : "Create a new category for organizing courses."}
-            </SheetDescription>
+        <SheetContent
+          side="right"
+          closePosition={isArabic ? "left" : "right"}
+          dir={isArabic ? "rtl" : "ltr"}
+          className="w-full sm:max-w-md"
+        >
+          <SheetHeader className={isArabic ? "text-right" : "text-left"}>
+            <SheetTitle>{sheetTitleText}</SheetTitle>
+            <SheetDescription>{sheetDescriptionText}</SheetDescription>
           </SheetHeader>
 
           {sheetError && (
@@ -532,7 +561,9 @@ export default function CategoriesPanel() {
               {activeCategory && sheetMode !== "create" && (
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
-                    <Label className="text-[11px] text-gray-500">ID</Label>
+                    <Label className="text-[11px] text-gray-500">
+                      {isArabic ? "المعرف" : "ID"}
+                    </Label>
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeCategory.id}
                     </div>
@@ -542,7 +573,9 @@ export default function CategoriesPanel() {
 
               <div className="grid grid-cols-1 gap-3 text-xs">
                 <div>
-                  <Label className="text-[11px] text-gray-500">Arabic title</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "العنوان بالعربية" : "Arabic title"}
+                  </Label>
                   {sheetMode === "view" && activeCategory ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeCategory.title_arabic || "-"}
@@ -556,7 +589,9 @@ export default function CategoriesPanel() {
                   )}
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">English title</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "العنوان بالإنجليزية" : "English title"}
+                  </Label>
                   {sheetMode === "view" && activeCategory ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeCategory.title_english || "-"}
@@ -570,7 +605,9 @@ export default function CategoriesPanel() {
                   )}
                 </div>
                 <div>
-                  <Label className="text-[11px] text-gray-500">Image</Label>
+                  <Label className="text-[11px] text-gray-500">
+                    {isArabic ? "الصورة" : "Image"}
+                  </Label>
                   {sheetMode === "view" && activeCategory ? (
                     <div className="mt-1 space-y-3">
                       <div className="rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-[12px] text-gray-700 break-all">
@@ -596,13 +633,17 @@ export default function CategoriesPanel() {
                         className="group flex w-full items-center justify-between rounded-xl border border-dashed border-gray-200 bg-gray-50/80 px-3 py-2 text-[11px] text-gray-600 transition-all hover:border-teal-300 hover:bg-teal-50/80 hover:text-teal-700"
                       >
                         <div className="flex flex-col text-left">
-                          <span className="font-medium text-[11px]">Click to upload</span>
+                          <span className="font-medium text-[11px]">
+                            {isArabic ? "انقر لرفع الصورة" : "Click to upload"}
+                          </span>
                           <span className="text-[10px] text-gray-400 group-hover:text-teal-500">
-                            PNG or JPG up to 5MB
+                            {isArabic
+                              ? "PNG أو JPG بحد أقصى 5 ميجابايت"
+                              : "PNG or JPG up to 5MB"}
                           </span>
                         </div>
                         <span className="ml-3 max-w-[120px] truncate text-[10px] text-gray-500 group-hover:text-teal-600">
-                          {imageFile?.name || "No file chosen"}
+                          {imageFile?.name || (isArabic ? "لم يتم اختيار ملف" : "No file chosen")}
                         </span>
                       </button>
                       <Input
@@ -618,7 +659,8 @@ export default function CategoriesPanel() {
                       {activeCategory?.image && (
                         <div className="space-y-3">
                           <div className="rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-[11px] text-gray-600 break-all">
-                            Current image URL: {activeCategory.image}
+                            {(isArabic ? "رابط الصورة الحالي: " : "Current image URL: ") +
+                              activeCategory.image}
                           </div>
                           <div className="flex items-center justify-center">
                             <div className="max-h-56 w-full max-w-sm overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
@@ -646,7 +688,7 @@ export default function CategoriesPanel() {
                 className="w-full rounded-full"
                 onClick={() => setSheetOpen(false)}
               >
-                Close
+                {isArabic ? "إغلاق" : "Close"}
               </Button>
             ) : (
               <Button
@@ -655,7 +697,7 @@ export default function CategoriesPanel() {
                 disabled={sheetSaving}
                 className="w-full rounded-full bg-primary text-white hover:bg-primary/90 disabled:opacity-50"
               >
-                {sheetSaving ? "Saving..." : "Save"}
+                {sheetPrimaryButtonText}
               </Button>
             )}
           </SheetFooter>
