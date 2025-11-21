@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { IconDotsVertical } from "@tabler/icons-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -37,8 +38,6 @@ function BooleanBadge({ value }: { value: boolean }) {
 export default function UsersPanel() {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
-  const [rows, setRows] = useState<AdminUser[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -54,34 +53,21 @@ export default function UsersPanel() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteSaving, setDeleteSaving] = useState(false);
 
+  const queryClient = useQueryClient();
+  const {
+    data: rows = [],
+    isLoading: loading,
+    error: queryError,
+  } = useQuery<AdminUser[]>({
+    queryKey: ["adminUsers"],
+    queryFn: fetchAdminUsers,
+  });
+
   useEffect(() => {
-    let isMounted = true;
-
-    async function loadUsers() {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchAdminUsers();
-        if (isMounted && Array.isArray(data)) {
-          setRows(data);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(err instanceof Error ? err.message : "Failed to load users");
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
+    if (queryError instanceof Error) {
+      setError(queryError.message);
     }
-
-    void loadUsers();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  }, [queryError]);
 
   useEffect(() => {
     setVisibleCount(20);
@@ -122,7 +108,9 @@ export default function UsersPanel() {
       setSheetError(null);
       const payload: Partial<AdminUser> = { ...activeUser, ...editValues };
       const updated = await updateAdminUser(activeUser.id, payload);
-      setRows((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+      queryClient.setQueryData<AdminUser[]>(["adminUsers"], (prev) =>
+        prev ? prev.map((u) => (u.id === updated.id ? updated : u)) : [updated],
+      );
       setActiveUser(updated);
       setSheetOpen(false);
     } catch (err) {
@@ -137,7 +125,9 @@ export default function UsersPanel() {
       setInlineSavingId(user.id);
       setError(null);
       const updated = await updateAdminUser(user.id, { ...user, is_verified: value });
-      setRows((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+      queryClient.setQueryData<AdminUser[]>(["adminUsers"], (prev) =>
+        prev ? prev.map((u) => (u.id === updated.id ? updated : u)) : [updated],
+      );
       setActiveUser((prev) => (prev && prev.id === updated.id ? updated : prev));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update user");
@@ -159,10 +149,12 @@ export default function UsersPanel() {
       setDeleteSaving(true);
       setError(null);
       await deleteAdminUser(deleteUser.id);
-      
+
       // Update the rows list to remove the deleted user
-      setRows((prev) => prev.filter((u) => u.id !== deleteUser.id));
-      
+      queryClient.setQueryData<AdminUser[]>(["adminUsers"], (prev) =>
+        prev ? prev.filter((u) => u.id !== deleteUser.id) : [],
+      );
+
       // Close the sheet if the deleted user was being viewed/edited
       if (activeUser && activeUser.id === deleteUser.id) {
         setActiveUser(null);

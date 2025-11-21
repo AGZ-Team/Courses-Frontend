@@ -45,13 +45,27 @@ export async function apiRequestWithCookies<T>(
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({
-      detail: 'An error occurred',
-    }));
-    throw new Error(error.detail || error.message || 'Request failed');
+    const raw = await response.text().catch(() => '');
+    let message = `Request failed with status ${response.status}`;
+
+    if (raw) {
+      try {
+        const data = JSON.parse(raw) as any;
+        if (typeof data?.detail === 'string') {
+          message = data.detail;
+        } else if (typeof data?.error === 'string') {
+          message = data.error;
+        } else if (typeof data?.message === 'string') {
+          message = data.message;
+        }
+      } catch {
+        message = `${message}: ${raw.slice(0, 200)}`;
+      }
+    }
+
+    throw new Error(message);
   }
 
-  // Check if response has content before parsing JSON
   const text = await response.text();
   if (!text) {
     return {} as T;

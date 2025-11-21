@@ -79,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         name: t('categories'),
-        url: "#",
+        url: "/dashboard?view=categories",
         icon: IconCategory,
       },
       {
