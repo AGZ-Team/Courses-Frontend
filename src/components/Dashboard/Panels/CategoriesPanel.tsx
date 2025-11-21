@@ -22,7 +22,7 @@ import { fetchCategories, createCategory, updateCategory, deleteCategory } from 
 
 function CategoryBadge({ value }: { value: string }) {
   return (
-    <span className="inline-flex rounded-full bg-gray-50 px-2.5 py-0.5 text-xs font-medium text-gray-700 ring-1 ring-gray-100">
+    <span className="inline-flex rounded-full bg-gray-50 px-3 py-0.5 text-sm md:text-[14px] font-base text-gray-700 ring-1 ring-gray-100">
       {value || "-"}
     </span>
   );
@@ -255,19 +255,19 @@ export default function CategoriesPanel() {
                   <Table className="min-w-full table-auto border-separate border-spacing-0 text-xs md:text-sm">
                     <TableHeader>
                       <TableRow className="sticky top-0 z-10 bg-gray-50/95 text-[11px] uppercase tracking-wide text-gray-500 backdrop-blur">
-                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium w-12">
+                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-semibold text-[12px] w-12">
                           ID
                         </TableHead>
-                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium">
+                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-semibold text-[12px]">
                           Arabic title
                         </TableHead>
-                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium">
+                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-semibold text-[12px]">
                           English title
                         </TableHead>
-                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium">
+                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-semibold text-[12px]">
                           Image
                         </TableHead>
-                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium w-20">
+                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-semibold text-[12px] w-20">
                           Actions
                         </TableHead>
                       </TableRow>
@@ -457,7 +457,14 @@ export default function CategoriesPanel() {
                 disabled={deleteSaving}
                 className="rounded-full bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
               >
-                {deleteSaving ? "Deleting..." : "Delete"}
+                {deleteSaving ? (
+                  <span className="flex items-center gap-2">
+                    <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-white/80 border-t-transparent" />
+                    <span>Deleting...</span>
+                  </span>
+                ) : (
+                  "Delete"
+                )}
               </Button>
               <Button
                 type="button"
