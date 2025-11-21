@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 import { IconDotsVertical } from "@tabler/icons-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -29,6 +30,8 @@ function CategoryBadge({ value }: { value: string }) {
 }
 
 export default function CategoriesPanel() {
+  const locale = useLocale();
+  const isArabic = locale === "ar";
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -198,30 +201,41 @@ export default function CategoriesPanel() {
 
   return (
     <div className="px-4 lg:px-6" dir="ltr">
-      <div className="mb-6 space-y-1 max-w-6xl mx-auto">
-        <h1 className="text-2xl font-semibold text-[#0b0b2b]">Categories</h1>
+      <div className="mb-6 space-y-1 max-w-6xl mx-auto" dir={isArabic ? "rtl" : "ltr"}>
+        <h1 className="text-2xl font-semibold text-[#0b0b2b]">
+          {isArabic ? "الفئات" : "Categories"}
+        </h1>
         <p className="text-sm text-gray-500">
-          Manage course categories, including Arabic and English titles and images.
+          {isArabic
+            ? "إدارة فئات الدورات، بما في ذلك العناوين العربية والإنجليزية والصور."
+            : "Manage course categories, including Arabic and English titles and images."}
         </p>
       </div>
 
       <Card className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-gray-100 bg-white/95 shadow-[0_10px_40px_rgba(13,13,18,0.05)] transition-shadow duration-200 hover:shadow-[0_18px_55px_rgba(13,13,18,0.07)]">
-        <CardHeader className="flex flex-col gap-4 border-b border-gray-100 bg-gradient-to-r from-teal-50/80 via-white to-sky-50/80 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-1 text-left">
+        <CardHeader
+          dir={isArabic ? "rtl" : "ltr"}
+          className="flex flex-col gap-4 border-b border-gray-100 bg-gradient-to-r from-teal-50/80 via-white to-sky-50/80 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className={`space-y-1 ${isArabic ? "text-right" : "text-left"}`}>
             <CardTitle className="text-base font-semibold text-[#0b0b2b]">
-              Category directory
+              {isArabic ? "دليل الفئات" : "Category directory"}
             </CardTitle>
             <CardDescription className="text-xs text-gray-500">
-              Connected to your admin categories API with search and quick actions.
+              {isArabic
+                ? "متصل بواجهة برمجة تطبيقات الفئات الخاصة بلوحة التحكم مع البحث والإجراءات السريعة."
+                : "Connected to your admin categories API with search and quick actions."}
             </CardDescription>
           </div>
           <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             <div className="inline-flex w-fit items-center justify-center gap-2 self-center rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-teal-800 shadow-sm ring-1 ring-teal-100/80">
-              <span className="mr-1 text-[10px] uppercase tracking-wide text-teal-500">Categories</span>
+              <span className="mr-1 text-[10px] uppercase tracking-wide text-teal-500">
+                {isArabic ? "الفئات" : "Categories"}
+              </span>
               <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] font-semibold text-teal-700">
                 {visibleCategories}
               </span>
-              <span className="mx-1 text-[10px] text-gray-400">of</span>
+              <span className="mx-1 text-[10px] text-gray-400">{isArabic ? "من" : "of"}</span>
               <span className="text-[11px] text-gray-700">{totalCategories}</span>
             </div>
             <div className="w-full sm:w-auto sm:min-w-[220px] flex items-center gap-2">
@@ -229,16 +243,20 @@ export default function CategoriesPanel() {
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Search by Arabic or English title"
+                placeholder={
+                  isArabic
+                    ? "ابحث بالعنوان العربي أو الإنجليزي"
+                    : "Search by Arabic or English title"
+                }
                 className="h-9 w-full rounded-full border border-teal-100 bg-white/90 px-3 text-xs text-gray-800 shadow-sm outline-none transition focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
               />
               <Button
                 type="button"
                 size="sm"
-                className="rounded-full bg-primary px-4 text-[11px] font-medium text-white shadow-sm hover:bg-primary/90"
+                className="rounded-full bg-primary px-5 sm:px-6 text-[11px] font-medium text-white shadow-sm hover:bg-primary/90"
                 onClick={() => handleOpenSheet("create")}
               >
-                New category
+                {locale === "ar" ? "إضافة فئة جديدة" : "Add new category"}
               </Button>
             </div>
           </div>

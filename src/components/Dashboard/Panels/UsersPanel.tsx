@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 import { IconDotsVertical } from "@tabler/icons-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -36,6 +37,8 @@ function BooleanBadge({ value }: { value: boolean }) {
 }
 
 export default function UsersPanel() {
+  const locale = useLocale();
+  const isArabic = locale === "ar";
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -201,30 +204,41 @@ export default function UsersPanel() {
 
   return (
     <div className="px-4 lg:px-6" dir="ltr">
-      <div className="mb-6 space-y-1 max-w-6xl mx-auto">
-        <h1 className="text-2xl font-semibold text-[#0b0b2b]">Users</h1>
+      <div className="mb-6 space-y-1 max-w-6xl mx-auto" dir={isArabic ? "rtl" : "ltr"}>
+        <h1 className="text-2xl font-semibold text-[#0b0b2b]">
+          {isArabic ? "المستخدمون" : "Users"}
+        </h1>
         <p className="text-sm text-gray-500">
-          List of users with basic profile and verification details.
+          {isArabic
+            ? "قائمة المستخدمين مع المعلومات الأساسية وحالة التحقق."
+            : "List of users with basic profile and verification details."}
         </p>
       </div>
 
       <Card className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-gray-100 bg-white/95 shadow-[0_10px_40px_rgba(13,13,18,0.05)]">
-        <CardHeader className="flex flex-col gap-4 border-b border-gray-100 bg-gradient-to-r from-teal-50/80 via-white to-sky-50/80 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-1 text-left">
+        <CardHeader
+          dir={isArabic ? "rtl" : "ltr"}
+          className="flex flex-col gap-4 border-b border-gray-100 bg-gradient-to-r from-teal-50/80 via-white to-sky-50/80 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className={`space-y-1 ${isArabic ? "text-right" : "text-left"}`}>
             <CardTitle className="text-base font-semibold text-[#0b0b2b]">
-              Users directory
+              {isArabic ? "دليل المستخدمين" : "Users directory"}
             </CardTitle>
             <CardDescription className="text-xs text-gray-500">
-              Connected to your admin users API with search, filters, and quick actions.
+              {isArabic
+                ? "متصل بواجهة برمجة تطبيقات المستخدمين الخاصة بلوحة التحكم مع البحث وعوامل التصفية والإجراءات السريعة."
+                : "Connected to your admin users API with search, filters, and quick actions."}
             </CardDescription>
           </div>
           <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             <div className="inline-flex w-fit items-center justify-center gap-2 self-center rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-teal-800 shadow-sm ring-1 ring-teal-100/80">
-              <span className="mr-1 text-[10px] uppercase tracking-wide text-teal-500">Users</span>
+              <span className="mr-1 text-[10px] uppercase tracking-wide text-teal-500">
+                {isArabic ? "المستخدمون" : "Users"}
+              </span>
               <span className="rounded-full bg-teal-50 px-2 py-0.5 text-[11px] font-semibold text-teal-700">
                 {visibleUsers}
               </span>
-              <span className="mx-1 text-[10px] text-gray-400">of</span>
+              <span className="mx-1 text-[10px] text-gray-400">{isArabic ? "من" : "of"}</span>
               <span className="text-[11px] text-gray-700">{totalUsers}</span>
             </div>
             <ToggleGroup
@@ -243,19 +257,19 @@ export default function UsersPanel() {
                 value="all"
                 className="rounded-full px-3 py-1 text-[11px] font-medium text-gray-600 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-primary/40 data-[state=on]:hover:bg-primary/90"
               >
-                All
+                {isArabic ? "الكل" : "All"}
               </ToggleGroupItem>
               <ToggleGroupItem
                 value="influencer"
                 className="rounded-full px-3 py-1 text-[11px] font-medium text-gray-600 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-primary/40 data-[state=on]:hover:bg-primary/90"
               >
-                Influencers
+                {isArabic ? "المؤثرون" : "Influencers"}
               </ToggleGroupItem>
               <ToggleGroupItem
                 value="normal"
                 className="rounded-full px-3 py-1 text-[11px] font-medium text-gray-600 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-primary/40 data-[state=on]:hover:bg-primary/90"
               >
-                Normal
+                {isArabic ? "العاديون" : "Normal"}
               </ToggleGroupItem>
             </ToggleGroup>
             <div className="w-full sm:w-auto sm:min-w-[220px]">
@@ -263,7 +277,11 @@ export default function UsersPanel() {
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Search by name, email, username, phone"
+                placeholder={
+                  isArabic
+                    ? "ابحث بالاسم أو البريد الإلكتروني أو اسم المستخدم أو رقم الجوال"
+                    : "Search by name, email, username, phone"
+                }
                 className="h-9 w-full rounded-full border border-teal-100 bg-white/90 px-3 text-xs text-gray-800 shadow-sm outline-none transition focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
               />
             </div>
