@@ -23,6 +23,8 @@ export function SiteHeader() {
     currentSectionLabel = t("users")
   } else if (view === "categories") {
     currentSectionLabel = t("categories")
+  } else if (view === "subcategories") {
+    currentSectionLabel = t("subcategories")
   }
 
   return (

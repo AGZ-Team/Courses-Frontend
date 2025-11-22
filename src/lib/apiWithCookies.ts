@@ -57,6 +57,28 @@ export async function apiRequestWithCookies<T>(
           message = data.error;
         } else if (typeof data?.message === 'string') {
           message = data.message;
+        } else if (data && typeof data === 'object') {
+          // Fallback for validation-style errors, e.g. {field: ["msg1", "msg2"], ...}
+          const fieldMessages: string[] = [];
+
+          for (const [field, value] of Object.entries(data)) {
+            if (!value) continue;
+
+            if (Array.isArray(value)) {
+              const text = (value as unknown[])
+                .filter((v) => typeof v === 'string')
+                .join(' ');
+              if (text) {
+                fieldMessages.push(`${field}: ${text}`);
+              }
+            } else if (typeof value === 'string') {
+              fieldMessages.push(`${field}: ${value}`);
+            }
+          }
+
+          if (fieldMessages.length > 0) {
+            message = fieldMessages.join(' | ');
+          }
         }
       } catch {
         message = `${message}: ${raw.slice(0, 200)}`;

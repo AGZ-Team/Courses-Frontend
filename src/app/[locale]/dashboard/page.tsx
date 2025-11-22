@@ -10,6 +10,7 @@ import ProfileSettingsPanel from "@/components/Dashboard/Panels/ProfileSettingsP
 import PaymentHistoryPanel from "@/components/Dashboard/Panels/PaymentHistoryPanel"
 import UsersPanel from "@/components/Dashboard/Panels/UsersPanel"
 import CategoriesPanel from "@/components/Dashboard/Panels/CategoriesPanel"
+import SubcategoriesPanel from "@/components/Dashboard/Panels/SubcategoriesPanel"
 import {
   SidebarInset,
   SidebarProvider,
@@ -43,6 +44,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const showPayments = view === "payments"
   const showUsers = view === "users"
   const showCategories = view === "categories"
+  const showSubcategories = view === "subcategories"
 
   return (
     <SidebarProvider
@@ -67,6 +69,8 @@ export default async function Page({ searchParams }: DashboardPageProps) {
                 <UsersPanel />
               ) : showCategories ? (
                 <CategoriesPanel />
+              ) : showSubcategories ? (
+                <SubcategoriesPanel />
               ) : (
                 <>
                   <SectionCards />

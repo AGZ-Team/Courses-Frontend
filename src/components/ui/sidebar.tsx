@@ -525,12 +525,12 @@ function SidebarMenuButton({
   if (!tooltip) {
     return button
   }
+  const tooltipProps =
+    typeof tooltip === "string"
+      ? { children: tooltip }
+      : tooltip
 
-  if (typeof tooltip === "string") {
-    tooltip = {
-      children: tooltip,
-    }
-  }
+  const { className: tooltipClassName, ...restTooltipProps } = tooltipProps || {}
 
   return (
     <Tooltip>
@@ -540,9 +540,9 @@ function SidebarMenuButton({
         align="center"
         className={cn(
           state !== "collapsed" || isMobile ? "hidden" : "",
-          tooltip && typeof tooltip === "object" ? tooltip.className : ""
+          tooltipClassName || ""
         )}
-        {...(typeof tooltip === "object" ? { ...tooltip, className: undefined } : tooltip)}
+        {...restTooltipProps}
       />
     </Tooltip>
   )

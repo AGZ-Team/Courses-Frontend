@@ -83,6 +83,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: IconCategory,
       },
       {
+        name: t('subcategories'),
+        url: "/dashboard?view=subcategories",
+        icon: IconCategory,
+      },
+      {
         name: t('content'),
         url: "#",
         icon: IconFileText,
