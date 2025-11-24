@@ -56,7 +56,7 @@
     }
   },
   "homeHero": {
-    "eyebrow": "Learn with the best",
+    "eyebrow": "Learn with the best — Inspire & Get Inspired",
     "headline": {
       "lineA": "Where Creativity",
       "lineBRich": "Meets Belonging."
@@ -244,7 +244,7 @@
       },
       {
         "question": "Who can join C R A I?",
-        "answer": "Anyone can join — whether you're a creator or a supporter. Creators can come from any field (art, design, education, tech, lifestyle) and users can subscribe to or support as many creators as they want."
+        "answer": "Anyone can join whether you're a creator or a supporter. Creators can come from any field (art, design, education, tech, lifestyle) and users can subscribe to or support as many creators as they want."
       },
       {
         "question": "How do creators earn money on C R A I?",
@@ -288,7 +288,7 @@
       },
       {
         "question": "Why is it called \"C R A I\"?",
-        "answer": "The name \"Kray\" is inspired by the word \"Crazy,\" as the platform celebrates the vibrant energy and beautiful madness that connect artists with their fans. It creates an interactive space that reflects genuine passion and freedom of expression, encouraging authentic connection and spontaneous engagement away from formality."
+        "answer": "The name CRAI, short for Creative AI, captures the spirit of modern artistry—where creativity meets smart technology. It symbolizes a vibrant, forward-thinking space designed to elevate creators and spark authentic engagement between them and their fans."
       }
     ]
   },
@@ -331,7 +331,7 @@
       "home": {
         "title": "Home",
         "heroSection": "Hero Section",
-        "popularCourses": "Popular Courses",
+        "popularCreators": "Popular Creators",
         "testimonials": "Testimonials",
         "newsletter": "Newsletter",
         "becomeCreator": "How to become a creator",
@@ -389,7 +389,7 @@
       "cookies": "Cookie Policy"
     }
   },
-  "popularCourses": {
+  "popularCreators": {
     "title": "Our Most Popular Content",
     "subtitle": "10,000+ unique online content list designs",
     "categories": {
@@ -988,7 +988,7 @@
       "title": "Made in Saudi Arabia.",
       "highlight": "Built for the world.",
       "description": "C R A I empowers a new generation of Arab creators to share their voice globally while staying true to local values. We believe in creative freedom, cultural respect, and economic opportunity for every dreamer.",
-      "cta": "Start Learning For Free",
+      "cta": "Start Learning Today",
       "stats": {
         "courses": {
           "value": "10,000+",
@@ -1013,7 +1013,7 @@
       "subtitle": "10,000+ unique online course list designs",
       "steps": {
         "browse": {
-          "title": "Discover videos from our top creators",
+          "title": "Discover documents and videos from our top creators",
           "description": "Explore thousands of videos across multiple categories and find creators that match your interests."
         },
         "purchase": {

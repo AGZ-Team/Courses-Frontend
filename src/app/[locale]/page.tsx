@@ -2,7 +2,7 @@ import CarouselHome from '@/components/Home/CarouselHome';
 import HomeHero from '@/components/Home/HomeHero';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import type {Metadata} from 'next';
-import PopularCourses from '@/components/Home/PopularCourses';
+import PopularCreators from '@/components/Home/PopularCreators';
 import Testimonials from '@/components/Home/Testimonials';
 import What from '@/components/Home/What';
 import BecomeInfluencer from '@/components/Home/BecomeInfluencer';
@@ -59,7 +59,7 @@ export default async function HomePage({params}: PageProps) {
       <HomeHero />
       <What />
       <CarouselHome />
-      <PopularCourses />
+      <PopularCreators />
       {/* <InstructorCarousel /> */}
       <BecomeInfluencer />
       <BecomeUser />

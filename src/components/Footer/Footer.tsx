@@ -15,7 +15,7 @@ const FOOTER_LINK_GROUPS = [
     key: "home",
     links: [
       { key: "heroSection", href: "/" },
-      { key: "popularCourses", href: "/#popular-courses" },
+      { key: "popularCreators", href: "/#popular-creators" },
       { key: "testimonials", href: "/#testimonials" },
       { key: "newsletter", href: "/#newsletter" },
       { key: "becomeCreator", href: "/signup" },

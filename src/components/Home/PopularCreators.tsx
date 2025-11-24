@@ -330,8 +330,8 @@ const CourseCard = memo(
 
 CourseCard.displayName = 'CourseCard';
 
-const PopularCourses = () => {
-  const t = useTranslations('popularCourses');
+const PopularCreators = () => {
+  const t = useTranslations('popularCreators');
   const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<CourseCategory>('All Categories');
 
@@ -425,4 +425,4 @@ const PopularCourses = () => {
   );
 };
 
-export default PopularCourses;
+export default PopularCreators;
