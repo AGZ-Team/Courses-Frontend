@@ -155,7 +155,7 @@ const PeopleSay = () => {
                 style={{minWidth: '440px', maxWidth: '480px'}}
               >
                 <h3 className="text-[18px] font-normal leading-9 text-[#0ABAB5]">{testimonial.heading}</h3>
-                <p className="mt-4 text-[15px] leading-[30px] text-[#221f3d]">"{testimonial.quote}"</p>
+                <p className="mt-4 text-[15px] leading-[30px] text-[#221f3d]">&ldquo;{testimonial.quote}&rdquo;</p>
                 <div className="mt-5 h-px w-full bg-[#ededed]" />
                 <div className="mt-6 flex items-center gap-4">
                   <Image

@@ -62,10 +62,11 @@ export default function ResetPasswordInstructions({
       }
 
       if (!response.ok) {
-        const errorMsg = 
-          (data as any)?.detail || 
-          (data as any)?.message || 
-          (isAr ? 'فشل إرسال رابط إعادة تعيين كلمة المرور' : 'Failed to send reset link');
+        let errorMsg = isAr ? 'فشل إرسال رابط إعادة تعيين كلمة المرور' : 'Failed to send reset link';
+        if (typeof data === 'object' && data !== null) {
+          if ('detail' in data && typeof data.detail === 'string') errorMsg = data.detail;
+          else if ('message' in data && typeof data.message === 'string') errorMsg = data.message;
+        }
         throw new Error(errorMsg);
       }
 

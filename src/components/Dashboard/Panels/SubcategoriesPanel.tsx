@@ -137,7 +137,7 @@ export default function SubcategoriesPanel() {
     setSheetOpen(true);
   };
 
-  const handleEditFieldChange = (field: keyof Subcategory, value: any) => {
+  const handleEditFieldChange = (field: keyof Subcategory, value: string | number) => {
     setEditValues((prev) => ({ ...(prev ?? {}), [field]: value }));
   };
 
@@ -504,7 +504,7 @@ export default function SubcategoriesPanel() {
             <div className="border-b border-gray-100 px-5 py-4">
               <h2 className="text-sm font-semibold text-gray-900">Delete subcategory</h2>
               <p className="mt-1 text-xs text-gray-500">
-                Are you sure you want to delete "{deleteSubcategoryState.title_english || deleteSubcategoryState.title_arabic}"?
+                Are you sure you want to delete &ldquo;{deleteSubcategoryState.title_english || deleteSubcategoryState.title_arabic}&rdquo;?
                 This action cannot be undone.
               </p>
             </div>

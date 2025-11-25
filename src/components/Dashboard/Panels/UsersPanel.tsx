@@ -107,7 +107,7 @@ export default function UsersPanel() {
     }
   };
 
-  const handleEditFieldChange = (field: keyof AdminUser, value: any) => {
+  const handleEditFieldChange = (field: keyof AdminUser, value: string | boolean) => {
     setEditValues((prev) => ({ ...(prev ?? {}), [field]: value }));
   };
 

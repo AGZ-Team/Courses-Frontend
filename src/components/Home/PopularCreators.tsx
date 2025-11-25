@@ -216,7 +216,7 @@ const CourseCard = memo(
     locale
   }: {
     course: CourseConfig;
-    t: any;
+    t: (key: string) => string;
     translation: CourseTranslation;
     authorName: string;
     locale: string;
@@ -290,7 +290,7 @@ const CourseCard = memo(
         <div className="flex items-center gap-2">
           <LuTrendingUp className="h-4 w-5 text-primary" />
           <dt className="sr-only">{t('courseCard.levelLabel')}</dt>
-          <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as any)}</dd>
+          <dd>{t(`courseCard.level.${course.level.toLowerCase()}` as string)}</dd>
         </div>
       </dl>
 

@@ -162,7 +162,7 @@ export default function ContactContent() {
           </div>
 
           <div className="space-y-4">
-            {t.raw('faqs').map((faq: any, index: number) => (
+            {t.raw('faqs').map((faq: { question: string; answer: string }, index: number) => (
               <div
                 key={index}
                 className="overflow-hidden rounded-lg border border-gray-200 bg-white transition-all"

@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let responseData: any = {};
+    let responseData: Record<string, unknown> = {};
     
     // Try to parse JSON response if there is one
     if (responseText && responseText.trim().length > 0) {

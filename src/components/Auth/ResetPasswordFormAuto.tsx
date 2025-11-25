@@ -98,10 +98,11 @@ export default function ResetPasswordFormAuto({
       }
 
       if (!response.ok) {
-        const errorMsg = 
-          (data as any)?.detail || 
-          (data as any)?.message || 
-          t('error');
+        let errorMsg = t('error');
+        if (typeof data === 'object' && data !== null) {
+          if ('detail' in data && typeof data.detail === 'string') errorMsg = data.detail;
+          else if ('message' in data && typeof data.message === 'string') errorMsg = data.message;
+        }
         throw new Error(errorMsg);
       }
 

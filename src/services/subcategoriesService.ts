@@ -12,8 +12,10 @@ async function handleResponse<T>(res: Response): Promise<T> {
   let message = "Request failed";
   try {
     const data = await res.json();
-    if (typeof (data as any)?.detail === "string") message = (data as any).detail;
-    else if (typeof (data as any)?.error === "string") message = (data as any).error;
+    if (typeof data === 'object' && data !== null) {
+      if ('detail' in data && typeof data.detail === "string") message = data.detail;
+      else if ('error' in data && typeof data.error === "string") message = data.error;
+    }
   } catch {
     // ignore JSON parse errors
   }

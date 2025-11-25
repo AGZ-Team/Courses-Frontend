@@ -98,7 +98,7 @@ export const loginErrors: ErrorMessages = {
  */
 export function getErrorMessageForField(
   fieldName: string,
-  backendError: any,
+  backendError: unknown,
   errorMap: ErrorMessages,
   language: Language
 ): string | null {
@@ -144,7 +144,7 @@ export function getErrorMessageForField(
  * Parse full error response and create field-specific error object
  */
 export function parseSignupErrors(
-  errorResponse: any,
+  errorResponse: unknown,
   language: Language
 ): Record<string, string> {
   const errors: Record<string, string> = {};
@@ -175,7 +175,7 @@ export function parseSignupErrors(
  * Parse login error response
  */
 export function parseLoginErrors(
-  errorResponse: any,
+  errorResponse: unknown,
   language: Language
 ): Record<string, string> {
   const errors: Record<string, string> = {};
@@ -199,7 +199,7 @@ export function parseLoginErrors(
     }
   } else if (typeof errorResponse === 'object' && errorResponse !== null) {
     // Handle object error responses
-    if (errorResponse.detail) {
+    if ('detail' in errorResponse && typeof errorResponse.detail === 'string') {
       const detail = errorResponse.detail;
       const lowerDetail = detail.toLowerCase();
       
@@ -244,7 +244,7 @@ export function parseLoginErrors(
  * Get a user-friendly error message from a raw error
  */
 export function getUserFriendlyErrorMessage(
-  error: any,
+  error: unknown,
   context: 'signup' | 'login',
   language: Language
 ): string {

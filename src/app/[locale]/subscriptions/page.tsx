@@ -92,7 +92,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
   // Translate section titles
   const COURSE_SECTIONS = COURSE_SECTIONS_TEMPLATE.map(section => ({
     ...section,
-    title: t(section.titleKey as any)
+    title: t(section.titleKey as string)
   }));
 
   return (

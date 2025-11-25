@@ -89,7 +89,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
       }
     } catch (err) {
       // Parse error and show field-specific or general message
-      let errorMessage: string = getUserFriendlyErrorMessage(
+      const errorMessage: string = getUserFriendlyErrorMessage(
         err,
         'login',
         isAr ? 'ar' : 'en'

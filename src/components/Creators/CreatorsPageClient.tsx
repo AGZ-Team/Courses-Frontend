@@ -35,7 +35,7 @@ const CreatorsPageClient = ({categoryOptions}: CreatorsPageClientProps) => {
                 }
                 aria-pressed={activeCategory === key}
               >
-                {tCats(key as any, {defaultValue: key})}
+                {tCats(key as string, {defaultValue: key})}
               </button>
             ))}
           </div>

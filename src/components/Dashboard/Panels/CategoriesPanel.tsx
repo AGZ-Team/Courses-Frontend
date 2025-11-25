@@ -122,7 +122,7 @@ export default function CategoriesPanel() {
     setSheetOpen(true);
   };
 
-  const handleEditFieldChange = (field: keyof Category, value: any) => {
+  const handleEditFieldChange = (field: keyof Category, value: string | File | null) => {
     setEditValues((prev) => ({ ...(prev ?? {}), [field]: value }));
   };
 
@@ -495,7 +495,7 @@ export default function CategoriesPanel() {
             <div className="border-b border-gray-100 px-5 py-4">
               <h2 className="text-sm font-semibold text-gray-900">Delete category</h2>
               <p className="mt-1 text-xs text-gray-500">
-                Are you sure you want to delete "{deleteCategoryState.title_english || deleteCategoryState.title_arabic}"?
+                Are you sure you want to delete &ldquo;{deleteCategoryState.title_english || deleteCategoryState.title_arabic}&rdquo;?
                 This action cannot be undone.
               </p>
             </div>
