@@ -1,12 +1,11 @@
-import { permanentRedirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function LocaleHomeAlias({ params }: PageProps) {
+export default async function HomeRedirect({ params }: PageProps) {
   const { locale } = await params;
-
-  // Redirect /en/home or /ar/home back to the locale root (e.g. /en, /ar)
-  permanentRedirect(`/${locale}`);
+  // Redirect /en/home to /en (or /ar/home to /ar)
+  redirect(`/${locale}`);
 }

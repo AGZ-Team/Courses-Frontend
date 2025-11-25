@@ -1,12 +1,11 @@
 import createMiddleware from 'next-intl/middleware';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { routing } from './i18n/routing';
 
-// Create the next-intl middleware
-const intlMiddleware = createMiddleware(routing);
+// Create the next-intl middleware handler
+const handleI18nRouting = createMiddleware(routing);
 
-export async function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Handle verify-email and reset-password query params
@@ -42,9 +41,12 @@ export async function proxy(request: NextRequest) {
   }
 
   // Apply next-intl middleware
-  return intlMiddleware(request);
+  return handleI18nRouting(request);
 }
 
 export const config = {
-  matcher: ['/(en|ar)/:path*'],
+  // Match all pathnames except for
+  // - API routes (/_next, /api, /trpc)
+  // - Static files (contain a dot)
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 };
