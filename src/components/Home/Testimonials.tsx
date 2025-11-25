@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import {useTranslations} from "next-intl";
 
@@ -27,21 +27,31 @@ export default function Testimonials() {
   const [active, setActive] = useState(0);
   const [animateIn, setAnimateIn] = useState(true);
 
-  // autoplay rotate
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActive((i) => (i + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(id);
+  const goToNext = useCallback(() => {
+    setAnimateIn(false);
+    setActive((i) => (i + 1) % testimonials.length);
+  }, [testimonials.length]);
+
+  const goToIndex = useCallback((index: number) => {
+    setAnimateIn(false);
+    setActive(index);
   }, []);
 
-  const current: Testimonial = useMemo(() => testimonials[active], [active]);
+  // autoplay rotate
+  useEffect(() => {
+    const id = setInterval(goToNext, 5000);
+    return () => clearInterval(id);
+  }, [goToNext]);
+
+  const current: Testimonial = useMemo(
+    () => testimonials[active],
+    [active, testimonials]
+  );
 
   // Smooth fade/slide on quote change
   useEffect(() => {
-    setAnimateIn(false);
-    const t = setTimeout(() => setAnimateIn(true), 30);
-    return () => clearTimeout(t);
+    const timeoutId = setTimeout(() => setAnimateIn(true), 30);
+    return () => clearTimeout(timeoutId);
   }, [active]);
 
   return (
@@ -96,7 +106,7 @@ export default function Testimonials() {
                   key={item.name}
                   aria-label={t('aria.showBy', {name: item.name})}
                   aria-current={isActive}
-                  onClick={() => setActive(idx)}
+                  onClick={() => goToIndex(idx)}
                   className="relative rounded-full focus:outline-none transition-transform duration-300 ease-out hover:-translate-y-1"
                 >
                   <span

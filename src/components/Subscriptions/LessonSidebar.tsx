@@ -131,7 +131,7 @@ export function LessonSidebar({
                             currentLesson?.id === lesson.id
                               ? 'text-primary'
                               : 'text-slate-700'
-                          }`} style={{display: '-webkit-box', WebkitLineClamp: 2 as any, WebkitBoxOrient: 'vertical'}}>
+                          }`} style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}>
                             {lesson.title}
                           </div>
                         </div>

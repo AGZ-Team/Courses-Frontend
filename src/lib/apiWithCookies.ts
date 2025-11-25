@@ -50,37 +50,19 @@ export async function apiRequestWithCookies<T>(
 
     if (raw) {
       try {
-        const data = JSON.parse(raw) as any;
-        if (typeof data?.detail === 'string') {
-          message = data.detail;
-        } else if (typeof data?.error === 'string') {
-          message = data.error;
-        } else if (typeof data?.message === 'string') {
-          message = data.message;
-        } else if (data && typeof data === 'object') {
-          // Fallback for validation-style errors, e.g. {field: ["msg1", "msg2"], ...}
-          const fieldMessages: string[] = [];
-
-          for (const [field, value] of Object.entries(data)) {
-            if (!value) continue;
-
-            if (Array.isArray(value)) {
-              const text = (value as unknown[])
-                .filter((v) => typeof v === 'string')
-                .join(' ');
-              if (text) {
-                fieldMessages.push(`${field}: ${text}`);
-              }
-            } else if (typeof value === 'string') {
-              fieldMessages.push(`${field}: ${value}`);
-            }
-          }
-
-          if (fieldMessages.length > 0) {
-            message = fieldMessages.join(' | ');
+        const data: unknown = JSON.parse(raw);
+        if (typeof data === 'object' && data !== null) {
+          const maybeError = data as { detail?: unknown; error?: unknown; message?: unknown };
+          if (typeof maybeError.detail === 'string') {
+            message = maybeError.detail;
+          } else if (typeof maybeError.error === 'string') {
+            message = maybeError.error;
+          } else if (typeof maybeError.message === 'string') {
+            message = maybeError.message;
           }
         }
       } catch {
+        // Fall back to including a snippet of the raw body for debugging
         message = `${message}: ${raw.slice(0, 200)}`;
       }
     }

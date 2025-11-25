@@ -160,7 +160,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
       }, 2000);
     } catch (err) {
       // Parse error and show field-specific or general message
-      let errorMessage: string = getUserFriendlyErrorMessage(
+      const errorMessage: string = getUserFriendlyErrorMessage(
         err,
         'signup',
         isAr ? 'ar' : 'en'

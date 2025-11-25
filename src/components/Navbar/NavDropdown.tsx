@@ -36,18 +36,21 @@ export function NavDropdown({
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const locale = useLocale();
   const isAr = locale === 'ar';
-  const [supportsHover, setSupportsHover] = useState(true);
+  const [supportsHover, setSupportsHover] = useState(() => {
+    if (typeof window !== 'undefined' && 'matchMedia' in window) {
+      return window.matchMedia('(hover: hover)').matches;
+    }
+    return true;
+  });
 
   useEffect(() => {
-    // Determine if the device supports hover (e.g., desktop vs touch devices)
     if (typeof window !== 'undefined' && 'matchMedia' in window) {
       const mq = window.matchMedia('(hover: hover)');
-      setSupportsHover(mq.matches);
       const handler = (e: MediaQueryListEvent) => setSupportsHover(e.matches);
       mq.addEventListener?.('change', handler);
       return () => mq.removeEventListener?.('change', handler);
     }
-  }, [isOpen]);
+  }, []);
 
   useEffect(() => {
     const handlePointerOutside = (event: Event) => {

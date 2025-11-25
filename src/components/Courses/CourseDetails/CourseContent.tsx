@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, ChevronDown, ChevronUp, Play, Star } from 'lucide-react';
 import type { CourseCard } from '../CourseCard';
@@ -23,17 +23,11 @@ export function CourseContent({ course }: CourseContentProps) {
     { id: 'reviews' as const, label: t('tabs.reviews') }
   ];
 
-  // For accordion smooth height animation, keep refs of content nodes
-  const sectionRefs = useRef<Record<number, HTMLDivElement | null>>({});
-  const setSectionRef = (id: number) => (el: HTMLDivElement | null) => {
-    sectionRefs.current[id] = el;
-  };
+  // Simple accordion animation using a fixed maxHeight to avoid reading refs during render
   const getSectionStyle = (id: number): React.CSSProperties => {
     const expanded = expandedSection === id;
-    const el = sectionRefs.current[id];
-    const target = expanded && el ? el.scrollHeight : 0;
     return {
-      maxHeight: target,
+      maxHeight: expanded ? 600 : 0,
       opacity: expanded ? 1 : 0,
       transition: 'max-height 350ms ease, opacity 250ms ease',
       overflow: 'hidden'
@@ -183,7 +177,6 @@ export function CourseContent({ course }: CourseContentProps) {
                     </button>
 
                       <div
-                        ref={setSectionRef(section.id)}
                         style={getSectionStyle(section.id)}
                         className="px-6 bg-white"
                       >

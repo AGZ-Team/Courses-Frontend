@@ -9,7 +9,7 @@ import type { AdminUser } from "@/types/adminUser";
 
 export async function GET(
   _req: NextRequest,
-  { params }: any,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
   try {
@@ -24,7 +24,7 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: any,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
   try {
@@ -44,7 +44,7 @@ export async function PATCH(
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: any,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
   try {

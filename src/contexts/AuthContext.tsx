@@ -21,16 +21,20 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const checkAuthentication = async () => {
+  const checkAuthentication = React.useCallback(async () => {
     setIsLoading(true);
     const authenticated = await checkAuth();
     setIsAuthenticated(authenticated);
     setIsLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
-    checkAuthentication();
-  }, []);
+    const id = setTimeout(() => {
+      void checkAuthentication();
+    }, 0);
+
+    return () => clearTimeout(id);
+  }, [checkAuthentication]);
 
   const logout = async () => {
     await clearTokens();
