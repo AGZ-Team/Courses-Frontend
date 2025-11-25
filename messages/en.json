@@ -56,14 +56,14 @@
     }
   },
   "homeHero": {
-    "eyebrow": "Learn with the best — Inspire & Get Inspired",
+    "eyebrow": "Inspire & Get Inspired",
     "headline": {
       "lineA": "Where Creativity",
       "lineBRich": "Meets Belonging."
     },
     "description": "A Saudi platform connecting creators and supporters through exclusive content, meaningful communities, and real opportunity.",
-    "primaryCta": "Inspire",
-    "secondaryCta": "Get inspired",
+    "primaryCta": "Start Creating",
+    "secondaryCta": "Support a Creator",
     "stats": [
       "Over 12 million students",
       "More than 60,000 Videos",
