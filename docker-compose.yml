@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Next.js listens on port 3000 inside the container (see Dockerfile)
+    # Expose it on port 80 externally so the site is reachable without a port in the URL
+    ports:
+      - "80:3000"
+    # Hostinger will inject environment variables (NEXT_PUBLIC_*, etc.) via its UI,
+    # so we don't hardcode any env_file or secrets here.
+    restart: unless-stopped
