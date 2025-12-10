@@ -63,8 +63,8 @@ export const signupErrors: ErrorMessages = {
 // Login Form Error Messages
 export const loginErrors: ErrorMessages = {
   username: {
-    en: 'Username or email is required',
-    ar: 'اسم المستخدم أو البريد الإلكتروني مطلوب',
+    en: 'Username is required',
+    ar: 'اسم المستخدم مطلوب',
   },
   password: {
     en: 'Password is required',

@@ -200,7 +200,7 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
                 ? 'border-red-500 focus:border-red-500'
                 : 'border-gray-200 focus:border-[#0ABAB5]'
             }`}
-            placeholder={isAr ? 'الاسم أو البريد الإلكتروني' : 'Username or Email'}
+            placeholder={isAr ? 'الاسم' : 'Username'}
             dir={isAr ? 'rtl' : 'ltr'}
             disabled={loading}
           />

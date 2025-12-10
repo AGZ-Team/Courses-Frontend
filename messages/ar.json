@@ -201,7 +201,7 @@
         "title": "تسجيل الدخول",
         "subtitlePrefix": "ليس لديك حساب بعد؟",
         "signupCta": "سجِّل مجانًا",
-        "usernameOrEmail": "اسم المستخدم أو البريد الإلكتروني",
+        "usernameOrEmail": "اسم المستخدم ",
         "password": "كلمة المرور",
         "rememberMe": "تذكرني",
         "forgotPassword": "نسيت كلمة المرور؟",

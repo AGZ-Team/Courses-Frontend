@@ -263,7 +263,7 @@ export function validateLoginForm(
   const errors: Record<string, string> = {};
   
   if (!username || !username.trim()) {
-    errors.username = language === 'ar' ? 'اسم المستخدم أو البريد الإلكتروني مطلوب' : 'Username or email is required';
+    errors.username = language === 'ar' ? 'اسم المستخدم مطلوب' : 'Username is required';
   }
   
   if (!password) {
