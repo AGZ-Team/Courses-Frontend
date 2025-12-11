@@ -420,3 +420,22 @@ html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
     @apply bg-background text-foreground;
   }
 }
+
+/* Sidebar Custom Scrollbar */
+.sidebar-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}

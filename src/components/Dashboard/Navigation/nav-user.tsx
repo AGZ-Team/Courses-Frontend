@@ -72,7 +72,7 @@ export function NavUser({
         if (!cancelled && status?.isAuthenticated && status.username) {
           setDisplayName(status.username)
         }
-      } catch {}
+      } catch { }
     }
 
     void loadUser()
@@ -122,7 +122,7 @@ export function NavUser({
                   {displayEmail}
                 </span>
               </div>
-              <IconDotsVertical className="ml-auto size-4" />
+              {/* <IconDotsVertical className="ml-auto size-4" /> */}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

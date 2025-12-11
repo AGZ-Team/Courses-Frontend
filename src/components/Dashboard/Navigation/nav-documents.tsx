@@ -100,7 +100,7 @@ export function NavDocuments({
                   <span>{item.name}</span>
                 </SidebarMenuButton>
               )}
-              <DropdownMenu>
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuAction
                     showOnHover
@@ -129,16 +129,16 @@ export function NavDocuments({
                     <span>{t('delete')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
+              </DropdownMenu> */}
             </SidebarMenuItem>
           )
         })}
-        <SidebarMenuItem>
+        {/* <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <IconDots className="text-sidebar-foreground/70" />
             <span>{t('more')}</span>
           </SidebarMenuButton>
-        </SidebarMenuItem>
+        </SidebarMenuItem> */}
       </SidebarMenu>
     </SidebarGroup>
   )

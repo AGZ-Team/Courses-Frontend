@@ -34,7 +34,7 @@ import {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const locale = useLocale()
   const t = useTranslations('dashboard')
-  
+
   const data = {
     user: {
       name: "shadcn",
@@ -48,11 +48,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: IconDashboard,
         isActive: true,
       },
-      {
-        title: t('analytics'),
-        url: "#",
-        icon: IconChartBar,
-      },
+      // {
+      //   title: t('analytics'),
+      //   url: "#",
+      //   icon: IconChartBar,
+      // },
       {
         title: t('profile'),
         url: "/dashboard?view=profile",
@@ -87,11 +87,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/dashboard?view=subcategories",
         icon: IconCategory,
       },
-      {
-        name: t('content'),
-        url: "#",
-        icon: IconFileText,
-      },
+      // {
+      //   name: t('content'),
+      //   url: "#",
+      //   icon: IconFileText,
+      // },
       {
         name: t('paymentHistory'),
         url: "/dashboard?view=payments",
@@ -99,7 +99,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
     ],
   }
-  
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
