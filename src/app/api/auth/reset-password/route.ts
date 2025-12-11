@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { API_BASE_URL } from '@/lib/config';
+import { validatePassword, validateConfirmPassword } from '@/lib/validation';
 
 /**
  * POST /api/auth/reset-password
@@ -24,16 +25,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (newPassword !== confirmPassword) {
+    // Validate password using centralized validation
+    const passwordError = validatePassword(newPassword, 'en');
+    if (passwordError) {
       return NextResponse.json(
-        { success: false, message: 'Passwords do not match' },
+        { success: false, message: passwordError },
         { status: 400 }
       );
     }
 
-    if (newPassword.length < 8) {
+    // Validate password confirmation
+    const confirmError = validateConfirmPassword(newPassword, confirmPassword, 'en');
+    if (confirmError) {
       return NextResponse.json(
-        { success: false, message: 'Password must be at least 8 characters' },
+        { success: false, message: confirmError },
         { status: 400 }
       );
     }

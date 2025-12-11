@@ -1,9 +1,14 @@
 import type { AdminUser } from '@/types/adminUser';
 
-// Simple in-memory cache for admin users within a single browser session.
-// This avoids refetching the list when navigating back to the Users view
-// while keeping the implementation lightweight (no extra libraries).
-let adminUsersCache: AdminUser[] | null = null;
+// Cache with TTL for admin users within a browser session.
+// This avoids excessive refetching while ensuring data freshness.
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+let adminUsersCache: CacheEntry<AdminUser[]> | null = null;
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (res.ok) {
@@ -22,21 +27,44 @@ async function handleResponse<T>(res: Response): Promise<T> {
   throw new Error(message);
 }
 
-export async function fetchAdminUsers(): Promise<AdminUser[]> {
-  // If we already loaded users in this session, reuse them.
-  // UsersPanel keeps its own state and updates this cache on
-  // mutations via update/delete calls below.
-  if (adminUsersCache) {
-    return adminUsersCache;
+/**
+ * Fetch admin users with cache support
+ * @param forceRefresh - If true, bypass cache and fetch fresh data
+ */
+export async function fetchAdminUsers(forceRefresh = false): Promise<AdminUser[]> {
+  const now = Date.now();
+  
+  // Check cache validity
+  if (
+    !forceRefresh &&
+    adminUsersCache &&
+    now - adminUsersCache.timestamp < CACHE_TTL
+  ) {
+    return adminUsersCache.data;
   }
 
+  // Fetch fresh data
   const res = await fetch('/api/admin/users', {
     method: 'GET',
     credentials: 'include',
   });
   const data = await handleResponse<AdminUser[]>(res);
-  adminUsersCache = data;
+  
+  // Update cache
+  adminUsersCache = {
+    data,
+    timestamp: now,
+  };
+  
   return data;
+}
+
+/**
+ * Invalidate the admin users cache
+ * Call this after mutations to ensure fresh data on next fetch
+ */
+export function invalidateAdminUsersCache() {
+  adminUsersCache = null;
 }
 
 export async function fetchAdminUser(id: number): Promise<AdminUser> {
@@ -63,7 +91,7 @@ export async function updateAdminUser(
 
   // Keep cache in sync if it exists
   if (adminUsersCache) {
-    adminUsersCache = adminUsersCache.map((user) =>
+    adminUsersCache.data = adminUsersCache.data.map((user) =>
       user.id === id ? updated : user
     );
   }
@@ -80,6 +108,6 @@ export async function deleteAdminUser(id: number): Promise<void> {
 
   // Remove from cache if present
   if (adminUsersCache) {
-    adminUsersCache = adminUsersCache.filter((user) => user.id !== id);
+    adminUsersCache.data = adminUsersCache.data.filter((user) => user.id !== id);
   }
 }

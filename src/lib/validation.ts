@@ -13,8 +13,8 @@ export const REGEX_PATTERNS = {
   // Email: standard email format
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   
-  // Password: at least 8 chars, must include lowercase and number (no uppercase required)
-  password: /^(?=.*[a-z])(?=.*\d).{8,}$/,
+  // Password: at least 8 chars, must include lowercase, uppercase, number, and special char
+  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
   
   // Name: letters, spaces, hyphens, apostrophes only
   name: /^[a-zA-Z\s\-']{1,150}$/,
@@ -41,10 +41,12 @@ export const validationMessages = {
     },
     password: {
       required: 'Password is required',
-      invalid: 'Password must be at least 8 characters and include lowercase and a number',
+      invalid: 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character',
       tooShort: 'Password must be at least 8 characters',
       noLowercase: 'Password must include at least one lowercase letter',
+      noUppercase: 'Password must include at least one uppercase letter',
       noNumber: 'Password must include at least one number',
+      noSpecialChar: 'Password must include at least one special character (!@#$%^&*)',
     },
     confirmPassword: {
       required: 'Please confirm your password',
@@ -88,10 +90,12 @@ export const validationMessages = {
     },
     password: {
       required: 'كلمة المرور مطلوبة',
-      invalid: 'يجب أن تكون كلمة المرور 8 أحرف على الأقل وتتضمن أحرف صغيرة ورقم',
+      invalid: 'يجب أن تكون كلمة المرور 8 أحرف على الأقل وتتضمن أحرف كبيرة وصغيرة ورقم وحرف خاص',
       tooShort: 'يجب أن تكون كلمة المرور 8 أحرف على الأقل',
       noLowercase: 'يجب أن تتضمن كلمة المرور حرف صغير واحد على الأقل',
+      noUppercase: 'يجب أن تتضمن كلمة المرور حرف كبير واحد على الأقل',
       noNumber: 'يجب أن تتضمن كلمة المرور رقم واحد على الأقل',
+      noSpecialChar: 'يجب أن تتضمن كلمة المرور حرف خاص واحد على الأقل (!@#$%^&*)',
     },
     confirmPassword: {
       required: 'يرجى تأكيد كلمة المرور',
@@ -166,8 +170,14 @@ export function validatePassword(password: string, language: Language = 'en'): s
   if (!/[a-z]/.test(password)) {
     return msgs.noLowercase;
   }
+  if (!/[A-Z]/.test(password)) {
+    return msgs.noUppercase;
+  }
   if (!/\d/.test(password)) {
     return msgs.noNumber;
+  }
+  if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
+    return msgs.noSpecialChar;
   }
   
   return null;
@@ -204,6 +214,23 @@ export function validateName(name: string, fieldName: 'firstName' | 'lastName', 
 }
 
 /**
+ * Country code to phone length mapping
+ * Maps country codes to expected phone number lengths (without country code)
+ */
+const COUNTRY_PHONE_LENGTHS: Record<string, number> = {
+  '+966': 9,  // Saudi Arabia
+  '+971': 9,  // UAE
+  '+974': 8,  // Qatar
+  '+968': 8,  // Oman
+  '+965': 8,  // Kuwait
+  '+973': 8,  // Bahrain
+  '+962': 9,  // Jordan
+  '+20': 10,  // Egypt
+  '+1': 10,   // USA/Canada
+  '+44': 10,  // UK
+};
+
+/**
  * Validate phone number
  */
 export function validatePhone(phone: string, language: Language = 'en'): string | null {
@@ -215,6 +242,43 @@ export function validatePhone(phone: string, language: Language = 'en'): string 
   if (!REGEX_PATTERNS.phone.test(phoneOnly)) {
     return validationMessages[language].phone.invalid;
   }
+  return null;
+}
+
+/**
+ * Validate phone number by country code
+ * Ensures phone number has correct length for the selected country
+ */
+export function validatePhoneByCountry(
+  phone: string,
+  countryCode: string,
+  language: Language = 'en'
+): string | null {
+  // First validate general phone format
+  const generalError = validatePhone(phone, language);
+  if (generalError) {
+    return generalError;
+  }
+
+  // Extract only digits from the phone number (removing all non-digit characters)
+  const digitsOnly = phone.replace(/\D/g, '');
+  
+  // Get expected length for this country
+  const expectedLength = COUNTRY_PHONE_LENGTHS[countryCode];
+  
+  if (!expectedLength) {
+    // Country code not in our mapping, accept any valid format
+    return null;
+  }
+  
+  // Validate exact length
+  if (digitsOnly.length !== expectedLength) {
+    const msg = language === 'ar'
+      ? `رقم الهاتف يجب أن يكون ${expectedLength} أرقام`
+      : `Phone number must be ${expectedLength} digits`;
+    return msg;
+  }
+  
   return null;
 }
 

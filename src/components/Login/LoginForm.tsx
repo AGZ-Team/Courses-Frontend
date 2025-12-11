@@ -1,11 +1,10 @@
 'use client';
 
 import React, {useState} from 'react';
-import {Link} from '@/i18n/routing';
+import {Link, useRouter} from '@/i18n/routing';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 import {Loader} from 'lucide-react';
 import {login} from '@/services/authService';
-import {useRouter} from 'next/navigation';
 import {parseLoginErrors, getUserFriendlyErrorMessage, loginErrors} from '@/lib/errorMessages';
 import {validateLoginForm} from '@/lib/validation';
 
@@ -82,10 +81,10 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
       // Check if backend returned uid and token (user not yet verified)
       if (tokens.uid && tokens.token) {
         // Redirect to email verification with uid and token
-        router.push(`/${locale}/auth/verify-email/${tokens.uid}/${tokens.token}`);
+        router.push(`/auth/verify-email/${tokens.uid}/${tokens.token}`);
       } else {
         // User already verified, redirect to home
-        router.push(`/${locale}`);
+        router.push('/');
       }
     } catch (err) {
       // Parse error and show field-specific or general message
@@ -114,6 +113,8 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
             const parsed = parseLoginErrors(errorData, isAr ? 'ar' : 'en');
             if (Object.keys(parsed).length > 0) {
               setFieldErrors(parsed);
+              // Clear password on error for security
+              setFormData((prev) => ({ ...prev, password: '' }));
               return;
             }
           }
@@ -122,6 +123,8 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
         }
       }
       
+      // Clear password on error for security
+      setFormData((prev) => ({ ...prev, password: '' }));
       setGeneralError(errorMessage);
     } finally {
       setLoading(false);

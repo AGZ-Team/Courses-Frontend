@@ -4,11 +4,10 @@ import React, {useState} from 'react';
 import {MdCloudUpload} from 'react-icons/md';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai';
 import {Loader} from 'lucide-react';
-import {Link} from '@/i18n/routing';
+import {Link, useRouter} from '@/i18n/routing';
 import {signup} from '@/services/authService';
-import {useRouter} from 'next/navigation';
 import {parseSignupErrors, getUserFriendlyErrorMessage} from '@/lib/errorMessages';
-import {validateSignupForm} from '@/lib/validation';
+import {validateSignupForm, validatePhoneByCountry} from '@/lib/validation';
 
 type Translations = {
   title: string;
@@ -72,9 +71,8 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
     { code: '+968', flag: '🇴🇲', name: 'Oman', label: 'OM' },
     { code: '+965', flag: '🇰🇼', name: 'Kuwait', label: 'KW' },
     { code: '+973', flag: '🇧🇭', name: 'Bahrain', label: 'BH' },
-    { code: '+966', flag: '🇯🇴', name: 'Jordan', label: 'JO' },
+    { code: '+962', flag: '🇯🇴', name: 'Jordan', label: 'JO' },
     { code: '+20', flag: '🇪🇬', name: 'Egypt', label: 'EG' },
-    { code: '+966', flag: '🇦🇪', name: 'UAE', label: 'AE' },
     { code: '+1', flag: '🇺🇸', name: 'United States', label: 'US' },
     { code: '+44', flag: '🇬🇧', name: 'United Kingdom', label: 'UK' },
   ];
@@ -107,7 +105,7 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
     setFieldErrors({});
     setSuccess(false);
 
-    // Validate all fields with regex patterns
+    // Validate all fields with regex patterns from validation.ts
     const validationErrors = validateSignupForm(
       {
         username: formData.username,
@@ -124,6 +122,16 @@ export default function SignupForm({isAr, translations: t}: SignupFormProps) {
       activeTab === 'instructor',
       isAr ? 'ar' : 'en'
     );
+
+    // Validate phone number with country-specific length check
+    const phoneError = validatePhoneByCountry(
+      formData.phone,
+      countryCode,
+      isAr ? 'ar' : 'en'
+    );
+    if (phoneError) {
+      validationErrors.phone = phoneError;
+    }
 
     if (Object.keys(validationErrors).length > 0) {
       setFieldErrors(validationErrors);
