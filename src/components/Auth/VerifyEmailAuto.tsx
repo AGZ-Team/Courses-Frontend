@@ -25,50 +25,85 @@ export default function VerifyEmailAuto({
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    const verifyEmail = async () => {
-      try {
-        if (typeof window === 'undefined') return;
+    const verifyEmail = async (retries = 3) => {
+      for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+          if (typeof window === 'undefined') return;
 
-        // Call verification endpoint with uid and token from URL
-        const response = await fetch('/api/auth/verify-email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            uid,
-            token,
-          }),
-        });
+          // Create AbortController for timeout handling
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
 
-        const data = await response.json();
+          // Call verification endpoint with uid and token from URL
+          const response = await fetch('/api/auth/verify-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              uid,
+              token,
+            }),
+            signal: controller.signal,
+          });
 
-        if (!response.ok) {
-          const errorMsg = data.message || data.detail || t('error');
-          throw new Error(errorMsg);
+          clearTimeout(timeoutId);
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            const errorMsg = data.message || data.detail || t('error');
+            throw new Error(errorMsg);
+          }
+
+          setSuccess(true);
+
+          // Store verification status in localStorage (survives tab refresh)
+          // with timestamp for cache validation
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('email_verified', JSON.stringify({
+              verified: true,
+              timestamp: Date.now(),
+              expiresIn: 24 * 60 * 60 * 1000, // 24 hours
+            }));
+          }
+
+          // Redirect to login after 2 seconds
+          setTimeout(() => {
+            router.push('/login');
+          }, 2000);
+          
+          return; // Success, exit the retry loop
+        } catch (err) {
+          console.error(`Verification attempt ${attempt} failed:`, err);
+          
+          // If this was the last retry, show error
+          if (attempt === retries) {
+            let errorMessage = t('error');
+            
+            if (err instanceof Error) {
+              if (err.name === 'AbortError') {
+                errorMessage = isAr 
+                  ? 'انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.'
+                  : 'Request timed out. Please try again.';
+              } else {
+                errorMessage = err.message;
+              }
+            }
+            
+            setError(errorMessage);
+            setLoading(false);
+            return;
+          }
+          
+          // Wait before retrying (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
         }
-
-        setSuccess(true);
-
-        // Mark email as verified in sessionStorage
-        if (typeof window !== 'undefined') {
-          sessionStorage.setItem('email_verified', 'true');
-        }
-
-        // Redirect to login after 2 seconds
-        setTimeout(() => {
-          router.push('/login');
-        }, 2000);
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : t('error');
-        setError(errorMessage);
-        setLoading(false);
       }
     };
 
     verifyEmail();
-  }, [uid, token, t, router]);
+  }, [uid, token, t, router, locale, isAr]);
 
   if (loading) {
     return (
