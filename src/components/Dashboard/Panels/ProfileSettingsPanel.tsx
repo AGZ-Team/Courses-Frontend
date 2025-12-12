@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthStore } from "@/stores/authStore";
+import { useUserProfile } from "@/hooks/useUserProfile";
+import { updateUserProfile, updateUserProfileWithFiles } from "@/services/userProfileService";
 
 export default function ProfileSettingsPanel() {
   const t = useTranslations("dashboardProfile");
@@ -81,16 +84,65 @@ export default function ProfileSettingsPanel() {
 
 function ProfileTab({ isAr }: { isAr: boolean }) {
   const t = useTranslations("dashboardProfile.profile");
+  const { user, shouldShowIdCards, updateUser } = useAuthStore();
+  const { refetch } = useUserProfile();
+  const [saving, setSaving] = useState(false);
+  const [formData, setFormData] = useState({
+    username: user?.username || '',
+    email: user?.email || '',
+    first_name: user?.first_name || '',
+    last_name: user?.last_name || '',
+    phone: user?.phone || '',
+    area_of_expertise: user?.area_of_expertise || '',
+    bio: user?.bio || '',
+  });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        username: user.username || '',
+        email: user.email || '',
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
+        phone: user.phone || '',
+        area_of_expertise: user.area_of_expertise || '',
+        bio: user.bio || '',
+      });
+    }
+  }, [user]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+
+    try {
+      const updatedUser = await updateUserProfile(formData);
+      updateUser(updatedUser);
+      alert(isAr ? 'تم حفظ التغييرات بنجاح' : 'Changes saved successfully');
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      alert(isAr ? 'فشل حفظ التغييرات' : 'Failed to save changes');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="space-y-6 pt-4">
       {/* Avatar row */}
       <div className="flex flex-col gap-4 border-b border-gray-100 pb-6 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-primary/5 text-primary text-xl font-semibold ring-2 ring-white shadow-sm">
-            {/* Placeholder avatar circle */}
-            CR
-          </div>
+          {user?.picture ? (
+            <img 
+              src={user.picture} 
+              alt="Profile" 
+              className="h-20 w-20 rounded-full object-cover ring-2 ring-white shadow-sm"
+            />
+          ) : (
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-primary/10 to-primary/5 text-primary text-xl font-semibold ring-2 ring-white shadow-sm">
+              {user?.first_name?.[0]}{user?.last_name?.[0]}
+            </div>
+          )}
           <div className={`${isAr ? "text-right" : "text-left"}`}>
             <p className="text-sm font-medium text-[#0b0b2b]">{t("avatarTitle")}</p>
             <p className="text-xs text-gray-500">{t("avatarHelp")}</p>
@@ -114,48 +166,90 @@ function ProfileTab({ isAr }: { isAr: boolean }) {
       </div>
 
       {/* Profile form */}
-      <form className="space-y-5 md:space-y-6 max-w-4xl mx-auto">
-        {/* Row 1: Username & Email (match signup layout) */}
+      <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6 max-w-4xl mx-auto">
+        {/* Row 1: Username & Email */}
         <div className="grid gap-5 md:grid-cols-2">
-          <Field
-            label={t("username")}
-            id="username"
-            placeholder={t("placeholders.username")}
-          />
-          <Field
-            label={t("email")}
-            id="email"
-            type="email"
-            placeholder={t("placeholders.email")}
-          />
+          <div>
+            <Label htmlFor="username" className="mb-1 block text-sm font-medium text-gray-700">
+              {t("username")}
+            </Label>
+            <Input
+              id="username"
+              value={formData.username}
+              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+              placeholder={t("placeholders.username")}
+              className="rounded-xl"
+            />
+          </div>
+          <div>
+            <Label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">
+              {t("email")}
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              placeholder={t("placeholders.email")}
+              className="rounded-xl"
+            />
+          </div>
         </div>
 
         {/* Row 2: First & Last name */}
         <div className="grid gap-5 md:grid-cols-2">
-          <Field
-            label={t("firstName")}
-            id="firstName"
-            placeholder={t("placeholders.firstName")}
-          />
-          <Field
-            label={t("lastName")}
-            id="lastName"
-            placeholder={t("placeholders.lastName")}
-          />
+          <div>
+            <Label htmlFor="firstName" className="mb-1 block text-sm font-medium text-gray-700">
+              {t("firstName")}
+            </Label>
+            <Input
+              id="firstName"
+              value={formData.first_name}
+              onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+              placeholder={t("placeholders.firstName")}
+              className="rounded-xl"
+            />
+          </div>
+          <div>
+            <Label htmlFor="lastName" className="mb-1 block text-sm font-medium text-gray-700">
+              {t("lastName")}
+            </Label>
+            <Input
+              id="lastName"
+              value={formData.last_name}
+              onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+              placeholder={t("placeholders.lastName")}
+              className="rounded-xl"
+            />
+          </div>
         </div>
 
         {/* Row 3: Phone & Expertise */}
         <div className="grid gap-5 md:grid-cols-2">
-          <Field
-            label={t("phone")}
-            id="phone"
-            placeholder={t("placeholders.phone")}
-          />
-          <Field
-            label={t("expertise")}
-            id="expertise"
-            placeholder={t("placeholders.expertise")}
-          />
+          <div>
+            <Label htmlFor="phone" className="mb-1 block text-sm font-medium text-gray-700">
+              {t("phone")}
+            </Label>
+            <Input
+              id="phone"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              placeholder={t("placeholders.phone")}
+              className="rounded-xl"
+            />
+          </div>
+          <div>
+            <Label htmlFor="expertise" className="mb-1 block text-sm font-medium text-gray-700">
+              {t("expertise")}
+            </Label>
+            <Input
+              id="expertise"
+              value={formData.area_of_expertise}
+              onChange={(e) => setFormData({ ...formData, area_of_expertise: e.target.value })}
+              placeholder={t("placeholders.expertise")}
+              className="rounded-xl"
+            />
+          </div>
         </div>
 
         {/* Row 4: Bio */}
@@ -166,16 +260,59 @@ function ProfileTab({ isAr }: { isAr: boolean }) {
           <textarea
             id="bio"
             rows={3}
+            value={formData.bio}
+            onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
             placeholder={isAr ? "اكتب نبذة قصيرة عنك" : "Write a short bio about yourself"}
             className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition hover:border-primary/40 focus-visible:border-primary focus-visible:ring-[3px] focus-visible:ring-primary/20 resize-none"
           />
         </div>
+
+        {/* ID Cards - Only for instructors and superusers */}
+        {shouldShowIdCards() && (
+          <div className="border-t border-gray-100 pt-6 space-y-5">
+            <h3 className="text-sm font-semibold text-[#0b0b2b]">
+              {isAr ? "بطاقة الهوية" : "ID Card"}
+            </h3>
+            <div className="grid gap-5 md:grid-cols-2">
+              <div>
+                <Label htmlFor="idFront" className="mb-1 block text-sm font-medium text-gray-700">
+                  {isAr ? "صورة الهوية الأمامية" : "ID Card Front"}
+                </Label>
+                {user?.id_card_face && (
+                  <img src={user.id_card_face} alt="ID Front" className="mb-2 h-32 w-full object-cover rounded-lg" />
+                )}
+                <Input
+                  id="idFront"
+                  type="file"
+                  accept="image/*"
+                  className="rounded-xl"
+                />
+              </div>
+              <div>
+                <Label htmlFor="idBack" className="mb-1 block text-sm font-medium text-gray-700">
+                  {isAr ? "صورة الهوية الخلفية" : "ID Card Back"}
+                </Label>
+                {user?.id_card_back && (
+                  <img src={user.id_card_back} alt="ID Back" className="mb-2 h-32 w-full object-cover rounded-lg" />
+                )}
+                <Input
+                  id="idBack"
+                  type="file"
+                  accept="image/*"
+                  className="rounded-xl"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="mt-2 flex justify-end border-t border-gray-100 pt-4">
           <Button
-            type="button"
-            className="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90 hover:shadow-md cursor-pointer"
+            type="submit"
+            disabled={saving}
+            className="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90 hover:shadow-md cursor-pointer disabled:opacity-50"
           >
-            {t("save")}
+            {saving ? (isAr ? 'جارٍ الحفظ...' : 'Saving...') : t("save")}
           </Button>
         </div>
       </form>

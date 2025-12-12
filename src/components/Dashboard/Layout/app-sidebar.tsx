@@ -17,6 +17,7 @@ import Link from "next/link"
 
 import { LanguageSwitcher } from "@/components/Dashboard/Navigation/language-switcher"
 import { NavDocuments } from "@/components/Dashboard/Navigation/nav-documents"
+import { NavItems } from "@/components/Dashboard/Navigation/nav-items"
 import { NavMain } from "@/components/Dashboard/Navigation/nav-main"
 import { NavPages } from "@/components/Dashboard/Navigation/nav-pages"
 import { NavSecondary } from "@/components/Dashboard/Navigation/nav-secondary"
@@ -30,16 +31,56 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useAuthStore } from "@/stores/authStore"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const locale = useLocale()
   const t = useTranslations('dashboard')
+  const { user, shouldShowManagementHub, shouldShowMyContent, isSuperuser, isInstructor } = useAuthStore()
+
+  // Build management hub items based on current user role
+  // This runs immediately without waiting for mount to ensure sidebar renders instantly
+  const managementHubItems = (() => {
+    const items = [];
+    
+    // Superusers see Users, Categories, Subcategories
+    if (user?.is_superuser) {
+      items.push(
+        {
+          name: t('users'),
+          url: "/dashboard?view=users",
+          icon: IconUsers,
+        },
+        {
+          name: t('categories'),
+          url: "/dashboard?view=categories",
+          icon: IconCategory,
+        },
+        {
+          name: t('subcategories'),
+          url: "/dashboard?view=subcategories",
+          icon: IconCategory,
+        }
+      );
+    }
+    
+    // Instructors and Superusers see My Content
+    if (user?.is_instructor || user?.is_superuser) {
+      items.push({
+        name: "My Content",
+        url: "/dashboard?view=my-content",
+        icon: IconFileText,
+      });
+    }
+    
+    return items;
+  })();
 
   const data = {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
-      avatar: "/instructors/1.jpg",
+      name: user ? `${user.first_name} ${user.last_name}` : "User",
+      email: user?.email || "user@example.com",
+      avatar: user?.picture || "/instructors/1.jpg",
     },
     navMain: [
       {
@@ -48,11 +89,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: IconDashboard,
         isActive: true,
       },
-      // {
-      //   title: t('analytics'),
-      //   url: "#",
-      //   icon: IconChartBar,
-      // },
       {
         title: t('profile'),
         url: "/dashboard?view=profile",
@@ -71,27 +107,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: IconSearch,
       },
     ],
-    documents: [
-      {
-        name: t('users'),
-        url: "/dashboard?view=users",
-        icon: IconUsers,
-      },
-      {
-        name: t('categories'),
-        url: "/dashboard?view=categories",
-        icon: IconCategory,
-      },
-      {
-        name: t('subcategories'),
-        url: "/dashboard?view=subcategories",
-        icon: IconCategory,
-      },
-      // {
-      //   name: t('content'),
-      //   url: "#",
-      //   icon: IconFileText,
-      // },
+    // Payment History - Visible to everyone
+    payments: [
       {
         name: t('paymentHistory'),
         url: "/dashboard?view=payments",
@@ -120,7 +137,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavPages />
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
+        
+        {/* Management Hub - Consolidates all management items based on role */}
+        {managementHubItems.length > 0 && (
+          <NavDocuments items={managementHubItems} />
+        )}
+        
+        {/* Payment History - For everyone (no label) */}
+        {data.payments.length > 0 && (
+          <NavItems items={data.payments} />
+        )}
+        
         <NavSecondary items={data.navSecondary} className="mt-auto" />
         <LanguageSwitcher />
       </SidebarContent>

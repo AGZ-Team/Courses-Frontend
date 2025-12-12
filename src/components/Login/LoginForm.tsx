@@ -7,6 +7,8 @@ import {Loader} from 'lucide-react';
 import {login} from '@/services/authService';
 import {parseLoginErrors, getUserFriendlyErrorMessage, loginErrors} from '@/lib/errorMessages';
 import {validateLoginForm} from '@/lib/validation';
+import {useAuthStore} from '@/stores/authStore';
+import {fetchUserProfile} from '@/services/userProfileService';
 
 type Translations = {
   title: string;
@@ -32,6 +34,7 @@ type FieldErrors = Record<string, string>;
 
 export default function LoginForm({isAr, locale, translations: t}: LoginFormProps) {
   const router = useRouter();
+  const { setUser, setVerified } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -83,8 +86,23 @@ export default function LoginForm({isAr, locale, translations: t}: LoginFormProp
         // Redirect to email verification with uid and token
         router.push(`/auth/verify-email/${tokens.uid}/${tokens.token}`);
       } else {
-        // User already verified, redirect to home
-        router.push('/');
+        // User already verified, fetch user profile and store in Zustand
+        try {
+          const userProfile = await fetchUserProfile();
+          setUser(userProfile);
+          setVerified(true);
+          
+          // Redirect based on user role
+          if (userProfile.is_superuser || userProfile.is_staff) {
+            router.push('/dashboard');
+          } else {
+            router.push('/');
+          }
+        } catch (profileError) {
+          console.error('Failed to fetch user profile:', profileError);
+          // Still redirect to home even if profile fetch fails
+          router.push('/');
+        }
       }
     } catch (err) {
       // Parse error and show field-specific or general message

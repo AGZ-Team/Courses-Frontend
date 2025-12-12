@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
 import { AlertCircle, CheckCircle, Loader } from 'lucide-react';
+import { useAuthStore } from '@/stores/authStore';
 
 interface VerifyEmailAutoProps {
   locale: string;
@@ -18,6 +19,7 @@ export default function VerifyEmailAuto({
 }: VerifyEmailAutoProps) {
   const t = useTranslations('verifyEmail');
   const router = useRouter();
+  const { setVerified } = useAuthStore();
   const isAr = locale === 'ar';
 
   const [loading, setLoading] = useState(true);
@@ -58,15 +60,8 @@ export default function VerifyEmailAuto({
 
           setSuccess(true);
 
-          // Store verification status in localStorage (survives tab refresh)
-          // with timestamp for cache validation
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('email_verified', JSON.stringify({
-              verified: true,
-              timestamp: Date.now(),
-              expiresIn: 24 * 60 * 60 * 1000, // 24 hours
-            }));
-          }
+          // Store verification status in Zustand store
+          setVerified(true);
 
           // Redirect to login after 2 seconds
           setTimeout(() => {

@@ -324,12 +324,25 @@ html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
   }
 }
 
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-float-slow {
   animation: float-slow 6s ease-in-out infinite;
 }
 
 .animate-float-slower {
   animation: float-slower 8s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
 }
 
 @theme inline {

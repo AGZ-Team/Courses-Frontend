@@ -59,24 +59,14 @@ export function NavDocuments({
           let isActive: boolean | undefined
 
           if (hasLink) {
-            const isPaymentsLink = item.url?.includes("view=payments")
-            const isUsersLink = item.url?.includes("view=users")
-            const isCategoriesLink = item.url?.includes("view=categories")
-            const isSubcategoriesLink = item.url?.includes("view=subcategories")
-
-            if (isPaymentsLink) {
-              // Highlight Payment History only when we're on the dashboard payments view
-              isActive = normalizedPath === basePath && view === "payments"
-            } else if (isUsersLink) {
-              // Highlight Users only when we're on the dashboard users view
-              isActive = normalizedPath === basePath && view === "users"
-            } else if (isCategoriesLink) {
-              // Highlight Categories only when we're on the dashboard categories view
-              isActive = normalizedPath === basePath && view === "categories"
-            } else if (isSubcategoriesLink) {
-              // Highlight Subcategories only when we're on the dashboard subcategories view
-              isActive = normalizedPath === basePath && view === "subcategories"
+            // Extract view parameter from URL
+            const urlView = item.url?.split("view=")[1]
+            
+            if (urlView) {
+              // Match based on view parameter
+              isActive = normalizedPath === basePath && view === urlView
             } else {
+              // Default path matching
               isActive =
                 normalizedPath === basePath ||
                 normalizedPath?.startsWith(`${basePath}/`)

@@ -7,6 +7,7 @@ import {
   verifyToken,
   isAuthenticated as checkAuth,
 } from '@/services/authService';
+import {useAuthStore} from '@/stores/authStore';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -18,6 +19,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({children}: {children: React.ReactNode}) {
+  const { clearAuth } = useAuthStore();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,6 +40,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
 
   const logout = async () => {
     await clearTokens();
+    clearAuth(); // Clear Zustand store
     setIsAuthenticated(false);
   };
 

@@ -11,6 +11,10 @@ import PaymentHistoryPanel from "@/components/Dashboard/Panels/PaymentHistoryPan
 import UsersPanel from "@/components/Dashboard/Panels/UsersPanel"
 import CategoriesPanel from "@/components/Dashboard/Panels/CategoriesPanel"
 import SubcategoriesPanel from "@/components/Dashboard/Panels/SubcategoriesPanel"
+import MyContentPanel from "@/components/Dashboard/Panels/MyContentPanel"
+import { DashboardUserLoader } from "@/components/Dashboard/DashboardUserLoader"
+import { DashboardContent } from "@/components/Dashboard/DashboardContent"
+import { ContentLoadingOverlay } from "@/components/Dashboard/ContentLoadingOverlay"
 import {
   SidebarInset,
   SidebarProvider,
@@ -45,45 +49,48 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const showUsers = view === "users"
   const showCategories = view === "categories"
   const showSubcategories = view === "subcategories"
+  const showMyContent = view === "my-content"
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
+    <DashboardUserLoader>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <SiteHeader />
+          <DashboardContent>
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              {showProfile ? (
-                <ProfileSettingsPanel />
-              ) : showPayments ? (
-                <PaymentHistoryPanel />
-              ) : showUsers ? (
-                <UsersPanel />
-              ) : showCategories ? (
-                <CategoriesPanel />
-              ) : showSubcategories ? (
-                <SubcategoriesPanel />
-              ) : (
-                <>
-                  <SectionCards />
-                  <div className="px-4 lg:px-6">
-                    <ChartAreaInteractive />
-                  </div>
-                  {/* <DataTable data={data} /> */}
-                </>
-              )}
-            </div>
+            {showProfile ? (
+              <ProfileSettingsPanel />
+            ) : showPayments ? (
+              <PaymentHistoryPanel />
+            ) : showUsers ? (
+              <UsersPanel />
+            ) : showCategories ? (
+              <CategoriesPanel />
+            ) : showSubcategories ? (
+              <SubcategoriesPanel />
+            ) : showMyContent ? (
+              <MyContentPanel />
+            ) : (
+              <>
+                <SectionCards />
+                <div className="px-4 lg:px-6">
+                  <ChartAreaInteractive />
+                </div>
+                {/* <DataTable data={data} /> */}
+              </>
+            )}
           </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+          </DashboardContent>
+        </SidebarInset>
+      </SidebarProvider>
+    </DashboardUserLoader>
   )
 }

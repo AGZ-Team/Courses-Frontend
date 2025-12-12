@@ -1224,6 +1224,9 @@
     "open": "Open",
     "share": "Share",
     "delete": "Delete",
+    "sideBar": {
+      "brand": "Dashboard"
+    },
     "cards": {
       "totalRevenue": "Total Revenue",
       "newCustomers": "New Customers",

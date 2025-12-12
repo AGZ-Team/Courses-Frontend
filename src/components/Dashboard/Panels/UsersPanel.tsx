@@ -71,7 +71,7 @@ export default function UsersPanel() {
     error: queryError,
   } = useQuery<AdminUser[]>({
     queryKey: ["adminUsers"],
-    queryFn: fetchAdminUsers,
+    queryFn: () => fetchAdminUsers(),
   });
 
   useEffect(() => {
