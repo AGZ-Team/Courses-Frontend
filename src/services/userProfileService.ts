@@ -44,18 +44,35 @@ export async function fetchUserProfile(): Promise<UserProfile> {
  * PATCH /auth/users/me
  */
 export async function updateUserProfile(data: Partial<UserProfile>): Promise<UserProfile> {
+  // Clean up data: remove undefined values and empty strings (except for intentional empty values)
+  const cleanData = Object.entries(data).reduce((acc, [key, value]) => {
+    // Only include defined values
+    if (value !== undefined && value !== null) {
+      acc[key] = value as unknown;
+    }
+    return acc;
+  }, {} as Record<string, unknown>);
+
+  console.log('Sending PATCH request to /api/auth/profile with data:', cleanData);
+
   const response = await fetch('/api/auth/profile', {
     method: 'PATCH',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(cleanData),
   });
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Failed to update user profile');
+    const errorMessage = errorData.error || errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+    console.error('Profile update failed:', {
+      status: response.status,
+      statusText: response.statusText,
+      errorData
+    });
+    throw new Error(errorMessage);
   }
 
   return response.json();

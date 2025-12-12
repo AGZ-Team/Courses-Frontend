@@ -51,17 +51,46 @@ export async function PATCH(request: NextRequest) {
     // Parse JSON data (no FormData support for now, just JSON updates)
     const data = await request.json();
 
-    console.log('Updating profile with data:', data);
+    console.log('=== PROFILE UPDATE REQUEST ===');
+    console.log('Updating profile with data:', JSON.stringify(data, null, 2));
+    console.log('Access token present:', !!accessToken);
+    console.log('API Base URL:', process.env.API_BASE_URL || 'https://api.cr-ai.cloud');
+    console.log('Endpoint: PATCH /auth/users/me/');
 
-    // Call Django backend /auth/users/me with PATCH
-    const updatedUser = await apiPatchWithCookies('/auth/users/me/', data, true);
-    
-    console.log('Profile updated successfully:', updatedUser);
-    
-    return NextResponse.json(updatedUser);
+    // Validate that we're not sending empty username or email (common Django validation rules)
+    if (data.username !== undefined && data.username.trim() === '') {
+      return NextResponse.json({ 
+        error: 'Username cannot be empty' 
+      }, { status: 400 });
+    }
+
+    if (data.email !== undefined && data.email.trim() === '') {
+      return NextResponse.json({ 
+        error: 'Email cannot be empty' 
+      }, { status: 400 });
+    }
+
+    try {
+      // Call Django backend /auth/users/me with PATCH
+      const updatedUser = await apiPatchWithCookies('/auth/users/me/', data, true);
+      
+      console.log('✓ Profile updated successfully:', updatedUser);
+      
+      return NextResponse.json(updatedUser);
+    } catch (backendError) {
+      console.error('✗ Backend API Error:', backendError);
+      console.error('Error type:', backendError instanceof Error ? backendError.constructor.name : typeof backendError);
+      console.error('Error message:', backendError instanceof Error ? backendError.message : String(backendError));
+      
+      // Return more detailed error information
+      return NextResponse.json({ 
+        error: backendError instanceof Error ? backendError.message : 'Failed to update profile',
+        details: backendError instanceof Error ? backendError.stack : undefined
+      }, { status: 500 });
+    }
   } catch (error) {
-    console.error('Error updating user profile:', error);
-    const message = error instanceof Error ? error.message : 'Failed to update user profile';
+    console.error('✗ Request parsing error:', error);
+    const message = error instanceof Error ? error.message : 'Failed to process request';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

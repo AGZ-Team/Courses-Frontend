@@ -62,7 +62,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
 
             const content = (
               <>
-                {item.icon && <item.icon />}
+                {item.icon ? <item.icon /> : null}
                 <span>{item.title}</span>
               </>
             )
@@ -73,6 +73,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                   tooltip={item.title}
                   isActive={!!isActive}
                   asChild={Boolean(href)}
+                  suppressHydrationWarning
                 >
                   {href ? <Link href={href}>{content}</Link> : content}
                 </SidebarMenuButton>

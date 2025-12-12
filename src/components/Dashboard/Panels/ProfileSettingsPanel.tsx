@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import { toast } from "sonner";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -116,12 +117,25 @@ function ProfileTab({ isAr }: { isAr: boolean }) {
     setSaving(true);
 
     try {
+      console.log('Submitting profile update:', formData);
       const updatedUser = await updateUserProfile(formData);
+      console.log('Profile updated successfully:', updatedUser);
       updateUser(updatedUser);
-      alert(isAr ? 'تم حفظ التغييرات بنجاح' : 'Changes saved successfully');
+      toast.success(isAr ? 'تم حفظ التغييرات بنجاح' : 'Changes saved successfully', {
+        description: isAr
+          ? 'تم تحديث بيانات حسابك.'
+          : 'Your account information has been updated.',
+      });
+      
+      // Refetch profile to ensure we have the latest data
+      await refetch();
     } catch (error) {
       console.error('Failed to update profile:', error);
-      alert(isAr ? 'فشل حفظ التغييرات' : 'Failed to save changes');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Error details:', errorMessage);
+      toast.error(isAr ? 'فشل حفظ التغييرات' : 'Failed to save changes', {
+        description: errorMessage,
+      });
     } finally {
       setSaving(false);
     }

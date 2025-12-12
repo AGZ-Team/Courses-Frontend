@@ -13,8 +13,6 @@ import CategoriesPanel from "@/components/Dashboard/Panels/CategoriesPanel"
 import SubcategoriesPanel from "@/components/Dashboard/Panels/SubcategoriesPanel"
 import MyContentPanel from "@/components/Dashboard/Panels/MyContentPanel"
 import { DashboardUserLoader } from "@/components/Dashboard/DashboardUserLoader"
-import { DashboardContent } from "@/components/Dashboard/DashboardContent"
-import { ContentLoadingOverlay } from "@/components/Dashboard/ContentLoadingOverlay"
 import {
   SidebarInset,
   SidebarProvider,
@@ -64,31 +62,33 @@ export default async function Page({ searchParams }: DashboardPageProps) {
         <AppSidebar variant="inset" />
         <SidebarInset>
           <SiteHeader />
-          <DashboardContent>
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-            {showProfile ? (
-              <ProfileSettingsPanel />
-            ) : showPayments ? (
-              <PaymentHistoryPanel />
-            ) : showUsers ? (
-              <UsersPanel />
-            ) : showCategories ? (
-              <CategoriesPanel />
-            ) : showSubcategories ? (
-              <SubcategoriesPanel />
-            ) : showMyContent ? (
-              <MyContentPanel />
-            ) : (
-              <>
-                <SectionCards />
-                <div className="px-4 lg:px-6">
-                  <ChartAreaInteractive />
-                </div>
-                {/* <DataTable data={data} /> */}
-              </>
-            )}
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              {showProfile ? (
+                <ProfileSettingsPanel />
+              ) : showPayments ? (
+                <PaymentHistoryPanel />
+              ) : showUsers ? (
+                <UsersPanel />
+              ) : showCategories ? (
+                <CategoriesPanel />
+              ) : showSubcategories ? (
+                <SubcategoriesPanel />
+              ) : showMyContent ? (
+                <MyContentPanel />
+              ) : (
+                <>
+                  <SectionCards />
+                  <div className="px-4 lg:px-6">
+                    <ChartAreaInteractive />
+                  </div>
+                  {/* <DataTable data={data} /> */}
+                </>
+              )}
+            </div>
           </div>
-          </DashboardContent>
+        </div>
         </SidebarInset>
       </SidebarProvider>
     </DashboardUserLoader>

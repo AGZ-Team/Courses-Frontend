@@ -8,6 +8,7 @@ import {Cairo, Jost} from 'next/font/google';
 import ConditionalFooter from '@/components/Footer/ConditionalFooter';
 import ArrowBtn from '@/components/Home/arrowBtn';
 import BreadCrumb from '@/components/BreadCrumb';
+import {Toaster} from '@/components/ui/sonner';
 
 const cairo = Cairo({subsets: ['arabic', 'latin'], variable: '--font-cairo', preload: false});
 const jost = Jost({subsets: ['latin'], variable: '--font-jost', preload: false});
@@ -83,6 +84,7 @@ export default async function LocaleLayout({children, params}: Props) {
           <main>{children}</main>
       <ConditionalFooter />
       <ArrowBtn />
+      <Toaster richColors closeButton position={dir === 'rtl' ? 'top-left' : 'top-right'} />
         </NextIntlClientProvider>
       </body>
     </html>

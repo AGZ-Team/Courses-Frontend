@@ -39,26 +39,46 @@ export async function apiRequestWithCookies<T>(
     }
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  const url = `${API_BASE_URL}${endpoint}`;
+  console.log(`[API] ${restOptions.method || 'GET'} ${url}`);
+  
+  const response = await fetch(url, {
     ...restOptions,
     headers: requestHeaders,
+    cache: 'no-store', // Prevent caching issues
   });
+
+  console.log(`[API] Response status: ${response.status} ${response.statusText}`);
 
   if (!response.ok) {
     const raw = await response.text().catch(() => '');
+    console.error(`[API] Error response body:`, raw);
+    
     let message = `Request failed with status ${response.status}`;
 
     if (raw) {
       try {
         const data: unknown = JSON.parse(raw);
         if (typeof data === 'object' && data !== null) {
-          const maybeError = data as { detail?: unknown; error?: unknown; message?: unknown };
+          const maybeError = data as { detail?: unknown; error?: unknown; message?: unknown; [key: string]: unknown };
+          
+          // Check for Django REST Framework validation errors
           if (typeof maybeError.detail === 'string') {
             message = maybeError.detail;
           } else if (typeof maybeError.error === 'string') {
             message = maybeError.error;
           } else if (typeof maybeError.message === 'string') {
             message = maybeError.message;
+          } else {
+            // If there are field-specific errors, include them
+            const fieldErrors = Object.entries(maybeError)
+              .filter(([key]) => !['detail', 'error', 'message'].includes(key))
+              .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
+              .join(', ');
+            
+            if (fieldErrors) {
+              message = `${message} - ${fieldErrors}`;
+            }
           }
         }
       } catch {

@@ -47,47 +47,9 @@ export function NavUser({
   const locale = useLocale()
   const router = useRouter()
 
-  const [displayName, setDisplayName] = React.useState(user.name)
-  const [displayEmail, setDisplayEmail] = React.useState(user.email)
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") return
-
-    let cancelled = false
-
-    const loadUser = async () => {
-      const storedUsername = window.localStorage.getItem("username")
-      const storedEmail =
-        window.localStorage.getItem("signup_email") || window.localStorage.getItem("email")
-
-      if (!cancelled && storedUsername && storedUsername.trim().length > 0) {
-        setDisplayName(storedUsername)
-      }
-      if (!cancelled && storedEmail && storedEmail.trim().length > 0) {
-        setDisplayEmail(storedEmail)
-      }
-
-      try {
-        const status = await getAuthStatus()
-        if (!cancelled && status?.isAuthenticated && status.username) {
-          setDisplayName(status.username)
-        }
-      } catch { }
-    }
-
-    void loadUser()
-
-    const handleAuthChanged = () => {
-      void loadUser()
-    }
-
-    window.addEventListener("auth-changed", handleAuthChanged)
-
-    return () => {
-      cancelled = true
-      window.removeEventListener("auth-changed", handleAuthChanged)
-    }
-  }, [])
+  // Use the user prop directly (from Zustand) without localStorage override
+  const displayName = user.name || "User"
+  const displayEmail = user.email || "user@example.com"
 
   const handleLogout = async () => {
     // Clear tokens centrally and notify listeners
