@@ -208,7 +208,7 @@ export function CourseHero({ course }: CourseHeroProps) {
                 <p className="text-center text-xs text-slate-500 mt-4">{t('moneyBackGuarantee')}</p>
 
                 <div className="mt-6 space-y-3">
-                  <DetailRow label={t('lessons')} value={course.lessons.toString()} />
+                  <DetailRow label={t('courses')} value={course.lessons.toString()} />
                   <DetailRow label={t('quizzes')} value="3" />
                   <DetailRow label={t('duration')} value={`${duration} ${t('hours')}`} />
                   <DetailRow label={t('skillLevel')} value={course.level} />
