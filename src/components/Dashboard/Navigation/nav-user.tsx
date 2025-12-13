@@ -3,11 +3,10 @@
 import * as React from "react"
 import {
   IconCreditCard,
-  IconDotsVertical,
   IconLogout,
   IconUserCircle,
 } from "@tabler/icons-react"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 
 import {
   Avatar,
@@ -31,7 +30,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { useRouter } from "@/i18n/routing"
-import { clearTokens, getAuthStatus } from "@/services/authService"
+import { clearTokens } from "@/services/authService"
 
 export function NavUser({
   user,
@@ -44,7 +43,6 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const t = useTranslations('dashboard')
-  const locale = useLocale()
   const router = useRouter()
 
   const [cacheBust, setCacheBust] = React.useState<string>("")
@@ -106,8 +104,8 @@ export function NavUser({
                   <AvatarImage 
                     src={avatarSrc} 
                     alt={displayName}
-                    onError={(e) => {
-                      console.error('Failed to load avatar:', user.avatar);
+                    onError={() => {
+                      // Silently handle avatar load errors
                     }}
                   />
                 ) : null}

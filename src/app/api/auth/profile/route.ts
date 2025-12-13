@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     // Log the full raw object returned from the backend for debugging
     try {
       console.log('[Profile Route] Raw user data from backend:', JSON.stringify(userData, null, 2));
-    } catch (e) {
+    } catch {
       // Fallback if stringify fails for any reason
       console.log('[Profile Route] Raw user data from backend (raw):', userData);
     }
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
         id_front: u.id_card_face ?? null,
         id_back: u.id_card_back ?? null,
       });
-    } catch (e) {
+    } catch {
       console.log('[Profile Route] Media fields (raw):', userData);
     }
     

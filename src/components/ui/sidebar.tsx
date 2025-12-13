@@ -495,6 +495,16 @@ const sidebarMenuButtonVariants = cva(
   }
 )
 
+type SidebarMenuButtonProps = {
+  asChild?: boolean
+  isActive?: boolean
+  tooltip?: string | React.ComponentProps<typeof TooltipContent>
+} & VariantProps<typeof sidebarMenuButtonVariants> &
+  // Allow both <button> and <a> props since we frequently render this
+  // as a link via `asChild` (Next.js <Link> renders an <a>).
+  Omit<React.ComponentPropsWithoutRef<"button">, "type"> &
+  Omit<React.ComponentPropsWithoutRef<"a">, "type">
+
 function SidebarMenuButton({
   asChild = false,
   isActive = false,
@@ -503,11 +513,11 @@ function SidebarMenuButton({
   tooltip,
   className,
   ...props
-}: React.ComponentProps<"button"> & {
-  asChild?: boolean
-  isActive?: boolean
-  tooltip?: string | React.ComponentProps<typeof TooltipContent>
-} & VariantProps<typeof sidebarMenuButtonVariants>) {
+}: SidebarMenuButtonProps) {
+  // Important for hydration stability:
+  // - When `asChild` is used, this becomes whatever the child is (often <a>).
+  // - When not using `asChild`, we still render a <button>.
+  // The prop typing above prevents accidentally forcing button-only props.
   const Comp = asChild ? Slot : "button"
   const { isMobile, state } = useSidebar()
 
@@ -518,6 +528,8 @@ function SidebarMenuButton({
       data-size={size}
       data-active={isActive}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+      // Ensure stable and safe default when rendering a real <button>
+      {...(!asChild ? { type: "button" as const } : null)}
       {...props}
     />
   )

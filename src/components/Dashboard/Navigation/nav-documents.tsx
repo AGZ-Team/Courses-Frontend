@@ -1,33 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Link from "next/link"
-import {
-  IconDots,
-  IconFolder,
-  IconShare3,
-  IconTrash,
-  type Icon,
-} from "@tabler/icons-react"
 import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
+import { IconLoader2 } from "@tabler/icons-react"
+import * as React from "react"
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar"
+import type { Icon } from "@tabler/icons-react"
 
 export function NavDocuments({
   items,
@@ -46,24 +32,20 @@ export function NavDocuments({
 }) {
   const t = useTranslations('dashboard')
   const locale = useLocale()
-  const [isHydrated, setIsHydrated] = useState(false)
-
-  useEffect(() => {
-    // Mark as hydrated after first render to avoid hydration mismatch
-    setIsHydrated(true)
-  }, [])
 
   return (
     <SidebarGroup 
-      className={cn(
-        "group-data-[collapsible=icon]:hidden transition-opacity duration-300",
-        loading && "opacity-50 pointer-events-none"
-      )}
-      suppressHydrationWarning
+      className="group-data-[collapsible=icon]:hidden"
     >
       <SidebarGroupLabel>{t('managementHub')}</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => {
+        {loading ? (
+          // Show a centered loading spinner during role loading/updates
+          <div className="flex items-center justify-center py-8">
+            <IconLoader2 className="size-6 animate-spin text-sidebar-foreground/50" />
+          </div>
+        ) : (
+          items.map((item) => {
           const hasLink = !!item.url && item.url !== "#"
           const href = hasLink
             ? `/${locale}${item.url.startsWith("/") ? item.url : `/${item.url}`}`
@@ -71,7 +53,7 @@ export function NavDocuments({
           const basePath = item.url?.split("?")[0] ?? ""
           let isActive: boolean | undefined
 
-          if (hasLink && isHydrated) {
+          if (hasLink) {
             // Extract view parameter from URL
             const urlView = item.url?.split("view=")[1]
             
@@ -111,13 +93,8 @@ export function NavDocuments({
               )}
             </SidebarMenuItem>
           )
-        })}
-        {/* <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
-            <IconDots className="text-sidebar-foreground/70" />
-            <span>{t('more')}</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem> */}
+        })
+        )}
       </SidebarMenu>
     </SidebarGroup>
   )

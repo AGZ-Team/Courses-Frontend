@@ -7,7 +7,6 @@ import Testimonials from '@/components/Home/Testimonials';
 import What from '@/components/Home/What';
 import BecomeInfluencer from '@/components/Home/BecomeInfluencer';
 import BecomeUser from '@/components/Home/BecomeUser';
-import News from '@/components/Home/News';
 import Ad from '@/components/Home/Ad';
 
 type PageProps = {

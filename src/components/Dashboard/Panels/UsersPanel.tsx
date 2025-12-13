@@ -80,7 +80,7 @@ export default function UsersPanel() {
         return filename.slice(0, 17) + '...';
       }
       return filename;
-    } catch (e) {
+    } catch {
       // If it's not parseable, fallback to a simple truncation
       return url.length > 20 ? url.slice(0, 17) + '...' : url;
     }

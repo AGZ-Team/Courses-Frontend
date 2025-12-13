@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server"
 
 import { AppSidebar } from "@/components/Dashboard/Layout/app-sidebar"
 import { ChartAreaInteractive } from "@/components/Dashboard/Charts/chart-area-interactive"
-import { DataTable } from "@/components/Dashboard/Tables/data-table"
 import { SectionCards } from "@/components/Dashboard/Layout/section-cards"
 import { SiteHeader } from "@/components/Dashboard/Layout/site-header"
 import ProfileSettingsPanel from "@/components/Dashboard/Panels/ProfileSettingsPanel"
@@ -17,8 +16,6 @@ import {
   SidebarInset,
   SidebarProvider,
 } from "@/components/ui/sidebar"
-
-import data from "./data.json"
 
 type DashboardMetadataProps = {
   params: Promise<{ locale: string }>

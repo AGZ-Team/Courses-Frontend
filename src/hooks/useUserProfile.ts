@@ -26,7 +26,7 @@ interface ProfileWithRoles {
 }
 
 export function useUserProfile() {
-  const { user, setUser, setRolesLoading, lockRoles, rolesLoading } = useAuthStore();
+  const { user, setUser, setRolesLoading } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasInitialized, setHasInitialized] = useState(false);
@@ -58,7 +58,7 @@ export function useUserProfile() {
         if (process.env.NODE_ENV !== 'production') {
           try {
             console.log('[useUserProfile] Full profile from backend:', JSON.stringify(profile, null, 2));
-          } catch (e) {
+          } catch {
             console.log('[useUserProfile] Full profile from backend (raw):', profile);
           }
         }
@@ -116,8 +116,8 @@ export function useUserProfile() {
         });
 
         setUser(derived); // This also sets rolesLoading to false via setUser
-        lockRoles(); // Lock roles after first successful load - prevents future loading states
-        console.log('[useUserProfile] setUser called and roles locked, rolesLoading will never be true again')
+        // REMOVED: lockRoles() - Don't lock roles permanently, allow rolesLoading during updates
+        console.log('[useUserProfile] Profile loaded, rolesLoading can now be used for updates')
         setHasInitialized(true); // Mark as initialized AFTER successful load
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load profile';
@@ -131,7 +131,7 @@ export function useUserProfile() {
     };
 
     loadProfile();
-  }, [hasInitialized, setUser, setRolesLoading, lockRoles]); // Only run on mount or if reset
+  }, [hasInitialized, user, setUser, setRolesLoading]); // Only run on mount or if reset
 
   const refetch = async () => {
     setLoading(true);
@@ -139,11 +139,56 @@ export function useUserProfile() {
 
     try {
       const profile = await fetchUserProfile();
-      setUser(profile);
+      console.log('[useUserProfile] Refetch profile:', {
+        id: profile.id,
+        first_name: profile.first_name,
+        is_instructor: profile.is_instructor,
+        is_superuser: profile.is_superuser,
+      });
+
+      // Derive missing role flags when backend omits them (same logic as initial load)
+      const derived: ProfileWithRoles = {
+        ...profile,
+        is_instructor: profile.is_instructor ?? false,
+        is_staff: profile.is_staff ?? false,
+        is_superuser: profile.is_superuser ?? false,
+        is_active: profile.is_active ?? true,
+      };
+
+      // If backend doesn't include is_instructor, infer from area_of_expertise or ID cards
+      if (!derived.is_instructor && (profile.area_of_expertise || profile.id_card_face || profile.id_card_back)) {
+        derived.is_instructor = true;
+        console.log('[useUserProfile] Refetch: Inferred is_instructor=true from profile fields');
+      }
+
+      // If is_superuser is false, attempt lightweight admin check
+      if (!derived.is_superuser) {
+        try {
+          const adminResp = await fetch('/api/admin/users', {
+            method: 'GET',
+            credentials: 'include',
+          });
+
+          if (adminResp.ok) {
+            derived.is_superuser = true;
+            console.log('[useUserProfile] Refetch: User has admin access - set is_superuser=true');
+          }
+        } catch (adminError) {
+          console.log('[useUserProfile] Refetch: Admin access check error:', adminError instanceof Error ? adminError.message : 'unknown');
+        }
+      }
+
+      console.log('[useUserProfile] Refetch complete with roles:', {
+        is_superuser: derived.is_superuser,
+        is_instructor: derived.is_instructor,
+        is_staff: derived.is_staff,
+      });
+
+      setUser(derived); // This also sets rolesLoading to false
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load profile';
       setError(errorMessage);
-      console.error('Failed to load user profile:', err);
+      console.error('[useUserProfile] Failed to refetch user profile:', err);
     } finally {
       setLoading(false);
     }

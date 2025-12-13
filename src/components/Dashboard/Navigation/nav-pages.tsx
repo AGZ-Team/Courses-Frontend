@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { IconChevronDown, IconHome2, type Icon } from "@tabler/icons-react"
+import { IconChevronDown, IconHome2 } from "@tabler/icons-react"
 import { useLocale, useTranslations } from "next-intl"
 import Link from "next/link"
 
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/collapsible"
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,

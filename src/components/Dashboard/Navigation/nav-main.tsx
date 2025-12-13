@@ -30,10 +30,6 @@ export function NavMain({ items }: { items: NavItem[] }) {
   const searchParams = useSearchParams()
   const view = searchParams?.get("view") ?? "overview"
 
-  // Prevent hydration mismatches from SVG/icon rendering inside Radix Slot/Tooltip.
-  const [hydrated, setHydrated] = React.useState(false)
-  React.useEffect(() => setHydrated(true), [])
-
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -70,8 +66,8 @@ export function NavMain({ items }: { items: NavItem[] }) {
 
             const content = (
               <>
-                {hydrated && item.icon ? <item.icon /> : null}
-                <span suppressHydrationWarning>{item.title}</span>
+                {item.icon ? <item.icon /> : null}
+                <span>{item.title}</span>
               </>
             )
 
@@ -81,9 +77,8 @@ export function NavMain({ items }: { items: NavItem[] }) {
                   tooltip={item.title}
                   isActive={!!isActive}
                   asChild={Boolean(href)}
-                  suppressHydrationWarning
                 >
-                  {href ? <Link href={href} suppressHydrationWarning>{content}</Link> : content}
+                  {href ? <Link href={href}>{content}</Link> : content}
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )

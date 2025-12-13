@@ -355,7 +355,6 @@ interface CoursesPageProps {
 export default async function CoursesPage({ params }: CoursesPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations('coursesPage');
   
   const ratingFilters: RatingFilter[] = RATING_FILTERS_KEYS.map((item) => ({
     labelKey: item.labelKey,

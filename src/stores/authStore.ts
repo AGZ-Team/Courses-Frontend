@@ -34,15 +34,16 @@ interface AuthState {
   
   // Loading states
   isLoading: boolean;
-  rolesLoading: boolean; // NEW: Track when roles are being derived from backend
-  rolesLocked: boolean; // Once roles are loaded, they stay locked
+  rolesLoading: boolean; // Track when data is being updated
+  lockedRoles: { is_superuser: boolean; is_instructor: boolean; is_staff: boolean } | null; // Locked role state during loading
   
   // Actions
   setUser: (user: User | null) => void;
   setVerified: (verified: boolean) => void;
   clearAuth: () => void;
   updateUser: (userData: Partial<User>) => void;
-  setRolesLoading: (loading: boolean) => void; // NEW
+  setRolesLoading: (loading: boolean) => void;
+  startRoleUpdate: () => void; // Locks current roles before update
   lockRoles: () => void;
   
   // Getters
@@ -62,8 +63,8 @@ export const useAuthStore = create<AuthState>()(
       isVerified: null,
       verificationTimestamp: null,
       isLoading: false,
-      rolesLoading: false, // Start as false - only true during initial fetch
-      rolesLocked: false, // Roles are not locked initially
+      rolesLoading: false,
+      lockedRoles: null,
       
       // Actions
       setUser: (user) => set({ user, isLoading: false, rolesLoading: false }),
@@ -78,23 +79,41 @@ export const useAuthStore = create<AuthState>()(
         isVerified: null,
         verificationTimestamp: null,
         isLoading: false,
-        rolesLoading: true,
-        rolesLocked: false, // Reset lock on logout
+        rolesLoading: false,
+        lockedRoles: null,
       }),
       
-      setRolesLoading: (loading) => {
-        const { rolesLocked } = get();
-        // If roles are locked, never go back to loading
-        if (rolesLocked && loading) return;
-        set({ rolesLoading: loading });
+      startRoleUpdate: () => {
+        const { user } = get();
+        if (user) {
+          // Lock the current role state before loading
+          set({
+            rolesLoading: true,
+            lockedRoles: {
+              is_superuser: user.is_superuser,
+              is_instructor: user.is_instructor,
+              is_staff: user.is_staff,
+            }
+          });
+        }
       },
       
-      lockRoles: () => set({ rolesLocked: true }),
+      setRolesLoading: (loading) => {
+        set({ rolesLoading: loading });
+        // Clear locked roles when loading finishes
+        if (!loading) {
+          set({ lockedRoles: null });
+        }
+      },
+      
+      lockRoles: () => {
+        // No-op: kept for backward compatibility but not used
+      },
       
       updateUser: (userData) => set((state) => ({
         user: state.user ? { ...state.user, ...userData } : null,
-        // Ensure rolesLoading stays false when updating user data
         rolesLoading: false,
+        lockedRoles: null, // Clear locked roles
       })),
       
       // Getters

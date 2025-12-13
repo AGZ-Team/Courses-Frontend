@@ -1,15 +1,13 @@
 import { Link } from '@/i18n/routing'
 import Image from 'next/image'
 import type { Metadata } from 'next'
-import { Cairo, Jost } from 'next/font/google'
+import { Jost } from 'next/font/google'
 import './globals.css'
 import MainNavbar from '@/components/Navbar/MainNavbar'
-import ConditionalFooter from '@/components/Footer/ConditionalFooter'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getLocale } from 'next-intl/server'
 import Footer from '@/components/Footer/Footer'
 
-const cairo = Cairo({ subsets: ['arabic', 'latin'], variable: '--font-cairo', preload: false })
 const jost = Jost({ subsets: ['latin'], variable: '--font-jost', preload: false })
 
 export const metadata: Metadata = {

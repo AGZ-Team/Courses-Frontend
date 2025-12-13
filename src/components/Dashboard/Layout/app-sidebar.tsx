@@ -46,21 +46,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     : pathname
   const activeView = searchParams?.get("view") ?? "overview"
   
-  // Use selectors for specific state pieces to avoid unnecessary re-renders
-  // This ensures managementHubItems only updates when actual roles change
-  const isSuperuser = useAuthStore((state) => state.isSuperuser())
-  const isInstructor = useAuthStore((state) => state.isInstructor())
-  const rolesLoading = useAuthStore((state) => state.rolesLoading)
+  // Use selectors to get user and role states directly
+  // IMPORTANT: Read role booleans directly from user object, not from getter functions
+  // This ensures immediate reactivity when user data updates
   const user = useAuthStore((state) => state.user)
+  const rolesLoading = useAuthStore((state) => state.rolesLoading)
+  const lockedRoles = useAuthStore((state) => state.lockedRoles)
+  
+  // Derive role booleans directly from user object for immediate reactivity
+  // During loading, use lockedRoles (captured BEFORE loading started)
+  const isSuperuser = rolesLoading && lockedRoles ? lockedRoles.is_superuser : user?.is_superuser === true
+  const isInstructor = rolesLoading && lockedRoles ? lockedRoles.is_instructor : user?.is_instructor === true
 
   // Role rules:
-  // - Superuser: sees everything
-  // - Instructor: sees Dashboard + Profile + Payments, and "Content" in Management Hub
-  // - Normal user: no Dashboard main tab; see Profile + Payments + Content
+  // - Superuser: sees Dashboard + Profile + Management Hub (Users/Categories/Subcategories/Content)
+  // - Instructor: sees Dashboard + Profile + Management Hub (Content only)
+  // - Normal user: sees Profile + Management Hub (Content only)
   const isNormalUser = !isSuperuser && !isInstructor
-
+  
   // Build management hub items based on current user role
-  // Dependencies: isSuperuser, isInstructor are now booleans (not functions)
   const managementHubItems = React.useMemo(() => {
     const items: { name: string; url: string; icon: Icon }[] = []
     
@@ -85,51 +89,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       );
     }
     
-    // Instructors and Superusers always see "Content" (no longer "My Content")
-    if (isInstructor || isSuperuser) {
-      items.push({
-        name: "Content",
-        url: "/dashboard?view=my-content",
-        icon: IconFileText,
-      });
-    }
+    // EVERYONE sees "Content" in Management Hub (superuser, instructor, normal user)
+    // The Content component itself will handle role-based rendering
+    items.push({
+      name: "Content",
+      url: "/dashboard?view=my-content",
+      icon: IconFileText,
+    });
     
     return items;
   }, [isSuperuser, isInstructor, t]);
-
-  // Stable placeholder items used while roles are loading.
-  // We keep the section visible to avoid layout shifts and the "appears late" feeling.
-  const managementHubSkeletonItems = React.useMemo(
-    (): { name: string; url: string; icon: Icon }[] => [
-      {
-        name: t('users'),
-        url: "#",
-        icon: IconUsers,
-      },
-      {
-        name: t('categories'),
-        url: "#",
-        icon: IconCategory,
-      },
-      {
-        name: t('subcategories'),
-        url: "#",
-        icon: IconCategory,
-      },
-      {
-        name: "Content",
-        url: "#",
-        icon: IconFileText,
-      },
-    ],
-    [t]
-  )
-
-  // Always pass a stable array reference into NavDocuments.
-  // Switching the array object back/forth contributes to flickery UI and can look like remounting.
-  const managementHubRenderItems = rolesLoading || managementHubItems.length === 0
-    ? managementHubSkeletonItems
-    : managementHubItems
 
   const data = {
     user: {
@@ -150,25 +119,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         })
       }
 
-      // Everyone can see Profile
+      // Everyone can see Profile (with proper translation)
       items.push({
         title: t('profile'),
         url: "/dashboard?view=profile",
         icon: IconUsers,
       })
 
-      // Normal user should also have a direct Content entry outside hub
-      // (in addition to Management Hub's Content) per your requested behavior.
-      if (isNormalUser) {
-        items.push({
-          title: "Content",
-          url: "/dashboard?view=my-content",
-          icon: IconFileText,
-        })
-      }
+      // Content is now ONLY in Management Hub, not here
+      // All users will see it in Management Hub section below
 
       return items
-    }, [isNormalUser, t]),
+    }, [isNormalUser, isSuperuser, isInstructor, t]),
     navSecondary: [
       {
         title: t('getHelp'),
@@ -190,15 +152,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
     ],
   }
-
-  // Debug logging
-  React.useEffect(() => {
-    if (rolesLoading) {
-      console.log('AppSidebar: rolesLoading=true, showing skeleton')
-    } else {
-      console.log('AppSidebar: rolesLoading=false, managementHubItems:', managementHubItems)
-    }
-  }, [rolesLoading, managementHubItems])
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -222,10 +175,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain.map(item => ({ ...item, icon: item.icon as Icon | undefined }))} />
         
         {/* Management Hub - Always mounted, never conditionally rendered
-            Pass loading state and active view as props instead of using hooks inside
-            This prevents re-renders and maintains component state */}
+            When loading: pass empty array + loading=true to show only spinner
+            When not loading: show correct items based on user role (or locked role if still updating)
+            lockedRoles ensures items stay consistent during async updates */}
         <NavDocuments 
-          items={managementHubRenderItems}
+          items={rolesLoading ? [] : managementHubItems}
           loading={rolesLoading}
           activePath={normalizedPath}
           activeView={activeView}

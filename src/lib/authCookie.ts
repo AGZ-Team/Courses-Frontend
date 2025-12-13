@@ -94,7 +94,7 @@ export async function checkAuthStatus(): Promise<CheckAuthResponse> {
 
     const data = await response.json();
     return data;
-  } catch (error) {
+  } catch {
     return { isAuthenticated: false };
   }
 }

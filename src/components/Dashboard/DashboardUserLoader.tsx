@@ -10,7 +10,7 @@ import { useUserProfile } from '@/hooks/useUserProfile';
  * Main content shows loading indicator while user data loads
  */
 export function DashboardUserLoader({ children }: { children: React.ReactNode }) {
-  const { user, loading, error } = useUserProfile();
+  const { error } = useUserProfile();
 
   useEffect(() => {
     if (error) {

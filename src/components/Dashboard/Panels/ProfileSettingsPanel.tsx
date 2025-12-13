@@ -18,7 +18,7 @@ export default function ProfileSettingsPanel() {
   const locale = useLocale();
   const isAr = locale === "ar";
 
-  const { user, updateUser } = useAuthStore();
+  const { user, updateUser, setRolesLoading, startRoleUpdate } = useAuthStore();
   const { refetch } = useUserProfile();
   const [saving, setSaving] = useState(false);
   const [picturePreview, setPicturePreview] = useState<string | null>(null);
@@ -120,6 +120,9 @@ export default function ProfileSettingsPanel() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
+    
+    // Lock current role BEFORE starting update - this ensures sidebar shows correct items during loading
+    startRoleUpdate();
 
     try {
       let updatedUser;
@@ -225,7 +228,17 @@ export default function ProfileSettingsPanel() {
       
       // updatedUser should always be defined if we got this far (no exception thrown)
       if (updatedUser) {
-        updateUser(updatedUser);
+        // IMPORTANT: The backend might not return is_superuser, is_instructor, etc.
+        // We need to preserve the user's role information from the store
+        const currentUser = user;
+        const userToUpdate = {
+          ...updatedUser,
+          // Preserve role fields that the backend might not return
+          is_superuser: updatedUser.is_superuser !== undefined ? updatedUser.is_superuser : currentUser?.is_superuser,
+          is_instructor: updatedUser.is_instructor !== undefined ? updatedUser.is_instructor : currentUser?.is_instructor,
+          is_staff: updatedUser.is_staff !== undefined ? updatedUser.is_staff : currentUser?.is_staff,
+        };
+        updateUser(userToUpdate);
         
         // Clean up object URL if it was used
         if (pictureObjectUrlRef.current) {
@@ -262,7 +275,12 @@ export default function ProfileSettingsPanel() {
           : 'Your account information has been updated.',
       });
       
+      // Refetch profile to ensure dashboard has latest data with derived roles
+      // Wait for refetch to complete before clearing loading state
       await refetch();
+      
+      // Only clear loading after refetch completes successfully
+      setRolesLoading(false);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       console.error('Form submission error:', {
@@ -272,6 +290,8 @@ export default function ProfileSettingsPanel() {
       toast.error(isAr ? 'فشل حفظ التغييرات' : 'Failed to save changes', {
         description: errorMessage,
       });
+      // On error, still clear loading state
+      setRolesLoading(false);
     } finally {
       setSaving(false);
     }
@@ -578,8 +598,12 @@ function IDCardUploader({
   // Update preview when imageSrc changes (e.g., after save or user change)
   useEffect(() => {
     if (!hasLocalSelection && imageSrc) {
-      setPreview(imageSrc);
-      setFileName(""); // Clear file name since this is a saved image URL
+      // Schedule state update to avoid synchronous setState in effect
+      const timer = setTimeout(() => {
+        setPreview(imageSrc);
+        setFileName(""); // Clear file name since this is a saved image URL
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [imageSrc, hasLocalSelection]);
 

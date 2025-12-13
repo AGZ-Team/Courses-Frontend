@@ -1,6 +1,5 @@
 import React from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/routing';
 import LoginDecor from '@/components/Login/LoginDecor';
 import VerifyEmailInstructions from '@/components/Auth/VerifyEmailInstructions';
 import Image from 'next/image';

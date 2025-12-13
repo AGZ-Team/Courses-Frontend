@@ -15,7 +15,7 @@ export async function apiRequest<T>(
   endpoint: string,
   options: RequestOptions = {}
 ): Promise<T> {
-  const {requireAuth = false, headers = {}, ...restOptions} = options;
+  const { headers = {}, ...restOptions} = options;
 
   const requestHeaders: Record<string, string> = {
     ...(headers as Record<string, string>),

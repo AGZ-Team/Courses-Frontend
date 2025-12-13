@@ -1,17 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useLocale } from "next-intl";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/stores/authStore";
 import { IconFileText, IconPlus, IconEdit, IconTrash } from "@tabler/icons-react";
 
 export default function MyContentPanel() {
-  const t = useTranslations("dashboard");
   const locale = useLocale();
   const isAr = locale === "ar";
-  const { user } = useAuthStore();
 
   // Mock data - replace with actual API call
   const [content] = useState([
