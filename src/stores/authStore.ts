@@ -93,6 +93,8 @@ export const useAuthStore = create<AuthState>()(
       
       updateUser: (userData) => set((state) => ({
         user: state.user ? { ...state.user, ...userData } : null,
+        // Ensure rolesLoading stays false when updating user data
+        rolesLoading: false,
       })),
       
       // Getters

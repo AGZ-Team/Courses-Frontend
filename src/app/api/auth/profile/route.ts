@@ -16,37 +16,36 @@ import { API_BASE_URL } from '@/lib/config';
  * Helper function to convert backend media URLs to Next.js proxy URLs
  * This solves CORS and authentication issues by routing images through /media/[...path]
  */
-function normalizeMediaUrls(userData: any): any {
+function normalizeMediaUrls(userData: unknown): unknown {
+  if (!userData || typeof userData !== 'object') return userData;
+
   const imageFields = ['picture', 'id_card_face', 'id_card_back'];
-  
-  imageFields.forEach(field => {
-    if (userData[field]) {
-      let url = userData[field];
-      
-      // Extract the media path from various URL formats
-      let mediaPath = '';
-      
-      if (url.startsWith('/media/')) {
-        // Relative path: /media/users/profile.jpg
-        mediaPath = url.replace('/media/', '');
-      } else if (url.includes('/media/')) {
-        // Absolute path: https://api.cr-ai.cloud/media/users/profile.jpg
-        const parts = url.split('/media/');
-        mediaPath = parts[1] || '';
-      } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        // Just filename: profile.jpg
-        mediaPath = url;
-      }
-      
-      // Convert to Next.js proxy URL (no /api prefix)
-      if (mediaPath) {
-        userData[field] = `/media/${mediaPath}`;
-        console.log(`[normalizeMediaUrls] Converted ${field}: ${url} → /media/${mediaPath}`);
-      }
+  const obj = userData as Record<string, unknown>;
+
+  imageFields.forEach((field) => {
+    const raw = obj[field];
+    if (!raw) return;
+    const url = String(raw ?? '');
+
+    // Extract the media path from various URL formats
+    let mediaPath = '';
+
+    if (url.startsWith('/media/')) {
+      mediaPath = url.replace('/media/', '');
+    } else if (url.includes('/media/')) {
+      const parts = url.split('/media/');
+      mediaPath = parts[1] || '';
+    } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      mediaPath = url;
+    }
+
+    if (mediaPath) {
+      obj[field] = `/media/${mediaPath}`;
+      console.log(`[normalizeMediaUrls] Converted ${field}: ${url} → /media/${mediaPath}`);
     }
   });
-  
-  return userData;
+
+  return obj;
 }
 
 /**
@@ -67,11 +66,11 @@ export async function GET(request: NextRequest) {
     }
     // Also log only the media-related fields for quick inspection in server logs
     try {
-      const u = userData as any;
+      const u = userData as Record<string, unknown>;
       console.log('[Profile Route] Media fields:', {
-        picture: u.picture,
-        id_front: u.id_card_face,
-        id_back: u.id_card_back,
+        picture: u.picture ?? null,
+        id_front: u.id_card_face ?? null,
+        id_back: u.id_card_back ?? null,
       });
     } catch (e) {
       console.log('[Profile Route] Media fields (raw):', userData);
@@ -80,10 +79,11 @@ export async function GET(request: NextRequest) {
     // Normalize media URLs to absolute paths
     const normalizedUserData = normalizeMediaUrls(userData);
     
+    const n = normalizedUserData as Record<string, unknown>;
     console.log('Normalized user data:', {
-      picture: normalizedUserData.picture,
-      id_card_face: normalizedUserData.id_card_face,
-      id_card_back: normalizedUserData.id_card_back,
+      picture: n.picture ?? null,
+      id_card_face: n.id_card_face ?? null,
+      id_card_back: n.id_card_back ?? null,
     });
     
     return NextResponse.json(normalizedUserData);
@@ -112,21 +112,26 @@ export async function PATCH(request: NextRequest) {
 
     // Determine if this is FormData or JSON
     const contentType = request.headers.get('content-type');
-    let data: any;
-    let isFormData = false;
+    let data: Record<string, unknown> | null = null;
+    let hasFiles = false;
 
     if (contentType?.includes('application/json')) {
       // Parse JSON data
       data = await request.json();
     } else if (contentType?.includes('multipart/form-data')) {
-      // Parse FormData
-      isFormData = true;
+      // Parse FormData and check if it contains actual File objects
       const formData = await request.formData();
       data = {};
       
       // Extract text fields and files from FormData
       for (const [key, value] of formData.entries()) {
-        data[key] = value; // Keep Files as-is for later handling
+        if (value instanceof File) {
+          hasFiles = true;
+          data[key] = value; // Keep File objects as-is
+        } else {
+          // Store text values as strings
+          data[key] = String(value);
+        }
       }
     } else {
       // Try to parse as JSON by default
@@ -134,13 +139,23 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Validate that we're not sending empty username or email (common Django validation rules)
-    if (data.username !== undefined && typeof data.username === 'string' && data.username.trim() === '') {
+    if (
+      data &&
+      data.username !== undefined &&
+      typeof data.username === 'string' &&
+      data.username.trim() === ''
+    ) {
       return NextResponse.json({ 
         error: 'Username cannot be empty' 
       }, { status: 400 });
     }
 
-    if (data.email !== undefined && typeof data.email === 'string' && data.email.trim() === '') {
+    if (
+      data &&
+      data.email !== undefined &&
+      typeof data.email === 'string' &&
+      data.email.trim() === ''
+    ) {
       return NextResponse.json({ 
         error: 'Email cannot be empty' 
       }, { status: 400 });
@@ -149,12 +164,12 @@ export async function PATCH(request: NextRequest) {
     try {
       let updatedUser;
 
-      if (isFormData) {
+      if (hasFiles) {
         // For FormData, we need to send it as multipart to Django backend
         const backendFormData = new FormData();
         
         // Add all fields to FormData (both text and file)
-        for (const [key, value] of Object.entries(data)) {
+        for (const [key, value] of Object.entries(data || {})) {
           if (value instanceof File) {
             console.log(`Adding file to FormData: ${key} = ${value.name} (${value.size} bytes)`);
             backendFormData.append(key, value);
@@ -182,12 +197,18 @@ export async function PATCH(request: NextRequest) {
           console.error('Django error response:', errorText);
           
           let errorMessage = 'Failed to update profile';
-          let parsedError: any = null;
+          let parsedError: unknown = null;
           
           try {
             parsedError = JSON.parse(errorText);
             console.error('Parsed error data:', parsedError);
-            errorMessage = parsedError.detail || parsedError.error || parsedError.message || JSON.stringify(parsedError);
+            // Attempt to extract common fields from parsed error
+            if (parsedError && typeof parsedError === 'object') {
+              const p = parsedError as Record<string, unknown>;
+              errorMessage = String(p.detail ?? p.error ?? p.message ?? JSON.stringify(p));
+            } else {
+              errorMessage = String(parsedError);
+            }
           } catch {
             // If it's HTML (like 413), extract meaningful info
             if (errorText.includes('<title>')) {
@@ -222,10 +243,11 @@ export async function PATCH(request: NextRequest) {
       // Normalize media URLs in the response
       const normalizedUpdatedUser = normalizeMediaUrls(updatedUser);
       
+      const nu = normalizedUpdatedUser as Record<string, unknown>;
       console.log('Normalized updated user data:', {
-        picture: normalizedUpdatedUser.picture,
-        id_card_face: normalizedUpdatedUser.id_card_face,
-        id_card_back: normalizedUpdatedUser.id_card_back,
+        picture: nu.picture ?? null,
+        id_card_face: nu.id_card_face ?? null,
+        id_card_back: nu.id_card_back ?? null,
       });
       
       return NextResponse.json(normalizedUpdatedUser);

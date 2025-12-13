@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/stores/authStore";
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { updateUserProfile, updateUserProfileWithFiles } from "@/services/userProfileService";
+import { updateUserProfile, updateUserProfileWithFiles, UserProfile } from "@/services/userProfileService";
 import { motion } from "motion/react";
 import { Upload, X, Shield, Star, User, Phone, Mail, FileText } from "lucide-react";
 
@@ -22,9 +22,8 @@ export default function ProfileSettingsPanel() {
   const { refetch } = useUserProfile();
   const [saving, setSaving] = useState(false);
   const [picturePreview, setPicturePreview] = useState<string | null>(null);
-  const pictureObjectUrlRef = (globalThis as any)._pictureObjectUrlRef ?? { current: null as string | null };
-  // Store ref on globalThis to avoid recreating across Fast Refresh in dev.
-  ;(globalThis as any)._pictureObjectUrlRef = pictureObjectUrlRef;
+  // Use a stable ref for object URLs
+  const pictureObjectUrlRef = useRef<string | null>(null);
   const [hasLocalPictureSelection, setHasLocalPictureSelection] = useState(false);
   const [idCardFaceFile, setIdCardFaceFile] = useState<File | null>(null);
   const [idCardBackFile, setIdCardBackFile] = useState<File | null>(null);
@@ -73,7 +72,7 @@ export default function ProfileSettingsPanel() {
         pictureObjectUrlRef.current = null;
       }
     };
-  }, [pictureObjectUrlRef]);
+  }, []);
 
   const handlePictureChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -114,8 +113,8 @@ export default function ProfileSettingsPanel() {
       reader.readAsDataURL(file);
     }
 
-    // Store file for submission
-    setFormData({ ...formData, picture: file as any });
+  // Store file for submission
+  setFormData({ ...formData, picture: file as File });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -131,12 +130,12 @@ export default function ProfileSettingsPanel() {
       
       if (pictureIsFile || hasIdCards) {
         // Send each image in a separate request for better reliability
-        // Backend handles up to 5MB per file
+        // Backend handles up to 10MB per file
         
         console.log('Files detected. Uploading each image separately...');
         
-        // Step 1: Update text fields first (no files)
-        const textFields = {
+        // Step 1: Update text fields first (no files, no picture URL)
+        const textFields: Partial<UserProfile> = {
           username: formData.username,
           email: formData.email,
           first_name: formData.first_name,
@@ -144,16 +143,19 @@ export default function ProfileSettingsPanel() {
           phone: formData.phone,
           area_of_expertise: formData.area_of_expertise,
           bio: formData.bio,
+          // Explicitly exclude picture field to avoid sending URL as "file"
         };
-        
+
         // Only send text fields if any are non-empty
-        const hasTextChanges = Object.values(textFields).some(v => v && v.trim());
+        const hasTextChanges = Object.values(textFields).some((v) => v && String(v).trim());
         if (hasTextChanges) {
           console.log('Updating text fields...');
           try {
-            updatedUser = await updateUserProfile(textFields as any);
+            updatedUser = await updateUserProfile(textFields);
+            console.log('✓ Text fields updated successfully');
           } catch (error) {
-            console.log('Text update skipped or failed:', error);
+            console.error('Failed to update text fields:', error);
+            // Continue to file uploads even if text update fails
           }
         }
         
@@ -208,7 +210,17 @@ export default function ProfileSettingsPanel() {
       } else {
         // Use regular JSON update for non-file data
         console.log('No files detected. Sending JSON update...');
-        updatedUser = await updateUserProfile(formData as any);
+        const payload: Partial<UserProfile> = {
+          username: formData.username,
+          email: formData.email,
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          phone: formData.phone,
+          area_of_expertise: formData.area_of_expertise,
+          bio: formData.bio,
+          // Do NOT include picture field in JSON updates - it causes Django to expect a file
+        };
+        updatedUser = await updateUserProfile(payload);
       }
       
       // updatedUser should always be defined if we got this far (no exception thrown)
@@ -560,9 +572,7 @@ function IDCardUploader({
 }) {
   const [preview, setPreview] = useState<string | null>(imageSrc || null);
   const [fileName, setFileName] = useState<string>("");
-  const objectUrlRef = (globalThis as any)[`_${id}_objectUrlRef`] ?? { current: null as string | null };
-  // Store ref on globalThis to avoid recreating across Fast Refresh in dev.
-  ;(globalThis as any)[`_${id}_objectUrlRef`] = objectUrlRef;
+  const objectUrlRef = useRef<string | null>(null);
   const [hasLocalSelection, setHasLocalSelection] = useState(false);
 
   // Update preview when imageSrc changes (e.g., after save or user change)
@@ -581,7 +591,7 @@ function IDCardUploader({
         objectUrlRef.current = null;
       }
     };
-  }, [objectUrlRef]);
+  }, []);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

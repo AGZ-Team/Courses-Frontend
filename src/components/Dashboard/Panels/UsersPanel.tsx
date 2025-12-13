@@ -198,10 +198,10 @@ export default function UsersPanel() {
         setIdCardFaceFile(null);
         setIdCardBackFile(null);
       } else {
-        // No files, just update text fields
-        // Remove file fields from the payload to avoid sending URLs as "files"
-        const { picture, id_card_face, id_card_back, ...textFields } = editValues;
-        const payload: Partial<AdminUser> = { ...textFields };
+  // No files, just update text fields
+  // Remove file fields from the payload to avoid sending URLs as "files"
+  const { picture: _picture, id_card_face: _id_card_face, id_card_back: _id_card_back, ...textFields } = editValues;
+  const payload: Partial<AdminUser> = { ...textFields };
         const updated = await updateAdminUser(activeUser.id, payload);
         queryClient.setQueryData<AdminUser[]>(["adminUsers"], (prev) =>
           prev ? prev.map((u) => (u.id === updated.id ? updated : u)) : [updated],

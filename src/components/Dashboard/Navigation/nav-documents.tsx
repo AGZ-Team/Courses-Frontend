@@ -44,14 +44,12 @@ export function NavDocuments({
   activePath?: string
   activeView?: string
 }) {
-  const { isMobile } = useSidebar()
   const t = useTranslations('dashboard')
   const locale = useLocale()
-  
-  // Track hydration state to prevent mismatch
   const [isHydrated, setIsHydrated] = useState(false)
-  
+
   useEffect(() => {
+    // Mark as hydrated after first render to avoid hydration mismatch
     setIsHydrated(true)
   }, [])
 

@@ -65,8 +65,8 @@ export function useUserProfile() {
         // Also log explicit media-related fields for quick visibility
         console.log('[useUserProfile] Media fields:', {
           picture: profile.picture,
-          id_front: (profile as any).id_card_face,
-          id_back: (profile as any).id_card_back,
+          id_front: profile.id_card_face ?? null,
+          id_back: profile.id_card_back ?? null,
         });
         console.log('[useUserProfile] Profile fetched:', {
           id: profile.id,

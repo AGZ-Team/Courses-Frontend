@@ -3,7 +3,7 @@
  * Handles fetching and updating user profile data
  */
 
-interface UserProfile {
+export interface UserProfile {
   id: number;
   username: string;
   email: string;
@@ -102,7 +102,7 @@ export async function updateUserProfileWithFiles(formData: FormData): Promise<Us
       ['picture', 'id_card_face', 'id_card_back'].forEach(field => {
         if (errorData[field]) {
           const errors = Array.isArray(errorData[field]) ? errorData[field] : [errorData[field]];
-          fieldErrors.push(...errors.filter((e: any) => typeof e === 'string'));
+          fieldErrors.push(...errors.filter((e: unknown) => typeof e === 'string') as string[]);
         }
       });
       
