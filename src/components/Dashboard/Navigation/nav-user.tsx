@@ -47,9 +47,36 @@ export function NavUser({
   const locale = useLocale()
   const router = useRouter()
 
+  const [cacheBust, setCacheBust] = React.useState<string>("")
+  React.useEffect(() => {
+    setCacheBust(String(Date.now()))
+  }, [])
+
   // Use the user prop directly (from Zustand) without localStorage override
   const displayName = user.name || "User"
-  const displayEmail = user.email || "user@example.com"
+  const displayEmail = user.email || ""
+  
+  // Debug logging
+  React.useEffect(() => {
+    console.log('[NavUser] User avatar URL:', user.avatar);
+  }, [user.avatar]);
+
+  // Bust cache for avatars that may have been recently updated.
+  const avatarSrc = user.avatar
+    ? `${user.avatar}${user.avatar.includes("?") ? "&" : "?"}v=${encodeURIComponent(cacheBust)}`
+    : "";
+
+  // Extract user initials from name (e.g., "Galal Elsayed" -> "GE")
+  const getUserInitials = (name: string): string => {
+    if (!name || name === "User") return "U"
+    const nameParts = name.trim().split(/\s+/)
+    if (nameParts.length === 1) {
+      return nameParts[0].charAt(0).toUpperCase()
+    }
+    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase()
+  }
+
+  const userInitials = getUserInitials(displayName)
 
   const handleLogout = async () => {
     // Clear tokens centrally and notify listeners
@@ -74,9 +101,19 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={displayName} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+              <Avatar className="h-8 w-8 rounded-lg">
+                {user.avatar ? (
+                  <AvatarImage 
+                    src={avatarSrc} 
+                    alt={displayName}
+                    onError={(e) => {
+                      console.error('Failed to load avatar:', user.avatar);
+                    }}
+                  />
+                ) : null}
+                <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                  {userInitials}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium text-white">{displayName}</span>
@@ -96,8 +133,10 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={displayName} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  {user.avatar && <AvatarImage src={user.avatar} alt={displayName} />}
+                  <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                    {userInitials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{displayName}</span>

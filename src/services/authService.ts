@@ -3,8 +3,6 @@ import {
   login,
   verifyToken,
   isAuthenticated,
-  getAccessToken,
-  getRefreshToken,
   clearTokens,
   getAuthStatus,
 } from '@/lib/auth';
@@ -14,8 +12,6 @@ export {
   login,
   verifyToken,
   isAuthenticated,
-  getAccessToken,
-  getRefreshToken,
   clearTokens,
   getAuthStatus,
 };

@@ -213,21 +213,21 @@ export async function verifyToken(token: string): Promise<boolean> {
  * Get stored access token (legacy - kept for compatibility)
  * Tokens are now in HttpOnly cookies, not accessible from client
  */
-export function getAccessToken(): string | null {
-  // Tokens are stored in HttpOnly cookies on the server
-  // Client code should not try to access them
-  return null;
-}
+// export function getAccessToken(): string | null {
+//   // Tokens are stored in HttpOnly cookies on the server
+//   // Client code should not try to access them
+//   return null;
+// }
 
-/**
- * Get stored refresh token (legacy - kept for compatibility)
- * Tokens are now in HttpOnly cookies, not accessible from client
- */
-export function getRefreshToken(): string | null {
-  // Tokens are stored in HttpOnly cookies on the server
-  // Client code should not try to access them
-  return null;
-}
+// /**
+//  * Get stored refresh token (legacy - kept for compatibility)
+//  * Tokens are now in HttpOnly cookies, not accessible from client
+//  */
+// export function getRefreshToken(): string | null {
+//   // Tokens are stored in HttpOnly cookies on the server
+//   // Client code should not try to access them
+//   return null;
+// }
 
 /**
  * Remove stored tokens (logout) via cookie-based API route

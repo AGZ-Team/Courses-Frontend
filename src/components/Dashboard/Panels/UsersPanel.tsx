@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import type { AdminUser } from "@/types/adminUser";
-import { fetchAdminUsers, updateAdminUser, deleteAdminUser } from "@/services/adminUsersService";
+import { fetchAdminUsers, updateAdminUser, updateAdminUserWithFiles, deleteAdminUser } from "@/services/adminUsersService";
 
 function BooleanBadge({
   value,
@@ -63,6 +63,28 @@ export default function UsersPanel() {
   const [deleteUser, setDeleteUser] = useState<AdminUser | null>(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteSaving, setDeleteSaving] = useState(false);
+  const [pictureFile, setPictureFile] = useState<File | null>(null);
+  const [idCardFaceFile, setIdCardFaceFile] = useState<File | null>(null);
+  const [idCardBackFile, setIdCardBackFile] = useState<File | null>(null);
+
+  // Format long URLs to a compact representation for table cells.
+  // Shows only the filename to save space
+  const formatShortUrl = (url?: string | null) => {
+    if (!url) return "";
+    try {
+      // Extract just the filename from the URL
+      const parts = url.split('/');
+      const filename = parts[parts.length - 1];
+      // Truncate filename if too long
+      if (filename.length > 20) {
+        return filename.slice(0, 17) + '...';
+      }
+      return filename;
+    } catch (e) {
+      // If it's not parseable, fallback to a simple truncation
+      return url.length > 20 ? url.slice(0, 17) + '...' : url;
+    }
+  };
 
   const queryClient = useQueryClient();
   const {
@@ -102,6 +124,9 @@ export default function UsersPanel() {
     setSheetOpen(true);
     if (mode === "edit") {
       setEditValues({ ...user });
+      setPictureFile(null);
+      setIdCardFaceFile(null);
+      setIdCardBackFile(null);
     } else {
       setEditValues(null);
     }
@@ -117,12 +142,73 @@ export default function UsersPanel() {
     try {
       setSheetSaving(true);
       setSheetError(null);
-      const payload: Partial<AdminUser> = { ...activeUser, ...editValues };
-      const updated = await updateAdminUser(activeUser.id, payload);
-      queryClient.setQueryData<AdminUser[]>(["adminUsers"], (prev) =>
-        prev ? prev.map((u) => (u.id === updated.id ? updated : u)) : [updated],
-      );
-      setActiveUser(updated);
+
+      // Check if any files are being uploaded
+      const hasFiles = pictureFile || idCardFaceFile || idCardBackFile;
+
+      if (hasFiles) {
+        // Validate file sizes (max 10MB per file - backend limit)
+        const maxFileSize = 10 * 1024 * 1024; // 10MB
+        const files = [
+          { file: pictureFile, name: "picture" },
+          { file: idCardFaceFile, name: "id_card_face" },
+          { file: idCardBackFile, name: "id_card_back" },
+        ];
+
+        for (const { file, name } of files) {
+          if (file && file.size > maxFileSize) {
+            setSheetError(`${name} must be less than 10MB`);
+            setSheetSaving(false);
+            return;
+          }
+        }
+
+        // Upload each file separately (one at a time)
+        // Skip text updates when there are files - let each file request handle all fields
+        let updated = activeUser;
+
+        for (const { file, name } of files) {
+          if (file) {
+            const formData = new FormData();
+            // Append all edited fields to the FormData along with the file
+            Object.keys(editValues).forEach((key) => {
+              const value = editValues[key as keyof AdminUser];
+              if (value !== undefined && value !== null && key !== 'picture' && key !== 'id_card_face' && key !== 'id_card_back') {
+                formData.append(key, String(value));
+              }
+            });
+            // Append the file
+            formData.append(name as string, file);
+            
+            try {
+              updated = await updateAdminUserWithFiles(activeUser.id, formData);
+              console.log(`✓ ${name} uploaded successfully`);
+            } catch (error) {
+              console.error(`Failed to upload ${name}:`, error);
+              throw error;
+            }
+          }
+        }
+
+        queryClient.setQueryData<AdminUser[]>(["adminUsers"], (prev) =>
+          prev ? prev.map((u) => (u.id === updated.id ? updated : u)) : [updated],
+        );
+        setActiveUser(updated);
+        setPictureFile(null);
+        setIdCardFaceFile(null);
+        setIdCardBackFile(null);
+      } else {
+        // No files, just update text fields
+        // Remove file fields from the payload to avoid sending URLs as "files"
+        const { picture, id_card_face, id_card_back, ...textFields } = editValues;
+        const payload: Partial<AdminUser> = { ...textFields };
+        const updated = await updateAdminUser(activeUser.id, payload);
+        queryClient.setQueryData<AdminUser[]>(["adminUsers"], (prev) =>
+          prev ? prev.map((u) => (u.id === updated.id ? updated : u)) : [updated],
+        );
+        setActiveUser(updated);
+      }
+
       setSheetOpen(false);
     } catch (err) {
       setSheetError(err instanceof Error ? err.message : "Failed to update user");
@@ -327,7 +413,7 @@ export default function UsersPanel() {
           ) : (
             <>
               {/* Desktop / tablet table */}
-              <div className="hidden md:block">
+              <div className="hidden md:block overflow-x-auto">
                 <div className="max-h-[560px] overflow-y-auto">
                   <Table className="min-w-full table-auto border-separate border-spacing-0 text-xs md:text-sm">
                     <TableHeader>
@@ -359,7 +445,7 @@ export default function UsersPanel() {
                         <TableHead className="border-b border-gray-100 px-6 py-3 text-left font-medium">
                           Username
                         </TableHead>
-                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium hidden lg:table-cell">
+                        <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium hidden lg:table-cell max-w-[22rem]">
                           ID docs
                         </TableHead>
                         <TableHead className="border-b border-gray-100 px-3 py-3 text-left font-medium w-20">
@@ -429,10 +515,34 @@ export default function UsersPanel() {
                           <TableCell className="px-6 py-3 align-middle text-xs text-gray-700 max-w-[7rem] truncate whitespace-nowrap overflow-hidden">
                             {user.username}
                           </TableCell>
-                          <TableCell className="px-3 py-3 align-middle text-xs text-gray-600 wrap-break-word hidden lg:table-cell">
+                          <TableCell className="px-3 py-3 align-middle text-xs text-gray-600 wrap-break-word hidden lg:table-cell min-w-0 max-w-[8rem]">
                             <div className="space-y-1">
-                              <div>{user.id_card_face}</div>
-                              <div className="text-gray-400 text-[11px]">{user.id_card_back}</div>
+                              {user.id_card_face ? (
+                                <a
+                                  href={user.id_card_face}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  title={user.id_card_face}
+                                  className="block max-w-full truncate whitespace-nowrap overflow-hidden text-teal-600 hover:underline text-[11px]"
+                                >
+                                  📄 {formatShortUrl(user.id_card_face)}
+                                </a>
+                              ) : (
+                                <span className="text-gray-400">-</span>
+                              )}
+                              {user.id_card_back ? (
+                                <a
+                                  href={user.id_card_back}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  title={user.id_card_back}
+                                  className="block max-w-full truncate whitespace-nowrap overflow-hidden text-teal-600 hover:underline text-[11px]"
+                                >
+                                  📄 {formatShortUrl(user.id_card_back)}
+                                </a>
+                              ) : (
+                                <span className="text-gray-400 text-[11px]">-</span>
+                              )}
                             </div>
                           </TableCell>
                           <TableCell className="px-3 py-3 align-middle text-xs text-gray-700">
@@ -810,6 +920,77 @@ export default function UsersPanel() {
                 </div>
               </div>
 
+              {sheetMode === "edit" && (
+                <div className="grid grid-cols-1 gap-3 rounded-md border border-teal-100 bg-teal-50/30 px-3 py-3 text-xs">
+                  <div>
+                    <Label className="text-[11px] font-medium text-teal-900">
+                      {isArabic ? "صورة المستخدم" : "Profile Picture"}
+                    </Label>
+                    <div className="mt-2 text-[12px] text-gray-600">
+                      {activeUser.picture && (
+                        <p className="mb-2 rounded-sm bg-white px-2 py-1">
+                          {isArabic ? "الصورة الحالية: " : "Current: "}
+                          <span className="truncate font-mono text-[11px]">{formatShortUrl(activeUser.picture)}</span>
+                        </p>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setPictureFile(e.target.files?.[0] ?? null)}
+                        className="block w-full text-[11px] file:mr-3 file:rounded-md file:border-0 file:bg-teal-100 file:px-2 file:py-1 file:text-[11px] file:font-medium file:text-teal-900 hover:file:bg-teal-200"
+                      />
+                      {pictureFile && (
+                        <p className="mt-1 text-[11px] text-emerald-700">✓ {pictureFile.name} ({(pictureFile.size / 1024).toFixed(2)} KB)</p>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="text-[11px] font-medium text-teal-900">
+                      {isArabic ? "الهوية (الوجه الأمامي)" : "ID Card (Front)"}
+                    </Label>
+                    <div className="mt-2 text-[12px] text-gray-600">
+                      {activeUser.id_card_face && (
+                        <p className="mb-2 rounded-sm bg-white px-2 py-1">
+                          {isArabic ? "الملف الحالي: " : "Current: "}
+                          <span className="truncate font-mono text-[11px]">{formatShortUrl(activeUser.id_card_face)}</span>
+                        </p>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setIdCardFaceFile(e.target.files?.[0] ?? null)}
+                        className="block w-full text-[11px] file:mr-3 file:rounded-md file:border-0 file:bg-teal-100 file:px-2 file:py-1 file:text-[11px] file:font-medium file:text-teal-900 hover:file:bg-teal-200"
+                      />
+                      {idCardFaceFile && (
+                        <p className="mt-1 text-[11px] text-emerald-700">✓ {idCardFaceFile.name} ({(idCardFaceFile.size / 1024).toFixed(2)} KB)</p>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="text-[11px] font-medium text-teal-900">
+                      {isArabic ? "الهوية (الوجه الخلفي)" : "ID Card (Back)"}
+                    </Label>
+                    <div className="mt-2 text-[12px] text-gray-600">
+                      {activeUser.id_card_back && (
+                        <p className="mb-2 rounded-sm bg-white px-2 py-1">
+                          {isArabic ? "الملف الحالي: " : "Current: "}
+                          <span className="truncate font-mono text-[11px]">{formatShortUrl(activeUser.id_card_back)}</span>
+                        </p>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setIdCardBackFile(e.target.files?.[0] ?? null)}
+                        className="block w-full text-[11px] file:mr-3 file:rounded-md file:border-0 file:bg-teal-100 file:px-2 file:py-1 file:text-[11px] file:font-medium file:text-teal-900 hover:file:bg-teal-200"
+                      />
+                      {idCardBackFile && (
+                        <p className="mt-1 text-[11px] text-emerald-700">✓ {idCardBackFile.name} ({(idCardBackFile.size / 1024).toFixed(2)} KB)</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
                   <Label className="text-[11px] text-gray-500">
@@ -870,25 +1051,6 @@ export default function UsersPanel() {
                       </button>
                     </div>
                   )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div>
-                  <Label className="text-[11px] text-gray-500">
-                    {isArabic ? "الهوية (الوجه الأمامي)" : "ID card (front)"}
-                  </Label>
-                  <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
-                    {activeUser.id_card_face || "-"}
-                  </div>
-                </div>
-                <div>
-                  <Label className="text-[11px] text-gray-500">
-                    {isArabic ? "الهوية (الوجه الخلفي)" : "ID card (back)"}
-                  </Label>
-                  <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
-                    {activeUser.id_card_back || "-"}
-                  </div>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
+    unoptimized: true, // Keep unoptimized for external domains
     remotePatterns: [
       {
         protocol: 'https',
@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'educrat-react.vercel.app'
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.cr-ai.cloud' // Django backend API (HTTPS)
+      },
+      {
+        protocol: 'http',
+        hostname: 'api.cr-ai.cloud' // Django backend API (HTTP)
       }
     ]
   }

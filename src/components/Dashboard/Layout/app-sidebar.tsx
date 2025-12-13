@@ -13,6 +13,7 @@ import {
   type Icon,
 } from "@tabler/icons-react"
 import { useLocale, useTranslations } from "next-intl"
+import { usePathname, useSearchParams } from "next/navigation"
 import Link from "next/link"
 
 import { LanguageSwitcher } from "@/components/Dashboard/Navigation/language-switcher"
@@ -36,19 +37,35 @@ import { useAuthStore } from "@/stores/authStore"
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const locale = useLocale()
   const t = useTranslations('dashboard')
-  const { user, isSuperuser, isInstructor } = useAuthStore()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  
+  // Normalize path and extract view parameter
+  const normalizedPath = pathname?.startsWith(`/${locale}`)
+    ? pathname.replace(`/${locale}`, "") || "/"
+    : pathname
+  const activeView = searchParams?.get("view") ?? "overview"
+  
+  // Use selectors for specific state pieces to avoid unnecessary re-renders
+  // This ensures managementHubItems only updates when actual roles change
+  const isSuperuser = useAuthStore((state) => state.isSuperuser())
+  const isInstructor = useAuthStore((state) => state.isInstructor())
+  const rolesLoading = useAuthStore((state) => state.rolesLoading)
+  const user = useAuthStore((state) => state.user)
 
-  // Treat missing user as "roles still loading" so we can render a stable sidebar
-  // skeleton (prevents Management Hub from appearing late / causing reflow).
-  const rolesLoading = !user
+  // Role rules:
+  // - Superuser: sees everything
+  // - Instructor: sees Dashboard + Profile + Payments, and "Content" in Management Hub
+  // - Normal user: no Dashboard main tab; see Profile + Payments + Content
+  const isNormalUser = !isSuperuser && !isInstructor
 
   // Build management hub items based on current user role
-  // Use memoization to prevent rebuilding on every render
+  // Dependencies: isSuperuser, isInstructor are now booleans (not functions)
   const managementHubItems = React.useMemo(() => {
     const items: { name: string; url: string; icon: Icon }[] = []
     
     // Superusers see Users, Categories, Subcategories
-    if (isSuperuser()) {
+    if (isSuperuser) {
       items.push(
         {
           name: t('users'),
@@ -68,10 +85,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       );
     }
     
-    // Instructors and Superusers see My Content (Content for superusers)
-    if (isInstructor() || isSuperuser()) {
+    // Instructors and Superusers always see "Content" (no longer "My Content")
+    if (isInstructor || isSuperuser) {
       items.push({
-        name: isSuperuser() ? "Content" : "My Content",
+        name: "Content",
         url: "/dashboard?view=my-content",
         icon: IconFileText,
       });
@@ -100,7 +117,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: IconCategory,
       },
       {
-        name: "My Content",
+        name: "Content",
         url: "#",
         icon: IconFileText,
       },
@@ -108,31 +125,50 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     [t]
   )
 
+  // Always pass a stable array reference into NavDocuments.
+  // Switching the array object back/forth contributes to flickery UI and can look like remounting.
+  const managementHubRenderItems = rolesLoading || managementHubItems.length === 0
+    ? managementHubSkeletonItems
+    : managementHubItems
+
   const data = {
     user: {
       name: user ? `${user.first_name} ${user.last_name}`.trim() || "User" : "User",
       email: user?.email || "user@example.com",
-      avatar: user?.picture || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3C/svg%3E",
+      avatar: user?.picture || "", // Empty string allows AvatarFallback to show initials
     },
-    navMain: (() => {
-      // Always include Dashboard and Profile in the array structure
-      // NavMain will handle showing/hiding based on role
-      const baseItems: { title: string; url: string; icon?: Icon; isActive?: boolean }[] = [
-        {
+    navMain: React.useMemo(() => {
+      const items: { title: string; url: string; icon?: Icon; isActive?: boolean }[] = []
+
+      // Normal user should not see the "Dashboard" (overview) tab.
+      if (!isNormalUser) {
+        items.push({
           title: t('title'),
           url: "/dashboard",
           icon: IconDashboard,
           isActive: true,
-        },
-        {
-          title: t('profile'),
-          url: "/dashboard?view=profile",
-          icon: IconUsers,
-        },
-      ];
-      
-      return baseItems;
-    })(),
+        })
+      }
+
+      // Everyone can see Profile
+      items.push({
+        title: t('profile'),
+        url: "/dashboard?view=profile",
+        icon: IconUsers,
+      })
+
+      // Normal user should also have a direct Content entry outside hub
+      // (in addition to Management Hub's Content) per your requested behavior.
+      if (isNormalUser) {
+        items.push({
+          title: "Content",
+          url: "/dashboard?view=my-content",
+          icon: IconFileText,
+        })
+      }
+
+      return items
+    }, [isNormalUser, t]),
     navSecondary: [
       {
         title: t('getHelp'),
@@ -155,6 +191,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
   }
 
+  // Debug logging
+  React.useEffect(() => {
+    if (rolesLoading) {
+      console.log('AppSidebar: rolesLoading=true, showing skeleton')
+    } else {
+      console.log('AppSidebar: rolesLoading=false, managementHubItems:', managementHubItems)
+    }
+  }, [rolesLoading, managementHubItems])
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -176,14 +221,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavPages />
         <NavMain items={data.navMain.map(item => ({ ...item, icon: item.icon as Icon | undefined }))} />
         
-        {/* Management Hub - Consolidates all management items based on role */}
-        {rolesLoading ? (
-          <div className="opacity-70 pointer-events-none">
-            <NavDocuments items={managementHubSkeletonItems} />
-          </div>
-        ) : managementHubItems.length > 0 ? (
-          <NavDocuments items={managementHubItems} />
-        ) : null}
+        {/* Management Hub - Always mounted, never conditionally rendered
+            Pass loading state and active view as props instead of using hooks inside
+            This prevents re-renders and maintains component state */}
+        <NavDocuments 
+          items={managementHubRenderItems}
+          loading={rolesLoading}
+          activePath={normalizedPath}
+          activeView={activeView}
+        />
         
         {/* Payment History - For everyone (no label) */}
         {data.payments.length > 0 && (

@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import Link from "next/link"
 import {
   IconDots,
   IconFolder,
@@ -8,7 +10,7 @@ import {
   type Icon,
 } from "@tabler/icons-react"
 import { useLocale, useTranslations } from "next-intl"
-import { usePathname, useSearchParams } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 import {
   DropdownMenu,
@@ -29,25 +31,38 @@ import {
 
 export function NavDocuments({
   items,
+  loading = false,
+  activePath = "",
+  activeView = "overview",
 }: {
   items: {
     name: string
     url: string
     icon: Icon
   }[]
+  loading?: boolean
+  activePath?: string
+  activeView?: string
 }) {
   const { isMobile } = useSidebar()
   const t = useTranslations('dashboard')
   const locale = useLocale()
-  const pathname = usePathname()
-  const normalizedPath = pathname?.startsWith(`/${locale}`)
-    ? pathname.replace(`/${locale}`, "") || "/"
-    : pathname
-  const searchParams = useSearchParams()
-  const view = searchParams?.get("view") ?? "overview"
+  
+  // Track hydration state to prevent mismatch
+  const [isHydrated, setIsHydrated] = useState(false)
+  
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup 
+      className={cn(
+        "group-data-[collapsible=icon]:hidden transition-opacity duration-300",
+        loading && "opacity-50 pointer-events-none"
+      )}
+      suppressHydrationWarning
+    >
       <SidebarGroupLabel>{t('managementHub')}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
@@ -58,31 +73,37 @@ export function NavDocuments({
           const basePath = item.url?.split("?")[0] ?? ""
           let isActive: boolean | undefined
 
-          if (hasLink) {
+          if (hasLink && isHydrated) {
             // Extract view parameter from URL
             const urlView = item.url?.split("view=")[1]
             
             if (urlView) {
-              // Match based on view parameter
-              isActive = normalizedPath === basePath && view === urlView
+              // Match based on view parameter from props instead of useSearchParams
+              isActive = activePath === basePath && activeView === urlView
             } else {
-              // Default path matching
+              // Default path matching using activePath prop
               isActive =
-                normalizedPath === basePath ||
-                normalizedPath?.startsWith(`${basePath}/`)
+                activePath === basePath ||
+                activePath?.startsWith(`${basePath}/`)
             }
           } else {
             isActive = false
           }
 
           return (
-            <SidebarMenuItem key={item.name}>
+            <SidebarMenuItem 
+              key={item.name}
+              className={cn(
+                "transition-all duration-200",
+                loading && "animate-pulse"
+              )}
+            >
               {href ? (
                 <SidebarMenuButton asChild isActive={!!isActive} className="cursor-pointer">
-                  <a href={href}>
+                  <Link href={href} prefetch={false}>
                     <item.icon />
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               ) : (
                 <SidebarMenuButton isActive={!!isActive}>
@@ -90,36 +111,6 @@ export function NavDocuments({
                   <span>{item.name}</span>
                 </SidebarMenuButton>
               )}
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuAction
-                    showOnHover
-                    className="data-[state=open]:bg-accent rounded-sm"
-                  >
-                    <IconDots />
-                    <span className="sr-only">{t('more')}</span>
-                  </SidebarMenuAction>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-24 rounded-lg"
-                  side={isMobile ? "bottom" : "right"}
-                  align={isMobile ? "end" : "start"}
-                >
-                  <DropdownMenuItem>
-                    <IconFolder />
-                    <span>{t('open')}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <IconShare3 />
-                    <span>{t('share')}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem variant="destructive">
-                    <IconTrash />
-                    <span>{t('delete')}</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
             </SidebarMenuItem>
           )
         })}

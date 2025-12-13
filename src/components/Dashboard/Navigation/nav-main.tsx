@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import Link from "next/link"
 import { useLocale } from "next-intl"
 import { usePathname, useSearchParams } from "next/navigation"
@@ -28,6 +29,10 @@ export function NavMain({ items }: { items: NavItem[] }) {
     : pathname
   const searchParams = useSearchParams()
   const view = searchParams?.get("view") ?? "overview"
+
+  // Prevent hydration mismatches from SVG/icon rendering inside Radix Slot/Tooltip.
+  const [hydrated, setHydrated] = React.useState(false)
+  React.useEffect(() => setHydrated(true), [])
 
   return (
     <SidebarGroup>
@@ -60,22 +65,25 @@ export function NavMain({ items }: { items: NavItem[] }) {
               isActive = item.isActive
             }
 
+            // Use a stable key to prevent remounting when text changes between server/client
+            const stableKey = item.url || item.title
+
             const content = (
               <>
-                {item.icon ? <item.icon /> : null}
-                <span>{item.title}</span>
+                {hydrated && item.icon ? <item.icon /> : null}
+                <span suppressHydrationWarning>{item.title}</span>
               </>
             )
 
             return (
-              <SidebarMenuItem key={item.title}>
+              <SidebarMenuItem key={stableKey}>
                 <SidebarMenuButton
                   tooltip={item.title}
                   isActive={!!isActive}
                   asChild={Boolean(href)}
                   suppressHydrationWarning
                 >
-                  {href ? <Link href={href}>{content}</Link> : content}
+                  {href ? <Link href={href} suppressHydrationWarning>{content}</Link> : content}
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )

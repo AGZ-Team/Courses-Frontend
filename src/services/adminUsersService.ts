@@ -99,6 +99,28 @@ export async function updateAdminUser(
   return updated;
 }
 
+export async function updateAdminUserWithFiles(
+  id: number,
+  formData: FormData
+): Promise<AdminUser> {
+  const res = await fetch(`/api/admin/users/${id}`, {
+    method: 'PATCH',
+    credentials: 'include',
+    // Don't set Content-Type header - browser will set multipart/form-data
+    body: formData,
+  });
+  const updated = await handleResponse<AdminUser>(res);
+
+  // Keep cache in sync if it exists
+  if (adminUsersCache) {
+    adminUsersCache.data = adminUsersCache.data.map((user) =>
+      user.id === id ? updated : user
+    );
+  }
+
+  return updated;
+}
+
 export async function deleteAdminUser(id: number): Promise<void> {
   const res = await fetch(`/api/admin/users/${id}`, {
     method: 'DELETE',

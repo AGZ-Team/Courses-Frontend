@@ -34,12 +34,16 @@ interface AuthState {
   
   // Loading states
   isLoading: boolean;
+  rolesLoading: boolean; // NEW: Track when roles are being derived from backend
+  rolesLocked: boolean; // Once roles are loaded, they stay locked
   
   // Actions
   setUser: (user: User | null) => void;
   setVerified: (verified: boolean) => void;
   clearAuth: () => void;
   updateUser: (userData: Partial<User>) => void;
+  setRolesLoading: (loading: boolean) => void; // NEW
+  lockRoles: () => void;
   
   // Getters
   isInstructor: () => boolean;
@@ -58,9 +62,11 @@ export const useAuthStore = create<AuthState>()(
       isVerified: null,
       verificationTimestamp: null,
       isLoading: false,
+      rolesLoading: false, // Start as false - only true during initial fetch
+      rolesLocked: false, // Roles are not locked initially
       
       // Actions
-      setUser: (user) => set({ user, isLoading: false }),
+      setUser: (user) => set({ user, isLoading: false, rolesLoading: false }),
       
       setVerified: (verified) => set({ 
         isVerified: verified,
@@ -72,7 +78,18 @@ export const useAuthStore = create<AuthState>()(
         isVerified: null,
         verificationTimestamp: null,
         isLoading: false,
+        rolesLoading: true,
+        rolesLocked: false, // Reset lock on logout
       }),
+      
+      setRolesLoading: (loading) => {
+        const { rolesLocked } = get();
+        // If roles are locked, never go back to loading
+        if (rolesLocked && loading) return;
+        set({ rolesLoading: loading });
+      },
+      
+      lockRoles: () => set({ rolesLocked: true }),
       
       updateUser: (userData) => set((state) => ({
         user: state.user ? { ...state.user, ...userData } : null,

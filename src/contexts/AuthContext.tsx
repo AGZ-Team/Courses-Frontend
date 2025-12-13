@@ -2,7 +2,6 @@
 
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {
-  getAccessToken,
   clearTokens,
   verifyToken,
   isAuthenticated as checkAuth,

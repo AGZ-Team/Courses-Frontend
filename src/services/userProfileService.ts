@@ -90,7 +90,49 @@ export async function updateUserProfileWithFiles(formData: FormData): Promise<Us
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Failed to update user profile');
+    
+    // Get the error message from backend (could be structured or plain text)
+    let errorMessage = '';
+    
+    // Try to extract specific field errors first (Django returns dict of field -> [errors])
+    if (typeof errorData === 'object' && errorData !== null) {
+      const fieldErrors: string[] = [];
+      
+      // Check for field-specific errors (like picture: ["error message"])
+      ['picture', 'id_card_face', 'id_card_back'].forEach(field => {
+        if (errorData[field]) {
+          const errors = Array.isArray(errorData[field]) ? errorData[field] : [errorData[field]];
+          fieldErrors.push(...errors.filter((e: any) => typeof e === 'string'));
+        }
+      });
+      
+      if (fieldErrors.length > 0) {
+        errorMessage = fieldErrors.join(', ');
+      } else {
+        // Try generic error/message fields
+        errorMessage = errorData.error || errorData.message || '';
+      }
+    }
+    
+    // Fallback to status text if no error message found
+    if (!errorMessage) {
+      errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+    }
+    
+    console.error('Profile update failed:', {
+      status: response.status,
+      statusText: response.statusText,
+      fullErrorData: errorData,
+      parsedMessage: errorMessage,
+      rawResponse: response
+    });
+    
+    // Make 413 error message clearer for users
+    if (response.status === 413) {
+      errorMessage = 'File too large. Each image must be under 1MB';
+    }
+    
+    throw new Error(errorMessage);
   }
 
   return response.json();
