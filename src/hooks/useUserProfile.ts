@@ -78,6 +78,7 @@ export function useUserProfile() {
         // Derive missing role flags when backend omits them
         const derived: ProfileWithRoles = {
           ...profile,
+          id: profile.id ?? 0, // Will be updated below if missing
           is_instructor: profile.is_instructor ?? false,
           is_staff: profile.is_staff ?? false,
           is_superuser: profile.is_superuser ?? false,
@@ -90,8 +91,9 @@ export function useUserProfile() {
           console.log('Inferred is_instructor=true from profile fields');
         }
 
-        // If is_superuser is false, attempt lightweight admin check
-        if (!derived.is_superuser) {
+        // If is_superuser is false OR id is missing, attempt admin list check
+        // This gets us both the superuser status AND the user ID
+        if (!derived.is_superuser || !derived.id) {
           try {
             const adminResp = await fetch('/api/admin/users', {
               method: 'GET',
@@ -101,6 +103,18 @@ export function useUserProfile() {
             if (adminResp.ok) {
               derived.is_superuser = true;
               console.log('User has admin access - set is_superuser=true');
+              
+              // Try to find current user in admin list to get their ID
+              if (!derived.id || derived.id === 0) {
+                const adminUsers = await adminResp.json();
+                const currentUser = adminUsers.find((u: { email?: string; username?: string }) => 
+                  u.email === derived.email || u.username === derived.username
+                );
+                if (currentUser?.id) {
+                  derived.id = currentUser.id;
+                  console.log('[useUserProfile] Got user ID from admin list:', derived.id);
+                }
+              }
             } else {
               console.log('Admin check failed with status:', adminResp.status);
             }

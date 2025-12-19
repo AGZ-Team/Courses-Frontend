@@ -10,6 +10,8 @@ import {
   IconCategory,
   IconFileText,
   IconCreditCard,
+  IconBook,
+  IconFolder,
   type Icon,
 } from "@tabler/icons-react"
 import { useLocale, useTranslations } from "next-intl"
@@ -59,9 +61,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const isInstructor = rolesLoading && lockedRoles ? lockedRoles.is_instructor : user?.is_instructor === true
 
   // Role rules:
-  // - Superuser: sees Dashboard + Profile + Management Hub (Users/Categories/Subcategories/Content)
-  // - Instructor: sees Dashboard + Profile + Management Hub (Content only)
-  // - Normal user: sees Profile + Management Hub (Content only)
+  // - Superuser: sees Dashboard + Profile + Management Hub (Users/Categories/Subcategories/Content/Lessons) + My Content
+  // - Instructor: sees Dashboard + Profile + Management Hub (Content/Lessons) + My Content
+  // - Normal user: sees Profile + My Content only
   const isNormalUser = !isSuperuser && !isInstructor
   
   // Build management hub items based on current user role
@@ -89,16 +91,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       );
     }
     
-    // EVERYONE sees "Content" in Management Hub (superuser, instructor, normal user)
-    // The Content component itself will handle role-based rendering
+    // Superusers and Instructors see Content Management and Lesson Management
+    if (isSuperuser || isInstructor) {
+      items.push(
+        {
+          name: locale === "ar" ? "إدارة المحتوى" : "Content Management",
+          url: "/dashboard?view=content",
+          icon: IconFileText,
+        },
+        {
+          name: locale === "ar" ? "إدارة الدروس" : "Lesson Management",
+          url: "/dashboard?view=lessons",
+          icon: IconBook,
+        }
+      );
+    }
+    
+    // EVERYONE sees "My Content" in Management Hub (superuser, instructor, normal user)
+    // The My Content component handles role-based content filtering
     items.push({
-      name: "Content",
+      name: locale === "ar" ? "محتواي" : "My Content",
       url: "/dashboard?view=my-content",
-      icon: IconFileText,
+      icon: IconFolder,
     });
     
     return items;
-  }, [isSuperuser, isInstructor, t]);
+  }, [isSuperuser, isInstructor, t, locale]);
 
   const data = {
     user: {
@@ -126,8 +144,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: IconUsers,
       })
 
-      // Content is now ONLY in Management Hub, not here
-      // All users will see it in Management Hub section below
+      // Content management items are now in Management Hub section
 
       return items
     }, [isNormalUser, isSuperuser, isInstructor, t]),

@@ -72,6 +72,8 @@ export async function GET(request: NextRequest) {
         id_front: u.id_card_face ?? null,
         id_back: u.id_card_back ?? null,
       });
+      // Log user ID - important for content creation
+      console.log('[Profile Route] User ID from backend:', u.id ?? 'NOT PROVIDED');
     } catch {
       console.log('[Profile Route] Media fields (raw):', userData);
     }
@@ -81,6 +83,7 @@ export async function GET(request: NextRequest) {
     
     const n = normalizedUserData as Record<string, unknown>;
     console.log('Normalized user data:', {
+      id: n.id ?? 'NOT PROVIDED',
       picture: n.picture ?? null,
       id_card_face: n.id_card_face ?? null,
       id_card_back: n.id_card_back ?? null,

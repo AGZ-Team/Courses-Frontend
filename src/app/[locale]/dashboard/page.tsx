@@ -10,6 +10,8 @@ import PaymentHistoryPanel from "@/components/Dashboard/Panels/PaymentHistoryPan
 import UsersPanel from "@/components/Dashboard/Panels/UsersPanel"
 import CategoriesPanel from "@/components/Dashboard/Panels/CategoriesPanel"
 import SubcategoriesPanel from "@/components/Dashboard/Panels/SubcategoriesPanel"
+import ContentPanel from "@/components/Dashboard/Panels/ContentPanel"
+import LessonPanel from "@/components/Dashboard/Panels/LessonPanel"
 import MyContentPanel from "@/components/Dashboard/Panels/MyContentPanel"
 import { DashboardUserLoader } from "@/components/Dashboard/DashboardUserLoader"
 import {
@@ -44,6 +46,8 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const showUsers = view === "users"
   const showCategories = view === "categories"
   const showSubcategories = view === "subcategories"
+  const showContent = view === "content"
+  const showLessons = view === "lessons"
   const showMyContent = view === "my-content"
 
   return (
@@ -72,6 +76,10 @@ export default async function Page({ searchParams }: DashboardPageProps) {
                 <CategoriesPanel />
               ) : showSubcategories ? (
                 <SubcategoriesPanel />
+              ) : showContent ? (
+                <ContentPanel />
+              ) : showLessons ? (
+                <LessonPanel />
               ) : showMyContent ? (
                 <MyContentPanel />
               ) : (
