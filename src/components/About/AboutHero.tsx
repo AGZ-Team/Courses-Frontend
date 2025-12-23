@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import {useLocale, useTranslations} from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function AboutHero() {
   const tHero = useTranslations('about.hero');
@@ -19,8 +19,7 @@ export default function AboutHero() {
               <div
                 className={
                   // Mirror the offset in RTL and reduce negative offset on small screens
-                  `absolute top-0 h-full w-[65%] rounded-3xl ${
-                    isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
+                  `absolute top-0 h-full w-[65%] rounded-3xl ${isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
                   } overflow-hidden shadow-xl ` +
                   (isRTL
                     ? 'right-0 sm:right-[-8%] lg:right-[-20%]'
@@ -40,8 +39,7 @@ export default function AboutHero() {
               {/* Top-right small */}
               <div
                 className={
-                  `absolute top-5 h-[38%] w-[38%] rounded-2xl mr-9 ${
-                    isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
+                  `absolute top-5 h-[38%] w-[38%] rounded-2xl mr-9 ${isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
                   } overflow-hidden shadow-md ` +
                   (isRTL
                     ? 'left-[15px] sm:left-6 md:left-8'
@@ -60,8 +58,7 @@ export default function AboutHero() {
               {/* Bottom-right medium */}
               <div
                 className={
-                  `absolute bottom-10 h-[46%] w-[48%] rounded-2xl ${
-                    isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
+                  `absolute bottom-10 h-[46%] w-[48%] rounded-2xl ${isRTL ? 'rounded-tl-4xl' : 'rounded-tr-4xl'
                   } overflow-hidden shadow-lg ` +
                   (isRTL ? 'left-4' : 'right-4')
                 }
@@ -82,7 +79,7 @@ export default function AboutHero() {
             <p className="text-3xl font-semibold tracking-widest uppercase text-primary mb-3">
               {tHero('badge')}
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-slate-900">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-slate-950">
               {tWelcome('title')}
               <span className="block text-slate-700 mt-2">
                 {tWelcome('highlight')}
