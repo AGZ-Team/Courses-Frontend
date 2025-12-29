@@ -31,15 +31,18 @@ export interface Lesson {
   video: string | null;
   file: string | null;
   content: number;
+  order?: number;  // Order within the content
   content_name?: string; // For display purposes
   created_at?: string;
   updated_at?: string;
 }
 
 export interface LessonInput {
-  name: string;
+  name: string;  // Maps to 'title' in backend
   text: string;
   video?: File | null;
   file?: File | null;
   content: number;
+  order?: number;  // Order within the content (auto-calculated if not provided)
+  creator?: number;  // Backend requires this - user ID of the creator
 }

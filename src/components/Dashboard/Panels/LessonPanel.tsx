@@ -23,6 +23,8 @@ import type { Content, Lesson, LessonInput } from "@/types/content";
 import { fetchContent } from "@/services/contentService";
 import { fetchLessons, createLesson, updateLesson, deleteLesson } from "@/services/lessonService";
 import { useAuthStore } from "@/stores/authStore";
+import { useUserProfile } from "@/hooks/useUserProfile";
+import { useAuthHydrated } from "@/hooks/useAuthHydrated";
 
 function ContentBadge({ value }: { value: string }) {
   return (
@@ -78,9 +80,16 @@ export default function LessonPanel() {
   const [attachmentFile, setAttachmentFile] = useState<File | null>(null);
 
   // Get user from auth store for role checks
+  // Also use useUserProfile to ensure profile data is loaded
+  // And check if auth store has been hydrated from localStorage
+  const isHydrated = useAuthHydrated();
+  const { loading: userLoading, refetch: refetchUserProfile } = useUserProfile();
   const user = useAuthStore((state) => state.user);
   const isSuperuser = user?.is_superuser === true;
   const isInstructor = user?.is_instructor === true;
+
+  // Combined loading state: not ready until hydrated AND not loading
+  const isUserReady = isHydrated && !userLoading && user?.id;
 
   const queryClient = useQueryClient();
   const {
@@ -124,15 +133,15 @@ export default function LessonPanel() {
   // - Instructors see their own content only
   const roleFilteredContent = useMemo(() => {
     if (!user) return [];
-    
+
     if (isSuperuser) {
       return contentList;
     }
-    
+
     if (isInstructor) {
       return contentList.filter((content) => content.creator === user.id);
     }
-    
+
     return [];
   }, [contentList, user, isSuperuser, isInstructor]);
 
@@ -140,7 +149,7 @@ export default function LessonPanel() {
   // Lessons are shown if they belong to content the user can access
   const roleFilteredLessons = useMemo(() => {
     if (!user) return [];
-    
+
     const allowedContentIds = new Set(roleFilteredContent.map(c => c.id));
     return lessonList.filter((lesson) => allowedContentIds.has(lesson.content));
   }, [lessonList, roleFilteredContent, user]);
@@ -186,9 +195,9 @@ export default function LessonPanel() {
 
     if (mode === "create") {
       setActiveLesson(null);
-      setEditValues({ 
-        name: "", 
-        text: "", 
+      setEditValues({
+        name: "",
+        text: "",
       });
       // Default to first content the user has access to
       setSelectedContentId(roleFilteredContent.length > 0 ? roleFilteredContent[0].id : null);
@@ -197,7 +206,7 @@ export default function LessonPanel() {
       const existingContentId = typeof lesson.content === "number" ? lesson.content : null;
       setSelectedContentId(existingContentId ?? (roleFilteredContent.length > 0 ? roleFilteredContent[0].id : null));
       if (mode === "edit") {
-        setEditValues({ 
+        setEditValues({
           name: lesson.name,
           text: lesson.text,
           content: lesson.content,
@@ -241,10 +250,38 @@ export default function LessonPanel() {
       setSheetSaving(true);
 
       if (sheetMode === "create") {
+        // Verify user is loaded before creating
+        if (!user?.id) {
+          console.log('[LessonPanel] User ID missing, attempting to refresh profile...');
+          // Try to refetch user profile automatically
+          try {
+            await refetchUserProfile();
+          } catch (refetchError) {
+            console.error('[LessonPanel] Failed to refetch user profile:', refetchError);
+          }
+
+          // Check again after refetch attempt
+          const currentUser = useAuthStore.getState().user;
+          if (!currentUser?.id) {
+            setSheetError(
+              isArabic
+                ? "خطأ: لم يتم تحميل بيانات المستخدم. يرجى تسجيل الخروج وإعادة تسجيل الدخول."
+                : "Error: User session expired. Please log out and log back in.",
+            );
+            setSheetSaving(false);
+            return;
+          }
+        }
+
+        // Get the latest user data from store (in case we just refetched)
+        const currentUser = useAuthStore.getState().user;
+        console.log('[LessonPanel] User object:', { id: currentUser?.id, name: currentUser?.first_name });
+
         const payload: LessonInput = {
           name: editValues.name?.trim() ?? "",
           text: editValues.text?.trim() ?? "",
           content: selectedContentId,
+          creator: currentUser!.id, // Backend requires this field
           video: videoFile,
           file: attachmentFile,
         };
@@ -321,37 +358,37 @@ export default function LessonPanel() {
     ? sheetMode === "view"
       ? "تفاصيل الدرس"
       : sheetMode === "edit"
-      ? "تعديل الدرس"
-      : "إنشاء درس"
+        ? "تعديل الدرس"
+        : "إنشاء درس"
     : sheetMode === "view"
-    ? "Lesson details"
-    : sheetMode === "edit"
-    ? "Edit lesson"
-    : "Create lesson";
+      ? "Lesson details"
+      : sheetMode === "edit"
+        ? "Edit lesson"
+        : "Create lesson";
 
   const sheetDescriptionText = isArabic
     ? sheetMode === "view"
       ? "راجع جميع معلومات الدرس."
       : sheetMode === "edit"
-      ? "قم بتحديث معلومات الدرس ثم احفظ التغييرات."
-      : "أنشئ درس جديد للمحتوى."
+        ? "قم بتحديث معلومات الدرس ثم احفظ التغييرات."
+        : "أنشئ درس جديد للمحتوى."
     : sheetMode === "view"
-    ? "Review the full lesson information."
-    : sheetMode === "edit"
-    ? "Update the lesson information and save the changes."
-    : "Create a new lesson for content.";
+      ? "Review the full lesson information."
+      : sheetMode === "edit"
+        ? "Update the lesson information and save the changes."
+        : "Create a new lesson for content.";
 
   const sheetPrimaryButtonText = sheetSaving
     ? isArabic
       ? "جارٍ الحفظ..."
       : "Saving..."
     : sheetMode === "edit"
-    ? isArabic
-      ? "حفظ التغييرات"
-      : "Save changes"
-    : isArabic
-    ? "حفظ الدرس"
-    : "Save";
+      ? isArabic
+        ? "حفظ التغييرات"
+        : "Save changes"
+      : isArabic
+        ? "حفظ الدرس"
+        : "Save";
 
   return (
     <div className="px-4 lg:px-6" dir="ltr">
@@ -407,11 +444,14 @@ export default function LessonPanel() {
               <Button
                 type="button"
                 size="sm"
-                disabled={!user || roleFilteredContent.length === 0}
+                disabled={!isUserReady || roleFilteredContent.length === 0}
                 className="rounded-full bg-primary px-5 sm:px-6 text-[11px] font-medium text-white shadow-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => handleOpenSheet("create")}
               >
-                {locale === "ar" ? "إضافة درس جديد" : "Add new lesson"}
+                {!isUserReady
+                  ? (locale === "ar" ? "جاري التحميل..." : "Loading...")
+                  : (locale === "ar" ? "إضافة درس جديد" : "Add new lesson")
+                }
               </Button>
             </div>
           </div>
@@ -463,9 +503,9 @@ export default function LessonPanel() {
                             <ContentBadge value={getContentLabel(lesson)} />
                           </TableCell>
                           <TableCell className="px-3 py-3 align-middle text-xs">
-                            <MediaBadge 
-                              hasVideo={!!lesson.video} 
-                              hasFile={!!lesson.file} 
+                            <MediaBadge
+                              hasVideo={!!lesson.video}
+                              hasFile={!!lesson.file}
                               isArabic={isArabic}
                             />
                           </TableCell>
@@ -520,9 +560,9 @@ export default function LessonPanel() {
                   >
                     <div className="flex items-center justify-between text-xs text-gray-500">
                       <span className="font-mono text-[11px] text-gray-600">ID {lesson.id}</span>
-                      <MediaBadge 
-                        hasVideo={!!lesson.video} 
-                        hasFile={!!lesson.file} 
+                      <MediaBadge
+                        hasVideo={!!lesson.video}
+                        hasFile={!!lesson.file}
                         isArabic={isArabic}
                       />
                     </div>
@@ -749,8 +789,8 @@ export default function LessonPanel() {
                             ? "جاري تحميل المحتوى..."
                             : "Loading content..."
                           : isArabic
-                          ? "اختر المحتوى"
-                          : "Select content"}
+                            ? "اختر المحتوى"
+                            : "Select content"}
                       </option>
                       {roleFilteredContent.map((content) => (
                         <option key={content.id} value={content.id}>
@@ -760,7 +800,7 @@ export default function LessonPanel() {
                     </select>
                   )}
                 </div>
-                
+
                 {/* Video Upload */}
                 <div>
                   <Label className="text-[11px] text-gray-500">
@@ -769,9 +809,9 @@ export default function LessonPanel() {
                   {sheetMode === "view" && activeLesson ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeLesson.video ? (
-                        <a 
-                          href={activeLesson.video} 
-                          target="_blank" 
+                        <a
+                          href={activeLesson.video}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:underline flex items-center gap-1"
                         >
@@ -812,9 +852,9 @@ export default function LessonPanel() {
                   {sheetMode === "view" && activeLesson ? (
                     <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                       {activeLesson.file ? (
-                        <a 
-                          href={activeLesson.file} 
-                          target="_blank" 
+                        <a
+                          href={activeLesson.file}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:underline flex items-center gap-1"
                         >

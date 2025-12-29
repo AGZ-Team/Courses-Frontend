@@ -25,6 +25,8 @@ import type { Subcategory } from "@/types/subcategory";
 import { fetchSubcategories } from "@/services/subcategoriesService";
 import { fetchContent, createContent, updateContent, deleteContent } from "@/services/contentService";
 import { useAuthStore } from "@/stores/authStore";
+import { useUserProfile } from "@/hooks/useUserProfile";
+import { useAuthHydrated } from "@/hooks/useAuthHydrated";
 
 function StatusBadge({ published, isArabic }: { published: boolean; isArabic: boolean }) {
   return published ? (
@@ -61,9 +63,16 @@ export default function ContentPanel() {
   const [selectedSubcategoryId, setSelectedSubcategoryId] = useState<number | null>(null);
 
   // Get user from auth store for role checks
+  // Also use useUserProfile to ensure profile data is loaded
+  // And check if auth store has been hydrated from localStorage
+  const isHydrated = useAuthHydrated();
+  const { loading: userLoading, refetch: refetchUserProfile } = useUserProfile();
   const user = useAuthStore((state) => state.user);
   const isSuperuser = user?.is_superuser === true;
   const isInstructor = user?.is_instructor === true;
+
+  // Combined loading state: not ready until hydrated AND not loading
+  const isUserReady = isHydrated && !userLoading && user?.id;
 
   const queryClient = useQueryClient();
   const {
@@ -108,17 +117,17 @@ export default function ContentPanel() {
   // - Normal users shouldn't be on this panel, but if they are, show nothing
   const roleFilteredContent = useMemo(() => {
     if (!user) return [];
-    
+
     if (isSuperuser) {
       // Superusers see everything
       return contentList;
     }
-    
+
     if (isInstructor) {
       // Instructors see only their own content
       return contentList.filter((content) => content.creator === user.id);
     }
-    
+
     // Normal users shouldn't see this panel - return empty
     return [];
   }, [contentList, user, isSuperuser, isInstructor]);
@@ -157,11 +166,11 @@ export default function ContentPanel() {
 
     if (mode === "create") {
       setActiveContent(null);
-      setEditValues({ 
-        name: "", 
-        description: "", 
-        price: 0, 
-        is_published: false 
+      setEditValues({
+        name: "",
+        description: "",
+        price: 0,
+        is_published: false
       });
       setSelectedSubcategoryId(subcategories.length > 0 ? subcategories[0].id : null);
     } else if (content) {
@@ -169,7 +178,7 @@ export default function ContentPanel() {
       const existingSubcategoryId = typeof content.subcategory === "number" ? content.subcategory : null;
       setSelectedSubcategoryId(existingSubcategoryId ?? (subcategories.length > 0 ? subcategories[0].id : null));
       if (mode === "edit") {
-        setEditValues({ 
+        setEditValues({
           name: content.name,
           description: content.description,
           price: content.price,
@@ -222,22 +231,36 @@ export default function ContentPanel() {
       if (sheetMode === "create") {
         // Verify user is loaded before creating
         if (!user?.id) {
-          setSheetError(
-            isArabic
-              ? "خطأ: لم يتم تحميل بيانات المستخدم. يرجى تحديث الصفحة."
-              : "Error: User data not loaded. Please refresh the page.",
-          );
-          setSheetSaving(false);
-          return;
+          console.log('[ContentPanel] User ID missing, attempting to refresh profile...');
+          // Try to refetch user profile automatically
+          try {
+            await refetchUserProfile();
+          } catch (refetchError) {
+            console.error('[ContentPanel] Failed to refetch user profile:', refetchError);
+          }
+
+          // Check again after refetch attempt
+          const currentUser = useAuthStore.getState().user;
+          if (!currentUser?.id) {
+            setSheetError(
+              isArabic
+                ? "خطأ: لم يتم تحميل بيانات المستخدم. يرجى تسجيل الخروج وإعادة تسجيل الدخول."
+                : "Error: User session expired. Please log out and log back in.",
+            );
+            setSheetSaving(false);
+            return;
+          }
         }
-        
-        console.log('[ContentPanel] User object:', { id: user.id, name: user.first_name });
-        
+
+        // Get the latest user data from store (in case we just refetched)
+        const currentUser = useAuthStore.getState().user;
+        console.log('[ContentPanel] User object:', { id: currentUser?.id, name: currentUser?.first_name });
+
         const payload: ContentInput = {
           name: editValues.name?.trim() ?? "",
           description: editValues.description?.trim() ?? "",
           subcategory: selectedSubcategoryId,
-          creator: user.id, // Backend requires this field
+          creator: currentUser!.id, // Backend requires this field - we've already verified it exists above
           price: Number(editValues.price) || 0,
           is_published: editValues.is_published ?? false,
         };
@@ -269,22 +292,22 @@ export default function ContentPanel() {
     } catch (err) {
       // Parse backend validation errors
       let errorMessage = "Failed to save content";
-      
+
       if (err instanceof Error) {
         // Try to parse structured error messages from backend
         if (err.message.includes("price")) {
-          errorMessage = isArabic 
+          errorMessage = isArabic
             ? "السعر يجب أن يحتوي على رقمين عشريين كحد أقصى (مثال: 99.99)"
             : "Price must not exceed 2 decimal places (e.g., 99.99)";
         } else if (err.message.includes("Ensure that there are no more than 2 decimal places")) {
-          errorMessage = isArabic 
+          errorMessage = isArabic
             ? "السعر يجب أن يحتوي على رقمين عشريين كحد أقصى (مثال: 99.99)"
             : "Price must not exceed 2 decimal places (e.g., 99.99)";
         } else {
           errorMessage = err.message;
         }
       }
-      
+
       setSheetError(errorMessage);
     } finally {
       setSheetSaving(false);
@@ -333,37 +356,37 @@ export default function ContentPanel() {
     ? sheetMode === "view"
       ? "تفاصيل المحتوى"
       : sheetMode === "edit"
-      ? "تعديل المحتوى"
-      : "إنشاء محتوى"
+        ? "تعديل المحتوى"
+        : "إنشاء محتوى"
     : sheetMode === "view"
-    ? "Content details"
-    : sheetMode === "edit"
-    ? "Edit content"
-    : "Create content";
+      ? "Content details"
+      : sheetMode === "edit"
+        ? "Edit content"
+        : "Create content";
 
   const sheetDescriptionText = isArabic
     ? sheetMode === "view"
       ? "راجع جميع معلومات المحتوى."
       : sheetMode === "edit"
-      ? "قم بتحديث معلومات المحتوى ثم احفظ التغييرات."
-      : "أنشئ محتوى جديد للدورات."
+        ? "قم بتحديث معلومات المحتوى ثم احفظ التغييرات."
+        : "أنشئ محتوى جديد للدورات."
     : sheetMode === "view"
-    ? "Review the full content information."
-    : sheetMode === "edit"
-    ? "Update the content information and save the changes."
-    : "Create new content for courses.";
+      ? "Review the full content information."
+      : sheetMode === "edit"
+        ? "Update the content information and save the changes."
+        : "Create new content for courses.";
 
   const sheetPrimaryButtonText = sheetSaving
     ? isArabic
       ? "جارٍ الحفظ..."
       : "Saving..."
     : sheetMode === "edit"
-    ? isArabic
-      ? "حفظ التغييرات"
-      : "Save changes"
-    : isArabic
-    ? "حفظ المحتوى"
-    : "Save";
+      ? isArabic
+        ? "حفظ التغييرات"
+        : "Save changes"
+      : isArabic
+        ? "حفظ المحتوى"
+        : "Save";
 
   return (
     <div className="px-4 lg:px-6" dir="ltr">
@@ -419,11 +442,14 @@ export default function ContentPanel() {
               <Button
                 type="button"
                 size="sm"
-                disabled={!user}
+                disabled={!isUserReady}
                 className="rounded-full bg-primary px-5 sm:px-6 text-[11px] font-medium text-white shadow-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => handleOpenSheet("create")}
               >
-                {locale === "ar" ? "إضافة محتوى جديد" : "Add new content"}
+                {!isUserReady
+                  ? (locale === "ar" ? "جاري التحميل..." : "Loading...")
+                  : (locale === "ar" ? "إضافة محتوى جديد" : "Add new content")
+                }
               </Button>
             </div>
           </div>
@@ -777,8 +803,8 @@ export default function ContentPanel() {
                             ? "جاري تحميل الفئات الفرعية..."
                             : "Loading subcategories..."
                           : isArabic
-                          ? "اختر الفئة الفرعية"
-                          : "Select subcategory"}
+                            ? "اختر الفئة الفرعية"
+                            : "Select subcategory"}
                       </option>
                       {subcategories.map((subcategory) => (
                         <option key={subcategory.id} value={subcategory.id}>
@@ -814,8 +840,8 @@ export default function ContentPanel() {
                         />
                       </div>
                       <p className="mt-1.5 text-[11px] text-gray-500">
-                        {isArabic 
-                          ? "يتم تقريب السعر تلقائياً إلى رقمين عشريين (مثال: 99.99)" 
+                        {isArabic
+                          ? "يتم تقريب السعر تلقائياً إلى رقمين عشريين (مثال: 99.99)"
                           : "Price will be automatically rounded to 2 decimal places (e.g., 99.99)"}
                       </p>
                     </>
