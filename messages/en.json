@@ -1390,9 +1390,10 @@
       "pricing": {
         "title": "Content Pricing",
         "items": {
-          "0": "All content pricing on C R A I is determined exclusively by the creator (influencer) who owns and publishes the content.",
-          "1": "C R A I does not set, control, or influence the prices of individual content offerings. Creators have full autonomy to establish their own pricing structures based on their value proposition and audience.",
-          "2": "As a user, you acknowledge that any purchase decision is based on the price set by the respective creator, and C R A I acts solely as a platform facilitating these transactions."
+          "0": "All content pricing on C R A I is determined solely by the individual creator or influencer.",
+          "1": "C R A I does not set, control, or influence the prices of any content, subscriptions, or memberships offered by creators.",
+          "2": "Creators have full autonomy to establish their own pricing tiers based on their content value, audience, and market considerations.",
+          "3": "Users are advised to review pricing information provided by the creator before making any purchase or subscription decisions."
         }
       },
       "information": {
