@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: Props) {
 
 const SECTIONS = [
   { id: 'introduction', key: 'introduction', items: 3 },
+  { id: 'pricing', key: 'pricing', items: 3 },
   { id: 'information', key: 'information', items: 5 },
   { id: 'usage', key: 'usage', items: 5 },
   { id: 'sharing', key: 'sharing', items: 4 },
@@ -29,6 +30,7 @@ const SECTIONS = [
 
 const ICONS: Record<string, string> = {
   introduction: '/privacySvgs/people-who-support-svgrepo-com.svg',
+  pricing: '/svgs/what/money.svg',
   information: '/privacySvgs/information-svgrepo-com.svg',
   usage: '/privacySvgs/data-analysis-svgrepo-com.svg',
   sharing: '/privacySvgs/people-who-support-svgrepo-com.svg',

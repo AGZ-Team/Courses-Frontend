@@ -225,10 +225,22 @@
     "emailContacts": {
       "title": "Direct contact emails",
       "items": [
-        { "label": "For general questions", "email": "support@cray.com" },
-        { "label": "For privacy matters", "email": "privacy@cray.com" },
-        { "label": "For business partnerships", "email": "partners@cray.com" },
-        { "label": "For media inquiries", "email": "media@cray.com" }
+        {
+          "label": "For general questions",
+          "email": "support@cray.com"
+        },
+        {
+          "label": "For privacy matters",
+          "email": "privacy@cray.com"
+        },
+        {
+          "label": "For business partnerships",
+          "email": "partners@cray.com"
+        },
+        {
+          "label": "For media inquiries",
+          "email": "media@cray.com"
+        }
       ]
     },
     "faqTitle": "Frequently Asked Questions",
@@ -1373,6 +1385,14 @@
           "0": "Welcome to C R A I (\"we,\" \"our,\" \"us\"). Your privacy and trust are our top priorities.",
           "1": "This Privacy Policy explains how we collect, use, share, and protect your personal information when you use our website and services (\"Platform\").",
           "2": "By using C R A I, you agree to the terms of this Privacy Policy."
+        }
+      },
+      "pricing": {
+        "title": "Content Pricing",
+        "items": {
+          "0": "All content pricing on C R A I is determined exclusively by the creator (influencer) who owns and publishes the content.",
+          "1": "C R A I does not set, control, or influence the prices of individual content offerings. Creators have full autonomy to establish their own pricing structures based on their value proposition and audience.",
+          "2": "As a user, you acknowledge that any purchase decision is based on the price set by the respective creator, and C R A I acts solely as a platform facilitating these transactions."
         }
       },
       "information": {
