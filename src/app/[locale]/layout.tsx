@@ -75,7 +75,7 @@ export default async function LocaleLayout({children, params}: Props) {
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className={`min-h-screen ${fontClass}`}>
+      <body suppressHydrationWarning className={`min-h-screen ${fontClass}`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <header>
             <ConditionalNavbar />
