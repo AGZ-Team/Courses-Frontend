@@ -12,6 +12,8 @@ import NavRightBannerSubscriptions from './NavRightBannerSubscriptions';
 import { clearTokens, getAuthStatus } from '@/services/authService';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
+import { useCartStore } from '@/stores/cartStore';
+import { useCartDrawer } from '@/components/Cart/CartProvider';
 
 type NavItem = {
   labelKey: string;
@@ -298,16 +300,7 @@ const MainNavbar = () => {
           </button>
 
           {/* Cart - Always Visible */}
-          <button
-            type="button"
-            className={`relative rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 ${isAr ? 'lg:order-3' : 'lg:order-2'}`}
-            aria-label={t('cart')}
-          >
-            <RiShoppingCart2Fill className={`h-6 w-6`} />
-            {/* <span className={`absolute ${isAr ? '-left-1' : '-right-1'} -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white`}>
-              3
-            </span> */}
-          </button>
+          <CartButton isAr={isAr} />
 
           {/* Language Switcher - Desktop Only */}
           <div className={`hidden lg:block ${isAr ? 'lg:order-2' : 'lg:order-3'}`}>
@@ -555,3 +548,25 @@ const MainNavbar = () => {
 };
 
 export default MainNavbar;
+
+function CartButton({ isAr }: { isAr: boolean }) {
+  const t = useTranslations('nav');
+  const { openCart } = useCartDrawer();
+  const itemCount = useCartStore((s) => s.itemCount());
+
+  return (
+    <button
+      type="button"
+      onClick={openCart}
+      className={`relative rounded-full bg-white/10 p-2.5 transition hover:bg-white/20 ${isAr ? 'lg:order-3' : 'lg:order-2'} cursor-pointer`}
+      aria-label={t('cart')}
+    >
+      <RiShoppingCart2Fill className="h-6 w-6" />
+      {itemCount > 0 && (
+        <span className={`absolute ${isAr ? '-left-1' : '-right-1'} -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white shadow-sm animate-in zoom-in-50 duration-200`}>
+          {itemCount > 9 ? '9+' : itemCount}
+        </span>
+      )}
+    </button>
+  );
+}

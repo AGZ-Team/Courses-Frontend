@@ -12,6 +12,7 @@ import CategoriesPanel from "@/components/Dashboard/Panels/CategoriesPanel"
 import SubcategoriesPanel from "@/components/Dashboard/Panels/SubcategoriesPanel"
 import ContentPanel from "@/components/Dashboard/Panels/ContentPanel"
 import LessonPanel from "@/components/Dashboard/Panels/LessonPanel"
+import OrdersPanel from "@/components/Dashboard/Panels/OrdersPanel"
 import MyContentPanel from "@/components/Dashboard/Panels/MyContentPanel"
 import { DashboardUserLoader } from "@/components/Dashboard/DashboardUserLoader"
 import {
@@ -49,6 +50,7 @@ export default async function Page({ searchParams }: DashboardPageProps) {
   const showContent = view === "content"
   const showLessons = view === "lessons"
   const showMyContent = view === "my-content"
+  const showOrders = view === "orders"
 
   return (
     <DashboardUserLoader>
@@ -82,6 +84,8 @@ export default async function Page({ searchParams }: DashboardPageProps) {
                 <LessonPanel />
               ) : showMyContent ? (
                 <MyContentPanel />
+              ) : showOrders ? (
+                <OrdersPanel />
               ) : (
                 <>
                   <SectionCards />

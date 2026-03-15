@@ -2,9 +2,14 @@
 
 import { Star, Users, Clock, Play, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import type { CourseCard } from '../CourseCard';
 import Image from 'next/image';
+import { useCartStore } from '@/stores/cartStore';
+import { useCartDrawer } from '@/components/Cart/CartProvider';
+import { toast } from 'sonner';
+import { IconCheck } from '@tabler/icons-react';
 
 interface CourseHeroProps {
   course: CourseCard;
@@ -14,6 +19,12 @@ export function CourseHero({ course }: CourseHeroProps) {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const duration = Math.floor(course.durationMinutes / 60);
   const t = useTranslations('courseDetails');
+  const tCart = useTranslations('cart');
+  const locale = useLocale();
+  const router = useRouter();
+  const addItem = useCartStore((s) => s.addItem);
+  const isInCart = useCartStore((s) => s.isInCart(course.id));
+  const { openCart } = useCartDrawer();
 
   const socials: { name: string; Icon: React.ComponentType<{ className?: string }> }[] = [
     { name: 'facebook', Icon: Facebook },
@@ -31,6 +42,34 @@ export function CourseHero({ course }: CourseHeroProps) {
       default:
         return 'bg-primary text-white';
     }
+  };
+
+  const handleAddToCart = () => {
+    if (isInCart) {
+      openCart();
+      return;
+    }
+    addItem({
+      id: course.id,
+      title: course.title,
+      image: course.image,
+      price: course.price.current,
+      author: course.author,
+    });
+    toast.success(tCart('addedToCart'), { description: course.title });
+  };
+
+  const handleBuyNow = () => {
+    if (!isInCart) {
+      addItem({
+        id: course.id,
+        title: course.title,
+        image: course.image,
+        price: course.price.current,
+        author: course.author,
+      });
+    }
+    router.push(`/${locale}/checkout`);
   };
 
   return (
@@ -68,63 +107,35 @@ export function CourseHero({ course }: CourseHeroProps) {
 
               {/* Meta Info */}
               <div className="flex flex-wrap gap-6">
-                {/* Rating */}
                 <div className="flex items-center gap-2">
-                  <span className="text-amber-400 font-semibold">
-                    {course.rating}
-                  </span>
+                  <span className="text-amber-400 font-semibold">{course.rating}</span>
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 fill-current ${
-                          i < Math.floor(course.rating)
-                            ? 'text-amber-300'
-                            : 'text-slate-300'
-                        }`}
-                      />
+                      <Star key={i} className={`w-4 h-4 fill-current ${i < Math.floor(course.rating) ? 'text-amber-300' : 'text-slate-300'}`} />
                     ))}
                   </div>
                   <span className="text-slate-400">({course.ratingCount})</span>
                 </div>
-
-                {/* Enrolled */}
                 <div className="flex items-center gap-2 text-slate-500">
                   <Users className="w-4 h-4" />
-                  <span>
-                    853 {t('enrolledCount')}
-                  </span>
+                  <span>853 {t('enrolledCount')}</span>
                 </div>
-
-                {/* Last Updated */}
                 <div className="flex items-center gap-2 text-slate-500">
                   <Clock className="w-4 h-4" />
-                  <span>
-                    {t('lastUpdated')} 11/2021
-                  </span>
+                  <span>{t('lastUpdated')} 11/2021</span>
                 </div>
               </div>
 
               {/* Author */}
               <div className="flex items-center gap-3">
-                <Image
-                  src={course.authorAvatar}
-                  alt={course.author}
-                  width={500}
-                  height={500}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
+                <Image src={course.authorAvatar} alt={course.author} width={500} height={500} className="w-10 h-10 rounded-full object-cover" />
                 <span className="text-slate-500">{course.author}</span>
               </div>
 
               {/* Social Share */}
               <div className="flex gap-3 pt-2">
                 {socials.map(({ name, Icon }) => (
-                  <button
-                    key={name}
-                    className="w-10 h-10 rounded-full border border-slate-200 hover:bg-primary/10 transition-colors flex items-center justify-center text-slate-500 hover:text-primary"
-                    aria-label={`Share on ${name}`}
-                  >
+                  <button key={name} className="w-10 h-10 rounded-full border border-slate-200 hover:bg-primary/10 transition-colors flex items-center justify-center text-slate-500 hover:text-primary" aria-label={`Share on ${name}`}>
                     <Icon className="w-4 h-4" />
                   </button>
                 ))}
@@ -139,7 +150,6 @@ export function CourseHero({ course }: CourseHeroProps) {
                     <p>{t('overview.p3')}</p>
                   </div>
                 </div>
-
                 <div>
                   <h2 className="text-xl font-bold text-slate-900">{t('overview.whatYouLearn')}</h2>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -151,7 +161,6 @@ export function CourseHero({ course }: CourseHeroProps) {
                     ))}
                   </div>
                 </div>
-
                 <div>
                   <h2 className="text-xl font-bold text-slate-900">{t('overview.requirements')}</h2>
                   <ul className="mt-4 space-y-3 text-slate-600">
@@ -165,21 +174,10 @@ export function CourseHero({ course }: CourseHeroProps) {
 
             {/* Right Column - Image & Price (Sticky) */}
             <div className="lg:col-span-1 space-y-6 sticky top-24">
-              {/* Course Image with Play Button */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                <Image 
-                  src={course.image}
-                  alt={course.title}
-                  width={500}
-                  height={500}
-                  className="w-full aspect-video object-cover"
-                />
+                <Image src={course.image} alt={course.title} width={500} height={500} className="w-full aspect-video object-cover" />
                 <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                  <button
-                    onClick={() => setIsVideoOpen(true)}
-                    className="w-16 h-16 rounded-full bg-white hover:bg-gray-100 transition-all transform hover:scale-110 flex items-center justify-center shadow-xl"
-                    aria-label="Play video"
-                  >
+                  <button onClick={() => setIsVideoOpen(true)} className="w-16 h-16 rounded-full bg-white hover:bg-gray-100 transition-all transform hover:scale-110 flex items-center justify-center shadow-xl" aria-label="Play video">
                     <Play className="w-6 h-6 text-primary ml-1 fill-primary" />
                   </button>
                 </div>
@@ -197,10 +195,27 @@ export function CourseHero({ course }: CourseHeroProps) {
                 </div>
 
                 <div className="grid grid-cols-1 gap-3">
-                  <button className="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-semibold rounded-md transition-colors">
-                    {t('addToCart')}
+                  <button
+                    onClick={handleAddToCart}
+                    className={`px-6 py-3 font-semibold rounded-md transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                      isInCart
+                        ? 'bg-emerald-50 text-emerald-700 border-2 border-emerald-200 hover:bg-emerald-100'
+                        : 'bg-primary hover:bg-primary/90 text-white'
+                    }`}
+                  >
+                    {isInCart ? (
+                      <>
+                        <IconCheck className="h-5 w-5" />
+                        {tCart('inCart')}
+                      </>
+                    ) : (
+                      t('addToCart')
+                    )}
                   </button>
-                  <button className="px-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold rounded-md transition-colors">
+                  <button
+                    onClick={handleBuyNow}
+                    className="px-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold rounded-md transition-colors cursor-pointer"
+                  >
                     {t('buyNow')}
                   </button>
                 </div>
@@ -226,19 +241,9 @@ export function CourseHero({ course }: CourseHeroProps) {
       {isVideoOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80" onClick={() => setIsVideoOpen(false)}>
           <div className="relative w-full max-w-4xl mx-4" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => setIsVideoOpen(false)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300"
-            >
-              Close
-            </button>
+            <button onClick={() => setIsVideoOpen(false)} className="absolute -top-12 right-0 text-white hover:text-gray-300">Close</button>
             <div className="relative pt-[56.25%]">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/LlCwHnp3kL4?autoplay=1"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              <iframe className="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/LlCwHnp3kL4?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
             </div>
           </div>
         </div>

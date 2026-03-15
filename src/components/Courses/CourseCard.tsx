@@ -5,7 +5,10 @@ import Link from 'next/link';
 import { FaStar } from 'react-icons/fa';
 import { LuCirclePlay, LuClock3, LuGraduationCap } from 'react-icons/lu';
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useCartStore } from '@/stores/cartStore';
+import { toast } from 'sonner';
+import { IconCheck } from '@tabler/icons-react';
 
 export type CourseCard = {
   id: number;
@@ -301,12 +304,50 @@ export function CourseCardItem({
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </button>
-            <button className="rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(10,186,181,0.35)] transition hover:bg-primary/90">
-              {course.ctaLabel}
-            </button>
+            <AddToCartCTA course={course} />
           </div>
         </div>
       </div>
     </article>
+  );
+}
+
+function AddToCartCTA({ course }: { course: CourseCard }) {
+  const tCart = useTranslations('cart');
+  const addItem = useCartStore((s) => s.addItem);
+  const inCart = useCartStore((s) => s.isInCart(course.id));
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (inCart) return;
+    addItem({
+      id: course.id,
+      title: course.title,
+      image: course.image,
+      price: course.price.current,
+      author: course.author,
+    });
+    toast.success(tCart('addedToCart'), { description: course.title });
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className={`rounded-xl px-6 py-2.5 text-sm font-semibold transition cursor-pointer flex items-center gap-2 ${
+        inCart
+          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+          : 'bg-primary text-white shadow-[0_12px_30px_rgba(10,186,181,0.35)] hover:bg-primary/90'
+      }`}
+    >
+      {inCart ? (
+        <>
+          <IconCheck className="h-4 w-4" />
+          {tCart('inCart')}
+        </>
+      ) : (
+        course.ctaLabel
+      )}
+    </button>
   );
 }

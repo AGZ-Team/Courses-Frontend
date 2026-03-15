@@ -12,6 +12,7 @@ import {
   IconCreditCard,
   IconBook,
   IconFolder,
+  IconReceipt,
   type Icon,
 } from "@tabler/icons-react"
 import { useLocale, useTranslations } from "next-intl"
@@ -87,6 +88,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           name: t('subcategories'),
           url: "/dashboard?view=subcategories",
           icon: IconCategory,
+        },
+        {
+          name: locale === "ar" ? "الطلبات" : "Orders",
+          url: "/dashboard?view=orders",
+          icon: IconReceipt,
         }
       );
     }
