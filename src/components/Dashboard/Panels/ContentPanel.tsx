@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
-import { IconDotsVertical, IconCheck, IconX } from "@tabler/icons-react";
+import { IconDotsVertical, IconCheck, IconX, IconAlertTriangle } from "@tabler/icons-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -290,16 +290,14 @@ export default function ContentPanel() {
 
       setSheetOpen(false);
     } catch (err) {
-      // Parse backend validation errors
       let errorMessage = "Failed to save content";
 
       if (err instanceof Error) {
-        // Try to parse structured error messages from backend
-        if (err.message.includes("price")) {
+        if (err.message.includes("verified influencer") || err.message.includes("verified instructor")) {
           errorMessage = isArabic
-            ? "السعر يجب أن يحتوي على رقمين عشريين كحد أقصى (مثال: 99.99)"
-            : "Price must not exceed 2 decimal places (e.g., 99.99)";
-        } else if (err.message.includes("Ensure that there are no more than 2 decimal places")) {
+            ? "يجب أن تكون مُحققًا كمنشئ محتوى لإنشاء المحتوى. يرجى التقدم للتحقق من حسابك."
+            : "You must be verified as a content creator to create content. Please apply for account verification.";
+        } else if (err.message.includes("price") || err.message.includes("decimal places")) {
           errorMessage = isArabic
             ? "السعر يجب أن يحتوي على رقمين عشريين كحد أقصى (مثال: 99.99)"
             : "Price must not exceed 2 decimal places (e.g., 99.99)";
@@ -400,6 +398,20 @@ export default function ContentPanel() {
             : "Manage course content, including names, descriptions, and pricing."}
         </p>
       </div>
+
+      {isUserReady && user && !isInstructor && !isSuperuser && (
+        <div className="mx-auto max-w-6xl mb-4 rounded-2xl border border-amber-100 bg-amber-50 p-4 text-sm text-amber-800">
+          <div className="flex items-center gap-2 font-semibold">
+            <IconAlertTriangle className="h-5 w-5" />
+            {isArabic ? "غير مُحقق كمنشئ محتوى" : "Not Verified as Content Creator"}
+          </div>
+          <p className="mt-1 text-xs text-amber-600">
+            {isArabic
+              ? "تحتاج إلى التحقق من حسابك كمنشئ محتوى لإنشاء المحتوى."
+              : "You need to be verified as a content creator to create content."}
+          </p>
+        </div>
+      )}
 
       <Card className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-gray-100 bg-white/95 shadow-[0_10px_40px_rgba(13,13,18,0.05)] transition-shadow duration-200 hover:shadow-[0_18px_55px_rgba(13,13,18,0.07)]">
         <CardHeader

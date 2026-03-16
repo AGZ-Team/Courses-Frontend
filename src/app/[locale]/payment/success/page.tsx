@@ -1,13 +1,24 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
+import { useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useCartStore } from "@/stores/cartStore";
 import { IconCircleCheck, IconArrowRight, IconHome } from "@tabler/icons-react";
 
 export default function PaymentSuccessPage() {
   const t = useTranslations("payment");
   const locale = useLocale();
+  const searchParams = useSearchParams();
+
+  // Parse Tap redirect params
+  const tapId = searchParams?.get("tap_id") ?? null;
+
+  // Clear the cart after successful payment
+  useEffect(() => {
+    useCartStore.getState().clearCart();
+  }, []);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-50/60 via-white to-teal-50/40 px-4">
@@ -39,6 +50,11 @@ export default function PaymentSuccessPage() {
           <p className="mt-2 text-xs text-gray-400">
             {t("confirmationEmail")}
           </p>
+          {tapId && (
+            <p className="mt-3 rounded-lg bg-gray-50 px-3 py-2 font-mono text-xs text-gray-500">
+              {t("chargeId")}: {tapId}
+            </p>
+          )}
         </div>
 
         {/* Actions */}

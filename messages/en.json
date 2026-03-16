@@ -1529,7 +1529,13 @@
     "paymentDeclined": "Payment was declined",
     "tryAgainMessage": "Please check your payment details and try again, or contact your bank.",
     "tryAgain": "Try Again",
-    "contactSupport": "Contact Support"
+    "contactSupport": "Contact Support",
+    "orderSummary": "Order Summary",
+    "emptyCart": "Your cart is empty",
+    "emptyCartDescription": "Add courses to your cart before checking out.",
+    "removeItem": "Remove",
+    "chargeId": "Transaction ID",
+    "referenceId": "Reference ID"
   },
   "cart": {
     "title": "Shopping Cart",

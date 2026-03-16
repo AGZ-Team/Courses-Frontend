@@ -1,13 +1,17 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { IconAlertCircle, IconRefresh, IconHome, IconHeadset } from "@tabler/icons-react";
 
 export default function PaymentFailedPage() {
   const t = useTranslations("payment");
   const locale = useLocale();
+  const searchParams = useSearchParams();
+
+  // Parse Tap redirect params for support reference
+  const tapId = searchParams?.get("tap_id") ?? null;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-rose-50/50 via-white to-orange-50/30 px-4">
@@ -39,6 +43,11 @@ export default function PaymentFailedPage() {
           <p className="mt-2 text-xs text-gray-400">
             {t("tryAgainMessage")}
           </p>
+          {tapId && (
+            <p className="mt-3 rounded-lg bg-gray-50 px-3 py-2 font-mono text-xs text-gray-500">
+              {t("referenceId")}: {tapId}
+            </p>
+          )}
         </div>
 
         {/* Actions */}

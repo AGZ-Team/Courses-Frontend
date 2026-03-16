@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 import { createCharge } from "@/services/paymentService";
+import { useCartStore } from "@/stores/cartStore";
+import { useAuthStore } from "@/stores/authStore";
 import type { PaymentMethod } from "@/types/payment";
 import { toast } from "sonner";
 import {
@@ -14,6 +18,8 @@ import {
   IconArrowRight,
   IconLock,
   IconShieldCheck,
+  IconTrash,
+  IconShoppingBag,
 } from "@tabler/icons-react";
 
 const PAYMENT_METHODS: { id: PaymentMethod; icon: typeof IconCreditCard; gradient: string }[] = [
@@ -25,20 +31,58 @@ const PAYMENT_METHODS: { id: PaymentMethod; icon: typeof IconCreditCard; gradien
 
 export default function CheckoutPage() {
   const t = useTranslations("payment");
+  const tCart = useTranslations("cart");
+  const locale = useLocale();
   const searchParams = useSearchParams();
 
-  // Get course IDs from URL params
+  // Cart store (primary source of course data)
+  const cartItems = useCartStore((s) => s.items);
+  const totalPrice = useCartStore((s) => s.totalPrice);
+  const removeItem = useCartStore((s) => s.removeItem);
+
+  // Auth store (for auto-filling user info)
+  const user = useAuthStore((s) => s.user);
+
+  // Hydration: cart is empty on SSR, wait for localStorage
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Fallback: support ?courses= URL param for direct links
   const coursesParam = searchParams?.get("courses") ?? "";
-  const courseIds = coursesParam
+  const fallbackCourseIds = coursesParam
     .split(",")
     .map((id) => parseInt(id.trim(), 10))
     .filter((id) => !isNaN(id));
+
+  // Use cart items if available, otherwise fall back to URL params
+  const hasCartItems = mounted && cartItems.length > 0;
+  const courseIds = hasCartItems
+    ? cartItems.map((item) => item.id)
+    : fallbackCourseIds;
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [method, setMethod] = useState<PaymentMethod>("card");
   const [loading, setLoading] = useState(false);
+
+  // Auto-fill from auth store
+  useEffect(() => {
+    if (user) {
+      if (user.first_name && !firstName) setFirstName(user.first_name);
+      if (user.last_name && !lastName) setLastName(user.last_name);
+      if (user.email && !email) setEmail(user.email);
+    }
+    // Only run once when user data becomes available
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const handleRemove = (id: number, title: string) => {
+    removeItem(id);
+    toast.success(tCart("removedFromCart"), { description: title });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,166 +138,255 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        {/* Checkout Card */}
-        <form onSubmit={handleSubmit}>
-          <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
-            {/* Personal Info */}
-            <div className="border-b border-gray-100 p-6 sm:p-8">
-              <h2 className="mb-5 text-sm font-semibold uppercase tracking-wider text-gray-400">
-                {t("personalInfo")}
-              </h2>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="checkout-first-name"
-                    className="mb-1.5 block text-xs font-medium text-gray-600"
-                  >
-                    {t("firstName")}
-                  </label>
-                  <input
-                    id="checkout-first-name"
-                    type="text"
-                    required
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
-                    placeholder={t("firstNamePlaceholder")}
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="checkout-last-name"
-                    className="mb-1.5 block text-xs font-medium text-gray-600"
-                  >
-                    {t("lastName")}
-                  </label>
-                  <input
-                    id="checkout-last-name"
-                    type="text"
-                    required
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
-                    placeholder={t("lastNamePlaceholder")}
-                  />
-                </div>
-              </div>
-              <div className="mt-4">
-                <label
-                  htmlFor="checkout-email"
-                  className="mb-1.5 block text-xs font-medium text-gray-600"
-                >
-                  {t("email")}
-                </label>
-                <input
-                  id="checkout-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
-                  placeholder={t("emailPlaceholder")}
-                />
-              </div>
+        {/* Empty cart state */}
+        {mounted && courseIds.length === 0 && (
+          <div className="rounded-3xl border border-gray-100 bg-white p-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-50">
+              <IconShoppingBag className="h-10 w-10 text-gray-300" />
             </div>
-
-            {/* Payment Method */}
-            <div className="border-b border-gray-100 p-6 sm:p-8">
-              <h2 className="mb-5 text-sm font-semibold uppercase tracking-wider text-gray-400">
-                {t("paymentMethod")}
-              </h2>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {PAYMENT_METHODS.map((pm) => {
-                  const Icon = pm.icon;
-                  const isSelected = method === pm.id;
-                  return (
-                    <button
-                      key={pm.id}
-                      type="button"
-                      onClick={() => setMethod(pm.id)}
-                      className={`group relative flex flex-col items-center gap-2 rounded-2xl border-2 px-3 py-4 text-center transition-all duration-200 cursor-pointer ${
-                        isSelected
-                          ? "border-blue-500 bg-blue-50/60 shadow-md shadow-blue-100/60"
-                          : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-sm"
-                      }`}
-                    >
-                      <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${pm.gradient} shadow-lg transition-transform duration-200 ${
-                          isSelected ? "scale-110" : "group-hover:scale-105"
-                        }`}
-                      >
-                        <Icon className="h-5 w-5 text-white" />
-                      </div>
-                      <span
-                        className={`text-xs font-semibold ${
-                          isSelected ? "text-blue-700" : "text-gray-600"
-                        }`}
-                      >
-                        {t(`methods.${pm.id}`)}
-                      </span>
-                      {isSelected && (
-                        <div className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-blue-500 ring-2 ring-white">
-                          <svg
-                            className="h-4 w-4 text-white"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Order Summary */}
-            <div className="border-b border-gray-100 bg-gray-50/40 p-6 sm:p-8">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-500">{t("coursesSelected")}</span>
-                <span className="font-semibold text-gray-900">
-                  {courseIds.length} {courseIds.length === 1 ? t("course") : t("courses")}
-                </span>
-              </div>
-            </div>
-
-            {/* Submit */}
-            <div className="p-6 sm:p-8">
-              <button
-                type="submit"
-                disabled={loading || courseIds.length === 0}
-                className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-200/60 transition-all duration-200 hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-200/80 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none cursor-pointer"
-              >
-                {loading ? (
-                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                ) : (
-                  <>
-                    <IconLock className="h-4 w-4" />
-                    {t("payNow")}
-                    <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  </>
-                )}
-              </button>
-
-              {/* Trust badges */}
-              <div className="mt-4 flex items-center justify-center gap-4 text-[11px] text-gray-400">
-                <div className="flex items-center gap-1">
-                  <IconShieldCheck className="h-3.5 w-3.5" />
-                  {t("securePayment")}
-                </div>
-                <div className="flex items-center gap-1">
-                  <IconLock className="h-3.5 w-3.5" />
-                  {t("encrypted")}
-                </div>
-              </div>
-            </div>
+            <h2 className="text-lg font-semibold text-gray-800">
+              {t("emptyCart")}
+            </h2>
+            <p className="mt-2 text-sm text-gray-400">
+              {t("emptyCartDescription")}
+            </p>
+            <Link
+              href={`/${locale}/courses`}
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-200/50 transition hover:shadow-xl"
+            >
+              {tCart("browseCourses")}
+              <IconArrowRight className="h-4 w-4" />
+            </Link>
           </div>
-        </form>
+        )}
+
+        {/* Checkout Card - only show when there are courses */}
+        {(courseIds.length > 0 || !mounted) && (
+          <form onSubmit={handleSubmit}>
+            <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+              {/* Personal Info */}
+              <div className="border-b border-gray-100 p-6 sm:p-8">
+                <h2 className="mb-5 text-sm font-semibold uppercase tracking-wider text-gray-400">
+                  {t("personalInfo")}
+                </h2>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="checkout-first-name"
+                      className="mb-1.5 block text-xs font-medium text-gray-600"
+                    >
+                      {t("firstName")}
+                    </label>
+                    <input
+                      id="checkout-first-name"
+                      type="text"
+                      required
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                      placeholder={t("firstNamePlaceholder")}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="checkout-last-name"
+                      className="mb-1.5 block text-xs font-medium text-gray-600"
+                    >
+                      {t("lastName")}
+                    </label>
+                    <input
+                      id="checkout-last-name"
+                      type="text"
+                      required
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                      placeholder={t("lastNamePlaceholder")}
+                    />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <label
+                    htmlFor="checkout-email"
+                    className="mb-1.5 block text-xs font-medium text-gray-600"
+                  >
+                    {t("email")}
+                  </label>
+                  <input
+                    id="checkout-email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    placeholder={t("emailPlaceholder")}
+                  />
+                </div>
+              </div>
+
+              {/* Payment Method */}
+              <div className="border-b border-gray-100 p-6 sm:p-8">
+                <h2 className="mb-5 text-sm font-semibold uppercase tracking-wider text-gray-400">
+                  {t("paymentMethod")}
+                </h2>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {PAYMENT_METHODS.map((pm) => {
+                    const Icon = pm.icon;
+                    const isSelected = method === pm.id;
+                    return (
+                      <button
+                        key={pm.id}
+                        type="button"
+                        onClick={() => setMethod(pm.id)}
+                        className={`group relative flex flex-col items-center gap-2 rounded-2xl border-2 px-3 py-4 text-center transition-all duration-200 cursor-pointer ${
+                          isSelected
+                            ? "border-blue-500 bg-blue-50/60 shadow-md shadow-blue-100/60"
+                            : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-sm"
+                        }`}
+                      >
+                        <div
+                          className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${pm.gradient} shadow-lg transition-transform duration-200 ${
+                            isSelected ? "scale-110" : "group-hover:scale-105"
+                          }`}
+                        >
+                          <Icon className="h-5 w-5 text-white" />
+                        </div>
+                        <span
+                          className={`text-xs font-semibold ${
+                            isSelected ? "text-blue-700" : "text-gray-600"
+                          }`}
+                        >
+                          {t(`methods.${pm.id}`)}
+                        </span>
+                        {isSelected && (
+                          <div className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-blue-500 ring-2 ring-white">
+                            <svg
+                              className="h-4 w-4 text-white"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Order Summary */}
+              <div className="border-b border-gray-100 bg-gray-50/40 p-6 sm:p-8">
+                <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+                  {t("orderSummary")}
+                </h2>
+
+                {/* Cart items (when using cart store) */}
+                {hasCartItems ? (
+                  <div className="space-y-3">
+                    {cartItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center gap-3 rounded-xl bg-white p-3 shadow-sm"
+                      >
+                        <div className="relative h-14 w-18 shrink-0 overflow-hidden rounded-lg">
+                          <Image
+                            src={item.image}
+                            alt={item.title}
+                            fill
+                            sizes="72px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-medium text-gray-900">
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-gray-400">{item.author}</p>
+                        </div>
+                        <span className="shrink-0 text-sm font-semibold text-gray-900">
+                          ${item.price.toFixed(2)}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemove(item.id, item.title)}
+                          className="shrink-0 rounded-lg p-1.5 text-gray-400 transition hover:bg-red-50 hover:text-red-500 cursor-pointer"
+                          aria-label={`${t("removeItem")} ${item.title}`}
+                        >
+                          <IconTrash className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+
+                    {/* Totals */}
+                    <div className="mt-4 space-y-2 border-t border-gray-200 pt-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-500">{tCart("subtotal")}</span>
+                        <span className="font-medium text-gray-700">
+                          ${totalPrice().toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-base font-semibold text-gray-900">
+                          {tCart("total")}
+                        </span>
+                        <span className="text-lg font-bold text-blue-600">
+                          ${totalPrice().toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Fallback: just show course count (URL param mode) */
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-500">{t("coursesSelected")}</span>
+                    <span className="font-semibold text-gray-900">
+                      {courseIds.length} {courseIds.length === 1 ? t("course") : t("courses")}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Submit */}
+              <div className="p-6 sm:p-8">
+                <button
+                  type="submit"
+                  disabled={loading || courseIds.length === 0}
+                  className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-200/60 transition-all duration-200 hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-200/80 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none cursor-pointer"
+                >
+                  {loading ? (
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  ) : (
+                    <>
+                      <IconLock className="h-4 w-4" />
+                      {t("payNow")}
+                      {hasCartItems && (
+                        <span className="ml-1">- ${totalPrice().toFixed(2)}</span>
+                      )}
+                      <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </>
+                  )}
+                </button>
+
+                {/* Trust badges */}
+                <div className="mt-4 flex items-center justify-center gap-4 text-[11px] text-gray-400">
+                  <div className="flex items-center gap-1">
+                    <IconShieldCheck className="h-3.5 w-3.5" />
+                    {t("securePayment")}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <IconLock className="h-3.5 w-3.5" />
+                    {t("encrypted")}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

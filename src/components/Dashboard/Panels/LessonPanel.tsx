@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
-import { IconDotsVertical, IconVideo, IconFile, IconFileText } from "@tabler/icons-react";
+import { IconDotsVertical, IconVideo, IconFile, IconFileText, IconAlertTriangle } from "@tabler/icons-react";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -309,7 +309,17 @@ export default function LessonPanel() {
 
       setSheetOpen(false);
     } catch (err) {
-      setSheetError(err instanceof Error ? err.message : "Failed to save lesson");
+      let errorMessage = "Failed to save lesson";
+      if (err instanceof Error) {
+        if (err.message.includes("verified influencer") || err.message.includes("verified instructor")) {
+          errorMessage = isArabic
+            ? "يجب أن تكون مُحققًا كمنشئ محتوى لإنشاء الدروس. يرجى التقدم للتحقق من حسابك."
+            : "You must be verified as a content creator to create lessons. Please apply for account verification.";
+        } else {
+          errorMessage = err.message;
+        }
+      }
+      setSheetError(errorMessage);
     } finally {
       setSheetSaving(false);
     }
@@ -402,6 +412,20 @@ export default function LessonPanel() {
             : "Manage content lessons, including names, text, videos, and files."}
         </p>
       </div>
+
+      {isUserReady && user && !isInstructor && !isSuperuser && (
+        <div className="mx-auto max-w-6xl mb-4 rounded-2xl border border-amber-100 bg-amber-50 p-4 text-sm text-amber-800">
+          <div className="flex items-center gap-2 font-semibold">
+            <IconAlertTriangle className="h-5 w-5" />
+            {isArabic ? "غير مُحقق كمنشئ محتوى" : "Not Verified as Content Creator"}
+          </div>
+          <p className="mt-1 text-xs text-amber-600">
+            {isArabic
+              ? "تحتاج إلى التحقق من حسابك كمنشئ محتوى لإنشاء الدروس والمحتوى."
+              : "You need to be verified as a content creator to create lessons and content."}
+          </p>
+        </div>
+      )}
 
       <Card className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-gray-100 bg-white/95 shadow-[0_10px_40px_rgba(13,13,18,0.05)] transition-shadow duration-200 hover:shadow-[0_18px_55px_rgba(13,13,18,0.07)]">
         <CardHeader

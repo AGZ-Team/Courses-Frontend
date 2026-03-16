@@ -1502,7 +1502,13 @@
     "paymentDeclined": "تم رفض الدفع",
     "tryAgainMessage": "يرجى التحقق من تفاصيل الدفع والمحاولة مرة أخرى، أو اتصل بالبنك.",
     "tryAgain": "حاول مرة أخرى",
-    "contactSupport": "تواصل مع الدعم"
+    "contactSupport": "تواصل مع الدعم",
+    "orderSummary": "ملخص الطلب",
+    "emptyCart": "سلتك فارغة",
+    "emptyCartDescription": "أضف دورات إلى سلتك قبل إتمام الدفع.",
+    "removeItem": "إزالة",
+    "chargeId": "رقم المعاملة",
+    "referenceId": "رقم المرجع"
   },
   "cart": {
     "title": "سلة التسوق",
