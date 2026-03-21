@@ -1,0 +1,72 @@
+[    4254ms] [WARNING] The resource http://localhost:3000/_next/static/chunks/%5Bnext%5D_internal_font_google_jost_8d857f2d_module_c563cf6e.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/en/checkout:0
+[   35687ms] [ERROR] An empty string ("") was passed to the %s attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to %s instead of an empty string. src src @ http://localhost:3000/_next/static/chunks/a5dda_next_dist_fd2d7206._.js:3127
+[   35690ms] [ERROR] Image is missing required "src" property: JSHandle@node @ http://localhost:3000/_next/static/chunks/a5dda_next_dist_fd2d7206._.js:3127
+[   35773ms] Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <body suppressHydrationWarning={true} className="min-h-scre...">
+      <NextIntlClientProviderServer>
+        <NextIntlClientProvider locale="en" messages={{...}} timeZone="Africa/Cairo">
+          ...
+            <CartProvider>
+              <header>
+                <ConditionalNavbar>
+                  <MainNavbar>
+                    <header className="fixed inse...">
+                      <div className="mx-auto fl...">
+                        <div>
+                        <nav>
+                        <div className="ml-auto fl..." dir="ltr">
+                          <button>
+                          <button>
+                          <CartButton isAr={false}>
+                            <button type="button" onClick={function CartProvider.useCallback[openCart]} ...>
+                              <RiShoppingCart2Fill>
++                             <span
++                               className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center round..."
++                             >
+                          ...
+                      ...
+                ...
+              ...
+              ...
+
+    at throwOnHydrationMismatch (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:3348:56)
+    at beginWork (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:6775:918)
+    at runWithFiberInDEV (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:965:74)
+    at performUnitOfWork (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:9562:97)
+    at workLoopConcurrentByScheduler (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:9558:58)
+    at renderRootConcurrent (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:9541:71)
+    at performWorkOnRoot (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:9068:150)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_react-dom_f2552aa9._.js:10230:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3000/_next/static/chunks/a5dda_next_dist_compiled_2884d899._.js:2647:64)
+[   35701ms] [ERROR] Image is missing required "src" property: JSHandle@node @ http://localhost:3000/_next/static/chunks/a5dda_next_dist_fd2d7206._.js:3127
+[   35708ms] [ERROR] An empty string ("") was passed to the %s attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to %s instead of an empty string. src src @ http://localhost:3000/_next/static/chunks/a5dda_next_dist_fd2d7206._.js:3127
+[   35710ms] [ERROR] Image is missing required "src" property: JSHandle@node @ http://localhost:3000/_next/static/chunks/a5dda_next_dist_fd2d7206._.js:3127
+[   35716ms] [ERROR] Image is missing required "src" property: JSHandle@node @ http://localhost:3000/_next/static/chunks/a5dda_next_dist_fd2d7206._.js:3127
+[   39003ms] [WARNING] The resource http://localhost:3000/_next/static/chunks/%5Bnext%5D_internal_font_google_jost_8d857f2d_module_c563cf6e.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/en/checkout:0
+[   54025ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/api/payment/create-charge:0
+[   54026ms] [ERROR] Payment error: Error: Request failed with status 500: 
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Server Error (500)</title>
+</head>
+<body>
+  <h1>Server Error (500)</h1><p></p>
+</body>
+</html>
+
+    at handleResponse (http://localhost:3000/_next/static/chunks/_c42f0abe._.js:27:11)
+    at async handleSubmit (http://localhost:3000/_next/static/chunks/_c42f0abe._.js:307:30) @ http://localhost:3000/_next/static/chunks/a5dda_next_dist_fd2d7206._.js:3127
+[   57081ms] [WARNING] The resource http://localhost:3000/_next/static/chunks/%5Bnext%5D_internal_font_google_jost_8d857f2d_module_c563cf6e.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/en/checkout:0

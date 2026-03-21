@@ -2,11 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocale } from "next-intl";
-import { 
-  IconFileText, 
-  IconBook, 
-  IconChevronDown, 
+import { useTranslations } from "next-intl";
+import {
+  IconFileText,
+  IconBook,
+  IconChevronDown,
   IconChevronRight,
   IconVideo,
   IconFile,
@@ -22,38 +22,38 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { Label } from "@/components/ui/label";
 import type { Content, Lesson } from "@/types/content";
 import type { Subcategory } from "@/types/subcategory";
-import { fetchContent } from "@/services/contentService";
+import { fetchContent, fetchMyContent } from "@/services/contentService";
 import { fetchLessons } from "@/services/lessonService";
 import { fetchSubcategories } from "@/services/subcategoriesService";
 import { useAuthStore } from "@/stores/authStore";
 
-function StatusBadge({ published, isArabic }: { published: boolean; isArabic: boolean }) {
+function StatusBadge({ published, t }: { published: boolean; t: (key: string) => string }) {
   return published ? (
     <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-green-100">
       <IconCheck className="h-3 w-3" />
-      {isArabic ? "منشور" : "Published"}
+      {t("published")}
     </span>
   ) : (
     <span className="inline-flex items-center gap-1 rounded-full bg-gray-50 px-2.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-gray-100">
       <IconX className="h-3 w-3" />
-      {isArabic ? "مسودة" : "Draft"}
+      {t("draft")}
     </span>
   );
 }
 
-function MediaBadge({ hasVideo, hasFile, isArabic }: { hasVideo: boolean; hasFile: boolean; isArabic: boolean }) {
+function MediaBadge({ hasVideo, hasFile, t }: { hasVideo: boolean; hasFile: boolean; t: (key: string) => string }) {
   return (
     <div className="flex gap-1">
       {hasVideo && (
         <span className="inline-flex items-center gap-1 rounded-full bg-purple-50 px-2 py-0.5 text-[10px] font-medium text-purple-700 ring-1 ring-purple-100">
           <IconVideo className="h-3 w-3" />
-          {isArabic ? "فيديو" : "Video"}
+          {t("video")}
         </span>
       )}
       {hasFile && (
         <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-100">
           <IconFile className="h-3 w-3" />
-          {isArabic ? "ملف" : "File"}
+          {t("file")}
         </span>
       )}
     </div>
@@ -66,8 +66,7 @@ interface ContentWithLessonsDisplay extends Content {
 }
 
 export default function MyContentPanel() {
-  const locale = useLocale();
-  const isArabic = locale === "ar";
+  const t = useTranslations("dashboard.myContentPanel");
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [expandedContent, setExpandedContent] = useState<Set<number>>(new Set());
@@ -78,14 +77,17 @@ export default function MyContentPanel() {
   const user = useAuthStore((state) => state.user);
   const isSuperuser = user?.is_superuser === true;
   const isInstructor = user?.is_instructor === true;
+  const isStudent = !isSuperuser && !isInstructor;
 
+  // Students use fetchMyContent (purchased content only)
+  // Instructors and superusers use fetchContent (all/own content)
   const {
     data: contentList = [],
     isLoading: contentLoading,
     error: contentError,
   } = useQuery<Content[]>({
-    queryKey: ["content"],
-    queryFn: fetchContent,
+    queryKey: isStudent ? ["myContent"] : ["content"],
+    queryFn: isStudent ? fetchMyContent : fetchContent,
   });
 
   const {
@@ -94,6 +96,7 @@ export default function MyContentPanel() {
   } = useQuery<Lesson[]>({
     queryKey: ["lessons"],
     queryFn: fetchLessons,
+    enabled: !isStudent, // Students don't need lessons list
   });
 
   const {
@@ -116,25 +119,29 @@ export default function MyContentPanel() {
   // Filter content based on user role (wait for hydration)
   const roleFilteredContent = useMemo(() => {
     if (!user) return [];
-    
+
+    // Students: contentList is already scoped to purchased content via fetchMyContent
+    if (isStudent) {
+      return contentList;
+    }
+
     // Superuser sees all content
     if (isSuperuser) {
       return contentList;
     }
-    
+
     // Instructor sees only their own content
     if (isInstructor) {
       return contentList.filter(content => content.creator === user?.id);
     }
-    
-    // Normal user sees all published content (in future, filter by subscription)
-    return contentList.filter(content => content.is_published);
-  }, [contentList, isSuperuser, isInstructor, user?.id]);
+
+    return contentList;
+  }, [contentList, isSuperuser, isInstructor, isStudent, user]);
 
   // Combine content with their lessons and search filter
   const contentWithLessons: ContentWithLessonsDisplay[] = useMemo(() => {
     const q = search.toLowerCase().trim();
-    
+
     return roleFilteredContent
       .filter(content => {
         if (!q) return true;
@@ -142,7 +149,7 @@ export default function MyContentPanel() {
         return (
           content.name.toLowerCase().includes(q) ||
           content.description.toLowerCase().includes(q) ||
-          contentLessons.some(lesson => 
+          contentLessons.some(lesson =>
             lesson.name.toLowerCase().includes(q) ||
             lesson.text.toLowerCase().includes(q)
           )
@@ -154,12 +161,12 @@ export default function MyContentPanel() {
         return {
           ...content,
           lessons,
-          subcategoryName: subcategory 
-            ? (isArabic ? subcategory.title_arabic : subcategory.title_english) 
+          subcategoryName: subcategory
+            ? (subcategory.title_arabic || subcategory.title_english)
             : undefined,
         };
       });
-  }, [roleFilteredContent, lessonList, subcategories, search, isArabic]);
+  }, [roleFilteredContent, lessonList, subcategories, search]);
 
   const toggleContentExpand = (contentId: number) => {
     setExpandedContent(prev => {
@@ -186,33 +193,23 @@ export default function MyContentPanel() {
   };
 
   // Role-based header text
-  const headerTitle = isArabic
-    ? isSuperuser
-      ? "جميع المحتويات"
-      : isInstructor
-      ? "محتواي"
-      : "المحتويات المتاحة"
-    : isSuperuser
-    ? "All Content"
+  const headerTitle = isSuperuser
+    ? t("allContent")
     : isInstructor
-    ? "My Content"
-    : "Available Content";
+    ? t("myContent")
+    : t("availableContent");
 
-  const headerDescription = isArabic
-    ? isSuperuser
-      ? "عرض جميع المحتويات والدروس في النظام"
-      : isInstructor
-      ? "عرض المحتويات والدروس التي قمت بإنشائها"
-      : "عرض المحتويات والدروس المتاحة لك"
-    : isSuperuser
-    ? "View all content and lessons in the system"
+  const headerDescription = isSuperuser
+    ? t("allContentDesc")
     : isInstructor
-    ? "View content and lessons you have created"
-    : "View content and lessons available to you";
+    ? t("myContentDesc")
+    : isStudent
+    ? t("purchasedContentDesc")
+    : t("availableContentDesc");
 
   return (
     <div className="px-4 lg:px-6" dir="ltr">
-      <div className="mb-6 space-y-1 max-w-6xl mx-auto" dir={isArabic ? "rtl" : "ltr"}>
+      <div className="mb-6 space-y-1 max-w-6xl mx-auto" dir="auto">
         <h1 className="text-2xl font-semibold text-[#0b0b2b]">
           {headerTitle}
         </h1>
@@ -223,17 +220,15 @@ export default function MyContentPanel() {
 
       <Card className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-gray-100 bg-white/95 shadow-[0_10px_40px_rgba(13,13,18,0.05)] transition-shadow duration-200 hover:shadow-[0_18px_55px_rgba(13,13,18,0.07)]">
         <CardHeader
-          dir={isArabic ? "rtl" : "ltr"}
+          dir="auto"
           className="flex flex-col gap-4 border-b border-gray-100 bg-linear-to-r from-teal-50/80 via-white to-sky-50/80 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
         >
-          <div className={`space-y-1 ${isArabic ? "text-right" : "text-left"}`}>
+          <div className="space-y-1">
             <CardTitle className="text-base font-semibold text-[#0b0b2b]">
-              {isArabic ? "المحتويات والدروس" : "Content & Lessons"}
+              {t("contentAndLessons")}
             </CardTitle>
             <CardDescription className="text-xs text-gray-500">
-              {isArabic
-                ? `${contentWithLessons.length} محتوى • ${contentWithLessons.reduce((acc, c) => acc + c.lessons.length, 0)} درس`
-                : `${contentWithLessons.length} content • ${contentWithLessons.reduce((acc, c) => acc + c.lessons.length, 0)} lessons`}
+              {t("contentCount", { contentCount: contentWithLessons.length })} {" \u2022 "} {t("lessonCount", { lessonCount: contentWithLessons.reduce((acc, c) => acc + c.lessons.length, 0) })}
             </CardDescription>
           </div>
           <div className="w-full sm:w-auto sm:min-w-[220px]">
@@ -241,11 +236,7 @@ export default function MyContentPanel() {
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              placeholder={
-                isArabic
-                  ? "ابحث في المحتويات والدروس..."
-                  : "Search content and lessons..."
-              }
+              placeholder={t("searchPlaceholder")}
               className="h-9 w-full rounded-full border border-teal-100 bg-white/90 px-3 text-xs text-gray-800 shadow-sm outline-none transition focus:border-teal-400 focus:ring-2 focus:ring-teal-100"
             />
           </div>
@@ -258,28 +249,31 @@ export default function MyContentPanel() {
           ) : contentError ? (
             <div className="flex h-80 items-center justify-center">
               <p className="text-red-500 text-sm">
-                {isArabic ? "فشل في تحميل المحتوى" : "Failed to load content"}
+                {t("failedToLoad")}
               </p>
             </div>
           ) : contentWithLessons.length === 0 ? (
             <div className="flex h-80 flex-col items-center justify-center gap-3">
               <IconFileText className="h-16 w-16 text-gray-300" />
               <p className="text-gray-500 text-sm">
-                {isArabic
-                  ? search
-                    ? "لا توجد نتائج للبحث"
-                    : "لا يوجد محتوى متاح"
-                  : search
-                  ? "No search results"
-                  : "No content available"}
+                {search
+                  ? t("noSearchResults")
+                  : isStudent
+                  ? t("noPurchasedContent")
+                  : t("noContent")}
               </p>
+              {!search && isStudent && (
+                <p className="text-gray-400 text-xs">
+                  {t("noPurchasedContentDesc")}
+                </p>
+              )}
             </div>
           ) : (
             <div className="divide-y divide-gray-100">
               {contentWithLessons.map((content) => (
                 <div key={content.id} className="group">
                   {/* Content Row */}
-                  <div 
+                  <div
                     className="flex items-center justify-between px-4 py-4 hover:bg-gray-50/50 cursor-pointer transition-colors"
                     onClick={() => toggleContentExpand(content.id)}
                   >
@@ -302,7 +296,7 @@ export default function MyContentPanel() {
                           <h3 className="font-semibold text-[#0b0b2b] truncate">
                             {content.name}
                           </h3>
-                          <StatusBadge published={content.is_published} isArabic={isArabic} />
+                          <StatusBadge published={content.is_published} t={t} />
                         </div>
                         <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
                           {content.subcategoryName && (
@@ -310,20 +304,20 @@ export default function MyContentPanel() {
                               {content.subcategoryName}
                             </span>
                           )}
-                          <span>•</span>
+                          <span>&bull;</span>
                           <span className="flex items-center gap-1">
                             <IconBook className="h-3 w-3" />
-                            {content.lessons.length} {isArabic ? "درس" : "lessons"}
+                            {content.lessons.length} {t("lessons")}
                           </span>
-                          <span>•</span>
+                          <span>&bull;</span>
                           <span className="font-medium text-primary">
-                            ${content.price.toFixed(2)}
+                            ${Number(content.price ?? 0).toFixed(2)}
                           </span>
                           {content.creator_name && (
                             <>
-                              <span>•</span>
+                              <span>&bull;</span>
                               <span className="text-gray-400">
-                                {isArabic ? "بواسطة" : "by"} {content.creator_name}
+                                {t("by")} {content.creator_name}
                               </span>
                             </>
                           )}
@@ -339,13 +333,13 @@ export default function MyContentPanel() {
                         <div className="px-4 py-6 text-center">
                           <IconBook className="h-8 w-8 mx-auto text-gray-300 mb-2" />
                           <p className="text-sm text-gray-500">
-                            {isArabic ? "لا توجد دروس" : "No lessons yet"}
+                            {t("noLessons")}
                           </p>
                         </div>
                       ) : (
                         <div className="divide-y divide-gray-100">
                           {content.lessons.map((lesson, index) => (
-                            <div 
+                            <div
                               key={lesson.id}
                               className="flex items-center justify-between px-4 py-3 pl-20 hover:bg-gray-100/50 transition-colors"
                             >
@@ -363,10 +357,10 @@ export default function MyContentPanel() {
                                 </div>
                               </div>
                               <div className="flex items-center gap-3 ml-4">
-                                <MediaBadge 
-                                  hasVideo={!!lesson.video} 
+                                <MediaBadge
+                                  hasVideo={!!lesson.video}
                                   hasFile={!!lesson.file}
-                                  isArabic={isArabic}
+                                  t={t}
                                 />
                                 <Button
                                   type="button"
@@ -398,14 +392,12 @@ export default function MyContentPanel() {
       <Sheet open={lessonSheetOpen} onOpenChange={setLessonSheetOpen}>
         <SheetContent
           side="right"
-          closePosition={isArabic ? "left" : "right"}
-          dir={isArabic ? "rtl" : "ltr"}
           className="w-full sm:max-w-md"
         >
-          <SheetHeader className={isArabic ? "text-right" : "text-left"}>
-            <SheetTitle>{isArabic ? "تفاصيل الدرس" : "Lesson Details"}</SheetTitle>
+          <SheetHeader>
+            <SheetTitle>{t("lessonDetails")}</SheetTitle>
             <SheetDescription>
-              {isArabic ? "عرض معلومات الدرس" : "View lesson information"}
+              {t("viewLessonInfo")}
             </SheetDescription>
           </SheetHeader>
 
@@ -414,7 +406,7 @@ export default function MyContentPanel() {
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
                   <Label className="text-[11px] text-gray-500">
-                    {isArabic ? "المعرف" : "ID"}
+                    {t("id")}
                   </Label>
                   <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                     {selectedLesson.id}
@@ -422,7 +414,7 @@ export default function MyContentPanel() {
                 </div>
                 <div>
                   <Label className="text-[11px] text-gray-500">
-                    {isArabic ? "المحتوى" : "Content"}
+                    {t("contentLabel")}
                   </Label>
                   <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                     {getContentLabel(selectedLesson)}
@@ -432,7 +424,7 @@ export default function MyContentPanel() {
 
               <div>
                 <Label className="text-[11px] text-gray-500">
-                  {isArabic ? "الاسم" : "Name"}
+                  {t("name")}
                 </Label>
                 <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                   {selectedLesson.name}
@@ -441,7 +433,7 @@ export default function MyContentPanel() {
 
               <div>
                 <Label className="text-[11px] text-gray-500">
-                  {isArabic ? "النص" : "Text"}
+                  {t("text")}
                 </Label>
                 <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800 whitespace-pre-wrap max-h-40 overflow-y-auto">
                   {selectedLesson.text || "-"}
@@ -451,21 +443,21 @@ export default function MyContentPanel() {
               {/* Video */}
               <div>
                 <Label className="text-[11px] text-gray-500">
-                  {isArabic ? "الفيديو" : "Video"}
+                  {t("videoLabel")}
                 </Label>
                 <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                   {selectedLesson.video ? (
-                    <a 
-                      href={selectedLesson.video} 
-                      target="_blank" 
+                    <a
+                      href={selectedLesson.video}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline flex items-center gap-1"
                     >
                       <IconVideo className="h-4 w-4" />
-                      {isArabic ? "عرض الفيديو" : "View Video"}
+                      {t("viewVideo")}
                     </a>
                   ) : (
-                    <span className="text-gray-400">{isArabic ? "لا يوجد فيديو" : "No video"}</span>
+                    <span className="text-gray-400">{t("noVideo")}</span>
                   )}
                 </div>
               </div>
@@ -473,21 +465,21 @@ export default function MyContentPanel() {
               {/* File */}
               <div>
                 <Label className="text-[11px] text-gray-500">
-                  {isArabic ? "الملف" : "File"}
+                  {t("fileLabel")}
                 </Label>
                 <div className="mt-1 rounded-md bg-gray-50 px-3 py-2 text-[13px] text-gray-800">
                   {selectedLesson.file ? (
-                    <a 
-                      href={selectedLesson.file} 
-                      target="_blank" 
+                    <a
+                      href={selectedLesson.file}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline flex items-center gap-1"
                     >
                       <IconFile className="h-4 w-4" />
-                      {isArabic ? "تحميل الملف" : "Download File"}
+                      {t("downloadFile")}
                     </a>
                   ) : (
-                    <span className="text-gray-400">{isArabic ? "لا يوجد ملف" : "No file"}</span>
+                    <span className="text-gray-400">{t("noFile")}</span>
                   )}
                 </div>
               </div>
@@ -501,7 +493,7 @@ export default function MyContentPanel() {
               className="w-full rounded-full"
               onClick={() => setLessonSheetOpen(false)}
             >
-              {isArabic ? "إغلاق" : "Close"}
+              {t("close")}
             </Button>
           </div>
         </SheetContent>

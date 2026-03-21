@@ -1,20 +1,24 @@
 <!--
   Sync Impact Report
   ───────────────────
-  Version change : N/A → 1.0.0 (initial adoption)
-  Modified principles : N/A (first version)
-  Added sections :
-    - Core Principles (7 principles)
-    - Technology Stack Constraints
-    - Development Workflow
-    - Governance
-  Removed sections : N/A
-  Templates requiring updates :
+  Version change     : N/A → 1.0.0 (initial adoption)
+  Last validated     : 2026-03-21 (no-change validation pass)
+  Modified principles: N/A
+  Added sections     : N/A
+  Removed sections   : N/A
+  Templates checked  :
     - .specify/templates/plan-template.md        ✅ compatible
-    - .specify/templates/spec-template.md         ✅ compatible
-    - .specify/templates/tasks-template.md        ✅ compatible
-    - .specify/templates/checklist-template.md    ✅ compatible
-  Follow-up TODOs : none
+    - .specify/templates/spec-template.md        ✅ compatible
+    - .specify/templates/tasks-template.md       ✅ compatible
+    - .specify/templates/checklist-template.md   ✅ compatible
+    - .specify/templates/agent-file-template.md  ✅ compatible (generic, no agent-specific refs)
+  Stack verified vs package.json (2026-03-21):
+    - Next.js ^16.0.3  ✅  React ^19.2.0        ✅
+    - Zustand ^5.0.9   ✅  TanStack Query ^5.90  ✅
+    - Zod ^4.1.12      ✅  motion ^12.23.24      ✅
+    - Tailwind CSS ^4  ✅  next-intl ^4.5.5      ✅
+    - TypeScript ^5.5  ✅  pnpm lockfile         ✅
+  Follow-up TODOs: none — all placeholders resolved, no deferred items
 -->
 
 # CRAI Constitution

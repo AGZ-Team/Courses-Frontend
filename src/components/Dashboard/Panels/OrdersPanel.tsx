@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { fetchOrders, fetchOrder } from "@/services/paymentService";
 import type { Order, OrderStatus } from "@/types/payment";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -20,12 +22,6 @@ const statusStyles: Record<OrderStatus, { bg: string; text: string; ring: string
   paid: { bg: "bg-emerald-50", text: "text-emerald-700", ring: "ring-emerald-100" },
   pending: { bg: "bg-amber-50", text: "text-amber-700", ring: "ring-amber-100" },
   failed: { bg: "bg-rose-50", text: "text-rose-700", ring: "ring-rose-100" },
-};
-
-const statusLabels: Record<OrderStatus, string> = {
-  paid: "Paid",
-  pending: "Pending",
-  failed: "Failed",
 };
 
 function formatDate(dateStr: string) {
@@ -50,67 +46,65 @@ function formatAmount(amount: number) {
 }
 
 export default function OrdersPanel() {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [detailLoading, setDetailLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const t = useTranslations("dashboard.ordersPanel");
+  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
 
-  useEffect(() => {
-    loadOrders();
-  }, []);
+  const {
+    data: orders = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery<Order[]>({
+    queryKey: ["orders"],
+    queryFn: fetchOrders,
+  });
 
-  async function loadOrders() {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await fetchOrders();
-      setOrders(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load orders");
-    } finally {
-      setLoading(false);
-    }
-  }
+  const {
+    data: selectedOrder,
+    isLoading: detailLoading,
+  } = useQuery<Order>({
+    queryKey: ["order", selectedOrderId],
+    queryFn: () => fetchOrder(selectedOrderId!),
+    enabled: selectedOrderId !== null,
+  });
 
-  async function viewOrderDetail(id: number) {
-    setDetailLoading(true);
-    try {
-      const order = await fetchOrder(id);
-      setSelectedOrder(order);
-    } catch (err) {
-      console.error("Failed to load order detail:", err);
-    } finally {
-      setDetailLoading(false);
-    }
-  }
+  const statusLabel = (status: OrderStatus) => {
+    const map: Record<OrderStatus, string> = {
+      paid: t("statusPaid"),
+      pending: t("statusPending"),
+      failed: t("statusFailed"),
+    };
+    return map[status] ?? status;
+  };
 
   if (selectedOrder) {
     return (
       <OrderDetail
         order={selectedOrder}
-        onBack={() => setSelectedOrder(null)}
+        onBack={() => setSelectedOrderId(null)}
+        t={t}
+        statusLabel={statusLabel}
       />
     );
   }
 
   return (
     <div className="px-4 lg:px-6" dir="ltr">
-      <div className="mb-6 space-y-1 max-w-6xl mx-auto">
-        <h1 className="text-2xl font-semibold text-[#0b0b2b]">Orders</h1>
+      <div className="mb-6 space-y-1 max-w-6xl mx-auto" dir="auto">
+        <h1 className="text-2xl font-semibold text-[#0b0b2b]">{t("title")}</h1>
         <p className="text-sm text-gray-500">
-          Manage and review all payment orders.
+          {t("subtitle")}
         </p>
       </div>
 
       <Card className="mx-auto max-w-6xl rounded-3xl border border-gray-100 bg-white/95 shadow-[0_10px_40px_rgba(13,13,18,0.05)]">
         <CardHeader className="flex flex-col gap-2 border-b border-gray-100 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-left">
+          <div dir="auto">
             <CardTitle className="text-base font-semibold text-[#0b0b2b]">
-              All Orders
+              {t("allOrders")}
             </CardTitle>
             <CardDescription className="text-xs text-gray-500">
-              {orders.length} total orders
+              {t("totalOrders", { count: orders.length })}
             </CardDescription>
           </div>
           <div className="flex flex-wrap gap-2 text-xs">
@@ -122,33 +116,33 @@ export default function OrdersPanel() {
                   key={status}
                   className={`rounded-full ${s.bg} px-3 py-1 ${s.text} ring-1 ${s.ring}`}
                 >
-                  {statusLabels[status]} ({count})
+                  {statusLabel(status)} ({count})
                 </Badge>
               );
             })}
           </div>
         </CardHeader>
         <CardContent className="p-0">
-          {loading ? (
+          {isLoading ? (
             <div className="flex items-center justify-center py-20">
               <IconLoader2 className="h-6 w-6 animate-spin text-gray-400" />
             </div>
           ) : error ? (
             <div className="py-20 text-center">
-              <p className="text-sm text-gray-500">{error}</p>
+              <p className="text-sm text-gray-500">{error instanceof Error ? error.message : t("retry")}</p>
               <Button
                 variant="outline"
                 size="sm"
                 className="mt-4 cursor-pointer"
-                onClick={loadOrders}
+                onClick={() => refetch()}
               >
-                Retry
+                {t("retry")}
               </Button>
             </div>
           ) : orders.length === 0 ? (
             <div className="py-20 text-center">
               <IconReceipt className="mx-auto h-10 w-10 text-gray-300" />
-              <p className="mt-3 text-sm text-gray-500">No orders yet</p>
+              <p className="mt-3 text-sm text-gray-500">{t("noOrders")}</p>
             </div>
           ) : (
             <>
@@ -159,25 +153,25 @@ export default function OrdersPanel() {
                     <thead>
                       <tr className="bg-gray-50/80 text-xs uppercase text-gray-500">
                         <th className="border-b border-gray-100 px-5 py-3 text-left font-medium">
-                          Order ID
+                          {t("orderId")}
                         </th>
                         <th className="border-b border-gray-100 px-5 py-3 text-left font-medium">
-                          User
+                          {t("user")}
                         </th>
                         <th className="border-b border-gray-100 px-5 py-3 text-left font-medium">
-                          Amount
+                          {t("amount")}
                         </th>
                         <th className="border-b border-gray-100 px-5 py-3 text-left font-medium">
-                          Method
+                          {t("method")}
                         </th>
                         <th className="border-b border-gray-100 px-5 py-3 text-left font-medium">
-                          Status
+                          {t("status")}
                         </th>
                         <th className="border-b border-gray-100 px-5 py-3 text-left font-medium">
-                          Date
+                          {t("date")}
                         </th>
                         <th className="border-b border-gray-100 px-5 py-3 text-right font-medium">
-                          Actions
+                          {t("actions")}
                         </th>
                       </tr>
                     </thead>
@@ -193,7 +187,7 @@ export default function OrdersPanel() {
                               #{order.id}
                             </td>
                             <td className="px-5 py-3 align-middle text-sm text-gray-900">
-                              User #{order.user}
+                              {t("user")} #{order.user}
                             </td>
                             <td className="px-5 py-3 align-middle text-sm font-semibold text-gray-900">
                               {formatAmount(order.amount)}
@@ -205,7 +199,7 @@ export default function OrdersPanel() {
                               <Badge
                                 className={`rounded-full ${s.bg} px-3 py-1 text-xs font-medium ${s.text} ring-1 ${s.ring}`}
                               >
-                                {statusLabels[order.status] ?? order.status}
+                                {statusLabel(order.status)}
                               </Badge>
                             </td>
                             <td className="px-5 py-3 align-middle text-xs text-gray-500">
@@ -218,9 +212,9 @@ export default function OrdersPanel() {
                                 size="sm"
                                 disabled={detailLoading}
                                 className="rounded-full border-gray-200 bg-white/80 px-3 text-xs font-medium text-gray-700 shadow-sm transition hover:border-primary/50 hover:bg-primary/5 hover:text-primary cursor-pointer"
-                                onClick={() => viewOrderDetail(order.id)}
+                                onClick={() => setSelectedOrderId(order.id)}
                               >
-                                View
+                                {t("view")}
                               </Button>
                             </td>
                           </tr>
@@ -248,13 +242,13 @@ export default function OrdersPanel() {
                       </div>
                       <div className="mt-2 flex items-center justify-between">
                         <div>
-                          <div className="text-xs text-gray-500">Amount</div>
+                          <div className="text-xs text-gray-500">{t("amount")}</div>
                           <div className="text-sm font-semibold text-gray-900">
                             {formatAmount(order.amount)}
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-xs text-gray-500">Method</div>
+                          <div className="text-xs text-gray-500">{t("method")}</div>
                           <div className="text-xs text-gray-700 capitalize">
                             {order.method}
                           </div>
@@ -264,7 +258,7 @@ export default function OrdersPanel() {
                         <Badge
                           className={`rounded-full ${s.bg} px-3 py-1 text-xs font-medium ${s.text} ring-1 ${s.ring}`}
                         >
-                          {statusLabels[order.status] ?? order.status}
+                          {statusLabel(order.status)}
                         </Badge>
                         <Button
                           type="button"
@@ -272,9 +266,9 @@ export default function OrdersPanel() {
                           size="sm"
                           disabled={detailLoading}
                           className="rounded-full border-gray-200 bg-white/80 px-3 text-[11px] font-medium text-gray-700 shadow-sm cursor-pointer"
-                          onClick={() => viewOrderDetail(order.id)}
+                          onClick={() => setSelectedOrderId(order.id)}
                         >
-                          View
+                          {t("view")}
                         </Button>
                       </div>
                     </div>
@@ -289,16 +283,26 @@ export default function OrdersPanel() {
   );
 }
 
-function OrderDetail({ order, onBack }: { order: Order; onBack: () => void }) {
+function OrderDetail({
+  order,
+  onBack,
+  t,
+  statusLabel,
+}: {
+  order: Order;
+  onBack: () => void;
+  t: (key: string) => string;
+  statusLabel: (status: OrderStatus) => string;
+}) {
   const s = statusStyles[order.status] ?? statusStyles.pending;
 
   const details = [
-    { icon: IconHash, label: "Order ID", value: `#${order.id}` },
-    { icon: IconUser, label: "User ID", value: `#${order.user}` },
-    { icon: IconReceipt, label: "Amount", value: formatAmount(order.amount) },
-    { icon: IconCreditCard, label: "Method", value: order.method },
-    { icon: IconCalendar, label: "Date", value: formatDate(order.created_at) },
-    { icon: IconHash, label: "Tap Charge ID", value: order.tap_charge_id ?? "—" },
+    { icon: IconHash, label: t("orderId"), value: `#${order.id}` },
+    { icon: IconUser, label: t("userId"), value: `#${order.user}` },
+    { icon: IconReceipt, label: t("amount"), value: formatAmount(order.amount) },
+    { icon: IconCreditCard, label: t("method"), value: order.method },
+    { icon: IconCalendar, label: t("date"), value: formatDate(order.created_at) },
+    { icon: IconHash, label: t("tapChargeId"), value: order.tap_charge_id ?? "\u2014" },
   ];
 
   return (
@@ -311,10 +315,10 @@ function OrderDetail({ order, onBack }: { order: Order; onBack: () => void }) {
           className="mb-4 -ml-2 text-gray-500 hover:text-gray-700 cursor-pointer"
         >
           <IconArrowLeft className="mr-1 h-4 w-4" />
-          Back to Orders
+          {t("backToOrders")}
         </Button>
         <h1 className="text-2xl font-semibold text-[#0b0b2b]">
-          Order #{order.id}
+          {t("order")} #{order.id}
         </h1>
       </div>
 
@@ -322,12 +326,12 @@ function OrderDetail({ order, onBack }: { order: Order; onBack: () => void }) {
         <CardHeader className="border-b border-gray-100">
           <div className="flex items-center justify-between">
             <CardTitle className="text-base font-semibold text-[#0b0b2b]">
-              Order Details
+              {t("orderDetails")}
             </CardTitle>
             <Badge
               className={`rounded-full ${s.bg} px-4 py-1.5 text-xs font-semibold ${s.text} ring-1 ${s.ring}`}
             >
-              {statusLabels[order.status] ?? order.status}
+              {statusLabel(order.status)}
             </Badge>
           </div>
         </CardHeader>

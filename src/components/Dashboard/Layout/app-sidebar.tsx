@@ -90,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           icon: IconCategory,
         },
         {
-          name: locale === "ar" ? "الطلبات" : "Orders",
+          name: t('orders'),
           url: "/dashboard?view=orders",
           icon: IconReceipt,
         }
@@ -101,12 +101,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     if (isSuperuser || isInstructor) {
       items.push(
         {
-          name: locale === "ar" ? "إدارة المحتوى" : "Content Management",
+          name: t('contentManagement'),
           url: "/dashboard?view=content",
           icon: IconFileText,
         },
         {
-          name: locale === "ar" ? "إدارة الدروس" : "Lesson Management",
+          name: t('lessonManagement'),
           url: "/dashboard?view=lessons",
           icon: IconBook,
         }
@@ -116,13 +116,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     // EVERYONE sees "My Content" in Management Hub (superuser, instructor, normal user)
     // The My Content component handles role-based content filtering
     items.push({
-      name: locale === "ar" ? "محتواي" : "My Content",
+      name: t('myContentLabel'),
       url: "/dashboard?view=my-content",
       icon: IconFolder,
     });
     
     return items;
-  }, [isSuperuser, isInstructor, t, locale]);
+  }, [isSuperuser, isInstructor, t]);
 
   const data = {
     user: {
