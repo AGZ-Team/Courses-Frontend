@@ -22,6 +22,18 @@ async function handleResponse<T>(res: Response): Promise<T> {
 }
 
 /**
+ * Fetch purchased content for the authenticated student.
+ * Calls GET /api/my-content → Django GET /my-content/
+ */
+export async function fetchMyContent(): Promise<Content[]> {
+  const res = await fetch("/api/my-content", {
+    method: "GET",
+    credentials: "include",
+  });
+  return handleResponse<Content[]>(res);
+}
+
+/**
  * Fetch all content
  * Backend filters based on user role:
  * - Superuser: sees all content

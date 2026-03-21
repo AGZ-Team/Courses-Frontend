@@ -309,7 +309,7 @@ export default function CheckoutPage() {
                           <p className="text-xs text-gray-400">{item.author}</p>
                         </div>
                         <span className="shrink-0 text-sm font-semibold text-gray-900">
-                          ${item.price.toFixed(2)}
+                          ${Number(item.price ?? 0).toFixed(2)}
                         </span>
                         <button
                           type="button"
